@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -34,8 +36,15 @@ public class ResultDAO extends AbstractDAO<Result> {
     }
 
     public List<TestWrapper> getAvailableTestsNames(long id){
+        List<TestWrapper> list = new ArrayList<>();
         Query query = em.createNamedQuery("getAvailableTestsNames");
         query.setParameter("userId", id);
-        return (List<TestWrapper>)query.getResultList();
+        Iterator iterator = query.getResultList().iterator();
+        while (iterator.hasNext()){
+            Object[] tmp = (Object[]) iterator.next();
+            TestWrapper testWrapper = new TestWrapper((String)tmp[0],(int)tmp[1]);
+            list.add(testWrapper);
+        }
+        return list;
     }
 }

@@ -8,6 +8,11 @@ public class TestWrapper {
     private String name;
     private int duration;
 
+    public TestWrapper(String name, int duration) {
+        this.name = name;
+        this.duration = duration;
+    }
+
     public TestWrapper(){
     }
 

@@ -1,0 +1,15 @@
+{
+   "users": [{
+      "id" : 1,
+      "name": "Bill Gates",
+      "age": 43
+   }, {
+      "id" : 2,
+      "name": "Sergey Brin",
+      "age": 33
+   }, {
+      "id" : 3,
+      "name": "Larry Page",
+      "age": 34
+   }]
+}
