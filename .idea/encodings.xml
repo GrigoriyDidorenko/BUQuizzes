@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/DAO/AbstractDAO.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/DAO/AnswerDAO.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/DAO/QuestionDAO.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/DAO/ResultDAO.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/DAO/TestDAO.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/DAO/UserAnswerDAO.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/DAO/UserDAO.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/DTO/AnswerDTO.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/DTO/QuestionDTO.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/DTO/TestDTO.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/DTO/UserAnswerDTO.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/controller/StudentRest.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/model/Answer.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/model/Answer.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/model/Question.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/model/Question.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/model/Result.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/model/Result.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/model/Role.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/model/Role.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/model/Test.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/model/Test.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/model/User.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/model/User.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/model/UserAnswer.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/services/CalculationAnswersForTest.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/services/Converter.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/services/ImportTest.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/services/StudentService.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/bionic/services/TestService.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/spring-config.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/css" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/fonts" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/img" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/js" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/materialize-src" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/static/pages" charset="windows-1251" />
+  </component>
+</project>
