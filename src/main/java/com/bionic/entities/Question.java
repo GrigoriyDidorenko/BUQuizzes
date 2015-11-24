@@ -1,4 +1,4 @@
-package com.bionic.model;
+package com.bionic.entities;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class Question {
     @Column(name = "is_open", nullable = false)
     private boolean isOpen;
     @Column(name = "mark", nullable = false)
-    private int mark;
+    private float mark;
     @Column(name = "picture")
     private String picture;
     @Column(name = "question")
@@ -39,7 +39,7 @@ public class Question {
     public Question() {
     }
 
-    public Question(boolean isMultichoice, boolean isOpen, int mark,
+    public Question(boolean isMultichoice, boolean isOpen, float mark,
                     String picture, String question, Test test, boolean isArchived, Set<Answer> answers) {
         this.isMultichoice = isMultichoice;
         this.isOpen = isOpen;
@@ -76,11 +76,11 @@ public class Question {
         this.isOpen = isOpen;
     }
 
-    public int getMark() {
+    public float getMark() {
         return mark;
     }
 
-    public void setMark(int mark) {
+    public void setMark(float mark) {
         this.mark = mark;
     }
 
@@ -149,7 +149,7 @@ public class Question {
         int result = (int) (getId() ^ (getId() >>> 32));
         result = 31 * result + (isMultichoice ? 1 : 0);
         result = 31 * result + (isOpen ? 1 : 0);
-        result = 31 * result + getMark();
+        result = (int) (31 * result + getMark());
         result = 31 * result + (getPicture() != null ? getPicture().hashCode() : 0);
         result = 31 * result + (getQuestion() != null ? getQuestion().hashCode() : 0);
         result = 31 * result + (isArchived ? 1 : 0);

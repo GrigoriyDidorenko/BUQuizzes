@@ -3,30 +3,26 @@ package com.bionic.services;
 import com.bionic.DTO.AnswerDTO;
 import com.bionic.DTO.QuestionDTO;
 import com.bionic.DTO.TestDTO;
-import com.bionic.DTO.UserAnswerDTO;
-import com.bionic.model.*;
-import org.springframework.stereotype.Component;
+import com.bionic.entities.Answer;
+import com.bionic.entities.Question;
+import com.bionic.entities.Test;
+import com.bionic.wrappers.TestWrapper;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 /**
  * Created by User on 13.11.2015.
  */
-@Component
+@Service
 public class Converter {
 
-    public static Set<TestDTO> convertTestsToDTO(List<Test> tests){
-        Set<TestDTO> testDTOs = new HashSet<>();
-        for (Test test : tests){
-            testDTOs.add(convertTestToDTO(test));
-        }
-        return testDTOs;
-    }
+    private static boolean alreadyExecuted;
 
-    public static Set<TestDTO> convertAvailableTestsToDTO(List<Test> tests){
+    public static Set<TestDTO> convertAvailableTestsToDTO(List<TestWrapper> tests){
         Set<TestDTO> testDTOs = new HashSet<>();
-        for (Test test : tests){
-            TestDTO testDTO = new TestDTO(test.getTestName());
+        for (TestWrapper test : tests){
+            TestDTO testDTO = new TestDTO(test.getName(), test.getDuration());
             testDTOs.add(testDTO);
         }
         return testDTOs;
@@ -39,10 +35,13 @@ public class Converter {
             for (Answer answer : question.getAnswers()){
                 answerDTOs.add(new AnswerDTO(answer.getAnswerText()));
             }
-            QuestionDTO questionDTO = new QuestionDTO(question.getQuestion(),randomizeAnswers(answerDTOs));
+            if(!alreadyExecuted) answerDTOs = randomizeAnswers(answerDTOs);
+            QuestionDTO questionDTO = new QuestionDTO(question.getQuestion(),answerDTOs);
             questionDTOs.add(questionDTO);
         }
-        TestDTO testDTO = new TestDTO(test.getId(),test.getTestName(),test.getDuration(), randomizeQuestions(questionDTOs));
+        if(!alreadyExecuted) questionDTOs = randomizeQuestions(questionDTOs);
+        TestDTO testDTO = new TestDTO(test.getId(),test.getTestName(),test.getDuration(), questionDTOs);
+        alreadyExecuted = true;
         return testDTO;
     }
 
@@ -56,21 +55,4 @@ public class Converter {
         Collections.shuffle(shuffledList);
         return new LinkedHashSet<>(shuffledList);
     }
-
-    public UserAnswer convertUserAnswerDTOToUserAnswer(UserAnswerDTO userAnswerDTO,Result result){
-        UserAnswer userAnswer = new UserAnswer();
-        userAnswer.setQuestionId(userAnswerDTO.getQuestionId());
-        userAnswer.setResultId(result.getId());
-        userAnswer.setUserAnswer(userAnswerDTO.getAnswerText());
-        return userAnswer;
-    }
-
-    public Collection<UserAnswer> convertUserAnswerDTOsToUserAnswers(Collection<UserAnswerDTO> userAnswerDTOs,Result result){
-        Collection<UserAnswer> userAnswers = new ArrayList<>();
-        for(UserAnswerDTO userAnswerDTO : userAnswerDTOs){
-                userAnswers.add(convertUserAnswerDTOToUserAnswer(userAnswerDTO,result));
-        }
-        return userAnswers;
-    }
-
 }

@@ -1,4 +1,4 @@
-package com.bionic.model;
+package com.bionic.entities;
 
 import javax.persistence.*;
 import java.util.Set;

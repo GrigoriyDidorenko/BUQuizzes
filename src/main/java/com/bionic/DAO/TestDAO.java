@@ -2,8 +2,7 @@ package com.bionic.DAO;
 
 
 
-
-import com.bionic.model.Test;
+import com.bionic.entities.Test;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

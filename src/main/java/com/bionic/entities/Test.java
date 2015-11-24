@@ -1,4 +1,4 @@
-package com.bionic.model;
+package com.bionic.entities;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -82,6 +82,14 @@ public class Test {
 
     public void setQuestions(Set<Question> questions) {
         this.questions = questions;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     @Override

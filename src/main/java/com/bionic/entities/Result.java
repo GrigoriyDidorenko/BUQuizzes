@@ -1,4 +1,4 @@
-package com.bionic.model;
+package com.bionic.entities;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,18 +10,21 @@ import java.util.Date;
  * @date: 12.11.2015
  */
 @Entity
-@NamedQuery(name = "getCurrentTestById",
-        query = "SELECT test From Result result JOIN result.test test JOIN result.user user WHERE result.test.id = :testId AND result.user.id = :userId" )
+@NamedQueries({
+        @NamedQuery(name = "getCurrentTestById",
+                query = "SELECT test From Result result JOIN result.test test JOIN result.user user WHERE result.test.id = :testId AND result.user.id = :userId"),
+        @NamedQuery(name = "getAvailableTestsNames",
+        query = "SELECT test.testName, test.duration FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId")
+})
 @Table(catalog = "quizzes")
 public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(name = "is_checked")
+    @Column(name = "is_checked", nullable = false)
     private boolean isChecked;
-    @Column(name = "submited")
+    @Column(name = "submited", nullable = false)
     private boolean submited;
-    // Default 0 in DB/ If mark null is error
     @Column(name = "mark")
     private int mark;
     @Column(name = "begin_time")
@@ -127,7 +130,7 @@ public class Result {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Result)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Result result = (Result) o;
 
@@ -139,14 +142,13 @@ public class Result {
         if (passTime != null ? !passTime.equals(result.passTime) : result.passTime != null) return false;
         if (feedback != null ? !feedback.equals(result.feedback) : result.feedback != null) return false;
         if (user != null ? !user.equals(result.user) : result.user != null) return false;
-        if (test != null ? !test.equals(result.test) : result.test != null) return false;
+        return !(test != null ? !test.equals(result.test) : result.test != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = (int) (getId() ^ (getId() >>> 32));
         result = 31 * result + (isChecked ? 1 : 0);
         result = 31 * result + (submited ? 1 : 0);
         result = 31 * result + mark;

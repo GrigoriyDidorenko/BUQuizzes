@@ -2,10 +2,10 @@ package com.bionic.services;
 
 
 import com.bionic.DAO.ResultDAO;
-import com.bionic.DAO.UserDAO;
 import com.bionic.DTO.TestDTO;
+import com.bionic.entities.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
@@ -15,31 +15,19 @@ import java.util.Set;
  * @author: Balitsky Alexandr & Grifan
  * @date: 12.11.2015
  */
-@Component
+@Service
 public class StudentService {
 
     public StudentService() {
     }
 
     @Autowired
-    private UserDAO userDAO;
-    @Autowired
-    private ResultDAO resultDAO;
+  private ResultDAO resultDAO;
 
-    public Set<TestDTO> getAvailableTests(String idStr) {
+    public Set<TestDTO> getAvailableTestsNames(String idStr) {
         Set<TestDTO> testDTOs = null;
         try {
-            testDTOs = Converter.convertAvailableTestsToDTO(userDAO.getAvailableTestsById(getLongId(idStr)));
-        } catch (Exception e) {
-            System.out.println();
-        }
-        return testDTOs;
-    }
-
-    public Set<TestDTO> getTestsToDo(String idStr) {
-        Set<TestDTO> testDTOs = null;
-        try {
-            testDTOs = Converter.convertTestsToDTO(userDAO.getAvailableTestsById(getLongId(idStr)));
+            testDTOs = Converter.convertAvailableTestsToDTO(resultDAO.getAvailableTestsNames(getLongId(idStr)));
         } catch (Exception e) {
             System.out.println();
         }
@@ -60,8 +48,9 @@ public class StudentService {
 
     public TestDTO getCurrentTest(String idStr, String testIdStr) {
         try {
-            return Converter.convertTestToDTO(resultDAO.getCurrentTest(getLongId(idStr),
-                    getLongId(testIdStr)));
+            Test test = resultDAO.getCurrentTest(getLongId(idStr),
+                    getLongId(testIdStr));
+            return Converter.convertTestToDTO(test);
         } catch (Exception e) {
             e.printStackTrace();
         }
