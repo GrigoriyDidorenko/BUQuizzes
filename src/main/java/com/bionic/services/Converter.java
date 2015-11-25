@@ -5,7 +5,6 @@ import com.bionic.DTO.QuestionDTO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.entities.*;
-import com.bionic.wrappers.TestWrapper;
 import com.bionic.entities.Answer;
 import com.bionic.entities.Question;
 import com.bionic.entities.Test;
