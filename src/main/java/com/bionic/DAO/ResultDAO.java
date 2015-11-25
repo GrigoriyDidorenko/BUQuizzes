@@ -1,8 +1,8 @@
 package com.bionic.DAO;
 
+import com.bionic.DTO.TestDTO;
 import com.bionic.entities.Result;
 import com.bionic.entities.Test;
-import com.bionic.wrappers.TestWrapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,15 +35,15 @@ public class ResultDAO extends AbstractDAO<Result> {
         return (Test)query.getSingleResult();
     }
 
-    public List<TestWrapper> getAvailableTestsNames(long id){
-        List<TestWrapper> list = new ArrayList<>();
+    public List<TestDTO> getAvailableTestsNames(long id){
+        List<TestDTO> list = new ArrayList<>();
         Query query = em.createNamedQuery("getAvailableTestsNames");
         query.setParameter("userId", id);
         Iterator iterator = query.getResultList().iterator();
         while (iterator.hasNext()){
             Object[] tmp = (Object[]) iterator.next();
-            TestWrapper testWrapper = new TestWrapper((String)tmp[0],(int)tmp[1]);
-            list.add(testWrapper);
+            TestDTO testDTO = new TestDTO((String)tmp[0],(int)tmp[1]);
+            list.add(testDTO);
         }
         return list;
     }

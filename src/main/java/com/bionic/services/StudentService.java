@@ -7,6 +7,7 @@ import com.bionic.entities.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -25,13 +26,24 @@ public class StudentService {
   private ResultDAO resultDAO;
 
     public Set<TestDTO> getAvailableTestsNames(String idStr) {
-        Set<TestDTO> testDTOs = null;
         try {
-            testDTOs = Converter.convertAvailableTestsToDTO(resultDAO.getAvailableTestsNames(getLongId(idStr)));
+            Set<TestDTO> testDTOs = new HashSet<>(resultDAO.getAvailableTestsNames(getLongId(idStr)));
+            return testDTOs;
         } catch (Exception e) {
-            System.out.println();
+            e.printStackTrace();
         }
-        return testDTOs;
+        return null;
+    }
+
+    public TestDTO getCurrentTest(String idStr, String testIdStr) {
+        try {
+            Test test = resultDAO.getCurrentTest(getLongId(idStr),
+                    getLongId(testIdStr));
+            return Converter.convertTestToDTO(test);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public long getLongId(String idStr) {
@@ -44,17 +56,6 @@ public class StudentService {
         if (id == 0)
             throw new RuntimeException("invalid id");
         return id;
-    }
-
-    public TestDTO getCurrentTest(String idStr, String testIdStr) {
-        try {
-            Test test = resultDAO.getCurrentTest(getLongId(idStr),
-                    getLongId(testIdStr));
-            return Converter.convertTestToDTO(test);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 

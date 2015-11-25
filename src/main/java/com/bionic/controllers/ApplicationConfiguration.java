@@ -1,4 +1,4 @@
-package com.bionic.rest;
+package com.bionic.controllers;
 
 
 import javax.ws.rs.core.Application;

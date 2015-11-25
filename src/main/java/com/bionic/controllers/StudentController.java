@@ -1,4 +1,4 @@
-package com.bionic.rest;
+package com.bionic.controllers;
 
 import com.bionic.DTO.TestDTO;
 import com.bionic.services.StudentService;

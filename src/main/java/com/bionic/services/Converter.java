@@ -6,7 +6,6 @@ import com.bionic.DTO.TestDTO;
 import com.bionic.entities.Answer;
 import com.bionic.entities.Question;
 import com.bionic.entities.Test;
-import com.bionic.wrappers.TestWrapper;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -18,16 +17,6 @@ import java.util.*;
 public class Converter {
 
     private static boolean alreadyExecuted;
-
-    public static Set<TestDTO> convertAvailableTestsToDTO(List<TestWrapper> tests){
-        Set<TestDTO> testDTOs = new HashSet<>();
-        for (TestWrapper test : tests){
-            TestDTO testDTO = new TestDTO(test.getName(), test.getDuration());
-            testDTOs.add(testDTO);
-        }
-        return testDTOs;
-    }
-    
     public static TestDTO convertTestToDTO(Test test){
         Set<QuestionDTO> questionDTOs = new HashSet<>();
         for (Question question : test.getQuestions()){
