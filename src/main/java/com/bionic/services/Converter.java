@@ -3,6 +3,9 @@ package com.bionic.services;
 import com.bionic.DTO.AnswerDTO;
 import com.bionic.DTO.QuestionDTO;
 import com.bionic.DTO.TestDTO;
+import com.bionic.DTO.UserAnswerDTO;
+import com.bionic.entities.*;
+import com.bionic.wrappers.TestWrapper;
 import com.bionic.entities.Answer;
 import com.bionic.entities.Question;
 import com.bionic.entities.Test;
@@ -44,4 +47,21 @@ public class Converter {
         Collections.shuffle(shuffledList);
         return new LinkedHashSet<>(shuffledList);
     }
+
+    public UserAnswer convertUserAnswerDTOToUserAnswer(UserAnswerDTO userAnswerDTO,Result result){
+        UserAnswer userAnswer = new UserAnswer();
+        userAnswer.setQuestionId(userAnswerDTO.getQuestionId());
+        userAnswer.setResultId(result.getId());
+        userAnswer.setUserAnswer(userAnswerDTO.getAnswerText());
+        return userAnswer;
+    }
+
+    public Collection<UserAnswer> convertUserAnswerDTOsToUserAnswers(Collection<UserAnswerDTO> userAnswerDTOs,Result result){
+        Collection<UserAnswer> userAnswers = new ArrayList<>();
+        for(UserAnswerDTO userAnswerDTO : userAnswerDTOs){
+            userAnswers.add(convertUserAnswerDTOToUserAnswer(userAnswerDTO,result));
+        }
+        return userAnswers;
+    }
+
 }

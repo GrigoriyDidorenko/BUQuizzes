@@ -26,7 +26,7 @@ public class Result {
     @Column(name = "submited", nullable = false)
     private boolean submited;
     @Column(name = "mark")
-    private int mark;
+    private float mark;
     @Column(name = "begin_time")
     private Date beginTime;
     @Column(name = "pass_time")
@@ -68,11 +68,11 @@ public class Result {
         this.submited = submited;
     }
 
-    public int getMark() {
+    public float getMark() {
         return mark;
     }
 
-    public void setMark(int mark) {
+    public void setMark(float mark) {
         this.mark = mark;
     }
 
@@ -148,10 +148,10 @@ public class Result {
 
     @Override
     public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (isChecked ? 1 : 0);
         result = 31 * result + (submited ? 1 : 0);
-        result = 31 * result + mark;
+        result = 31 * result + (mark != +0.0f ? Float.floatToIntBits(mark) : 0);
         result = 31 * result + (beginTime != null ? beginTime.hashCode() : 0);
         result = 31 * result + (passTime != null ? passTime.hashCode() : 0);
         result = 31 * result + (feedback != null ? feedback.hashCode() : 0);

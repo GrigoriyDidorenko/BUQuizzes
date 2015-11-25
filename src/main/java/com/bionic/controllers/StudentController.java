@@ -1,15 +1,21 @@
 package com.bionic.controllers;
 
 import com.bionic.DTO.TestDTO;
+import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.services.StudentService;
+import com.bionic.services.TestService;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,6 +30,13 @@ public class StudentController {
 
     @Autowired
     StudentService studentService;
+    @Autowired
+    TestService testService;
+    @Autowired
+    ObjectMapper objectMapper;
+
+
+
 
     public StudentController() {
 
@@ -49,10 +62,22 @@ public class StudentController {
     @RequestMapping(value = "/tests/{id}/pass/{testId}", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody
     ResponseEntity<TestDTO> getCurrentTest(@PathVariable("id") String id,@PathVariable("testId") String testId){
-        TestDTO testDTO = studentService.getCurrentTest(id,testId);
+        TestDTO testDTO = studentService.getCurrentTest(id, testId);
 
         return new ResponseEntity<>(testDTO, HttpStatus.OK);
 
 
     }
+     /*Example JSON [ {   "answerText" : "1",   "questionId" : 1 },
+                      {   "answerText" : "1",   "questionId" : 2 } ,
+                      {   "answerText" : "11",   "questionId" : 2 }  ,
+                      {   "answerText" : "Me_Text",   "questionId" : 3 }  ]*/
+    @RequestMapping(value = "/answers/{resultId}", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody
+    String setAnswers(@RequestBody String JSONAnswers,@PathVariable("resultId") String resultId) throws IOException {
+        TypeFactory typeFactory = objectMapper.getTypeFactory();
+        List<UserAnswerDTO> userAnswerDTOs =  objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(List.class, UserAnswerDTO.class));
+        return testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
+    }
+
 }

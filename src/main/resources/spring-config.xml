@@ -43,6 +43,6 @@ http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframewor
         <property name="password" value="root" />
     </bean>
 
-    <bean id="studentRest" class="com.bionic.controller.StudentRest"/>
-    <bean id="studentService" class="com.bionic.services.StudentService"/>
+
+    <bean id="testService" class="com.bionic.services.TestService"/>
 </beans>
