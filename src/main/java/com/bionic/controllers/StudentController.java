@@ -40,8 +40,6 @@ public class StudentController {
     private ObjectMapper objectMapper;
 
 
-
-
     public StudentController() {
 
     }
@@ -56,8 +54,9 @@ public class StudentController {
 
 
     @RequestMapping(value = "/tests/{id}", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody
-    ResponseEntity<Set<TestDTO>> getAvailableTestsNames(@PathVariable("id") String id){
+    public
+    @ResponseBody
+    ResponseEntity<Set<TestDTO>> getAvailableTestsNames(@PathVariable("id") String id) {
         Set<TestDTO> testDTOs = studentService.getAvailableTestsNames(id);
 
         return new ResponseEntity<>(testDTOs, HttpStatus.OK);
@@ -65,40 +64,54 @@ public class StudentController {
 
 
     @RequestMapping(value = "/tests/{id}/pass/{testId}", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody
-    ResponseEntity<TestDTO> getCurrentTest(@PathVariable("id") String id,@PathVariable("testId") String testId){
+    public
+    @ResponseBody
+    ResponseEntity<TestDTO> getCurrentTest(@PathVariable("id") String id, @PathVariable("testId") String testId) {
         TestDTO testDTO = studentService.getCurrentTest(id, testId);
 
         return new ResponseEntity<>(testDTO, HttpStatus.OK);
 
 
     }
-     /*Example JSON [ {   "answerText" : "1",   "questionId" : 1 },
-                      {   "answerText" : "1",   "questionId" : 2 } ,
-                      {   "answerText" : "11",   "questionId" : 2 }  ,
-                      {   "answerText" : "Me_Text",   "questionId" : 3 }  ]*/
+
+    /*Example JSON [ {   "answerText" : "1",   "questionId" : 1 },
+                     {   "answerText" : "1",   "questionId" : 2 } ,
+                     {   "answerText" : "11",   "questionId" : 2 }  ,
+                     {   "answerText" : "Me_Text",   "questionId" : 3 }  ]*/
     @RequestMapping(value = "/answers/{resultId}", method = RequestMethod.POST, produces = "application/json")
-    public @ResponseBody
-    String setAnswers(@RequestBody String JSONAnswers,@PathVariable("resultId") String resultId) throws IOException {
-        TypeFactory typeFactory = objectMapper.getTypeFactory();
-        List<UserAnswerDTO> userAnswerDTOs =  objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(List.class, UserAnswerDTO.class));
-        return testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
+    public
+    @ResponseBody
+    String setAnswers(@RequestBody String JSONAnswers, @PathVariable("resultId") String resultId) {
+        String result;
+        try {
+            TypeFactory typeFactory = objectMapper.getTypeFactory();
+            List<UserAnswerDTO> userAnswerDTOs = objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(List.class, UserAnswerDTO.class));
+            result = testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
+        } catch (NumberFormatException e) {
+            result = "resultId string cannot be parsed";
+        } catch (IOException e) {
+            result = "I/O problem";
+        }
+        return result;
     }
 
-    @RequestMapping(value="/upload", method=RequestMethod.GET)
-    public @ResponseBody String provideUploadInfo() {
+    @RequestMapping(value = "/upload", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    String provideUploadInfo() {
         return "You can upload a file by posting to this same URL.";
     }
 
-    @RequestMapping(value="/upload", method=RequestMethod.POST)
-    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
-            try {
-                return testService.importTest(file);
-            } catch (Exception e) {
-                return "You failed to upload";
-            }
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String handleFileUpload(@RequestParam("file") MultipartFile file) {
+        try {
+            return testService.importTest(file);
+        } catch (Exception e) {
+            return "You failed to upload";
+        }
     }
-
 
 
 }

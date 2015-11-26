@@ -47,14 +47,20 @@ public class TestService {
     }
 
     public String processingAnswers(Collection<UserAnswerDTO> answerDTOs, long resultId) {
-        Result result = resultDAO.find(resultId);
-        Collection<UserAnswer> userAnswers = converter.convertUserAnswerDTOsToUserAnswers(answerDTOs, result);
-        for (UserAnswer userAnswer : userAnswers) {
-            userAnswerDAO.save(userAnswer);
+        String markResult;
+        try {
+            Result result = resultDAO.find(resultId);
+            Collection<UserAnswer> userAnswers = converter.convertUserAnswerDTOsToUserAnswers(answerDTOs, result);
+            for (UserAnswer userAnswer : userAnswers) {
+                userAnswerDAO.save(userAnswer);
+            }
+            result = calcResult(result, userAnswers);
+            resultDAO.update(result);
+            markResult= result.getMark() + " isChecked " + result.isChecked();
+        } catch (Exception e) {
+           markResult = e.getMessage();
         }
-        result = calcResult(result, userAnswers);
-        resultDAO.update(result);
-        return result.getMark() + " isChecked " + result.isChecked();
+        return markResult;
     }
 
     public Result calcResult(Result result, Collection<UserAnswer> userAnswers) {
@@ -83,7 +89,7 @@ public class TestService {
                 }
             }
             if (question.getIsMultichoice()) {
-                int numberUserCorrectAnswers=0, numberIsCorrectInQuestion;
+                int numberUserCorrectAnswers = 0, numberIsCorrectInQuestion;
                 for (UserAnswer selectUserAnswer : userAnswers) {
                     if (question.getId() == selectUserAnswer.getQuestionId()) {
                         for (Answer answer : question.getAnswers()) {
@@ -102,8 +108,8 @@ public class TestService {
                     if (answer.getIsCorrect()) numberIsCorrectInQuestion++;
                 }
                 numberUserCorrectAnswers = numberUserCorrectAnswers < 0 ? 0 : numberUserCorrectAnswers;
-                mark +=  1 / (float) numberIsCorrectInQuestion * (float) numberUserCorrectAnswers * question.getMark();
-                mark = (float) (Math.round(mark * 100.0)/100.0);
+                mark += 1 / (float) numberIsCorrectInQuestion * (float) numberUserCorrectAnswers * question.getMark();
+                mark = (float) (Math.round(mark * 100.0) / 100.0);
             }
         }
         result.setMark(mark);
@@ -124,10 +130,10 @@ public class TestService {
                 Answer answer = new Answer();
                 test.setDuration(testDTO.getDuration());
                 test.setTestName(testDTO.getTestName());
-                for(QuestionDTO questionDTO : testDTO.getQuestions()){
+                for (QuestionDTO questionDTO : testDTO.getQuestions()) {
                     question.setTest(test);
                     question.setQuestion(questionDTO.getQuestion());
-                    for(AnswerDTO answerDTO : questionDTO.getAnswers()){
+                    for (AnswerDTO answerDTO : questionDTO.getAnswers()) {
                         answer.setAnswerText(answerDTO.getAnswerText());
                         answer.setQuestion(question);
                         answers.add(answer);
@@ -147,7 +153,8 @@ public class TestService {
         }
         return "successful";
     }
-//TODO: Transaction Rollback
+
+    //TODO: Transaction Rollback
     public void saveTest(Test test, HashSet<Question> questions, HashSet<Answer> answers) {
         testDAO.save(test);
         for (Question question : questions) {
