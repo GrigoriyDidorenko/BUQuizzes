@@ -1,18 +1,26 @@
 package com.bionic.services;
 
-import com.bionic.DAO.ResultDAO;
-import com.bionic.DAO.UserAnswerDAO;
+import com.bionic.DAO.*;
+import com.bionic.DTO.AnswerDTO;
+import com.bionic.DTO.QuestionDTO;
+import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
-import com.bionic.entities.Answer;
-import com.bionic.entities.Question;
-import com.bionic.entities.Result;
-import com.bionic.entities.UserAnswer;
+import com.bionic.entities.*;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by rondo104 on 25.11.2015.
@@ -26,6 +34,14 @@ public class TestService {
     private ResultDAO resultDAO;
     @Autowired
     private UserAnswerDAO userAnswerDAO;
+    @Autowired
+    private ObjectMapper mapper;
+    @Autowired
+    private TestDAO testDAO;
+    @Autowired
+    private QuestionDAO questionDAO;
+    @Autowired
+    private AnswerDAO answerDAO;
 
     public TestService() {
     }
@@ -94,4 +110,50 @@ public class TestService {
         return result;
     }
 
+    public String importTest(MultipartFile file) {
+        HashSet<TestDTO> testDTOs;
+        try {
+            testDTOs = mapper.readValue(file.getInputStream(),
+                    new TypeReference<Set<TestDTO>>() {
+                    });
+            for (TestDTO testDTO : testDTOs) {
+                HashSet<Answer> answers = new HashSet<>();
+                HashSet<Question> questions = new HashSet<>();
+                Test test = new Test();
+                Question question = new Question();
+                Answer answer = new Answer();
+                test.setDuration(testDTO.getDuration());
+                test.setTestName(testDTO.getTestName());
+                for(QuestionDTO questionDTO : testDTO.getQuestions()){
+                    question.setTest(test);
+                    question.setQuestion(questionDTO.getQuestion());
+                    for(AnswerDTO answerDTO : questionDTO.getAnswers()){
+                        answer.setAnswerText(answerDTO.getAnswerText());
+                        answer.setQuestion(question);
+                        answers.add(answer);
+                    }
+                    question.setAnswers(answers);
+                    questions.add(question);
+                }
+                test.setQuestions(questions);
+                saveTest(test, questions, answers);
+            }
+        } catch (JsonGenerationException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "successful";
+    }
+//TODO: Transaction Rollback
+    public void saveTest(Test test, HashSet<Question> questions, HashSet<Answer> answers) {
+        testDAO.save(test);
+        for (Question question : questions) {
+            questionDAO.save(question);
+            for (Answer answer : answers)
+                answerDAO.save(answer);
+        }
+    }
 }

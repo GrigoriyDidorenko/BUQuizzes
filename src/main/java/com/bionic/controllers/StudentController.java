@@ -12,7 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +33,11 @@ import java.util.Set;
 public class StudentController {
 
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
     @Autowired
-    TestService testService;
+    private TestService testService;
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
 
 
@@ -42,12 +46,13 @@ public class StudentController {
 
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    String getSample(@PathVariable String id){
-        return id;
-    }
+//    /*Test method*/
+//    @RequestMapping(value = "/import", method = RequestMethod.GET)
+//    public
+//    @ResponseBody
+//    String getSample(){
+//        return testService.importTest(new File("d:\\file.json"));
+//    }
 
 
     @RequestMapping(value = "/tests/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -79,5 +84,21 @@ public class StudentController {
         List<UserAnswerDTO> userAnswerDTOs =  objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(List.class, UserAnswerDTO.class));
         return testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
     }
+
+    @RequestMapping(value="/upload", method=RequestMethod.GET)
+    public @ResponseBody String provideUploadInfo() {
+        return "You can upload a file by posting to this same URL.";
+    }
+
+    @RequestMapping(value="/upload", method=RequestMethod.POST)
+    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
+            try {
+                return testService.importTest(file);
+            } catch (Exception e) {
+                return "You failed to upload";
+            }
+    }
+
+
 
 }

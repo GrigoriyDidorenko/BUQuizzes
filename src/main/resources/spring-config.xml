@@ -43,6 +43,4 @@ http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframewor
         <property name="password" value="root" />
     </bean>
 
-
-    <bean id="testService" class="com.bionic.services.TestService"/>
 </beans>
