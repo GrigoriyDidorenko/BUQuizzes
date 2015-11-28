@@ -19,8 +19,8 @@ public class Answer {
     private long id;
     @Column(name = "answer_text", nullable = false)
     private String answerText;
-    @Column(name = "is_correct", nullable = false)
-    private boolean isCorrect;
+    @Column(name = "mark", nullable = false)
+    private int mark;
     @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
@@ -32,9 +32,9 @@ public class Answer {
     public Answer(){
     }
 
-    public Answer(String answerText, boolean isCorrect, Question question, String picture, boolean isArchived) {
+    public Answer(String answerText, int mark, Question question, String picture, boolean isArchived) {
         this.answerText = answerText;
-        this.isCorrect = isCorrect;
+        this.mark = mark;
         this.question = question;
         this.picture = picture;
         this.isArchived = isArchived;
@@ -56,12 +56,12 @@ public class Answer {
         this.answerText = answerText;
     }
 
-    public boolean getIsCorrect() {
-        return isCorrect;
+    public int getMark() {
+        return mark;
     }
 
-    public void setIsCorrect(boolean isCorrect) {
-        this.isCorrect = isCorrect;
+    public void setMark(int mark) {
+        this.mark = mark;
     }
 
     public Question getQuestion() {
@@ -91,25 +91,24 @@ public class Answer {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Answer)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Answer answer = (Answer) o;
 
-        if (getId() != answer.getId()) return false;
-        if (isCorrect != answer.isCorrect) return false;
+        if (id != answer.id) return false;
+        if (mark != answer.mark) return false;
         if (isArchived != answer.isArchived) return false;
-        if (getAnswerText() != null ? !getAnswerText().equals(answer.getAnswerText()) : answer.getAnswerText() != null)
-            return false;
-        return !(getPicture() != null ? !getPicture().equals(answer.getPicture()) : answer.getPicture() != null);
+        if (answerText != null ? !answerText.equals(answer.answerText) : answer.answerText != null) return false;
+        return !(picture != null ? !picture.equals(answer.picture) : answer.picture != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getId() ^ (getId() >>> 32));
-        result = 31 * result + (getAnswerText() != null ? getAnswerText().hashCode() : 0);
-        result = 31 * result + (isCorrect ? 1 : 0);
-        result = 31 * result + (getPicture() != null ? getPicture().hashCode() : 0);
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (answerText != null ? answerText.hashCode() : 0);
+        result = 31 * result + mark;
+        result = 31 * result + (picture != null ? picture.hashCode() : 0);
         result = 31 * result + (isArchived ? 1 : 0);
         return result;
     }
@@ -119,9 +118,10 @@ public class Answer {
         return "Answer{" +
                 "id=" + id +
                 ", answerText='" + answerText + '\'' +
-                ", isCorrect=" + isCorrect +
+                ", mark=" + mark +
+                ", question=" + question +
                 ", picture='" + picture + '\'' +
-                ", archived=" + isArchived +
+                ", isArchived=" + isArchived +
                 '}';
     }
 }

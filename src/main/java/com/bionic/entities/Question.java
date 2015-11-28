@@ -22,8 +22,6 @@ public class Question {
     private boolean isMultichoice;
     @Column(name = "is_open", nullable = false)
     private boolean isOpen;
-    @Column(name = "mark", nullable = false)
-    private float mark;
     @Column(name = "picture")
     private String picture;
     @Column(name = "question")
@@ -39,11 +37,10 @@ public class Question {
     public Question() {
     }
 
-    public Question(boolean isMultichoice, boolean isOpen, float mark,
+    public Question(boolean isMultichoice, boolean isOpen,
                     String picture, String question, Test test, boolean isArchived, Set<Answer> answers) {
         this.isMultichoice = isMultichoice;
         this.isOpen = isOpen;
-        this.mark = mark;
         this.picture = picture;
         this.question = question;
         this.test = test;
@@ -74,14 +71,6 @@ public class Question {
 
     public void setIsOpen(boolean isOpen) {
         this.isOpen = isOpen;
-    }
-
-    public float getMark() {
-        return mark;
-    }
-
-    public void setMark(float mark) {
-        this.mark = mark;
     }
 
     public String getPicture() {
@@ -134,7 +123,6 @@ public class Question {
         if (getId() != question1.getId()) return false;
         if (isMultichoice != question1.isMultichoice) return false;
         if (isOpen != question1.isOpen) return false;
-        if (getMark() != question1.getMark()) return false;
         if (isArchived != question1.isArchived) return false;
         if (getPicture() != null ? !getPicture().equals(question1.getPicture()) : question1.getPicture() != null)
             return false;
@@ -149,7 +137,6 @@ public class Question {
         int result = (int) (getId() ^ (getId() >>> 32));
         result = 31 * result + (isMultichoice ? 1 : 0);
         result = 31 * result + (isOpen ? 1 : 0);
-        result = (int) (31 * result + getMark());
         result = 31 * result + (getPicture() != null ? getPicture().hashCode() : 0);
         result = 31 * result + (getQuestion() != null ? getQuestion().hashCode() : 0);
         result = 31 * result + (isArchived ? 1 : 0);
@@ -163,7 +150,6 @@ public class Question {
                 "id=" + id +
                 ", isMultichoice=" + isMultichoice +
                 ", isOpen=" + isOpen +
-                ", mark=" + mark +
                 ", picture='" + picture + '\'' +
                 ", question='" + question + '\'' +
                 ", archived=" + isArchived +

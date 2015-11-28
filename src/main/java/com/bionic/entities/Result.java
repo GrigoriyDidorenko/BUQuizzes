@@ -33,6 +33,8 @@ public class Result {
     private Date passTime;
     @Column(name = "feedback")
     private String feedback;
+    @Column(name = "permission")
+    private long permission;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -114,6 +116,14 @@ public class Result {
 
     public void setTest(Test test) {
         this.test = test;
+    }
+
+    public long getPermission() {
+        return permission;
+    }
+
+    public void setPermission(long permission) {
+        this.permission = permission;
     }
 
     @Override

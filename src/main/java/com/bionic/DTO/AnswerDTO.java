@@ -11,6 +11,15 @@ package com.bionic.DTO;
 public class AnswerDTO {
 
     private String answerText;
+    private int mark;
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
 
     public String getAnswerText() {
         return answerText;
@@ -27,6 +36,7 @@ public class AnswerDTO {
         this.answerText = answerText;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -34,12 +44,15 @@ public class AnswerDTO {
 
         AnswerDTO answerDTO = (AnswerDTO) o;
 
+        if (mark != answerDTO.mark) return false;
         return !(answerText != null ? !answerText.equals(answerDTO.answerText) : answerDTO.answerText != null);
 
     }
 
     @Override
     public int hashCode() {
-        return answerText != null ? answerText.hashCode() : 0;
+        int result = answerText != null ? answerText.hashCode() : 0;
+        result = 31 * result + mark;
+        return result;
     }
 }

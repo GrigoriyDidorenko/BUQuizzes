@@ -30,6 +30,8 @@ public class User {
     private String email;
     @Column(name = "password", nullable = false)
     private String password;
+    @Column(name="position")
+    private String position;
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
@@ -46,6 +48,14 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public long getId() {
