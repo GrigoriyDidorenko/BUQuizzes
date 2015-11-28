@@ -17,10 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by rondo104 on 25.11.2015.
@@ -46,75 +43,52 @@ public class TestService {
     public TestService() {
     }
 
-//    public String processingAnswers(Collection<UserAnswerDTO> answerDTOs, long resultId) {
-//        String markResult;
-//        try {
-//            Result result = resultDAO.find(resultId);
-//            Collection<UserAnswer> userAnswers = converter.convertUserAnswerDTOsToUserAnswers(answerDTOs, result);
-//            for (UserAnswer userAnswer : userAnswers) {
-//                userAnswerDAO.save(userAnswer);
-//            }
-//            result = calcResult(result, userAnswers);
-//            resultDAO.update(result);
-//            markResult= result.getMark() + " isChecked " + result.isChecked();
-//        } catch (Exception e) {
-//           markResult = e.getMessage();
-//        }
-//        return markResult;
-//    }
+    public String processingAnswers(ArrayList<UserAnswerDTO> answerDTOs, long resultId) {
+        String markResult;
+        try {
+            Result result = resultDAO.find(resultId);
+            ArrayList<UserAnswer> userAnswers = converter.convertUserAnswerDTOsToUserAnswers(answerDTOs, result);
+            for (UserAnswer userAnswer : userAnswers) {
+                userAnswerDAO.save(userAnswer);
+            }
+            result = calcResult(result, userAnswers);
+            resultDAO.update(result);
+            markResult = result.getMark() + " isChecked " + result.isChecked();
+        } catch (Exception e) {
+            markResult = e.getMessage();
+        }
+        return markResult;
+    }
 
-//    public Result calcResult(Result result, Collection<UserAnswer> userAnswers) {
-//        float mark = 0.0f;
-//        result.setIsChecked(true);
-//        for (Question question : result.getTest().getQuestions()) {
-//            if (question.getIsOpen()) {
-//                result.setIsChecked(false);
-//                continue;
-//            }
-//            if (!question.getIsMultichoice()) {
-//                for (UserAnswer userAnswer : userAnswers) {
-//                    if (userAnswer.getQuestionId() == question.getId()) {
-//                        for (Answer answer : question.getAnswers()) {
-//                            if (answer.getAnswerText().equals(userAnswer.getUserAnswer())) {
-//                                if (answer.getIsCorrect()) {
-//                                    mark += question.getMark();
-//                                    break;
-//                                } else {
-//                                    break;
-//                                }
-//                            }
-//                        }
-//                        break;
-//                    }
-//                }
-//            }
-//            if (question.getIsMultichoice()) {
-//                int numberUserCorrectAnswers = 0, numberIsCorrectInQuestion;
-//                for (UserAnswer selectUserAnswer : userAnswers) {
-//                    if (question.getId() == selectUserAnswer.getQuestionId()) {
-//                        for (Answer answer : question.getAnswers()) {
-//                            if (answer.getAnswerText().equals(selectUserAnswer.getUserAnswer())) {
-//                                if (answer.getIsCorrect()) {
-//                                    numberUserCorrectAnswers++;
-//                                } else {
-//                                    numberUserCorrectAnswers--;
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                numberIsCorrectInQuestion = 0;
-//                for (Answer answer : question.getAnswers()) {
-//                    if (answer.getIsCorrect()) numberIsCorrectInQuestion++;
-//                }
-//                numberUserCorrectAnswers = numberUserCorrectAnswers < 0 ? 0 : numberUserCorrectAnswers;
-//                mark += 1 / (float) numberIsCorrectInQuestion * (float) numberUserCorrectAnswers * question.getMark();
-//                mark = (float) (Math.round(mark * 100.0) / 100.0);
-//            }
-//        }
-//        result.setMark(mark);
-//        return result;
-//    }
+    public Result calcResult(Result result, ArrayList<UserAnswer> userAnswers) throws Exception {
+        int mark = 0;
+        result.setIsChecked(true);
+        int end = userAnswers.size();
+        for (int i = 0; i < end; i++) {
+            if(userAnswers.get(i) == null) continue;
+            Answer answer = answerDAO.find(userAnswers.get(i).getAnswerId());
+            if (!answer.getQuestion().getIsMultichoice() && !answer.getQuestion().getIsOpen()) {
+                mark += answer.getMark();
+                continue;
+            } else if (answer.getQuestion().getIsMultichoice()) {
+                int multiMark = answer.getMark();
+                long multieQuestionId = answer.getQuestion().getId();
+                for (int j = i + 1; j < end;j++) {
+                    if (userAnswers.get(j).getQuestionId() == multieQuestionId) {
+                      multiMark+=answerDAO.find(userAnswers.get(j).getAnswerId()).getMark();
+                      userAnswers.set(j, null);
+                    }
+                }
+                multiMark = multiMark < 0 ? 0 : multiMark;
+                mark += multiMark;
+                continue;
+            } else if (answer.getQuestion().getIsOpen()) {
+                result.setIsChecked(false);
+            }
+        }
+        result.setMark(mark);
+        return result;
+    }
 
     public String importTest(MultipartFile file) {
         HashSet<TestDTO> testDTOs;

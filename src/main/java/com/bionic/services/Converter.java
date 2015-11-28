@@ -52,11 +52,12 @@ public class Converter {
         userAnswer.setQuestionId(userAnswerDTO.getQuestionId());
         userAnswer.setResultId(result.getId());
         userAnswer.setUserAnswer(userAnswerDTO.getAnswerText());
+        userAnswer.setAnswerId(userAnswerDTO.getAnswerId());
         return userAnswer;
     }
 
-    public Collection<UserAnswer> convertUserAnswerDTOsToUserAnswers(Collection<UserAnswerDTO> userAnswerDTOs,Result result){
-        Collection<UserAnswer> userAnswers = new ArrayList<>();
+    public ArrayList<UserAnswer> convertUserAnswerDTOsToUserAnswers(ArrayList<UserAnswerDTO> userAnswerDTOs,Result result){
+        ArrayList<UserAnswer> userAnswers = new ArrayList<>();
         for(UserAnswerDTO userAnswerDTO : userAnswerDTOs){
             userAnswers.add(convertUserAnswerDTOToUserAnswer(userAnswerDTO,result));
         }

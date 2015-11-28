@@ -10,14 +10,16 @@ public class UserAnswerDTO {
 
     private String answerText;
     private long questionId;
+    private long answerId;
 
 
     public UserAnswerDTO() {
     }
 
-    public UserAnswerDTO(String answerText, long questionId) {
+    public UserAnswerDTO(String answerText, long questionId, long answerId) {
         this.answerText = answerText;
         this.questionId = questionId;
+        this.answerId = answerId;
     }
 
     public String getAnswerText() {
@@ -36,6 +38,14 @@ public class UserAnswerDTO {
         this.questionId = questionId;
     }
 
+    public long getAnswerId() {
+        return answerId;
+    }
+
+    public void setAnswerId(long answerId) {
+        this.answerId = answerId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,14 +54,14 @@ public class UserAnswerDTO {
         UserAnswerDTO that = (UserAnswerDTO) o;
 
         if (questionId != that.questionId) return false;
-        return !(answerText != null ? !answerText.equals(that.answerText) : that.answerText != null);
+        return answerId == that.answerId;
 
     }
 
     @Override
     public int hashCode() {
-        int result = answerText != null ? answerText.hashCode() : 0;
-        result = 31 * result + (int) (questionId ^ (questionId >>> 32));
+        int result = (int) (questionId ^ (questionId >>> 32));
+        result = 31 * result + (int) (answerId ^ (answerId >>> 32));
         return result;
     }
 }

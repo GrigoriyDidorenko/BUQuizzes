@@ -74,26 +74,26 @@ public class StudentController {
 
     }
 
-    /*Example JSON [ {   "answerText" : "1",   "questionId" : 1 },
-                     {   "answerText" : "1",   "questionId" : 2 } ,
-                     {   "answerText" : "11",   "questionId" : 2 }  ,
-                     {   "answerText" : "Me_Text",   "questionId" : 3 }  ]*/
-//    @RequestMapping(value = "/answers/{resultId}", method = RequestMethod.POST, produces = "application/json")
-//    public
-//    @ResponseBody
-//    String setAnswers(@RequestBody String JSONAnswers, @PathVariable("resultId") String resultId) {
-//        String result;
-//        try {
-//            TypeFactory typeFactory = objectMapper.getTypeFactory();
-//            List<UserAnswerDTO> userAnswerDTOs = objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(List.class, UserAnswerDTO.class));
-//            result = testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
-//        } catch (NumberFormatException e) {
-//            result = "resultId string cannot be parsed";
-//        } catch (IOException e) {
-//            result = "I/O problem";
-//        }
-//        return result;
-//    }
+    /*Example JSON [ {   "answerText" : " ",   "questionId" : 1 , "answerId" : 1 },
+                     {   "answerText" : " ",   "questionId" : 2 , "answerId" : 4} ,
+                     {   "answerText" : " ",   "questionId" : 2 , "answerId" : 6}  ,
+                     {   "answerText" : "Me_Text",   "questionId" : 3, "answerId" : 7 }  ]*/
+    @RequestMapping(value = "/answers/{resultId}", method = RequestMethod.POST, produces = "application/json")
+    public
+    @ResponseBody
+    String setAnswers(@RequestBody String JSONAnswers, @PathVariable("resultId") String resultId) {
+        String result;
+        try {
+            TypeFactory typeFactory = objectMapper.getTypeFactory();
+            ArrayList<UserAnswerDTO> userAnswerDTOs = objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(ArrayList.class, UserAnswerDTO.class));
+            result = testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
+        } catch (NumberFormatException e) {
+            result = "resultId string cannot be parsed";
+        } catch (IOException e) {
+            result = "I/O problem";
+        }
+        return result;
+    }
 
     @RequestMapping(value = "/upload", method = RequestMethod.GET)
     public
@@ -112,6 +112,5 @@ public class StudentController {
             return "You failed to upload";
         }
     }
-
 
 }
