@@ -10,8 +10,13 @@ import java.util.Set;
  * @date: 12.11.2015
  */
 @Entity
-@NamedQuery(name = "getAvailableTestsById",
-query = "SELECT u.tests FROM User u WHERE u.id = :id")
+@NamedQueries({
+        @NamedQuery(name = "getAvailableTestsById",
+                query = "SELECT u.tests FROM User u WHERE u.id = :id"),
+        @NamedQuery(name = "getUserByEmail",
+                query = "SELECT u FROM User u WHERE u.email=:email"),
+
+})
 @Table(catalog = "quizzes")
 public class User {
     @Id
