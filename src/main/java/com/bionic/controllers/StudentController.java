@@ -95,22 +95,4 @@ public class StudentController {
         return result;
     }
 
-    @RequestMapping(value = "/upload", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    String provideUploadInfo() {
-        return "You can upload a file by posting to this same URL.";
-    }
-
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    String handleFileUpload(@RequestParam("file") MultipartFile file) {
-        try {
-            return testService.importTest(file);
-        } catch (Exception e) {
-            return "You failed to upload";
-        }
-    }
-
 }

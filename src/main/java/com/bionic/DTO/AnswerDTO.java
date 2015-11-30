@@ -10,8 +10,17 @@ package com.bionic.DTO;
  */
 public class AnswerDTO {
 
+    private long id;
     private String answerText;
     private int mark;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public int getMark() {
         return mark;
@@ -32,10 +41,10 @@ public class AnswerDTO {
     public AnswerDTO() {
     }
 
-    public AnswerDTO(String answerText) {
+    public AnswerDTO(long id, String answerText) {
+        this.id = id;
         this.answerText = answerText;
     }
-
 
     @Override
     public boolean equals(Object o) {

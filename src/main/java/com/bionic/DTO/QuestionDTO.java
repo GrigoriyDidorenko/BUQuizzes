@@ -12,16 +12,26 @@ import java.util.Set;
  */
 public class QuestionDTO {
 
+    private long id;
+    private String question;
+    private Set<AnswerDTO> answers;
+
     public QuestionDTO() {
     }
 
-    public QuestionDTO(String question, Set<AnswerDTO> answers) {
+    public QuestionDTO(long id, String question, Set<AnswerDTO> answers) {
+        this.id = id;
         this.question = question;
         this.answers = answers;
     }
 
-    private String question;
-    private Set<AnswerDTO> answers;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getQuestion() {
         return question;

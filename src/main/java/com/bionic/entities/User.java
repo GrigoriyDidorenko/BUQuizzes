@@ -30,6 +30,8 @@ public class User {
     private String email;
     @Column(name = "password", nullable = false)
     private String password;
+    @Column(name = "cell")
+    private String cell;
     @Column(name="position")
     private String position;
     @ManyToOne
@@ -110,6 +112,15 @@ public class User {
         this.tests = tests;
     }
 
+    public String getCell() {
+        return cell;
+    }
+
+    public void setCell(String cell) {
+        this.cell = cell;
+    }
+
+
     @Override
     public String toString() {
         return "User{" +
@@ -117,6 +128,10 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", cell='" + cell + '\'' +
+                ", position='" + position + '\'' +
+                ", role=" + role +
                 '}';
     }
 

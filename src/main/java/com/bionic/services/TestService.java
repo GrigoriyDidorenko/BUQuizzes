@@ -117,7 +117,7 @@ public class TestService {
                     questions.add(question);
                 }
                 test.setQuestions(questions);
-                saveTest(test, questions, answers);
+                testDAO.save(test);
             }
         } catch (JsonGenerationException e) {
             e.printStackTrace();
@@ -130,12 +130,12 @@ public class TestService {
     }
 
     //TODO: Transaction Rollback
-    public void saveTest(Test test, HashSet<Question> questions, HashSet<Answer> answers) {
-        testDAO.save(test);
+/*    public void saveTest(Test test, HashSet<Question> questions, HashSet<Answer> answers) {
+
         for (Question question : questions) {
             questionDAO.save(question);
             for (Answer answer : answers)
                 answerDAO.save(answer);
         }
-    }
+    }*/
 }

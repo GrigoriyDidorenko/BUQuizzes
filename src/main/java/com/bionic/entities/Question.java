@@ -31,7 +31,7 @@ public class Question {
     private Test test;
     @Column(name = "archived", nullable = false)
     private boolean isArchived;
-    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question", fetch = FetchType.EAGER)
     private Set<Answer> answers;
 
     public Question() {

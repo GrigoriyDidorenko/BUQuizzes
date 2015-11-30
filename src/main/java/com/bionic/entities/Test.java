@@ -24,7 +24,7 @@ public class Test {
     private String testName;
     @Column(name = "archived", nullable = false)
     private boolean archived;
-    @OneToMany(mappedBy = "test", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "test", fetch = FetchType.EAGER)
     private Set<Question> questions;
     @ManyToMany(mappedBy = "tests")
     private Set<User> users;
