@@ -1,5 +1,8 @@
 package com.bionic.entities;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -42,7 +45,8 @@ public class User {
     @JoinTable(name = "result", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "test_id"))
     private Set<Test> tests;
 
-
+    @Autowired
+    Md5PasswordEncoder md5PasswordEncoder;
     public User() {
     }
 
@@ -93,7 +97,8 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+
+        this.password = md5PasswordEncoder.encodePassword(password,null);
     }
 
     public Role getRole() {
