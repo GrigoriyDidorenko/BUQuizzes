@@ -22,10 +22,17 @@ public class AdministratorService {
     private UserDAO userDAO;
     @Autowired
     private RoleDAO roleDAO;
+    @Autowired
+    private OtpGenerator generator;
+    @Autowired
+    private MailManager mailManager;
 
     public void addUser(User user){
         try {
+            user.setPassword(generator.generateToken());
             user.setRole(roleDAO.find(user.getRole().getId()));
+            mailManager.send("grigoriy.didorenko@gmail.com","test","Hello "+user.getFirstName()+
+                    ", your new password:"+"\n"+user.getPassword()+"\nit's OTP, please change it");
             userDAO.save(user);
         } catch (Exception e){
             e.printStackTrace();

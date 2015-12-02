@@ -15,14 +15,18 @@ public class QuestionDTO {
     private long id;
     private String question;
     private Set<AnswerDTO> answers;
+    private boolean isMultichoice;
+    private boolean isOpen;
 
     public QuestionDTO() {
     }
 
-    public QuestionDTO(long id, String question, Set<AnswerDTO> answers) {
+    public QuestionDTO(long id, String question, Set<AnswerDTO> answers, boolean isMultichoice, boolean isOpen) {
         this.id = id;
         this.question = question;
         this.answers = answers;
+        this.isMultichoice = isMultichoice;
+        this.isOpen = isOpen;
     }
 
     public long getId() {
@@ -49,6 +53,23 @@ public class QuestionDTO {
         this.answers = answers;
     }
 
+    public boolean isMultichoice() {
+        return isMultichoice;
+    }
+
+    public void setIsMultichoice(boolean isMultichoice) {
+        this.isMultichoice = isMultichoice;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(boolean isOpen) {
+        this.isOpen = isOpen;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,15 +77,21 @@ public class QuestionDTO {
 
         QuestionDTO that = (QuestionDTO) o;
 
+        if (id != that.id) return false;
+        if (isMultichoice != that.isMultichoice) return false;
+        if (isOpen != that.isOpen) return false;
         if (!question.equals(that.question)) return false;
-        return answers.equals(that.answers);
+        return !(answers != null ? !answers.equals(that.answers) : that.answers != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = question.hashCode();
-        result = 31 * result + answers.hashCode();
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + question.hashCode();
+        result = 31 * result + (answers != null ? answers.hashCode() : 0);
+        result = 31 * result + (isMultichoice ? 1 : 0);
+        result = 31 * result + (isOpen ? 1 : 0);
         return result;
     }
 }

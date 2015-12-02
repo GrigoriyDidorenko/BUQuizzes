@@ -16,6 +16,7 @@ import java.util.Date;
         @NamedQuery(name = "getAvailableTestsNames",
         query = "SELECT test.testName, test.duration FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId")
 })
+@NamedNativeQuery(name = "getResultByIds", query = "SELECT result.id FROM Result result WHERE result.test_id = :testId AND result.user_id = :userId ")
 @Table(catalog = "quizzes")
 public class Result {
     @Id

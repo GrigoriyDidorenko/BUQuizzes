@@ -35,11 +35,15 @@ public class StudentService {
         return null;
     }
 
+    //TODO CHECK THIS METHOD
     public TestDTO getCurrentTest(String idStr, String testIdStr) {
         try {
             Test test = resultDAO.getCurrentTest(getLongId(idStr),
                     getLongId(testIdStr));
-            return Converter.convertTestToDTO(test);
+            TestDTO testDTO = Converter.convertTestToDTO(test);
+            testDTO.setResultId(resultDAO.getResultByIds(getLongId(idStr),
+                    getLongId(testIdStr)).longValue());
+            return testDTO;
         } catch (Exception e) {
             e.printStackTrace();
         }

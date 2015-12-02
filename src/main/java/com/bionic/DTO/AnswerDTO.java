@@ -46,6 +46,7 @@ public class AnswerDTO {
         this.answerText = answerText;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,14 +54,16 @@ public class AnswerDTO {
 
         AnswerDTO answerDTO = (AnswerDTO) o;
 
+        if (id != answerDTO.id) return false;
         if (mark != answerDTO.mark) return false;
-        return !(answerText != null ? !answerText.equals(answerDTO.answerText) : answerDTO.answerText != null);
+        return answerText.equals(answerDTO.answerText);
 
     }
 
     @Override
     public int hashCode() {
-        int result = answerText != null ? answerText.hashCode() : 0;
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + answerText.hashCode();
         result = 31 * result + mark;
         return result;
     }

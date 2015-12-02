@@ -82,4 +82,35 @@ public class UserDTO {
     public void setRole(int role) {
         this.role = role;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserDTO userDTO = (UserDTO) o;
+
+        if (id != userDTO.id) return false;
+        if (role != userDTO.role) return false;
+        if (!firstName.equals(userDTO.firstName)) return false;
+        if (!lastName.equals(userDTO.lastName)) return false;
+        if (!email.equals(userDTO.email)) return false;
+        if (!password.equals(userDTO.password)) return false;
+        if (cell != null ? !cell.equals(userDTO.cell) : userDTO.cell != null) return false;
+        return !(position != null ? !position.equals(userDTO.position) : userDTO.position != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + (cell != null ? cell.hashCode() : 0);
+        result = 31 * result + (position != null ? position.hashCode() : 0);
+        result = 31 * result + role;
+        return result;
+    }
 }

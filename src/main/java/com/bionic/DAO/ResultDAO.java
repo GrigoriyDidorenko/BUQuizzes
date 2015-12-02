@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -46,5 +47,12 @@ public class ResultDAO extends AbstractDAO<Result> {
             list.add(testDTO);
         }
         return list;
+    }
+
+    public BigInteger getResultByIds(long userId, long testId){
+        Query query = em.createNamedQuery("getResultByIds");
+        query.setParameter("testId", testId);
+        query.setParameter("userId", userId);
+        return (BigInteger)query.getSingleResult();
     }
 }

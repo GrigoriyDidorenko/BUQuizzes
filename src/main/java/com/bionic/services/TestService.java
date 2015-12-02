@@ -65,7 +65,7 @@ public class TestService {
         result.setIsChecked(true);
         int end = userAnswers.size();
         for (int i = 0; i < end; i++) {
-            if(userAnswers.get(i) == null) continue;
+            if (userAnswers.get(i) == null) continue;
             Answer answer = answerDAO.find(userAnswers.get(i).getAnswerId());
             if (!answer.getQuestion().getIsMultichoice() && !answer.getQuestion().getIsOpen()) {
                 mark += answer.getMark();
@@ -73,10 +73,10 @@ public class TestService {
             } else if (answer.getQuestion().getIsMultichoice()) {
                 int multiMark = answer.getMark();
                 long multieQuestionId = answer.getQuestion().getId();
-                for (int j = i + 1; j < end;j++) {
+                for (int j = i + 1; j < end; j++) {
                     if (userAnswers.get(j).getQuestionId() == multieQuestionId) {
-                      multiMark+=answerDAO.find(userAnswers.get(j).getAnswerId()).getMark();
-                      userAnswers.set(j, null);
+                        multiMark += answerDAO.find(userAnswers.get(j).getAnswerId()).getMark();
+                        userAnswers.set(j, null);
                     }
                 }
                 multiMark = multiMark < 0 ? 0 : multiMark;
@@ -97,21 +97,37 @@ public class TestService {
                     new TypeReference<Set<TestDTO>>() {
                     });
             for (TestDTO testDTO : testDTOs) {
-                HashSet<Answer> answers = new HashSet<>();
                 HashSet<Question> questions = new HashSet<>();
                 Test test = new Test();
-                Question question = new Question();
-                Answer answer = new Answer();
                 test.setDuration(testDTO.getDuration());
                 test.setTestName(testDTO.getTestName());
+                if(testDTO.getQuestions()!=null)
                 for (QuestionDTO questionDTO : testDTO.getQuestions()) {
+                    HashSet<Answer> answers = new HashSet<>();
+                    Question question = new Question();
                     question.setTest(test);
                     question.setQuestion(questionDTO.getQuestion());
+                    if(questionDTO.getAnswers()!=null)
                     for (AnswerDTO answerDTO : questionDTO.getAnswers()) {
+                        Answer answer = new Answer();
                         answer.setAnswerText(answerDTO.getAnswerText());
                         answer.setQuestion(question);
                         answer.setMark(answerDTO.getMark());
                         answers.add(answer);
+                    }
+                    switch (answers.size()) {
+                        case 0:
+                            question.setIsOpen(true);
+                            question.setIsMultichoice(false);
+                            break;
+                        case 1:
+                            question.setIsOpen(false);
+                            question.setIsMultichoice(false);
+                            break;
+                        default:
+                            question.setIsOpen(false);
+                            question.setIsMultichoice(true);
+                            break;
                     }
                     question.setAnswers(answers);
                     questions.add(question);
@@ -122,20 +138,10 @@ public class TestService {
         } catch (JsonGenerationException e) {
             e.printStackTrace();
         } catch (JsonMappingException e) {
-            e.printStackTrace();
+            return "Invalid format";
         } catch (IOException e) {
             e.printStackTrace();
         }
         return "successful";
     }
-
-    //TODO: Transaction Rollback
-/*    public void saveTest(Test test, HashSet<Question> questions, HashSet<Answer> answers) {
-
-        for (Question question : questions) {
-            questionDAO.save(question);
-            for (Answer answer : answers)
-                answerDAO.save(answer);
-        }
-    }*/
 }

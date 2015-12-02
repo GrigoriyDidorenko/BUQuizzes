@@ -10,11 +10,11 @@ xmlns:th="http://www.thymeleaf.org">
     Имя: <input type="text" name="firstName" th:field="*{firstName}"><br />
     Фамилия: <input type="text" name="lastName" th:field="*{lastName}"><br />
     Email: <input type="text" name="email" th:field="*{email}"><br />
-    Password:  <input type="text" name="password" th:field="*{password}"><br />
+    Телефон:  <input type="text" name="cell" th:field="*{cell}"><br />
     Должность: <input type="text" name="position" th:field="*{position}">
     Уровень доступа: <select name="role.id" size="2" th:field="*{role.id}">
-    <option value="1">Администратор</option>
-    <option value="2">Тренер</option>
+    <option value="4">Администратор</option>
+    <option value="5">Тренер</option>
 </select>
     <br /> <br /> <input type="submit" value="Upload">
 </form>

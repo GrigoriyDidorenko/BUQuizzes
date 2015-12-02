@@ -32,7 +32,7 @@ public class TrainerController {
         try {
             return testService.importTest(file);
         } catch (Exception e) {
-            return "You failed to upload, check the format";
+            return "Duplicate row in DB";
         }
     }
 

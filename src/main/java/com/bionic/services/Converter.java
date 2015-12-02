@@ -28,7 +28,8 @@ public class Converter {
                 answerDTOs.add(new AnswerDTO(answer.getId(), answer.getAnswerText()));
             }
             if (!alreadyExecuted) answerDTOs = randomizeAnswers(answerDTOs);
-            QuestionDTO questionDTO = new QuestionDTO(question.getId(), question.getQuestion(), answerDTOs);
+            QuestionDTO questionDTO = new QuestionDTO(question.getId(), question.getQuestion(),
+                    answerDTOs, question.getIsMultichoice(), question.getIsOpen());
             questionDTOs.add(questionDTO);
         }
         if (!alreadyExecuted) questionDTOs = randomizeQuestions(questionDTOs);
