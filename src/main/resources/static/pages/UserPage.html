@@ -15,13 +15,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/myfunctions.js"></script>
+    <script type="text/javascript" src="../materialize-src/js/bin/materialize.min.js"></script>
+
 </head>
 <body>
-<!--Import jQuery before materialize.js-->
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="../materialize-src/js/bin/materialize.min.js"></script>
-
 <header>
     <div class="logo">
         <div class="container">
@@ -53,17 +54,31 @@
             </div>
         </div>
         <div class="row">
-            <div class="col s4">
+            <div class="col s12">
                 <h3>Доступні тести:</h3>
-                <table id="users">
-                    <tr><td>Id</td><td>Имя</td><td>Возраст</td><tr>
+                <table class="striped centered avaliableTests">
+                    <thead>
+                    <tr>
+                        <th>Назва тесту</th>
+                        <th>Тривалість</th>
+                        <th></th>
+                    </tr>
+                    </thead>
                 </table>
-                <!--<div class="collection">-->
-                    <!--<a href="#!" class="collection-item active">Alvin</a>-->
-                    <!--<a href="#!" class="collection-item">Alvin</a>-->
-                    <!--<a href="#!" class="collection-item">Alvin</a>-->
-                    <!--<a href="#!" class="collection-item">Alvin</a>-->
-                <!--</div>-->
+            </div>
+            <div class="col s12 results">
+                <h3>Результати:</h3>
+                <table class="striped centered resultsTests">
+                    <thead>
+                    <tr>
+                        <th>Назва тесту</th>
+                        <th>Дата проходження</th>
+                        <th>Кількість запитань</th>
+                        <th>Кількість правильних відповідей</th>
+                        <th>Бали</th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
@@ -109,22 +124,5 @@
         </div>
     </div>
 </footer>
-<script src="../js/owl.carousel.min.js"></script>
-<script>
-    $(document).ready(function($) {
-        $("#owl-example").owlCarousel({
-            autoPlay: 3000
-        });
-    });
-
-    $(function(){
-        $.getJSON('../js/users.json', function(data) {
-            for(var i=0;i<data.users.length;i++){
-                $('#users').append('<tr><td>' + data.users[i].id + '</td><td>' + data.users[i].name +
-                        '</td><td>' + data.users[i].age + '</td><tr>');
-            }
-        });
-    });
-</script>
 </body>
 </html>
