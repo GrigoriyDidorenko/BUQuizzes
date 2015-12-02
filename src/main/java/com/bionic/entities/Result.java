@@ -71,7 +71,7 @@ public class Result {
         this.submited = submited;
     }
 
-    public float getMark() {
+    public int  getMark() {
         return mark;
     }
 

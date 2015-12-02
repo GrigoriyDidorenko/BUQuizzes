@@ -1,10 +1,7 @@
 package com.bionic.services;
 
 import com.bionic.DAO.*;
-import com.bionic.DTO.AnswerDTO;
-import com.bionic.DTO.QuestionDTO;
-import com.bionic.DTO.TestDTO;
-import com.bionic.DTO.UserAnswerDTO;
+import com.bionic.DTO.*;
 import com.bionic.entities.*;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -43,8 +40,8 @@ public class TestService {
     public TestService() {
     }
 
-    public String processingAnswers(ArrayList<UserAnswerDTO> answerDTOs, long resultId) {
-        String markResult;
+    public ResultDTO processingAnswers(ArrayList<UserAnswerDTO> answerDTOs, long resultId) {
+        ResultDTO resultDTO = null;
         try {
             Result result = resultDAO.find(resultId);
             ArrayList<UserAnswer> userAnswers = converter.convertUserAnswerDTOsToUserAnswers(answerDTOs, result);
@@ -53,37 +50,51 @@ public class TestService {
             }
             result = calcResult(result, userAnswers);
             resultDAO.update(result);
-            markResult = result.getMark() + " isChecked " + result.isChecked();
+            resultDTO = new ResultDTO(result.getMark(),String.valueOf(result.isChecked()));
         } catch (Exception e) {
-            markResult = e.getMessage();
+            resultDTO.setCheckStatus(e.getMessage());
         }
-        return markResult;
+        return resultDTO;
     }
 
     public Result calcResult(Result result, ArrayList<UserAnswer> userAnswers) throws Exception {
         int mark = 0;
         result.setIsChecked(true);
-        int end = userAnswers.size();
-        for (int i = 0; i < end; i++) {
-            if (userAnswers.get(i) == null) continue;
-            Answer answer = answerDAO.find(userAnswers.get(i).getAnswerId());
-            if (!answer.getQuestion().getIsMultichoice() && !answer.getQuestion().getIsOpen()) {
-                mark += answer.getMark();
+        for (Question question : result.getTest().getQuestions()) {
+            if (question.getIsOpen()) {
+                result.setIsChecked(false);
                 continue;
-            } else if (answer.getQuestion().getIsMultichoice()) {
-                int multiMark = answer.getMark();
-                long multieQuestionId = answer.getQuestion().getId();
-                for (int j = i + 1; j < end; j++) {
-                    if (userAnswers.get(j).getQuestionId() == multieQuestionId) {
-                        multiMark += answerDAO.find(userAnswers.get(j).getAnswerId()).getMark();
-                        userAnswers.set(j, null);
+            }
+            if (!question.getIsMultichoice()) {
+                boolean flag = false;
+                for (UserAnswer userAnswer : userAnswers) {
+                    if (userAnswer.getQuestionId() == question.getId()) {
+                        for (Answer answer : question.getAnswers()) {
+                            if (answer.getId() == userAnswer.getAnswerId()) {
+                                mark += answer.getMark();
+                                flag = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (flag) break;
+                }
+                continue;
+            }
+            if (question.getIsMultichoice()) {
+                int preMark = 0;
+                for (UserAnswer userAnswer : userAnswers) {
+                    if (userAnswer.getQuestionId() == question.getId()) {
+                        for (Answer answer : question.getAnswers()) {
+                            if (answer.getId() == userAnswer.getAnswerId()) {
+                                preMark += answer.getMark();
+                            }
+                        }
                     }
                 }
-                multiMark = multiMark < 0 ? 0 : multiMark;
-                mark += multiMark;
+                preMark = preMark < 0 ? 0 : preMark;
+                mark += preMark;
                 continue;
-            } else if (answer.getQuestion().getIsOpen()) {
-                result.setIsChecked(false);
             }
         }
         result.setMark(mark);
@@ -101,37 +112,37 @@ public class TestService {
                 Test test = new Test();
                 test.setDuration(testDTO.getDuration());
                 test.setTestName(testDTO.getTestName());
-                if(testDTO.getQuestions()!=null)
-                for (QuestionDTO questionDTO : testDTO.getQuestions()) {
-                    HashSet<Answer> answers = new HashSet<>();
-                    Question question = new Question();
-                    question.setTest(test);
-                    question.setQuestion(questionDTO.getQuestion());
-                    if(questionDTO.getAnswers()!=null)
-                    for (AnswerDTO answerDTO : questionDTO.getAnswers()) {
-                        Answer answer = new Answer();
-                        answer.setAnswerText(answerDTO.getAnswerText());
-                        answer.setQuestion(question);
-                        answer.setMark(answerDTO.getMark());
-                        answers.add(answer);
+                if (testDTO.getQuestions() != null)
+                    for (QuestionDTO questionDTO : testDTO.getQuestions()) {
+                        HashSet<Answer> answers = new HashSet<>();
+                        Question question = new Question();
+                        question.setTest(test);
+                        question.setQuestion(questionDTO.getQuestion());
+                        if (questionDTO.getAnswers() != null)
+                            for (AnswerDTO answerDTO : questionDTO.getAnswers()) {
+                                Answer answer = new Answer();
+                                answer.setAnswerText(answerDTO.getAnswerText());
+                                answer.setQuestion(question);
+                                answer.setMark(answerDTO.getMark());
+                                answers.add(answer);
+                            }
+                        switch (answers.size()) {
+                            case 0:
+                                question.setIsOpen(true);
+                                question.setIsMultichoice(false);
+                                break;
+                            case 1:
+                                question.setIsOpen(false);
+                                question.setIsMultichoice(false);
+                                break;
+                            default:
+                                question.setIsOpen(false);
+                                question.setIsMultichoice(true);
+                                break;
+                        }
+                        question.setAnswers(answers);
+                        questions.add(question);
                     }
-                    switch (answers.size()) {
-                        case 0:
-                            question.setIsOpen(true);
-                            question.setIsMultichoice(false);
-                            break;
-                        case 1:
-                            question.setIsOpen(false);
-                            question.setIsMultichoice(false);
-                            break;
-                        default:
-                            question.setIsOpen(false);
-                            question.setIsMultichoice(true);
-                            break;
-                    }
-                    question.setAnswers(answers);
-                    questions.add(question);
-                }
                 test.setQuestions(questions);
                 testDAO.save(test);
             }

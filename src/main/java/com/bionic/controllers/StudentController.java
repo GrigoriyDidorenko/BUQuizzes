@@ -1,10 +1,10 @@
 package com.bionic.controllers;
 
+import com.bionic.DTO.ResultDTO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.services.StudentService;
 import com.bionic.services.TestService;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -74,25 +69,27 @@ public class StudentController {
 
     }
 
-    /*Example JSON [ {   "answerText" : " ",   "questionId" : 1 , "answerId" : 1 },
-                     {   "answerText" : " ",   "questionId" : 2 , "answerId" : 4} ,
-                     {   "answerText" : " ",   "questionId" : 2 , "answerId" : 6}  ,
-                     {   "answerText" : "Me_Text",   "questionId" : 3, "answerId" : 7 }  ]*/
+    /*Example JSON [ {     "questionId" : 1 , "answerId" : 1 },
+                     {     "questionId" : 2 , "answerId" : 4} ,
+                     {     "questionId" : 2 , "answerId" : 6}  ,
+                     {      "answerText" : "Me_Text",   "questionId" : 3, "answerId" : 7 }  ]*/
     @RequestMapping(value = "/answers/{resultId}", method = RequestMethod.POST, produces = "application/json")
     public
     @ResponseBody
-    String setAnswers(@RequestBody String JSONAnswers, @PathVariable("resultId") String resultId) {
-        String result;
+    ResultDTO setAnswers(@RequestBody String JSONAnswers, @PathVariable("resultId") String resultId) {
+        ResultDTO resultDTO = null;
         try {
             TypeFactory typeFactory = objectMapper.getTypeFactory();
             ArrayList<UserAnswerDTO> userAnswerDTOs = objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(ArrayList.class, UserAnswerDTO.class));
-            result = testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
+            resultDTO = testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
         } catch (NumberFormatException e) {
-            result = "resultId string cannot be parsed";
+            resultDTO.setCheckStatus("resultId string cannot be parsed");
         } catch (IOException e) {
-            result = "I/O problem";
+            resultDTO.setCheckStatus("I/O problem");
+        } catch (Exception e){
+            resultDTO.setCheckStatus(e.getMessage());
         }
-        return result;
+        return resultDTO;
     }
 
 }

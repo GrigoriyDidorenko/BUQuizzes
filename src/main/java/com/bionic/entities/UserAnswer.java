@@ -15,7 +15,7 @@ public class UserAnswer {
     private long id;
     @Column(name = "resultId", nullable = false)
     private long resultId;
-    @Column(name = "userAnswer", nullable = false)
+    @Column(name = "userAnswer", nullable = true)
     private String userAnswer;
     @Column(name = "questionId", nullable = false)
     private long questionId;
