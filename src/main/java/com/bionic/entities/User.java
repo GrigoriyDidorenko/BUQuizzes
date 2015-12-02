@@ -45,8 +45,6 @@ public class User {
     @JoinTable(name = "result", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "test_id"))
     private Set<Test> tests;
 
-    @Autowired
-    Md5PasswordEncoder md5PasswordEncoder;
     public User() {
     }
 
@@ -98,7 +96,7 @@ public class User {
 
     public void setPassword(String password) {
 
-        this.password = md5PasswordEncoder.encodePassword(password,null);
+        this.password = password;
     }
 
     public Role getRole() {
