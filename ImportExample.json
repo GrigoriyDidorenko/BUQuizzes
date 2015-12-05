@@ -1,0 +1,21 @@
+[ {
+  "testName" : "C#",
+  "duration" : 30,
+  "questionDTOs" : [ {
+    "question" : "Which programming language is the best?",
+    "answerDTOs" : [ {
+      "answerText" : "Java",
+      "mark" : 3
+    } ]
+  } ]
+}, {
+  "testName" : "Java",
+  "duration" : 30,
+  "questionDTOs" : [ {
+    "question" : "Which programming language is the best?",
+    "answerDTOs" : [ {
+      "answerText" : "Java",
+      "mark" : 3
+    } ]
+  } ]
+} ]

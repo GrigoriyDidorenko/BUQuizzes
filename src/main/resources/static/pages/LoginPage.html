@@ -47,25 +47,20 @@
     <div class="container">
         <div class="row">
             <div class="col s12 right-side">
-                <div th:if="${param.error}">
-                    Invalid username and password.
-                </div>
-                <div th:if="${param.logout}">
-                    You have been logged out.
-                </div>
                 <form th:action="@{/login}" method="post">
                 <div class="email">
                     <label>Email</label>
-                    <input placeholder="Email" type="email">
+                    <input placeholder="Email" type="email" name="email">
                 </div>
                 <div class="password">
                     <label>Пароль</label>
-                    <input placeholder="Пароль" type="password">
+                    <input placeholder="Пароль" type="password" name="password">
+                </div>
+
+                <div class="but">
+                    <button class="enter-but" type="submit">увійти</button>
                 </div>
                 </form>
-                <div class="but">
-                    <button class="enter-but">увійти</button>
-                </div>
             </div>
         </div>
     </div>

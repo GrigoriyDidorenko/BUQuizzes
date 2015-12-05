@@ -10,7 +10,25 @@ package com.bionic.DTO;
  */
 public class AnswerDTO {
 
+    private long id;
     private String answerText;
+    private int mark;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
 
     public String getAnswerText() {
         return answerText;
@@ -23,9 +41,11 @@ public class AnswerDTO {
     public AnswerDTO() {
     }
 
-    public AnswerDTO(String answerText) {
+    public AnswerDTO(long id, String answerText) {
+        this.id = id;
         this.answerText = answerText;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -34,12 +54,17 @@ public class AnswerDTO {
 
         AnswerDTO answerDTO = (AnswerDTO) o;
 
-        return !(answerText != null ? !answerText.equals(answerDTO.answerText) : answerDTO.answerText != null);
+        if (id != answerDTO.id) return false;
+        if (mark != answerDTO.mark) return false;
+        return answerText.equals(answerDTO.answerText);
 
     }
 
     @Override
     public int hashCode() {
-        return answerText != null ? answerText.hashCode() : 0;
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + answerText.hashCode();
+        result = 31 * result + mark;
+        return result;
     }
 }

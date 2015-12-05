@@ -1,8 +1,7 @@
 package com.bionic.DAO;
 
-
-import com.bionic.model.Test;
-import com.bionic.model.User;
+import com.bionic.entities.Test;
+import com.bionic.entities.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +26,11 @@ public class UserDAO extends AbstractDAO<User> {
         Query query = em.createNamedQuery("getAvailableTestsById");
         query.setParameter("id", id);
         return (List<Test>)query.getResultList();
+    }
+    public User getUserByEmail(String email){
+        Query query=em.createNamedQuery("getUserByEmail");
+        query.setParameter("email", email);
+        return (User)query.getSingleResult();
     }
 
 }

@@ -2,11 +2,12 @@ package com.bionic.services;
 
 
 import com.bionic.DAO.ResultDAO;
-import com.bionic.DAO.UserDAO;
 import com.bionic.DTO.TestDTO;
+import com.bionic.entities.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -15,35 +16,38 @@ import java.util.Set;
  * @author: Balitsky Alexandr & Grifan
  * @date: 12.11.2015
  */
-@Component
+@Service
 public class StudentService {
 
     public StudentService() {
     }
 
     @Autowired
-    private UserDAO userDAO;
-    @Autowired
-    private ResultDAO resultDAO;
+  private ResultDAO resultDAO;
 
-    public Set<TestDTO> getAvailableTests(String idStr) {
-        Set<TestDTO> testDTOs = null;
+    public Set<TestDTO> getAvailableTestsNames(String idStr) {
         try {
-            testDTOs = Converter.convertAvailableTestsToDTO(userDAO.getAvailableTestsById(getLongId(idStr)));
+            Set<TestDTO> testDTOs = new HashSet<>(resultDAO.getAvailableTestsNames(getLongId(idStr)));
+            return testDTOs;
         } catch (Exception e) {
-            System.out.println();
+            e.printStackTrace();
         }
-        return testDTOs;
+        return null;
     }
 
-    public Set<TestDTO> getTestsToDo(String idStr) {
-        Set<TestDTO> testDTOs = null;
+    //TODO CHECK THIS METHOD
+    public TestDTO getCurrentTest(String idStr, String testIdStr) {
         try {
-            testDTOs = Converter.convertTestsToDTO(userDAO.getAvailableTestsById(getLongId(idStr)));
+            Test test = resultDAO.getCurrentTest(getLongId(idStr),
+                    getLongId(testIdStr));
+            TestDTO testDTO = Converter.convertTestToDTO(test);
+            testDTO.setResultId(resultDAO.getResultByIds(getLongId(idStr),
+                    getLongId(testIdStr)).longValue());
+            return testDTO;
         } catch (Exception e) {
-            System.out.println();
+            e.printStackTrace();
         }
-        return testDTOs;
+        return null;
     }
 
     public long getLongId(String idStr) {
@@ -56,16 +60,6 @@ public class StudentService {
         if (id == 0)
             throw new RuntimeException("invalid id");
         return id;
-    }
-
-    public TestDTO getCurrentTest(String idStr, String testIdStr) {
-        try {
-            return Converter.convertTestToDTO(resultDAO.getCurrentTest(getLongId(idStr),
-                    getLongId(testIdStr)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 

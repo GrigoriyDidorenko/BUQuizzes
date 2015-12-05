@@ -23,7 +23,7 @@
 $base_font: PFB;
 $font_thin: PFBthin;
 $main_color: #2dadf0;
-$white_color: #ffffff;
+$white_color: white;
 $dark_gray_color: rgb(109, 110, 113);
 $light_gray_color: #ccc;
 $uppertext: uppercase;
@@ -48,6 +48,24 @@ body{
 }
 main {
   flex: 1 0 auto;
+}
+th{
+  color: $main_color;
+  font-weight: normal;
+  text-shadow: none;
+}
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+  position: relative;
+  left: 0;
+  visibility: visible;
+}
+[type="radio"]:not(:checked), [type="radio"]:checked {
+  position: relative;
+  left: 0;
+  visibility: visible;
+}
+.results{
+  margin-top: 30px;
 }
 .logo{
   @extend %marking;
@@ -77,7 +95,7 @@ main {
 }
 .page-main{
   margin-top: 70px;
-  margin-bottom: 70px;
+  margin-bottom: 100px;
 }
 .user-main{
   margin-top: 20px;
@@ -163,14 +181,51 @@ label {
        transition: 0.3s;
      }
 }
+.submit-but{
+  margin: 0;
+  width: 80px;
+  height: 30px;
+  background-color: $main_color;
+  color: $white_color;
+  font-size: 15px;
+  text-transform: $uppertext;
+  border-radius: 5px;
+  border: 2px solid $main_color;
+  font-family: $font_thin;
+  &:hover{
+    background-color: $white_color;
+    color: $main_color;
+    border: 2px solid $main_color;
+    transition: 0.3s;
+  }
+}
 .out-but{
   margin: 23px 0 0 0;
-  background-color: $white_color;
-  color: $main_color;
-  border: 1px solid $main_color;
+  background-color: $main_color;
+  color: $white_color;
+  border: 2px solid $white_color;
   width: 80px;
   height: 30px;
   font-size: 15px;
+  text-transform: $uppertext;
+  border-radius: 5px;
+  &:hover{
+    background-color: $white_color;
+    color: $main_color;
+    border: 2px solid $white_color;
+    transition: 0.3s;
+  }
+}
+.start-test-btn{
+  margin: 0 auto;
+  background-color: $white_color;
+  color: $main_color;
+  border: 2px solid $main_color;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+  padding: 5px 5px 2.5px 5px;
+  font-size: 12px;
   text-transform: $uppertext;
   border-radius: 5px;
   &:hover{
@@ -253,4 +308,8 @@ label {
   font-size: 12px;
   line-height: 12px;
   color: $dark_gray_color;
+}
+#question{
+  margin-bottom: 20px;
+  background-color: red;
 }

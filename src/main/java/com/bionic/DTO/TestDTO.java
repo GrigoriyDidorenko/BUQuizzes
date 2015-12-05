@@ -17,6 +17,7 @@ public class TestDTO {
     private String testName;
     private int duration;
     private Set<QuestionDTO> questions;
+    private long resultId;
 
     public TestDTO() {
     }
@@ -31,6 +32,14 @@ public class TestDTO {
         this.duration = duration;
         this.testName = testName;
         this.questions = questions;
+    }
+
+    public long getResultId() {
+        return resultId;
+    }
+
+    public void setResultId(long resultId) {
+        this.resultId = resultId;
     }
 
     public TestDTO(String testName) {
@@ -72,11 +81,19 @@ public class TestDTO {
 
         TestDTO testDTO = (TestDTO) o;
 
+        if (id != testDTO.id) return false;
         if (duration != testDTO.duration) return false;
         if (!testName.equals(testDTO.testName)) return false;
-        return questions.equals(testDTO.questions);
+        return !(questions != null ? !questions.equals(testDTO.questions) : testDTO.questions != null);
 
     }
 
-
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + testName.hashCode();
+        result = 31 * result + duration;
+        result = 31 * result + (questions != null ? questions.hashCode() : 0);
+        return result;
+    }
 }
