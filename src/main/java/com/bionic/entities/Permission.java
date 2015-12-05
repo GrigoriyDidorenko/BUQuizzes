@@ -6,21 +6,17 @@ package com.bionic.entities;
  * class:
  *
  * @author: Grigoriy Didorenko
- * @date: 05.12.2015
+ * @date: 06.12.2015
  */
-public enum Role {
-    ADMINISTRATOR(1, "administrator"),
-    TRAINER(2, "trainer"),
-    STUDENT(3, "student"),
-    RESTRICTED_ADMINISTRATOR(4, "restricted_administrator"),
-    RESTRICTED_TRAINER(5, "restricted_trainer");
+public enum Permission {
+    PASS_THE_TEST(1,"passTheTest"), EDIT_THE_TEST(2,"editTheTest");
 
     private long id;
     private String name;
 
-    private Role(long id, String name) {
-        this.name = name;
+    private Permission(int id, String name) {
         this.id = id;
+        this.name = name;
     }
 
     public long getId() {

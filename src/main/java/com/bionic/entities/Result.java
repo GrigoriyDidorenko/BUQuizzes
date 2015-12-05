@@ -35,8 +35,9 @@ public class Result {
     private Date passTime;
     @Column(name = "feedback")
     private String feedback;
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "permission", nullable = false)
-    private long permission;
+    private Permission permission;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -70,14 +71,6 @@ public class Result {
 
     public void setSubmited(boolean submited) {
         this.submited = submited;
-    }
-
-    public int  getMark() {
-        return mark;
-    }
-
-    public void setMark(int mark) {
-        this.mark = mark;
     }
 
     public Date getBeginTime() {
@@ -120,11 +113,19 @@ public class Result {
         this.test = test;
     }
 
-    public long getPermission() {
+    public Integer getMark() {
+        return mark;
+    }
+
+    public void setMark(Integer mark) {
+        this.mark = mark;
+    }
+
+    public Permission getPermission() {
         return permission;
     }
 
-    public void setPermission(long permission) {
+    public void setPermission(Permission permission) {
         this.permission = permission;
     }
 
@@ -167,7 +168,6 @@ public class Result {
         result = 31 * result + (beginTime != null ? beginTime.hashCode() : 0);
         result = 31 * result + (passTime != null ? passTime.hashCode() : 0);
         result = 31 * result + (feedback != null ? feedback.hashCode() : 0);
-        result = 31 * result + (int) (permission ^ (permission >>> 32));
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (test != null ? test.hashCode() : 0);
         return result;

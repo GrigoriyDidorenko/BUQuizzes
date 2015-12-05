@@ -1,8 +1,5 @@
 package com.bionic.entities;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -37,13 +34,10 @@ public class User {
     private String cell;
     @Column(name="position")
     private String position;
-/*    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;*/
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "role_id")
-    private Roles roles;
+    private Role role;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "result", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "test_id"))
@@ -103,12 +97,12 @@ public class User {
         this.password = password;
     }
 
-    public Roles getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Roles roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Set<Test> getTests() {
@@ -138,7 +132,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", cell='" + cell + '\'' +
                 ", position='" + position + '\'' +
-                ", role=" + roles +
+                ", role=" + role +
                 '}';
     }
 
@@ -157,7 +151,7 @@ public class User {
         if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) return false;
         if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
             return false;
-        return !(getRoles() != null ? !getRoles().equals(user.getRoles()) : user.getRoles() != null);
+        return !(getRole() != null ? !getRole().equals(user.getRole()) : user.getRole() != null);
 
     }
 
@@ -168,7 +162,7 @@ public class User {
         result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
         result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
         result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
-        result = 31 * result + (getRoles() != null ? getRoles().hashCode() : 0);
+        result = 31 * result + (getRole() != null ? getRole().hashCode() : 0);
         return result;
     }
 }
