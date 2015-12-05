@@ -3,10 +3,13 @@ package com.bionic.services;
 
 import com.bionic.DAO.ResultDAO;
 import com.bionic.DTO.TestDTO;
+import com.bionic.entities.Result;
 import com.bionic.entities.Test;
+import com.bionic.wrappers.TestWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,31 +26,44 @@ public class StudentService {
     }
 
     @Autowired
-  private ResultDAO resultDAO;
+    private ResultDAO resultDAO;
 
-    public Set<TestDTO> getAvailableTestsNames(String idStr) {
+    public Set<TestWrapper> getAvailableTestsNames(String idStr) {
         try {
-            Set<TestDTO> testDTOs = new HashSet<>(resultDAO.getAvailableTestsNames(getLongId(idStr)));
-            return testDTOs;
+            HashSet<TestWrapper> result = new HashSet<>();
+            HashSet<TestDTO> testDTOs = new HashSet<>(resultDAO.getAvailableTestsNames(getLongId(idStr)));
+            for (TestDTO testDTO : testDTOs)
+                result.add(new TestWrapper(testDTO, resultDAO.getResultByIds(getLongId(idStr),
+                        testDTO.getId()).longValue()));
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    //TODO CHECK THIS METHOD
-    public TestDTO getCurrentTest(String idStr, String testIdStr) {
+    public TestDTO getCurrentTest(String idStr, String resultIdStr) {
         try {
-            Test test = resultDAO.getCurrentTest(getLongId(idStr),
-                    getLongId(testIdStr));
-            TestDTO testDTO = Converter.convertTestToDTO(test);
-            testDTO.setResultId(resultDAO.getResultByIds(getLongId(idStr),
-                    getLongId(testIdStr)).longValue());
-            return testDTO;
+            Result result = resultDAO.find(getLongId(resultIdStr));
+            Date testBeginTime = result.getBeginTime();
+            testBeginTime.setMinutes(testBeginTime.getMinutes()+result.getTest().getDuration());
+            if(result.getBeginTime()==null || !(new Date(System.currentTimeMillis()).after(testBeginTime))) {
+                Test test = resultDAO.getCurrentTest(getLongId(idStr),
+                        result.getTest().getId());
+                return Converter.convertTestToDTO(test);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void setTestBeginTime(String resultIdStr) {
+        Result result = resultDAO.find(getLongId(resultIdStr));
+        result.setBeginTime(new Date(System.currentTimeMillis()));
+        //TODO ask for this method
+        result.setSubmited(true);
+        resultDAO.save(result);
     }
 
     public long getLongId(String idStr) {

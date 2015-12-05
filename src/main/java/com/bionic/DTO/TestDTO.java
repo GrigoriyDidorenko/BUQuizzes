@@ -17,12 +17,12 @@ public class TestDTO {
     private String testName;
     private int duration;
     private Set<QuestionDTO> questions;
-    private long resultId;
 
     public TestDTO() {
     }
 
-    public TestDTO(String testName, int duration) {
+    public TestDTO(long id,String testName, int duration) {
+        this.id = id;
         this.duration = duration;
         this.testName = testName;
     }
@@ -32,14 +32,6 @@ public class TestDTO {
         this.duration = duration;
         this.testName = testName;
         this.questions = questions;
-    }
-
-    public long getResultId() {
-        return resultId;
-    }
-
-    public void setResultId(long resultId) {
-        this.resultId = resultId;
     }
 
     public TestDTO(String testName) {

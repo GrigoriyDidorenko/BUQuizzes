@@ -1,21 +1,25 @@
 [ {
   "testName" : "C#",
   "duration" : 30,
-  "questionDTOs" : [ {
-    "question" : "Which programming language is the best?",
-    "answerDTOs" : [ {
-      "answerText" : "Java",
+  "questions" : [ {
+    "question" : "How are you?",
+    "answers" : [ {
+      "answerText" : "Fine",
       "mark" : 3
     } ]
-  } ]
-}, {
-  "testName" : "Java",
-  "duration" : 30,
-  "questionDTOs" : [ {
+  }, {
     "question" : "Which programming language is the best?",
-    "answerDTOs" : [ {
+    "answers" : [ {
       "answerText" : "Java",
       "mark" : 3
+    }, {
+      "answerText" : "C#",
+      "mark" : -1
+    }, {
+      "answerText" : "Scala",
+      "mark" : -1
     } ]
+  }, {
+    "question" : "Open Question?"
   } ]
-} ]
+}]
