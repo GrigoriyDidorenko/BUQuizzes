@@ -5,6 +5,7 @@ import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.services.StudentService;
 import com.bionic.services.TestService;
+import com.bionic.wrappers.TestWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,22 +52,20 @@ public class StudentController {
     @RequestMapping(value = "/tests/{id}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity<Set<TestDTO>> getAvailableTestsNames(@PathVariable("id") String id) {
-        Set<TestDTO> testDTOs = studentService.getAvailableTestsNames(id);
+    ResponseEntity<Set<TestWrapper>> getAvailableTestsNames(@PathVariable("id") String id) {
+        Set<TestWrapper> tests = studentService.getAvailableTestsNames(id);
 
-        return new ResponseEntity<>(testDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(tests, HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "/tests/{id}/pass/{testId}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/tests/{id}/pass/{resultId}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity<TestDTO> getCurrentTest(@PathVariable("id") String id, @PathVariable("testId") String testId) {
-        TestDTO testDTO = studentService.getCurrentTest(id, testId);
-
+    ResponseEntity<TestDTO> getCurrentTest(@PathVariable("id") String id, @PathVariable("resultId") String resultId) {
+        TestDTO testDTO = studentService.getCurrentTest(id, resultId);
+        studentService.setTestBeginTime(resultId);
         return new ResponseEntity<>(testDTO, HttpStatus.OK);
-
-
     }
 
     /*Example JSON [ {     "questionId" : 1 , "answerId" : 1 },
@@ -91,5 +90,4 @@ public class StudentController {
         }
         return resultDTO;
     }
-
 }

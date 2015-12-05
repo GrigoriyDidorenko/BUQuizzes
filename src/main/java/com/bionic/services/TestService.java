@@ -101,7 +101,7 @@ public class TestService {
         return result;
     }
 
-    public String importTest(MultipartFile file) {
+    public String importTest(MultipartFile file) throws Exception {
         HashSet<TestDTO> testDTOs;
         try {
             testDTOs = mapper.readValue(file.getInputStream(),
@@ -114,6 +114,7 @@ public class TestService {
                 test.setTestName(testDTO.getTestName());
                 if (testDTO.getQuestions() != null)
                     for (QuestionDTO questionDTO : testDTO.getQuestions()) {
+                        int positiveMark = 0;
                         HashSet<Answer> answers = new HashSet<>();
                         Question question = new Question();
                         question.setTest(test);
@@ -125,8 +126,13 @@ public class TestService {
                                 answer.setQuestion(question);
                                 answer.setMark(answerDTO.getMark());
                                 answers.add(answer);
+                                if(answer.getMark()>0)
+                                    positiveMark++;
                             }
-                        switch (answers.size()) {
+                        if(answers.size()!=0 && positiveMark == 0)
+                            throw new Exception("Question should have at least one answer with positive" +
+                                    " mark or doesn't have any answers at all");
+                        switch (positiveMark) {
                             case 0:
                                 question.setIsOpen(true);
                                 question.setIsMultichoice(false);
