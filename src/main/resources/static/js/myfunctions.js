@@ -27,11 +27,12 @@ $(document).ready(function ($) {
         type: "GET",
         url: "http://localhost:8080/student/tests/1",
         contentType: 'application/json; charset=utf-8',
-        success: function (json) {
-            myjson = json;
-            $.each(myjson, function (index, myjs) {
-                $('.resultsTests').append('<tr><td>' + myjs.testName + '</td><td>' +
-                    myjs.duration + '</td><td>' + myjs.id + '</td><td>' + myjs.id + '</td><td>' + myjs.id + '</td></tr>')
+        success: function (jsonres) {
+            myresult = jsonres;
+            $.each(myresult, function (index, myres) {
+                $.each(myres.testDTO, function (j, testDTOone) {
+                    $('#res').append(testDTOone.testName + ' ' + testDTOone.duration )
+                });
             });
         }
     });
