@@ -9,8 +9,11 @@ $(document).ready(function ($) {
     var myjson;
     jQuery.ajax({
         type: "GET",
-        url: "http://localhost:8080/student/tests/1",
+        async: false,
+        jsonpCallback: 'jsonCallback',
+        url: "rest/student/tests/1",
         contentType: 'application/json; charset=utf-8',
+        dataType: 'jsonp',
         success: function (json) {
             myjson = json;
             $.each(myjson, function (index, myjs) {
@@ -18,9 +21,6 @@ $(document).ready(function ($) {
                     myjs.duration + " хв" + '</td><td><a href="TestPage.html"><button class="start-test-btn">' +
                     "розпочати тест" + '</button></a></td></tr>')
             });
-        },
-        error: function (e) {
-            alert('Error121212: ' + e);
         }
     });
 
@@ -36,9 +36,6 @@ $(document).ready(function ($) {
                 $('.resultsTests').append('<tr><td>' + myjs.testName + '</td><td>' +
                     myjs.duration + '</td><td>' + myjs.id + '</td><td>' + myjs.id + '</td><td>' + myjs.id + '</td></tr>')
             });
-        },
-        error: function (e) {
-            alert('Error121212: ' + e);
         }
     });
 //*getting results
@@ -99,9 +96,6 @@ $(document).ready(function ($) {
                     alert(JSON.stringify(event));
                 })
 
-        },
-        error: function (e) {
-            alert('Error121212: ' + e);
         }
     });
 //*getting test-info
