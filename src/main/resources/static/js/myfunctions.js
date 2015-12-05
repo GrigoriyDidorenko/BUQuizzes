@@ -60,18 +60,29 @@ $(document).ready(function ($) {
 // 2.3 get each category of this article
 
                 var qmass = $.each(testinfo.questions, function (i, questionone) {
-
                     var div_q = $("<div style='margin: 0; padding: 0;'/>");
-                    $.each(questionone.answers, function (j, answersone) {
-                        var span = $("<span style='margin: 0; padding: 0;'/>");
-                        span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input type="radio" value="' + answersone.answerText + '" name="answer'+i+'" style="margin: 0; padding: 0;">' +
-                            answersone.answerText + '</label></p>')
-                        div_q.append(span);
-                    });
-                    $(".test").append($('<div id="question'+i+'" style="margin-bottom: 20px; padding: 0;"/>')
-                        .append($('<div style="margin: 0; padding: 0;"/>').html(i+1 +'. '+questionone.question + '</div>'))
-                        .append(div_q)
-                    );
+                        $.each(questionone.answers, function (j, answersone) {
+                            var span = $("<span style='margin: 0; padding: 0;'/>");
+                                if (questionone.multichoice) {
+                                    span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input type="checkbox" value="' + answersone.answerText + '" name="answer' + i + '" style="margin: 0; padding: 0;">' +
+                                        answersone.answerText + '</label></p>')
+                                } else {
+                                    span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input type="radio" value="' + answersone.answerText + '" name="answer' + i + '" style="margin: 0; padding: 0;">' +
+                                        answersone.answerText + '</label></p>')
+                                }
+                            div_q.append(span);
+                        });
+                    if(questionone.open){
+                        $(".test").append($('<div id="question' + i + '" style="margin-bottom: 20px; padding: 0;"/>')
+                            .append($('<div style="margin: 0; padding: 0;"/>').html(i + 1 + '. ' + questionone.question + '</div>'))
+                            .append($('<div style="margin: 0; padding: 0;"/>').html('isOpen'))
+                        );
+                    }else {
+                        $(".test").append($('<div id="question' + i + '" style="margin-bottom: 20px; padding: 0;"/>')
+                            .append($('<div style="margin: 0; padding: 0;"/>').html(i + 1 + '. ' + questionone.question + '</div>'))
+                            .append(div_q)
+                        );
+                    }
                 })
             var mytabs = [];
             mytabs.length = qmass.length
