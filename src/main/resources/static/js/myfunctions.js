@@ -64,29 +64,30 @@ $(document).ready(function ($) {
                         $.each(questionone.answers, function (j, answersone) {
                             var span = $("<span style='margin: 0; padding: 0;'/>");
                                 if (questionone.multichoice) {
-                                    span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input type="checkbox" value="' + answersone.answerText + '" name="answer' + i + '" style="margin: 0; padding: 0;">' +
+                                    span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input type="checkbox" class="filled-in" value="' + answersone.answerText + '" name="answer' + i + '" style="margin: 0; padding: 0;">' +
                                         answersone.answerText + '</label></p>')
                                 } else {
-                                    span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input type="radio" value="' + answersone.answerText + '" name="answer' + i + '" style="margin: 0; padding: 0;">' +
+                                    span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input class="with-gap" type="radio" value="' + answersone.answerText + '" name="answer' + i + '" style="margin: 0; padding: 0;">' +
                                         answersone.answerText + '</label></p>')
                                 }
                             div_q.append(span);
                         });
-                    if(questionone.open){
+                    if (!questionone.open) {
                         $(".test").append($('<div id="question' + i + '" style="margin-bottom: 20px; padding: 0;"/>')
-                            .append($('<div style="margin: 0; padding: 0;"/>').html(i + 1 + '. ' + questionone.question + '</div>'))
-                            .append($('<div style="margin: 0; padding: 0;"/>').html('isOpen'))
-                        );
-                    }else {
-                        $(".test").append($('<div id="question' + i + '" style="margin-bottom: 20px; padding: 0;"/>')
-                            .append($('<div style="margin: 0; padding: 0;"/>').html(i + 1 + '. ' + questionone.question + '</div>'))
+                            .append($('<div style="margin: 0; padding: 0;"/>').html(i+1 + '. ' + questionone.question + '</div>'))
                             .append(div_q)
                         );
+                    } else {
+                        $(".test").append($('<div id="question' + i + '" style="margin-bottom: 20px; padding: 0;"/>')
+                            .append($('<div style="margin: 0; padding: 0;"/>').html(i+1 + '. ' + questionone.question + '</div>'))
+                            .append($('<div style="margin: 0; padding: 0;"/>').html('<label for="icon_prefix2">' + 'Відповідь:' + '</label>'+
+                                '<textarea id="icon_prefix2" class="materialize-textarea" style="padding: 0; margin-bottom: 0;"></textarea>'))
+                    );
                     }
                 })
             var mytabs = [];
             mytabs.length = qmass.length
-            for(i=1; i<=mytabs.length; i++) {
+            for(i=0; i<=mytabs.length; i++) {
                     $('#demo').append('<li style="display: inline"><a href="#question' + i + '">' + i + ' ' + '</a></li>');
 
             }
