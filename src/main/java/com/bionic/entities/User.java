@@ -37,9 +37,13 @@ public class User {
     private String cell;
     @Column(name="position")
     private String position;
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+    private Role role;*/
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "role_id")
+    private Roles roles;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "result", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "test_id"))
@@ -99,12 +103,12 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public Roles getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(Roles roles) {
+        this.roles = roles;
     }
 
     public Set<Test> getTests() {
@@ -134,7 +138,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", cell='" + cell + '\'' +
                 ", position='" + position + '\'' +
-                ", role=" + role +
+                ", role=" + roles +
                 '}';
     }
 
@@ -153,7 +157,7 @@ public class User {
         if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) return false;
         if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
             return false;
-        return !(getRole() != null ? !getRole().equals(user.getRole()) : user.getRole() != null);
+        return !(getRoles() != null ? !getRoles().equals(user.getRoles()) : user.getRoles() != null);
 
     }
 
@@ -164,7 +168,7 @@ public class User {
         result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
         result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
         result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
-        result = 31 * result + (getRole() != null ? getRole().hashCode() : 0);
+        result = 31 * result + (getRoles() != null ? getRoles().hashCode() : 0);
         return result;
     }
 }

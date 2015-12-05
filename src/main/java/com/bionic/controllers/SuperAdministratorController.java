@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping(value = "/admin")
-public class AdministratorController {
+public class SuperAdministratorController {
 
     @Autowired
     private AdministratorService administratorService;

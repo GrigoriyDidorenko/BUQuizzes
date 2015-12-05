@@ -18,11 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdministratorService {
 
-
     @Autowired
-    private UserDAO userDAO;
-    @Autowired
-    private RoleDAO roleDAO;
+    private UserService userService;
     @Autowired
     private OtpGenerator generator;
     @Autowired
@@ -31,10 +28,9 @@ public class AdministratorService {
     public void addUser(User user){
         try {
             user.setPassword(generator.generateToken());
-            user.setRole(roleDAO.find(user.getRole().getId()));
             mailManager.send(user.getEmail(),"test","Hello "+user.getFirstName()+
                     ", your new password:"+"\n"+user.getPassword()+"\nit's OTP, please change it");
-            userDAO.save(user);
+            userService.save(user);
         } catch (Exception e){
             e.printStackTrace();
         }
