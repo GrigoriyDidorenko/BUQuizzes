@@ -9,11 +9,8 @@ $(document).ready(function ($) {
     var myjson;
     jQuery.ajax({
         type: "GET",
-        async: false,
-        jsonpCallback: 'jsonCallback',
-        url: "rest/student/tests/1",
+        url: "http://localhost:8080/student/tests/1",
         contentType: 'application/json; charset=utf-8',
-        dataType: 'jsonp',
         success: function (json) {
             myjson = json;
             $.each(myjson, function (index, myjs) {
@@ -49,8 +46,9 @@ $(document).ready(function ($) {
             testinfo = info;
             $('.test-info').append('<div>' + "Назва тесту: " + testinfo.testName + '</div>' +
                 '<div>' + "Тривалість: " + testinfo.duration + " хв" + '</div>');
-            $(function() {
+
                 $("#hms_timer").countdowntimer({
+                    hours:0,
                     minutes: testinfo.duration,
                     size: "lg",
                     timeUp : timeisUp
@@ -58,7 +56,7 @@ $(document).ready(function ($) {
                 function timeisUp() {
                     $('#modal1').openModal();
                 }
-            });
+
 // 2.3 get each category of this article
 
                 var qmass = $.each(testinfo.questions, function (i, questionone) {
