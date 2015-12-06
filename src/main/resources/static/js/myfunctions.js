@@ -4,6 +4,7 @@ $(document).ready(function ($) {
     $("#owl-example").owlCarousel({
         autoPlay: 3000
     });
+
 //*owlCarousel
 //getting tests
     var myjson;
@@ -107,19 +108,20 @@ $(document).ready(function ($) {
 
             }
 
-            $("#button").click(function() {
-                    var answertext = [];
-                        $.each(testinfo.questions, function (i, questionone) {
-                            $.each($('input[name="answer' + i + '"]:checked'), function () {
-                                answertext.push($(this).val());
-                        });
+            $("#save").click(function() {
+                $('#modal2').openModal();
+                var answertext = [];
+                    $.each(testinfo.questions, function (i, questionone) {
+                        $.each($('input[name="answer' + i + '"]:checked'), function () {
+                            answertext.push($(this).val());
                     });
+                });
 
-                    event = {
-                        answerText: answertext
-                    };
-                    alert(JSON.stringify(event));
-                })
+                event = {
+                    answerText: answertext
+                };
+                alert(JSON.stringify(event));
+            })
 
         }
     });
@@ -198,5 +200,4 @@ $(document).ready(function() {
     }
 
 });
-
 //*IMPORT TEST

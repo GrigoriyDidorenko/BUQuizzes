@@ -22,7 +22,6 @@
     <script src="../js/jquery-ui-1.7.custom.min.js"></script>
     <script src="../js/myfunctions.js"></script>
     <script type="text/javascript" src="../materialize-src/js/bin/materialize.min.js"></script>
-
 </head>
 <body>
 <header>
@@ -50,20 +49,28 @@
         <div class="row">
             <div class="col s6">
                 <div class="test-info"></div>
-                <div id="hms_timer" style="border:2px solid #2dadf0; border-radius:5px; padding:3px; margin-bottom: 15px; color: #2dadf0; width:80px; text-align: center;"></div>
+                <div id="hms_timer" style="border:2px solid #2dadf0; border-radius:5px; padding:3px; margin: 5px 0 15px 0; color: #2dadf0; width:80px; text-align: center;"></div>
                 <div id="tabs">
                     <!--<ul id="demo"></ul>-->
                     <form class="test"></form>
                 </div>
 
-                <button id="button" class="submit-but">Зберегти</button>
+                <a href="#modal2" class="start-test-btn" id="save">Зберегти</a>
 
-
+                <div id="modal2" class="modal">
+                    <div class="modal-content">
+                        <p>Після збереження відповіді будуть відправлені. Зберегти?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="UserPage.html" class=" modal-action modal-close waves-effect waves-green btn-flat">Так</a>
+                        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Ні</a>
+                    </div>
+                </div>
 
                 <!-- Modal Trigger -->
                 <div id="modal1" class="modal">
                     <div class="modal-content">
-                        <p>Час тестування вийшов. Ваші результати збережено</p>
+                        <p>Час тестування вийшов. Ваші результати збережено.</p>
                     </div>
                     <div class="modal-footer">
                         <a href="UserPage.html" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
