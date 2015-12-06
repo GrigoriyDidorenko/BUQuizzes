@@ -14,27 +14,25 @@ $(document).ready(function ($) {
         success: function (json) {
             myjson = json;
             $.each(myjson, function (index, myjs) {
-                $.each(myjs.testDTO, function (index, testDT) {
-                    $('.avaliableTests').append('<tr><td>' + testDT.testName + '</td><td>' +
-                        testDT.duration + " хв" + '</td><td><a href="TestPage.htm"><button class="start-test-btn">' +
+                    $('.avaliableTests').append('<tr><td>' + myjs.testDTO.testName + '</td><td>' +
+                        myjs.testDTO.duration + " хв" + '</td><td><a href="TestPage.html"><button class="start-test-btn">' +
                         "розпочати тест" + '</button></a></td></tr>')
-                })
             })
         }
     });
 
 //*getting tests
-//getting results
+    //getting results
     jQuery.ajax({
         type: "GET",
-        url: "http://localhost:8080/student/tests/1",
+        url: "http://localhost:8080/superAdmin/addUser",
         contentType: 'application/json; charset=utf-8',
-        success: function (jsonres) {
-            myresult = jsonres;
-            $.each(myresult, function (index, myres) {
-                $.each(myres.testDTO, function (j, testDTOone) {
-                });
-            });
+        success: function (jsonrols) {
+            var rols;
+            rols = jsonrols;
+            $.each(rols, function (index, rolsone) {
+                $('#roles').append('<option value="role' + index + '">' + rolsone + '</option>');
+            })
         }
     });
 //*getting results
@@ -61,7 +59,7 @@ $(document).ready(function ($) {
 
 // 2.3 get each category of this article
 
-                var qmass = $.each(testinfo.questions, function (i, questionone) {
+                    var qmass = $.each(testinfo.questions, function (i, questionone) {
                     var div_q = $("<div style='margin: 0; padding: 0;'/>");
                         $.each(questionone.answers, function (j, answersone) {
                             var span = $("<span style='margin: 0; padding: 0;'/>");
@@ -96,11 +94,7 @@ $(document).ready(function ($) {
 
             $("#button").click(function() {
                     var answertext = [];
-                        $.each(testinfo.questions, function (i, questionone) {
-                            $.each($('input[name="answer' + i + '"]:checked'), function () {
-                                answertext.push($(this).val());
-                        });
-                    });
+                    answertext.push($('input[name="answer' + i + '"]:checked').val());
 
                     event = {
                         answerText: answertext
