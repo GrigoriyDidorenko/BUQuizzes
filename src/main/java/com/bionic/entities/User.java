@@ -1,8 +1,5 @@
 package com.bionic.entities;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -37,8 +34,9 @@ public class User {
     private String cell;
     @Column(name="position")
     private String position;
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "role_id")
     private Role role;
 
     @ManyToMany(fetch = FetchType.EAGER)

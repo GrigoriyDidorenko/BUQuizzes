@@ -1,8 +1,11 @@
 package com.bionic.controllers;
 
+import com.bionic.DAO.UserDAO;
 import com.bionic.DTO.ResultDTO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
+import com.bionic.entities.Role;
+import com.bionic.entities.User;
 import com.bionic.services.StudentService;
 import com.bionic.services.TestService;
 import com.bionic.wrappers.TestWrapper;
@@ -40,13 +43,7 @@ public class StudentController {
 
     }
 
-//    /*Test method*/
-//    @RequestMapping(value = "/import", method = RequestMethod.GET)
-//    public
-//    @ResponseBody
-//    String getSample(){
-//        return testService.importTest(new File("d:\\file.json"));
-//    }
+
 
 
     @RequestMapping(value = "/tests/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -57,7 +54,6 @@ public class StudentController {
 
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
-
 
     @RequestMapping(value = "/tests/{id}/pass/{resultId}", method = RequestMethod.GET, produces = "application/json")
     public
