@@ -9,15 +9,17 @@ $(document).ready(function ($) {
     var myjson;
     jQuery.ajax({
         type: "GET",
-        url: "http://localhost:8080/student/tests/1",
+        url: "http://localhost:8080/student/tests/2",
         contentType: 'application/json; charset=utf-8',
         success: function (json) {
             myjson = json;
             $.each(myjson, function (index, myjs) {
-                $('.avaliableTests').append('<tr><td>' + myjs.testName + '</td><td>' +
-                    myjs.duration + " хв" + '</td><td><a href="TestPage.html"><button class="start-test-btn">' +
-                    "розпочати тест" + '</button></a></td></tr>')
-            });
+                $.each(myjs.testDTO, function (j, testDT) {
+                    $('.avaliableTests').append('<tr><td>' + testDT.testName + '</td><td>' +
+                        testDT.duration + " хв" + '</td><td><a href="TestPage.htm"><button class="start-test-btn">' +
+                        "розпочати тест" + '</button></a></td></tr>')
+                })
+            })
         }
     });
 
@@ -31,7 +33,6 @@ $(document).ready(function ($) {
             myresult = jsonres;
             $.each(myresult, function (index, myres) {
                 $.each(myres.testDTO, function (j, testDTOone) {
-                    $('#res').append(testDTOone.testName + ' ' + testDTOone.duration )
                 });
             });
         }
