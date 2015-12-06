@@ -2,15 +2,13 @@ package com.bionic.controllers;
 
 import com.bionic.entities.Role;
 import com.bionic.entities.User;
-import com.bionic.services.AdministratorService;
-import com.bionic.services.TestService;
+import com.bionic.services.SuperAdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +27,7 @@ import java.util.List;
 public class SuperAdministratorController {
 
     @Autowired
-    private AdministratorService administratorService;
+    private SuperAdministratorService superAdministratorService;
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public
@@ -37,7 +35,7 @@ public class SuperAdministratorController {
     String addUser(@ModelAttribute User user, Model model) {
         try {
             model.addAttribute("user", user);
-            administratorService.addUser(user);
+            superAdministratorService.addUser(user);
             return "successful";
         } catch (Exception e) {
             return "You failed to upload";
@@ -51,12 +49,5 @@ public class SuperAdministratorController {
         List<String> roles = Arrays.asList(Role.RESTRICTED_ADMINISTRATOR.getName(), Role.RESTRICTED_TRAINER.getName());
         return new ResponseEntity<>(roles, HttpStatus.OK);
     }
-
-/*    @RequestMapping(value = "/addUser", method = RequestMethod.GET, produces = "application/json")
-    public
-    @ResponseBody
-    String getCurrentTest(@PathVariable("id") String id, @PathVariable("resultId") String resultId) {
-        return "hihi";
-    }*/
 
 }

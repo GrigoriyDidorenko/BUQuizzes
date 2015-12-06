@@ -12,6 +12,8 @@ import java.util.Set;
  * @date: 01.11.2015
  */
 @Entity
+@NamedNativeQuery(name = "getUnarchivedTestsNames",
+        query = "SELECT t.id, t.test_name FROM Test t WHERE t.archived = FALSE")
 @Table(name = "test", catalog = "quizzes")
 public class Test {
     @Id

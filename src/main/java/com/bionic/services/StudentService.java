@@ -3,7 +3,9 @@ package com.bionic.services;
 
 import com.bionic.DAO.ResultDAO;
 import com.bionic.DTO.TestDTO;
+import com.bionic.entities.Permission;
 import com.bionic.entities.Result;
+import com.bionic.entities.Role;
 import com.bionic.entities.Test;
 import com.bionic.wrappers.TestWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,7 @@ public class StudentService {
             testBeginTime.setMinutes(testBeginTime.getMinutes()+result.getTest().getDuration());
             if(result.getBeginTime()==null || !(new Date(System.currentTimeMillis()).after(testBeginTime))) {
                 Test test = resultDAO.getCurrentTest(getLongId(idStr),
-                        result.getTest().getId());
+                        result.getTest().getId(), Permission.PASS_THE_TEST.getId());
                 return Converter.convertTestToDTO(test);
             }
         } catch (Exception e) {

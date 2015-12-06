@@ -1,7 +1,9 @@
 package com.bionic.DAO;
 
 import com.bionic.DTO.TestDTO;
+import com.bionic.entities.Permission;
 import com.bionic.entities.Result;
+import com.bionic.entities.Role;
 import com.bionic.entities.Test;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -29,10 +31,11 @@ public class ResultDAO extends AbstractDAO<Result> {
         super(Result.class);
     }
 
-    public Test getCurrentTest(long id, long testId){
+    public Test getCurrentTest(long id, long testId, long permissionId){
         Query query = em.createNamedQuery("getCurrentTestById");
         query.setParameter("userId", id);
         query.setParameter("testId", testId);
+        query.setParameter("permissionId", permissionId);
         return (Test)query.getSingleResult();
     }
 

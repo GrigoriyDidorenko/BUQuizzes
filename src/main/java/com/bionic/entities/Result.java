@@ -13,7 +13,7 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "getCurrentTestById",
                 query = "SELECT test From Result result JOIN result.test test JOIN result.user user " +
-                        "WHERE result.test.id = :testId AND result.user.id = :userId AND result.permission = 1"),
+                        "WHERE result.test.id = :testId AND result.user.id = :userId AND result.permission.id = :permissionId"),
         @NamedQuery(name = "getAvailableTestsNames",
         query = "SELECT test.id, test.testName, test.duration FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId")
 })
@@ -48,7 +48,10 @@ public class Result {
     public Result() {
     }
 
-    public Result(User user, Test test) {
+    public Result(boolean isChecked, boolean submited, Permission permission, User user, Test test) {
+        this.isChecked = isChecked;
+        this.submited = submited;
+        this.permission = permission;
         this.user = user;
         this.test = test;
     }

@@ -1,10 +1,7 @@
 package com.bionic.services;
 
-import com.bionic.DAO.RoleDAO;
-import com.bionic.DAO.UserDAO;
 import com.bionic.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @date: 29.11.2015
  */
 @Service
-public class AdministratorService {
+public class SuperAdministratorService {
 
     @Autowired
     private UserService userService;

@@ -92,10 +92,10 @@ public class UserDTO {
 
         if (id != userDTO.id) return false;
         if (role != userDTO.role) return false;
-        if (!firstName.equals(userDTO.firstName)) return false;
-        if (!lastName.equals(userDTO.lastName)) return false;
-        if (!email.equals(userDTO.email)) return false;
-        if (!password.equals(userDTO.password)) return false;
+        if (firstName != null ? !firstName.equals(userDTO.firstName) : userDTO.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(userDTO.lastName) : userDTO.lastName != null) return false;
+        if (email != null ? !email.equals(userDTO.email) : userDTO.email != null) return false;
+        if (password != null ? !password.equals(userDTO.password) : userDTO.password != null) return false;
         if (cell != null ? !cell.equals(userDTO.cell) : userDTO.cell != null) return false;
         return !(position != null ? !position.equals(userDTO.position) : userDTO.position != null);
 
@@ -104,10 +104,10 @@ public class UserDTO {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + firstName.hashCode();
-        result = 31 * result + lastName.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + password.hashCode();
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (cell != null ? cell.hashCode() : 0);
         result = 31 * result + (position != null ? position.hashCode() : 0);
         result = 31 * result + role;
