@@ -1,6 +1,7 @@
 package com.bionic.services;
 
 import com.bionic.entities.Role;
+import org.springframework.stereotype.Service;
 
 /**
  * package: com.bionic.services
@@ -10,6 +11,7 @@ import com.bionic.entities.Role;
  * @author: Grigoriy Didorenko
  * @date: 06.12.2015
  */
+@Service
 public class RoleService {
 
     public Role getRoleById(long id){
