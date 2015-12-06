@@ -1,9 +1,6 @@
 package com.bionic.services;
 
-import com.bionic.DTO.AnswerDTO;
-import com.bionic.DTO.QuestionDTO;
-import com.bionic.DTO.TestDTO;
-import com.bionic.DTO.UserAnswerDTO;
+import com.bionic.DTO.*;
 import com.bionic.entities.*;
 import com.bionic.entities.Answer;
 import com.bionic.entities.Question;
@@ -65,6 +62,16 @@ public class Converter {
             userAnswers.add(convertUserAnswerDTOToUserAnswer(userAnswerDTO, result));
         }
         return userAnswers;
+    }
+
+    public static User converUserDTOToUser(UserDTO userDTO){
+        try {
+            return new User(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
+                    userDTO.getCell(), userDTO.getPosition(), userDTO.getRole());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

@@ -1,5 +1,7 @@
 package com.bionic.services;
 
+import com.bionic.DTO.UserDTO;
+import com.bionic.entities.Role;
 import com.bionic.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +23,13 @@ public class SuperAdministratorService {
     private OtpGenerator generator;
     @Autowired
     private MailManager mailManager;
+    @Autowired
+    private RoleService roleService;
 
-    public void addUser(User user){
+    public void addUser(UserDTO userDTO){
         try {
+            userDTO.setRole(roleService.getRoleById(userDTO.getRoleId()));
+            User user = Converter.converUserDTOToUser(userDTO);
             user.setPassword(generator.generateToken());
             mailManager.send(user.getEmail(),"test","Hello "+user.getFirstName()+
                     ", your new password:"+"\n"+user.getPassword()+"\nit's OTP, please change it");
@@ -32,4 +38,6 @@ public class SuperAdministratorService {
             e.printStackTrace();
         }
     }
+
+
 }

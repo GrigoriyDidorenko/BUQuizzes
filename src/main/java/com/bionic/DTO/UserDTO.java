@@ -1,5 +1,7 @@
 package com.bionic.DTO;
 
+import com.bionic.entities.Role;
+
 /**
  * package: com.bionic.DTO
  * project: Test
@@ -17,7 +19,8 @@ public class UserDTO {
     private String password;
     private String cell;
     private String position;
-    private int role;
+    private Role role;
+    private long roleId;
 
     public long getId() {
         return id;
@@ -75,12 +78,20 @@ public class UserDTO {
         this.position = position;
     }
 
-    public int getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(Role role) {
         this.role = role;
+    }
+
+    public long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(long roleId) {
+        this.roleId = roleId;
     }
 
     @Override
@@ -110,7 +121,6 @@ public class UserDTO {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (cell != null ? cell.hashCode() : 0);
         result = 31 * result + (position != null ? position.hashCode() : 0);
-        result = 31 * result + role;
         return result;
     }
 }

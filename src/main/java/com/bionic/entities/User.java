@@ -47,10 +47,13 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String email) {
+    public User(String firstName, String lastName, String email, String cell, String position, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.cell = cell;
+        this.position = position;
+        this.role = role;
     }
 
     public String getPosition() {

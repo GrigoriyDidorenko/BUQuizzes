@@ -1,5 +1,6 @@
 package com.bionic.controllers;
 
+import com.bionic.DTO.UserDTO;
 import com.bionic.entities.Role;
 import com.bionic.entities.User;
 import com.bionic.services.SuperAdministratorService;
@@ -11,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * package: com.bionic.controllers
@@ -32,7 +35,7 @@ public class SuperAdministratorController {
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public
     @ResponseBody
-    String addUser(@ModelAttribute User user, Model model) {
+    String addUser(@ModelAttribute UserDTO user, Model model) {
         try {
             model.addAttribute("user", user);
             superAdministratorService.addUser(user);
@@ -45,8 +48,10 @@ public class SuperAdministratorController {
     @RequestMapping(value = "/addUser", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity<List<String>> getRoles() {
-        List<String> roles = Arrays.asList(Role.RESTRICTED_ADMINISTRATOR.getName(), Role.RESTRICTED_TRAINER.getName());
+    ResponseEntity<Map<Long, String>> getRoles() {
+        HashMap<Long, String> roles = new HashMap<>();
+        roles.put(Role.RESTRICTED_ADMINISTRATOR.getId(), Role.RESTRICTED_ADMINISTRATOR.getName());
+        roles.put(Role.RESTRICTED_TRAINER.getId(), Role.RESTRICTED_TRAINER.getName());
         return new ResponseEntity<>(roles, HttpStatus.OK);
     }
 
