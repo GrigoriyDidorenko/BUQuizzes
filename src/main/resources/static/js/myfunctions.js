@@ -16,7 +16,7 @@ $(document).ready(function ($) {
             $.each(myjson, function (index, myjs) {
                 $.each(myjs.testDTO, function (index, testDT) {
                     $('.avaliableTests').append('<tr><td>' + testDT.testName + '</td><td>' +
-                        testDT.duration + " хв" + '</td><td><a href="TestPage.htm"><button class="start-test-btn">' +
+                        testDT.duration + " хв" + '</td><td><a href="TestPage.html"><button class="start-test-btn">' +
                         "розпочати тест" + '</button></a></td></tr>')
                 })
             })
@@ -27,14 +27,14 @@ $(document).ready(function ($) {
 //getting results
     jQuery.ajax({
         type: "GET",
-        url: "http://localhost:8080/student/tests/1",
+        url: "http://localhost:8080/superAdmin/addUser",
         contentType: 'application/json; charset=utf-8',
-        success: function (jsonres) {
-            myresult = jsonres;
-            $.each(myresult, function (index, myres) {
-                $.each(myres.testDTO, function (j, testDTOone) {
-                });
-            });
+        success: function (jsonrols) {
+            var rols;
+            rols = jsonrols;
+            $.each(rols, function (index, rolsone) {
+                    $('#roles').append('<option value="role' + index + '">' + rolsone + '</option>');
+            })
         }
     });
 //*getting results

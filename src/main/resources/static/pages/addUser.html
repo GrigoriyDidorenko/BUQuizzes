@@ -56,10 +56,7 @@
     Email: <input type="text" name="email" th:field="*{email}"><br />
     Телефон:  <input type="text" name="cell" th:field="*{cell}"><br />
     Должность: <input type="text" name="position" th:field="*{position}">
-    Уровень доступа: <select name="role.id" size="2" th:field="*{role.id}" style="display: block">
-    <option value="4">Администратор</option>
-    <option value="5">Тренер</option>
-</select>
+    Уровень доступа: <select name="role.id" size="2" th:field="*{role.id}" style="display: block" id="roles"></select>
     <br /> <br /> <input type="submit" value="Upload" class="submit-but">
 </form>
         </div></div></div>
