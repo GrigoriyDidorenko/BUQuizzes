@@ -9,12 +9,12 @@ $(document).ready(function ($) {
     var myjson;
     jQuery.ajax({
         type: "GET",
-        url: "http://localhost:8080/student/tests/2",
+        url: "http://localhost:8080/student/tests/1",
         contentType: 'application/json; charset=utf-8',
         success: function (json) {
             myjson = json;
             $.each(myjson, function (index, myjs) {
-                $.each(myjs.testDTO, function (j, testDT) {
+                $.each(myjs.testDTO, function (index, testDT) {
                     $('.avaliableTests').append('<tr><td>' + testDT.testName + '</td><td>' +
                         testDT.duration + " хв" + '</td><td><a href="TestPage.htm"><button class="start-test-btn">' +
                         "розпочати тест" + '</button></a></td></tr>')
