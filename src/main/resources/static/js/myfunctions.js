@@ -15,14 +15,14 @@ $(document).ready(function ($) {
             myjson = json;
             $.each(myjson, function (index, myjs) {
                     $('.avaliableTests').append('<tr><td>' + myjs.testDTO.testName + '</td><td>' +
-                        myjs.testDTO.duration + " хв" + '</td><td><a href="TestPage.html"><button class="start-test-btn">' +
+                        myjs.testDTO.duration + " хв" + '</td><td><a href="TestPage.html?resultId='+myjs.resultId+'"><button class="start-test-btn">' +
                         "розпочати тест" + '</button></a></td></tr>')
             })
         }
-    });
+    })
 
 //*getting tests
-    //getting results
+//getting results
     jQuery.ajax({
         type: "GET",
         url: "http://localhost:8080/superAdmin/addUser",
@@ -31,16 +31,31 @@ $(document).ready(function ($) {
             var rols;
             rols = jsonrols;
             $.each(rols, function (index, rolsone) {
-                $('#roles').append('<option value="role' + index + '">' + rolsone + '</option>');
+                   $('#roles').append('<option value="role' + index + '" disabled>' + rolsone + '</option>')
             })
         }
     });
 //*getting results
 //getting test-info
+    function GetURLParameter(sParam) {
+
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+    var tech = GetURLParameter('resultId');
+    var urltest = 'http://localhost:8080/student/tests/1/pass/' + tech;
     var testinfo;
     jQuery.ajax({
         type: "GET",
-        url: "http://localhost:8080/student/tests/1/pass/1",
+        url: urltest,
         contentType: 'application/json; charset=utf-8',
         success: function (info) {
             testinfo = info;
@@ -59,7 +74,7 @@ $(document).ready(function ($) {
 
 // 2.3 get each category of this article
 
-                    var qmass = $.each(testinfo.questions, function (i, questionone) {
+                var qmass = $.each(testinfo.questions, function (i, questionone) {
                     var div_q = $("<div style='margin: 0; padding: 0;'/>");
                         $.each(questionone.answers, function (j, answersone) {
                             var span = $("<span style='margin: 0; padding: 0;'/>");
@@ -94,7 +109,11 @@ $(document).ready(function ($) {
 
             $("#button").click(function() {
                     var answertext = [];
-                    answertext.push($('input[name="answer' + i + '"]:checked').val());
+                        $.each(testinfo.questions, function (i, questionone) {
+                            $.each($('input[name="answer' + i + '"]:checked'), function () {
+                                answertext.push($(this).val());
+                        });
+                    });
 
                     event = {
                         answerText: answertext
@@ -179,6 +198,5 @@ $(document).ready(function() {
     }
 
 });
-
 
 //*IMPORT TEST
