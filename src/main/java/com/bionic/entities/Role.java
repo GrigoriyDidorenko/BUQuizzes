@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * package: com.bionic.entities
@@ -23,6 +25,16 @@ public enum Role {
 
     private long id;
     private String name;
+
+    private static Map<Long, Role> roleMap = new HashMap<>();
+    static {
+        for(Role role : values())
+            roleMap.put(role.id, role);
+    }
+
+    public static Role findById(long id){
+        return roleMap.get(id);
+    }
 
 
     Role(){}

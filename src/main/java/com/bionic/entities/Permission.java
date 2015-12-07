@@ -14,7 +14,7 @@ public enum Permission {
     private long id;
     private String name;
 
-    private Permission(int id, String name) {
+    private Permission(long id, String name) {
         this.id = id;
         this.name = name;
     }

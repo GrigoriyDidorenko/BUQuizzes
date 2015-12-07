@@ -23,12 +23,10 @@ public class SuperAdministratorService {
     private OtpGenerator generator;
     @Autowired
     private MailManager mailManager;
-    @Autowired
-    private RoleService roleService;
 
     public void addUser(UserDTO userDTO){
         try {
-            userDTO.setRole(roleService.getRoleById(userDTO.getRoleId()));
+            userDTO.setRole(Role.findById(userDTO.getRoleId()));
             User user = Converter.converUserDTOToUser(userDTO);
             user.setPassword(generator.generateToken());
             mailManager.send(user.getEmail(),"test","Hello "+user.getFirstName()+

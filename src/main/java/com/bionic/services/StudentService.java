@@ -30,6 +30,8 @@ public class StudentService {
     @Autowired
     private ResultDAO resultDAO;
 
+    private boolean firstEnter = true;
+
     public Set<TestWrapper> getAvailableTestsNames(String idStr) {
         try {
             HashSet<TestWrapper> result = new HashSet<>();
@@ -47,13 +49,13 @@ public class StudentService {
     public TestDTO getCurrentTest(String idStr, String resultIdStr) {
         try {
             Result result = resultDAO.find(getLongId(resultIdStr));
-            Date testBeginTime = result.getBeginTime();
-            testBeginTime.setMinutes(testBeginTime.getMinutes()+result.getTest().getDuration());
-            if(result.getBeginTime()==null || !(new Date(System.currentTimeMillis()).after(testBeginTime))) {
-                Test test = resultDAO.getCurrentTest(getLongId(idStr),
-                        result.getTest().getId(), Permission.PASS_THE_TEST.getId());
-                return Converter.convertTestToDTO(test);
-            }
+                Date testBeginTime = result.getBeginTime();
+                testBeginTime.setTime(testBeginTime.getTime()+60000*result.getTest().getDuration());
+                if (new Date(System.currentTimeMillis()).before(testBeginTime)) {
+                    Test test = resultDAO.getCurrentTest(getLongId(idStr),
+                            result.getTest().getId(), Permission.PASS_THE_TEST.getId());
+                    return Converter.convertTestToDTO(test);
+                }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,11 +63,13 @@ public class StudentService {
     }
 
     public void setTestBeginTime(String resultIdStr) {
-        Result result = resultDAO.find(getLongId(resultIdStr));
-        result.setBeginTime(new Date(System.currentTimeMillis()));
-        //TODO ask for this method
-        result.setSubmited(true);
-        resultDAO.save(result);
+        if(firstEnter) {
+            Result result = resultDAO.find(getLongId(resultIdStr));
+            result.setBeginTime(new Date(System.currentTimeMillis()));
+            //TODO ask for this method
+            result.setSubmited(true);
+            resultDAO.save(result);
+        }
     }
 
     public long getLongId(String idStr) {
