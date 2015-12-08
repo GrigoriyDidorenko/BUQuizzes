@@ -72,6 +72,10 @@ $(document).ready(function ($) {
                 function timeisUp() {
                     $('#modal1').openModal();
                 }
+            //$.each(testinfo.questions, function (i, questionone) {
+            //    $('#t').html(questionone.id);
+            //    //questionId.push($(this).attr("id"));
+            //})
 
 // 2.3 get each category of this article
 
@@ -80,22 +84,22 @@ $(document).ready(function ($) {
                         $.each(questionone.answers, function (j, answersone) {
                             var span = $("<span style='margin: 0; padding: 0;'/>");
                                 if (questionone.multichoice) {
-                                    span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input type="checkbox" class="filled-in" value="' + answersone.answerText + '" name="answer' + i + '" style="margin: 0; padding: 0;">' +
+                                    span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input type="checkbox" class="filled-in" value="' + answersone.answerText + '" name="answer' + i + '" id ="'+answersone.id+'" style="margin: 0; padding: 0;">' +
                                         answersone.answerText + '</label></p>')
                                 } else {
-                                    span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input class="with-gap" type="radio" value="' + answersone.answerText + '" name="answer' + i + '" style="margin: 0; padding: 0;">' +
+                                    span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input class="with-gap" type="radio" value="' + answersone.answerText + '" name="answer' + i + '" id ="'+answersone.id+'" style="margin: 0; padding: 0;">' +
                                         answersone.answerText + '</label></p>')
                                 }
                             div_q.append(span);
                         });
                     if (!questionone.open) {
-                        $(".test").append($('<div id="question' + i + '" style="margin-bottom: 20px; padding: 0;"/>')
-                            .append($('<div style="margin: 0; padding: 0;"/>').html(i+1 + '. ' + questionone.question + '</div>'))
+                        $(".test").append($('<div id="' + i + '" style="margin-bottom: 20px; padding: 0;" />')
+                            .append($('<div style="margin: 0; padding: 0;"/>').html(i+1 + '. ' + '<span id="'+questionone.id+'" class="questionclass">' + questionone.question + '</span></div>'))
                             .append(div_q)
                         );
                     } else {
-                        $(".test").append($('<div id="question' + i + '" style="margin-bottom: 20px; padding: 0;"/>')
-                            .append($('<div style="margin: 0; padding: 0;"/>').html(i+1 + '. ' + questionone.question + '</div>'))
+                        $(".test").append($('<div id="' + i + '" style="margin-bottom: 20px; padding: 0;" class="alldiv"/>')
+                            .append($('<div style="margin: 0; padding: 0;"/>').html(i+1 + '. ' + '<span id="'+questionone.id+'" class="questionclass">' + questionone.question + '</span></div>'))
                             .append($('<div style="margin: 0; padding: 0;"/>').html('<label for="icon_prefix2">' + 'Відповідь:' + '</label>'+
                                 '<textarea id="icon_prefix2" class="materialize-textarea" style="padding: 0; margin-bottom: 0;"></textarea>'))
                     );
@@ -109,18 +113,39 @@ $(document).ready(function ($) {
             }
 
             $("#save").click(function() {
-                $('#modal2').openModal();
-                var answertext = [];
-                    $.each(testinfo.questions, function (i, questionone) {
-                        $.each($('input[name="answer' + i + '"]:checked'), function () {
-                            answertext.push($(this).val());
-                    });
-                });
+                //$('#modal2').openModal();
 
-                event = {
-                    answerText: answertext
-                };
+                var questionId=[];
+                var answerId=[];
+                var answerText=[];
+                    $(".questionclass").each(function () {
+                        questionId.push($(this).attr("id"));
+
+                        $("input:checked").each(function () {
+                            answerId.push($(this).attr("id"));
+                        });
+
+                        $("#icon_prefix2").each(function () {
+                            answerText.push($(this).val());
+                        });
+                    });
+
+
+
+
+                        //questionId.push($(this).attr("id"));
+
+
+
+
+
+                event = [{
+                    answerText: answerText,
+                    answerId: answerId,
+                    questionId:questionId
+                }];
                 alert(JSON.stringify(event));
+
             })
 
         }
