@@ -74,10 +74,6 @@ $(document).ready(function ($) {
                 function timeisUp() {
                     $('#modal1').openModal();
                 }
-            //$.each(testinfo.questions, function (i, questionone) {
-            //    $('#t').html(questionone.id);
-            //    //questionId.push($(this).attr("id"));
-            //})
 
 // 2.3 get each category of this article
 
@@ -118,8 +114,6 @@ $(document).ready(function ($) {
     var exurl = 'http://localhost:8080/student/answers/' + tech;
             $("#save").click(function() {
                 //$('#modal2').openModal();
-
-
                 var answerId=[];
                 var answerText=[];
                 var eventArray = [];
