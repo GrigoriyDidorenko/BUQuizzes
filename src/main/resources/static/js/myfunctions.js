@@ -11,7 +11,8 @@ $(document).ready(function ($) {
     jQuery.ajax({
         type: "GET",
         url: "http://localhost:8080/student/tests/1",
-        contentType: 'application/json; charset=utf-8',
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
         success: function (json) {
             myjson = json;
             $.each(myjson, function (index, myjs) {
@@ -114,7 +115,7 @@ $(document).ready(function ($) {
             }
         }
     });
-    var exurl = 'http://localhost:8080/answers/' + tech;
+    var exurl = 'http://localhost:8080/student/answers/' + tech;
             $("#save").click(function() {
                 //$('#modal2').openModal();
 
@@ -156,37 +157,17 @@ $(document).ready(function ($) {
                 $.ajax({
                     url:exurl,
                     type:'POST',
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
                     data:globalVariable,
                     success: function() {
                         alert("yes");
+                    },
+                    error: function (e) {
+                        alert(e.message);
                     }
                 });
             })
-
-
-    //var exurl = 'http://localhost:8080/answers/' + tech;
-    //
-    //function function2() {
-    //    var local = globalVariable;
-    //    $.ajax
-    //    ({
-    //        type: "POST",
-    //        async: false,
-    //        url: exurl,
-    //        contentType: "application/json; charset=utf-8",
-    //        dataType: 'json',
-    //        data: local,
-    //        processData: true,
-    //        success: function () {
-    //
-    //            alert("Thanks!");
-    //        }
-    //    })
-    //};
-
-
-
-
 //*getting test-info
 });
 
