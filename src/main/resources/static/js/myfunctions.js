@@ -54,6 +54,7 @@ $(document).ready(function ($) {
     var tech = GetURLParameter('resultId');
     var urltest = 'http://localhost:8080/student/tests/1/pass/' + tech;
     var testinfo;
+    var globalVariable;
     jQuery.ajax({
         type: "GET",
         url: urltest,
@@ -93,15 +94,15 @@ $(document).ready(function ($) {
                             div_q.append(span);
                         });
                     if (!questionone.open) {
-                        $(".test").append($('<div id="' + i + '" style="margin-bottom: 20px; padding: 0;" />')
+                        $(".test").append($('<div id="' + i + '" style="margin-bottom: 20px; padding: 0;" class="alldiv" />')
                             .append($('<div style="margin: 0; padding: 0;"/>').html(i+1 + '. ' + '<span id="'+questionone.id+'" class="questionclass">' + questionone.question + '</span></div>'))
                             .append(div_q)
                         );
                     } else {
                         $(".test").append($('<div id="' + i + '" style="margin-bottom: 20px; padding: 0;" class="alldiv"/>')
                             .append($('<div style="margin: 0; padding: 0;"/>').html(i+1 + '. ' + '<span id="'+questionone.id+'" class="questionclass">' + questionone.question + '</span></div>'))
-                            .append($('<div style="margin: 0; padding: 0;"/>').html('<label for="icon_prefix2">' + 'Відповідь:' + '</label>'+
-                                '<textarea id="icon_prefix2" class="materialize-textarea" style="padding: 0; margin-bottom: 0;"></textarea>'))
+                            .append($('<div style="margin: 0; padding: 0;"/>').html('<label for=".icon_prefix2">' + 'Відповідь:' + '</label>'+
+                                '<textarea class="materialize-textarea icon_prefix2" style="padding: 0; margin-bottom: 0;"></textarea>'))
                     );
                     }
                 })
@@ -111,45 +112,81 @@ $(document).ready(function ($) {
                     $('#demo').append('<li style="display: inline"><a href="#question' + i + '">' + i + ' ' + '</a></li>');
 
             }
-
+        }
+    });
+    var exurl = 'http://localhost:8080/answers/' + tech;
             $("#save").click(function() {
                 //$('#modal2').openModal();
 
-                var questionId=[];
+
                 var answerId=[];
                 var answerText=[];
-                    $(".questionclass").each(function () {
-                        questionId.push($(this).attr("id"));
+                var eventArray = [];
 
-                        $("input:checked").each(function () {
-                            answerId.push($(this).attr("id"));
+                    $(".alldiv").each(function () {
+                        var event={
+                            questionId: "",
+                            answerId: "",
+                            answerText:""
+                        };
+                        event.questionId=+($(this).find(".questionclass").attr("id"));
+                        var inp=$(this).find("input:checked");
+                        var ansId =[];
+                        $(inp).each(function (){
+                            ansId.push(+($(this).attr("id")));
                         });
+                        event.answerId = ansId;
+                        if ($(this).find(".icon_prefix2").val()) {
+                            event.answerText = ($(this).find(".icon_prefix2").val());
+                        } else {
+                            event.answerText = "";
+                        }
 
-                        $("#icon_prefix2").each(function () {
-                            answerText.push($(this).val());
-                        });
+                        //var str = JSON.stringify(event);
+                        eventArray.push(event);
                     });
 
+                globalVariable=JSON.stringify(eventArray);
+                console.log(globalVariable);
 
-
-
-                        //questionId.push($(this).attr("id"));
-
-
-
-
-
-                event = [{
-                    answerText: answerText,
-                    answerId: answerId,
-                    questionId:questionId
-                }];
-                alert(JSON.stringify(event));
-
+                var formData = {
+                    "field1":$("#field1").val()
+                    , "field2":$("#field2").val()
+                };
+                $.ajax({
+                    url:exurl,
+                    type:'POST',
+                    data:globalVariable,
+                    success: function() {
+                        alert("yes");
+                    }
+                });
             })
 
-        }
-    });
+
+    //var exurl = 'http://localhost:8080/answers/' + tech;
+    //
+    //function function2() {
+    //    var local = globalVariable;
+    //    $.ajax
+    //    ({
+    //        type: "POST",
+    //        async: false,
+    //        url: exurl,
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: 'json',
+    //        data: local,
+    //        processData: true,
+    //        success: function () {
+    //
+    //            alert("Thanks!");
+    //        }
+    //    })
+    //};
+
+
+
+
 //*getting test-info
 });
 
