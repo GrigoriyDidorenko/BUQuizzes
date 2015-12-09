@@ -78,9 +78,11 @@ public class StudentController {
     ResultDTO setAnswers(@RequestBody String JSONAnswers, @PathVariable("resultId") String resultId) {
         ResultDTO resultDTO = null;
         try {
-            TypeFactory typeFactory = objectMapper.getTypeFactory();
-            ArrayList<UserAnswerDTO> userAnswerDTOs = objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(ArrayList.class, UserAnswerDTO.class));
-            resultDTO = testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
+           // TypeFactory typeFactory = objectMapper.getTypeFactory();
+           // ArrayList<UserAnswerDTO> userAnswerDTOs = objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(ArrayList.class, UserAnswerDTO.class));
+           // resultDTO = testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
+            resultDTO.setMark(56);
+            resultDTO.setCheckStatus(false);
         } catch (NumberFormatException e) {
             resultDTO.setCheckStatus("resultId string cannot be parsed");
         } catch (IOException e) {
