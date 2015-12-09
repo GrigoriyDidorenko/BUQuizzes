@@ -75,7 +75,7 @@ public class StudentController {
     @RequestMapping(value = "/answers/{resultId}", method = RequestMethod.POST, produces = "application/json")
     public
     @ResponseBody
-    ResultDTO setAnswers(@RequestBody String JSONAnswers, @PathVariable("resultId") String resultId) {
+    ResponseEntity<ResultDTO> setAnswers(@RequestBody String JSONAnswers, @PathVariable("resultId") String resultId) {
         ResultDTO resultDTO = new ResultDTO(56, "false");
         try {
             //  TypeFactory typeFactory = objectMapper.getTypeFactory();
@@ -86,6 +86,6 @@ public class StudentController {
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
         }
-        return resultDTO;
+        return new ResponseEntity<>(resultDTO, HttpStatus.OK);
     }
 }
