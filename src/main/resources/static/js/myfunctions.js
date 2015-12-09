@@ -5,6 +5,7 @@ $(document).ready(function ($) {
         autoPlay: 3000
     });
 
+
 //*owlCarousel
 //getting tests
     var myjson;
@@ -91,12 +92,12 @@ $(document).ready(function ($) {
                             div_q.append(span);
                         });
                     if (!questionone.open) {
-                        $(".test").append($('<div id="' + i + '" style="margin-bottom: 20px; padding: 0;" class="alldiv" />')
+                        $("#tabs").append($('<div id="tabs-' + i + '" style="margin-bottom: 20px; padding: 0;" class="alldiv" />')
                             .append($('<div style="margin: 0; padding: 0;"/>').html(i+1 + '. ' + '<span id="'+questionone.id+'" class="questionclass">' + questionone.question + '</span></div>'))
                             .append(div_q)
                         );
                     } else {
-                        $(".test").append($('<div id="' + i + '" style="margin-bottom: 20px; padding: 0;" class="alldiv"/>')
+                        $("#tabs").append($('<div id="tabs-' + i + '" style="margin-bottom: 20px; padding: 0;" class="alldiv"/>')
                             .append($('<div style="margin: 0; padding: 0;"/>').html(i+1 + '. ' + '<span id="'+questionone.id+'" class="questionclass">' + questionone.question + '</span></div>'))
                             .append($('<div style="margin: 0; padding: 0;"/>').html('<label for=".icon_prefix2">' + 'Відповідь:' + '</label>'+
                                 '<textarea class="materialize-textarea icon_prefix2" style="padding: 0; margin-bottom: 0;"></textarea>'))
@@ -105,13 +106,14 @@ $(document).ready(function ($) {
                 })
             var mytabs = [];
             mytabs.length = qmass.length
-            for(i=0; i<=mytabs.length; i++) {
-                    $('#demo').append('<li style="display: inline"><a href="#question' + i + '">' + i + ' ' + '</a></li>');
+            for(i=0; i<mytabs.length; i++) {
+                $('#demo').append('<li class="tab" style="display: inline"><a href="#tabs-' + i + '">' + i + ' ' + '</a></li>');
 
             }
+            $( "#tabs" ).tabs();
         }
     });
-    var exurl = 'http://localhost:8080/student/answers/' + tech;
+
             $("#save").click(function() {
                 //$('#modal2').openModal();
                 var answerId=[];
@@ -143,10 +145,11 @@ $(document).ready(function ($) {
 
                 globalVariable=JSON.stringify(eventArray);
                 console.log(globalVariable);
+                var exurl = 'http://localhost:8080/student/answers/' + tech;
 
                 var formData = {
-                    "field1":$("#field1").val()
-                    , "field2":$("#field2").val()
+                    "field1":1,
+                    "field2":2
                 };
                 $.ajax({
                     url:exurl,
