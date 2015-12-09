@@ -147,10 +147,6 @@ $(document).ready(function ($) {
                 console.log(globalVariable);
                 var exurl = 'http://localhost:8080/student/answers/' + tech;
 
-                var formData = {
-                    "field1":1,
-                    "field2":2
-                };
                 $.ajax({
                     url:exurl,
                     type:'POST',
