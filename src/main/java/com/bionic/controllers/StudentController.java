@@ -82,11 +82,9 @@ public class StudentController {
            // ArrayList<UserAnswerDTO> userAnswerDTOs = objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(ArrayList.class, UserAnswerDTO.class));
            // resultDTO = testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
             resultDTO.setMark(56);
-            resultDTO.setCheckStatus(false);
+            resultDTO.setCheckStatus("false");
         } catch (NumberFormatException e) {
             resultDTO.setCheckStatus("resultId string cannot be parsed");
-        } catch (IOException e) {
-            resultDTO.setCheckStatus("I/O problem");
         } catch (Exception e){
             resultDTO.setCheckStatus(e.getMessage());
         }
