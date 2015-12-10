@@ -17,6 +17,45 @@ public class Converter {
 
     private static boolean alreadyExecuted;
 
+    public static Test convertTestDTOToTest(TestDTO testDTO){
+        Test test = new Test();
+        test.setTestName(testDTO.getTestName());
+        test.setDuration(testDTO.getDuration());
+        Set<Question> questions = new HashSet<>();
+        for (QuestionDTO questionDTO : testDTO.getQuestions()){
+            Question question = new Question();
+            question.setQuestion(questionDTO.getQuestion());
+            if (questionDTO.getAnswers().size()==0 /* || questionDTO.getAnswers() == null*/){
+                question.setIsOpen(true);
+                question.setIsMultichoice(false);
+                question.setTest(test);
+                questions.add(question);
+                continue;
+            }
+            Set<Answer> answers = new HashSet<>();
+            int isMultichoice = 0;
+            for (AnswerDTO answerDTO : questionDTO.getAnswers()){
+                Answer answer = new Answer();
+                answer.setAnswerText(answerDTO.getAnswerText());
+                answer.setMark(answerDTO.getMark());
+                answer.setQuestion(question);
+                answers.add(answer);
+                if (answerDTO.getMark() > 0){
+                    isMultichoice++;
+                }
+            }
+            if (isMultichoice > 1){
+                question.setIsMultichoice(true);
+            }
+            question.setIsOpen(false);
+            question.setAnswers(answers);
+            question.setTest(test);
+            questions.add(question);
+        }
+        test.setQuestions(questions);
+        return test;
+    }
+
     public static TestDTO convertUsersTestToDTO(Test test) {
         TestDTO testDTO = new TestDTO();
         Set<QuestionDTO> questionDTOs = new HashSet<>();
