@@ -8,12 +8,13 @@ public class ResultDTO {
     int mark;
     String checkStatus;
 
-    public ResultDTO(int mark, String statusPerevirki) {
-        this.mark = mark;
-        this.checkStatus = statusPerevirki;
+    public ResultDTO() {
     }
 
-
+    public ResultDTO(int mark, String checkStatus) {
+        this.mark = mark;
+        this.checkStatus = checkStatus;
+    }
 
     public int getMark() {
         return mark;

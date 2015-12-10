@@ -18,7 +18,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="../js/owl.carousel.min.js"></script>
-    <script src="../js/myfunctions.js"></script>
+    <script src="../js/final.js"></script>
+    <script src="../js/addUser.js"></script>
     <script type="text/javascript" src="../materialize-src/js/bin/materialize.min.js"></script>
 
 </head>
@@ -47,21 +48,20 @@
     </div>
 </header>
 <main class="user-main">
-<div class="container">
-    <div class="row">
-        <div class="col s12">
-<form method="POST" action="/admin/addUser" th:object="${user}">
-    Имя: <input type="text" name="firstName" th:field="*{firstName}"><br />
-    Фамилия: <input type="text" name="lastName" th:field="*{lastName}"><br />
-    Email: <input type="text" name="email" th:field="*{email}"><br />
-    Телефон:  <input type="text" name="cell" th:field="*{cell}"><br />
-    Должность: <input type="text" name="position" th:field="*{position}">
-    Уровень доступа: <select name="role.id" size="2" th:field="*{role.id}" style="display: block" id='roles'></select>
-    <br /> <br /> <input type="submit" value
-        ="Upload" class="submit-but">
-</form>
-        </div></div></div>
-    </main>
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <form method="POST" action="/superAdmin/addUser" th:object="${user}">
+                    Имя: <input type="text" name="firstName" th:field="*{firstName}"><br />
+                    Фамилия: <input type="text" name="lastName" th:field="*{lastName}"><br />
+                    Email: <input type="text" name="email" th:field="*{email}"><br />
+                    Телефон:  <input type="text" name="cell" th:field="*{cell}"><br />
+                    Должность: <input type="text" name="position" th:field="*{position}">
+                    Уровень доступа: <select name="roleId" size="2" th:field="*{roleId}" style="display: block" id="roles"></select>
+                    <br /> <br /> <input type="submit" value="Upload" class="submit-but">
+                </form>
+            </div></div></div>
+</main>
 <footer class="footer">
     <div class="container">
         <div class="row">

@@ -1,8 +1,5 @@
 package com.bionic.entities;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -18,8 +15,9 @@ import java.util.Set;
                 query = "SELECT u.tests FROM User u WHERE u.id = :id"),
         @NamedQuery(name = "getUserByEmail",
                 query = "SELECT u FROM User u WHERE u.email=:email"),
-
 })
+@NamedNativeQuery(name = "getUsersNames",
+        query = "SELECT u.id, u.first_name, u.last_name FROM User u")
 @Table(catalog = "quizzes")
 public class User {
     @Id
@@ -37,8 +35,9 @@ public class User {
     private String cell;
     @Column(name="position")
     private String position;
-    @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "role_id", nullable = false)
     private Role role;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -48,10 +47,13 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String email) {
+    public User(String firstName, String lastName, String email, String cell, String position, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.cell = cell;
+        this.position = position;
+        this.role = role;
     }
 
     public String getPosition() {

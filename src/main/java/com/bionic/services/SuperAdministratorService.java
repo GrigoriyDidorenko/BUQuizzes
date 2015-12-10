@@ -1,10 +1,9 @@
 package com.bionic.services;
 
-import com.bionic.DAO.RoleDAO;
-import com.bionic.DAO.UserDAO;
+import com.bionic.DTO.UserDTO;
+import com.bionic.entities.Role;
 import com.bionic.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,27 +15,27 @@ import org.springframework.stereotype.Service;
  * @date: 29.11.2015
  */
 @Service
-public class AdministratorService {
-
+public class SuperAdministratorService {
 
     @Autowired
-    private UserDAO userDAO;
-    @Autowired
-    private RoleDAO roleDAO;
+    private UserService userService;
     @Autowired
     private OtpGenerator generator;
     @Autowired
     private MailManager mailManager;
 
-    public void addUser(User user){
+    public void addUser(UserDTO userDTO){
         try {
+            userDTO.setRole(Role.findById(userDTO.getRoleId()));
+            User user = Converter.convertUserDTOToUser(userDTO);
             user.setPassword(generator.generateToken());
-            user.setRole(roleDAO.find(user.getRole().getId()));
             mailManager.send(user.getEmail(),"test","Hello "+user.getFirstName()+
                     ", your new password:"+"\n"+user.getPassword()+"\nit's OTP, please change it");
-            userDAO.save(user);
+            userService.save(user);
         } catch (Exception e){
             e.printStackTrace();
         }
     }
+
+
 }

@@ -2,16 +2,26 @@ package com.bionic.DAO;
 
 
 
+import com.bionic.DTO.TestDTO;
 import com.bionic.entities.Test;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.Query;
+import java.util.List;
+import java.util.Set;
 
 @Repository("testDAO")
 @Transactional(propagation = Propagation.REQUIRED)
 public class TestDAO extends AbstractDAO<Test> {
     public TestDAO() {
         super(Test.class);
+    }
+
+    public List<TestDTO> getUnarchivedTestsNames(){
+        Query query = em.createNamedQuery("getUnarchivedTestsNames");
+        return (List<TestDTO>)query.getResultList();
     }
 
 /*    public ShowAll findTestByName(String name){
