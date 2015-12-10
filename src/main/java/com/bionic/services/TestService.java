@@ -42,17 +42,20 @@ public class TestService {
 
     public ResultDTO processingAnswers(ArrayList<UserAnswerDTO> answerDTOs, long resultId) {
         ResultDTO resultDTO = null;
+        Result result = resultDAO.find(resultId);
         try {
-            Result result = resultDAO.find(resultId);
             ArrayList<UserAnswer> userAnswers = converter.convertUserAnswerDTOsToUserAnswers(answerDTOs, result);
             for (UserAnswer userAnswer : userAnswers) {
                 userAnswerDAO.save(userAnswer);
             }
             result = calcResult(result, userAnswers);
-            resultDAO.update(result);
-            resultDTO = new ResultDTO(result.getMark(),String.valueOf(result.isChecked()));
+
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
+        }finally {
+            result.setSubmited(true);
+            resultDAO.update(result);
+            resultDTO = new ResultDTO(result.getMark(),String.valueOf(result.isChecked()));
         }
         return resultDTO;
     }

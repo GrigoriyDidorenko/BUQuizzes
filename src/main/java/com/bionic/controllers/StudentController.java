@@ -49,24 +49,14 @@ public class StudentController {
 //        return testService.importTest(new File("d:\\file.json"));
 //    }
 
-
     @RequestMapping(value = "/tests/{id}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     ResponseEntity<Set<TestWrapper>> getAvailableTestsNames(@PathVariable("id") String id) {
         Set<TestWrapper> tests = studentService.getAvailableTestsNames(id);
-
+        tests.addAll(studentService.getPassTests(id));
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
-
-    @RequestMapping(value = "/passTests/{id}", method = RequestMethod.GET, produces = "application/json")
-    public
-    @ResponseBody
-    ResponseEntity<List<TestDTO>> getPassTests(@PathVariable("id") String id) {
-        List<TestDTO> passTests = (List<TestDTO>) studentService.getPassTests(id);
-        return new ResponseEntity<>(passTests, HttpStatus.OK);
-    }
-
 
     @RequestMapping(value = "/tests/{id}/pass/{resultId}", method = RequestMethod.GET, produces = "application/json")
     public
@@ -85,11 +75,11 @@ public class StudentController {
     public
     @ResponseBody
     ResponseEntity<ResultDTO> setAnswers(@RequestBody String JSONAnswers, @PathVariable("resultId") String resultId) {
-        ResultDTO resultDTO = new ResultDTO(56, "false");
+        ResultDTO resultDTO = null;
         try {
-            //  TypeFactory typeFactory = objectMapper.getTypeFactory();
-            //    ArrayList<UserAnswerDTO> userAnswerDTOs = objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(ArrayList.class, UserAnswerDTO.class));
-            //     resultDTO = testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
+              TypeFactory typeFactory = objectMapper.getTypeFactory();
+              ArrayList<UserAnswerDTO> userAnswerDTOs = objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(ArrayList.class, UserAnswerDTO.class));
+              resultDTO = testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
         } catch (NumberFormatException e) {
             resultDTO.setCheckStatus("resultId string cannot be parsed");
         } catch (Exception e) {

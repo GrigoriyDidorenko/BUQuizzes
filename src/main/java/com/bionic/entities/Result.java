@@ -18,7 +18,7 @@ import java.util.Date;
         query = "SELECT test.id, test.testName, test.duration FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId"),
 
         @NamedQuery(name = "getPassTests",
-                query = "SELECT test.id, test.testName, result.beginTime, result.mark FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId and result.isChecked = TRUE " )
+                query = "SELECT test.id, test.testName, result.mark, result.isChecked FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId and result.submited = TRUE " )
 
 })
 @NamedNativeQuery(name = "getResultByIds", query = "SELECT result.id FROM Result result WHERE result.test_id = :testId AND result.user_id = :userId ")

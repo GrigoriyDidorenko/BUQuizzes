@@ -89,12 +89,17 @@ public class StudentService {
     }
 
 
-    public List<TestDTO> getPassTests(String idStr) {
-       List<TestDTO> resultDTOs =  resultDAO.getPassTests(getLongId(idStr));
-        //ToDO write data
-        /*for(TestDTO testDTO : resultDTOs){
-            //testDTO.setCountQuestions();
-        }*/
-        return resultDTOs;
+    public HashSet<TestWrapper> getPassTests(String idStr) {
+        try {
+            HashSet<TestWrapper> result = new HashSet<>();
+            HashSet<TestDTO> testDTOs = new HashSet<>(resultDAO.getPassTests(getLongId(idStr)));
+            for (TestDTO testDTO : testDTOs){
+                result.add(new TestWrapper(testDTO));}
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+
 }

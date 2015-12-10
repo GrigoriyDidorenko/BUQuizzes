@@ -50,19 +50,25 @@ public class Converter {
         return new LinkedHashSet<>(shuffledList);
     }
 
-    public UserAnswer convertUserAnswerDTOToUserAnswer(UserAnswerDTO userAnswerDTO, Result result) {
+    public UserAnswer convertUserAnswerDTOToUserAnswer(UserAnswerDTO userAnswerDTO, Result result, Long answerId) {
         UserAnswer userAnswer = new UserAnswer();
         userAnswer.setQuestionId(userAnswerDTO.getQuestionId());
         userAnswer.setResultId(result.getId());
         userAnswer.setUserAnswer(userAnswerDTO.getAnswerText());
-        userAnswer.setAnswerId(userAnswerDTO.getAnswerId());
+        if (!(answerId == null)) userAnswer.setAnswerId(answerId);
         return userAnswer;
     }
 
-    public ArrayList<UserAnswer> convertUserAnswerDTOsToUserAnswers(ArrayList<UserAnswerDTO> userAnswerDTOs, Result result) {
+    public ArrayList<UserAnswer> convertUserAnswerDTOsToUserAnswers(ArrayList<UserAnswerDTO> userAnswerDTOs, Result result) throws NumberFormatException {
         ArrayList<UserAnswer> userAnswers = new ArrayList<>();
         for (UserAnswerDTO userAnswerDTO : userAnswerDTOs) {
-            userAnswers.add(convertUserAnswerDTOToUserAnswer(userAnswerDTO, result));
+            if (!userAnswerDTO.getAnswerId().isEmpty()) {
+                for (String answerId : userAnswerDTO.getAnswerId()) {
+                    userAnswers.add(convertUserAnswerDTOToUserAnswer(userAnswerDTO, result, Long.parseLong(answerId)));
+                }
+            } else {
+                userAnswers.add(convertUserAnswerDTOToUserAnswer(userAnswerDTO, result, null));
+            }
         }
         return userAnswers;
     }
