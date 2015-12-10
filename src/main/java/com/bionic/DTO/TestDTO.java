@@ -104,7 +104,7 @@ public class TestDTO {
 
         if (id != testDTO.id) return false;
         if (duration != testDTO.duration) return false;
-        if (!testName.equals(testDTO.testName)) return false;
+        if (testName != null ? !testName.equals(testDTO.testName) : testDTO.testName != null) return false;
         return !(questions != null ? !questions.equals(testDTO.questions) : testDTO.questions != null);
 
     }
@@ -112,7 +112,7 @@ public class TestDTO {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + testName.hashCode();
+        result = 31 * result + (testName != null ? testName.hashCode() : 0);
         result = 31 * result + duration;
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
         return result;

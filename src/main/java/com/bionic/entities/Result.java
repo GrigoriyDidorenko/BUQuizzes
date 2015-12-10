@@ -13,15 +13,32 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "getCurrentTestById",
                 query = "SELECT test From Result result JOIN result.test test JOIN result.user user " +
-                        "WHERE result.test.id = :testId AND result.user.id = :userId AND result.permission = 1"),
+                        "JOIN test.questions question JOIN question.answers answer WHERE test.id = :testId " +
+                        "AND user.id = :userId AND result.permission.id = :permissionId"),
         @NamedQuery(name = "getAvailableTestsNames",
-        query = "SELECT test.id, test.testName, test.duration FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId"),
+                query = "SELECT test.id, test.testName, test.duration FROM Result result " +
+                        "JOIN result.test test " +
+                        "JOIN result.user user " +
+                        "where user.id = :userId AND result.submited = false"),
 
         @NamedQuery(name = "getPassTests",
                 query = "SELECT test.id, test.testName, result.mark, result.isChecked FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId and result.submited = TRUE " )
 
+               
 })
-@NamedNativeQuery(name = "getResultByIds", query = "SELECT result.id FROM Result result WHERE result.test_id = :testId AND result.user_id = :userId ")
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "getResultByIds", query = "SELECT result.id FROM Result result " +
+                "WHERE result.test_id = :testId AND result.user_id = :userId "),
+//        @NamedNativeQuery(name = "getCurrentTestById",
+//                query = "SELECT t.id, t.test_name, t.duration, q.id as qId, " +
+//                        "q.question as question, q.is_multichoice as is_multichoice, " +
+//                        "q.is_open as is_open, a.id as aId, a.answer_text as answer_text  FROM result r " +
+//                        "JOIN test t ON r.test_id = t.id " +
+//                        "JOIN user u ON r.user_id = u.id " +
+//                        "JOIN question q ON t.id = q.test_id JOIN answer a ON q.id = a.question_id " +
+//                        "WHERE t.id = :testId AND u.id = :userId AND r.permission = :permissionId " +
+//                        "AND q.archived = false AND a.archived = false", resultClass = com.bionic.entities.Test.class)
+})
 @Table(catalog = "quizzes")
 public class Result {
     @Id
@@ -39,8 +56,9 @@ public class Result {
     private Date passTime;
     @Column(name = "feedback")
     private String feedback;
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "permission", nullable = false)
-    private long permission;
+    private Permission permission;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -51,7 +69,10 @@ public class Result {
     public Result() {
     }
 
-    public Result(User user, Test test) {
+    public Result(boolean isChecked, boolean submited, Permission permission, User user, Test test) {
+        this.isChecked = isChecked;
+        this.submited = submited;
+        this.permission = permission;
         this.user = user;
         this.test = test;
     }
@@ -74,14 +95,6 @@ public class Result {
 
     public void setSubmited(boolean submited) {
         this.submited = submited;
-    }
-
-    public int  getMark() {
-        return mark;
-    }
-
-    public void setMark(int mark) {
-        this.mark = mark;
     }
 
     public Date getBeginTime() {
@@ -124,11 +137,19 @@ public class Result {
         this.test = test;
     }
 
-    public long getPermission() {
+    public Integer getMark() {
+        return mark;
+    }
+
+    public void setMark(Integer mark) {
+        this.mark = mark;
+    }
+
+    public Permission getPermission() {
         return permission;
     }
 
-    public void setPermission(long permission) {
+    public void setPermission(Permission permission) {
         this.permission = permission;
     }
 
@@ -171,7 +192,6 @@ public class Result {
         result = 31 * result + (beginTime != null ? beginTime.hashCode() : 0);
         result = 31 * result + (passTime != null ? passTime.hashCode() : 0);
         result = 31 * result + (feedback != null ? feedback.hashCode() : 0);
-        result = 31 * result + (int) (permission ^ (permission >>> 32));
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (test != null ? test.hashCode() : 0);
         return result;

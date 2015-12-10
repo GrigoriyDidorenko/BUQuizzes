@@ -1,8 +1,11 @@
 package com.bionic.controllers;
 
+import com.bionic.DAO.UserDAO;
 import com.bionic.DTO.ResultDTO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
+import com.bionic.entities.Role;
+import com.bionic.entities.User;
 import com.bionic.services.StudentService;
 import com.bionic.services.TestService;
 import com.bionic.wrappers.TestWrapper;
@@ -41,13 +44,7 @@ public class StudentController {
 
     }
 
-//    /*Test method*/
-//    @RequestMapping(value = "/import", method = RequestMethod.GET)
-//    public
-//    @ResponseBody
-//    String getSample(){
-//        return testService.importTest(new File("d:\\file.json"));
-//    }
+
 
     @RequestMapping(value = "/tests/{id}", method = RequestMethod.GET, produces = "application/json")
     public
@@ -62,8 +59,8 @@ public class StudentController {
     public
     @ResponseBody
     ResponseEntity<TestDTO> getCurrentTest(@PathVariable("id") String id, @PathVariable("resultId") String resultId) {
-        TestDTO testDTO = studentService.getCurrentTest(id, resultId);
         studentService.setTestBeginTime(resultId);
+        TestDTO testDTO = studentService.getCurrentTest(id, resultId);
         return new ResponseEntity<>(testDTO, HttpStatus.OK);
     }
 

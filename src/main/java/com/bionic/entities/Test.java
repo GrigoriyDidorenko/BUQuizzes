@@ -1,6 +1,7 @@
 package com.bionic.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -12,6 +13,8 @@ import java.util.Set;
  * @date: 01.11.2015
  */
 @Entity
+@NamedNativeQuery(name = "getUnarchivedTestsNames",
+        query = "SELECT t.id, t.test_name FROM Test t WHERE t.archived = FALSE")
 @Table(name = "test", catalog = "quizzes")
 public class Test {
     @Id
@@ -24,7 +27,7 @@ public class Test {
     private String testName;
     @Column(name = "archived", nullable = false)
     private boolean archived;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "test", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "test", fetch = FetchType.EAGER)
     private Set<Question> questions;
     @ManyToMany(mappedBy = "tests")
     private Set<User> users;
@@ -78,6 +81,16 @@ public class Test {
 
     public Set<Question> getQuestions() {
         return questions;
+    }
+
+    public Set<Question> getQuestionsNotArchived() {
+        Set<Question> notArchivedQuestions = new HashSet<>();
+        for (Question question : questions)
+            if (!question.getIsArchived())
+                notArchivedQuestions.add(question);
+        if(notArchivedQuestions.isEmpty() && !questions.isEmpty())
+            this.setArchived(true);
+        return notArchivedQuestions;
     }
 
     public void setQuestions(Set<Question> questions) {
