@@ -17,20 +17,22 @@ public class Converter {
 
     private static boolean alreadyExecuted;
 
-    public static TestDTO convertTestToDTO(Test test) {
+    public static TestDTO convertUsersTestToDTO(Test test) {
+        TestDTO testDTO = new TestDTO();
         Set<QuestionDTO> questionDTOs = new HashSet<>();
-        for (Question question : test.getQuestions()) {
+        for (Question question : test.getQuestionsNotArchived()) {
             Set<AnswerDTO> answerDTOs = new HashSet<>();
-            for (Answer answer : question.getAnswers()) {
+            for (Answer answer : question.getAnswersNotArchived()) {
                 answerDTOs.add(new AnswerDTO(answer.getId(), answer.getAnswerText()));
             }
             if (!alreadyExecuted) answerDTOs = randomizeAnswers(answerDTOs);
-            QuestionDTO questionDTO = new QuestionDTO(question.getId(), question.getQuestion(),
-                    answerDTOs, question.getIsMultichoice(), question.getIsOpen());
-            questionDTOs.add(questionDTO);
+            if (!question.getIsArchived())
+                questionDTOs.add(new QuestionDTO(question.getId(), question.getQuestion(),
+                        answerDTOs, question.getIsMultichoice(), question.getIsOpen()));
         }
         if (!alreadyExecuted) questionDTOs = randomizeQuestions(questionDTOs);
-        TestDTO testDTO = new TestDTO(test.getId(), test.getTestName(), test.getDuration(), questionDTOs);
+        if (test.isArchived())
+            testDTO = new TestDTO(test.getId(), test.getTestName(), test.getDuration(), questionDTOs);
         alreadyExecuted = true;
         return testDTO;
     }
@@ -64,11 +66,11 @@ public class Converter {
         return userAnswers;
     }
 
-    public static User converUserDTOToUser(UserDTO userDTO){
+    public static User converUserDTOToUser(UserDTO userDTO) {
         try {
             return new User(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
                     userDTO.getCell(), userDTO.getPosition(), userDTO.getRole());
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

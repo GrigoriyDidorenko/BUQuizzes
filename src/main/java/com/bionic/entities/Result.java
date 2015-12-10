@@ -13,13 +13,24 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "getCurrentTestById",
                 query = "SELECT test From Result result JOIN result.test test JOIN result.user user " +
-                        "JOIN test.questions question JOIN question.answers answer " +
-                        "WHERE test.id = :testId AND user.id = :userId " +
-                        "AND result.permission.id = :permissionId AND question.isArchived = false AND answer.isArchived = false"),
+                        "JOIN test.questions question JOIN question.answers answer WHERE test.id = :testId " +
+                        "AND user.id = :userId AND result.permission.id = :permissionId"),
         @NamedQuery(name = "getAvailableTestsNames",
-        query = "SELECT test.id, test.testName, test.duration FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId")
+                query = "SELECT test.id, test.testName, test.duration FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId")
 })
-@NamedNativeQuery(name = "getResultByIds", query = "SELECT result.id FROM Result result WHERE result.test_id = :testId AND result.user_id = :userId ")
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "getResultByIds", query = "SELECT result.id FROM Result result " +
+                "WHERE result.test_id = :testId AND result.user_id = :userId "),
+//        @NamedNativeQuery(name = "getCurrentTestById",
+//                query = "SELECT t.id, t.test_name, t.duration, q.id as qId, " +
+//                        "q.question as question, q.is_multichoice as is_multichoice, " +
+//                        "q.is_open as is_open, a.id as aId, a.answer_text as answer_text  FROM result r " +
+//                        "JOIN test t ON r.test_id = t.id " +
+//                        "JOIN user u ON r.user_id = u.id " +
+//                        "JOIN question q ON t.id = q.test_id JOIN answer a ON q.id = a.question_id " +
+//                        "WHERE t.id = :testId AND u.id = :userId AND r.permission = :permissionId " +
+//                        "AND q.archived = false AND a.archived = false", resultClass = com.bionic.entities.Test.class)
+})
 @Table(catalog = "quizzes")
 public class Result {
     @Id
