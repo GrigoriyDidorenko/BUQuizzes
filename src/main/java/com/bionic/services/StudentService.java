@@ -1,17 +1,22 @@
 package com.bionic.services;
 
 
+
+import com.bionic.DAO.QuestionDAO;
 import com.bionic.DAO.ResultDAO;
+import com.bionic.DAO.UserAnswerDAO;
+import com.bionic.DAO.UserDAO;
+import com.bionic.DTO.ResultDTO;
 import com.bionic.DTO.TestDTO;
+import com.bionic.entities.Question;
 import com.bionic.entities.Result;
 import com.bionic.entities.Test;
+import com.bionic.entities.User;
 import com.bionic.wrappers.TestWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * package: com.bionic.services
@@ -27,6 +32,11 @@ public class StudentService {
 
     @Autowired
     private ResultDAO resultDAO;
+    @Autowired
+    private QuestionDAO questionDAO;
+    @Autowired
+    private UserAnswerDAO userAnswerDAO;
+
 
     public Set<TestWrapper> getAvailableTestsNames(String idStr) {
         try {
@@ -79,4 +89,12 @@ public class StudentService {
     }
 
 
+    public List<TestDTO> getPassTests(String idStr) {
+       List<TestDTO> resultDTOs =  resultDAO.getPassTests(getLongId(idStr));
+        //ToDO write data
+        /*for(TestDTO testDTO : resultDTOs){
+            //testDTO.setCountQuestions();
+        }*/
+        return resultDTOs;
+    }
 }

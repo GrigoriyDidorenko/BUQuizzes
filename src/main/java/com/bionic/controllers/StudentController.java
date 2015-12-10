@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -56,6 +57,14 @@ public class StudentController {
         Set<TestWrapper> tests = studentService.getAvailableTestsNames(id);
 
         return new ResponseEntity<>(tests, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/passTests/{id}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    ResponseEntity<List<TestDTO>> getPassTests(@PathVariable("id") String id) {
+        List<TestDTO> passTests = (List<TestDTO>) studentService.getPassTests(id);
+        return new ResponseEntity<>(passTests, HttpStatus.OK);
     }
 
 

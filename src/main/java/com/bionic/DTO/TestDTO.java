@@ -1,5 +1,6 @@
 package com.bionic.DTO;
 
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -13,10 +14,20 @@ import java.util.Set;
 
 public class TestDTO {
 
+    // General filds
     private long id;
     private String testName;
+    //Filds for Avaliable Tests
     private int duration;
     private Set<QuestionDTO> questions;
+    //Filds for Submited Tests
+    private boolean isChecked;
+    private int mark;
+    private Date beginTime;
+    private int countQuestions;
+    private int countCorectAnswers;
+
+
 
     public TestDTO() {
     }
@@ -32,6 +43,53 @@ public class TestDTO {
         this.duration = duration;
         this.testName = testName;
         this.questions = questions;
+    }
+
+    public TestDTO(long id, String testName, Date beginTime, int mark ) {
+        this.id = id;
+        this.testName = testName;
+        this.mark = mark;
+        this.beginTime = beginTime;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(boolean isChecked) {
+        this.isChecked = isChecked;
+    }
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
+
+    public Date getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(Date beginTime) {
+        this.beginTime = beginTime;
+    }
+
+    public int getCountQuestions() {
+        return countQuestions;
+    }
+
+    public void setCountQuestions(int countQuestions) {
+        this.countQuestions = countQuestions;
+    }
+
+    public int getCountCorectAnswers() {
+        return countCorectAnswers;
+    }
+
+    public void setCountCorectAnswers(int countCorectAnswers) {
+        this.countCorectAnswers = countCorectAnswers;
     }
 
     public TestDTO(String testName) {

@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.Query;
 import java.math.BigInteger;
 import java.util.ArrayList;
+
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -54,5 +56,19 @@ public class ResultDAO extends AbstractDAO<Result> {
         query.setParameter("testId", testId);
         query.setParameter("userId", userId);
         return (BigInteger)query.getSingleResult();
+    }
+
+    public List<TestDTO> getPassTests(long id) {
+        List<TestDTO> list = new ArrayList<>();
+        Query query = em.createNamedQuery("getPassTests");
+        query.setParameter("userId", id);
+        Iterator iterator = query.getResultList().iterator();
+        while (iterator.hasNext()){
+            Object[] tmp = (Object[]) iterator.next();
+            TestDTO testDTO = new TestDTO((long)tmp[0],(String)tmp[1],(Date)tmp[2],(int)tmp[3]);
+
+            list.add(testDTO);
+        }
+        return list;
     }
 }
