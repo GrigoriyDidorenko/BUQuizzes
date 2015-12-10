@@ -17,18 +17,19 @@ $(document).ready(function ($) {
         success: function (json) {
             myjson = json;
             $.each(myjson, function (index, myjs) {
-                    $('.avaliableTests').append('<tr><td>' + myjs.testDTO.testName + '</td><td>' +
-                        myjs.testDTO.duration + " хв" + '</td><td><a href="TestPage.html?resultId='+myjs.resultId+'"><button class="start-test-btn">' +
+                $.each(myjs.testDTO, function (index, testDT) {
+                    $('.avaliableTests').append('<tr><td>' + testDT.testName + '</td><td>' +
+                        testDT.duration + " хв" + '</td><td><a href="TestPage.html"><button class="start-test-btn">' +
                         "розпочати тест" + '</button></a></td></tr>')
             })
-        }
-    })
+        })
+    }});
 
 //*getting tests
 //getting results
     jQuery.ajax({
         type: "GET",
-        url: "http://localhost:8080/superAdmin/addUser",
+        url: "http://localhost:8081/superAdmin/addUser",
         contentType: 'application/json; charset=utf-8',
         success: function (jsonrols) {
             var rols;

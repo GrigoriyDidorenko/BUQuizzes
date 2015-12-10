@@ -1,9 +1,6 @@
 package com.bionic.services;
 
-import com.bionic.DTO.AnswerDTO;
-import com.bionic.DTO.QuestionDTO;
-import com.bionic.DTO.TestDTO;
-import com.bionic.DTO.UserAnswerDTO;
+import com.bionic.DTO.*;
 import com.bionic.entities.*;
 import com.bionic.entities.Answer;
 import com.bionic.entities.Question;
@@ -20,20 +17,22 @@ public class Converter {
 
     private static boolean alreadyExecuted;
 
-    public static TestDTO convertTestToDTO(Test test) {
+    public static TestDTO convertUsersTestToDTO(Test test) {
+        TestDTO testDTO = new TestDTO();
         Set<QuestionDTO> questionDTOs = new HashSet<>();
-        for (Question question : test.getQuestions()) {
+        for (Question question : test.getQuestionsNotArchived()) {
             Set<AnswerDTO> answerDTOs = new HashSet<>();
-            for (Answer answer : question.getAnswers()) {
+            for (Answer answer : question.getAnswersNotArchived()) {
                 answerDTOs.add(new AnswerDTO(answer.getId(), answer.getAnswerText()));
             }
             if (!alreadyExecuted) answerDTOs = randomizeAnswers(answerDTOs);
-            QuestionDTO questionDTO = new QuestionDTO(question.getId(), question.getQuestion(),
-                    answerDTOs, question.getIsMultichoice(), question.getIsOpen());
-            questionDTOs.add(questionDTO);
+            if (!question.getIsArchived())
+                questionDTOs.add(new QuestionDTO(question.getId(), question.getQuestion(),
+                        answerDTOs, question.getIsMultichoice(), question.getIsOpen()));
         }
         if (!alreadyExecuted) questionDTOs = randomizeQuestions(questionDTOs);
-        TestDTO testDTO = new TestDTO(test.getId(), test.getTestName(), test.getDuration(), questionDTOs);
+        if (test.isArchived())
+            testDTO = new TestDTO(test.getId(), test.getTestName(), test.getDuration(), questionDTOs);
         alreadyExecuted = true;
         return testDTO;
     }
@@ -65,6 +64,16 @@ public class Converter {
             userAnswers.add(convertUserAnswerDTOToUserAnswer(userAnswerDTO, result));
         }
         return userAnswers;
+    }
+
+    public static User convertUserDTOToUser(UserDTO userDTO) {
+        try {
+            return new User(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
+                    userDTO.getCell(), userDTO.getPosition(), userDTO.getRole());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

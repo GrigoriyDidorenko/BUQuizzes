@@ -1,5 +1,6 @@
 package com.bionic.DAO;
 
+import com.bionic.DTO.UserDTO;
 import com.bionic.entities.Test;
 import com.bionic.entities.User;
 import org.springframework.stereotype.Repository;
@@ -31,6 +32,11 @@ public class UserDAO extends AbstractDAO<User> {
         Query query=em.createNamedQuery("getUserByEmail");
         query.setParameter("email", email);
         return (User)query.getSingleResult();
+    }
+
+    public List<UserDTO> getUsersNames(){
+        Query query = em.createNamedQuery("getUsersNames");
+        return (List<UserDTO>)query.getResultList();
     }
 
 }
