@@ -57,6 +57,15 @@ public class TestService {
         return resultDTO;
     }
 
+    public void saveCreatedTest(TestDTO testDTO){
+        try {
+            Test test = Converter.convertTestDTOToTest(testDTO);
+            testDAO.save(test);
+        }catch (Exception e){
+            System.out.println("failed to save test");
+        }
+    }
+
     public Result calcResult(Result result, ArrayList<UserAnswer> userAnswers) throws Exception {
         int mark = 0;
         result.setIsChecked(true);

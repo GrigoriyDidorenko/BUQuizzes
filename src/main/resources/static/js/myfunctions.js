@@ -35,7 +35,7 @@ $(document).ready(function ($) {
             var rols;
             rols = jsonrols;
             $.each(rols, function (index, rolsone) {
-                   $('#roles').append('<option value="role' + index + '" disabled>' + rolsone + '</option>')
+                   $('#roles').append('<option value=' + index + '>' + rolsone + '</option>')
             })
         }
     });
