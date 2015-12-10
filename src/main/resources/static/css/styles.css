@@ -363,6 +363,21 @@ label {
     border-color: #0f0;
 }
 
+.Clearboth
+{
+    clear: both;
+}
+
+.divright
+{
+    float:right;
+}
+
+.divleft
+{
+    float:left;
+}
+
 /*/IMPORT TEST*/
 
 /*# sourceMappingURL=styles.css.map */
