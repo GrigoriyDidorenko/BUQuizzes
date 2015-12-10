@@ -115,7 +115,7 @@ $(document).ready(function ($) {
     });
 
             $("#save").click(function() {
-                //$('#modal2').openModal();
+                $('#modal2').openModal();
                 var answerId=[];
                 var answerText=[];
                 var eventArray = [];
