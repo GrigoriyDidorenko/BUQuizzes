@@ -49,7 +49,7 @@ public class Converter {
         return new LinkedHashSet<>(shuffledList);
     }
 
-    public UserAnswer convertUserAnswerDTOToUserAnswer(UserAnswerDTO userAnswerDTO, Result result, Long answerId) {
+    public static UserAnswer convertUserAnswerDTOToUserAnswer(UserAnswerDTO userAnswerDTO, Result result, Long answerId) {
         UserAnswer userAnswer = new UserAnswer();
         userAnswer.setQuestionId(userAnswerDTO.getQuestionId());
         userAnswer.setResultId(result.getId());
@@ -58,7 +58,7 @@ public class Converter {
         return userAnswer;
     }
 
-    public ArrayList<UserAnswer> convertUserAnswerDTOsToUserAnswers(ArrayList<UserAnswerDTO> userAnswerDTOs, Result result) throws NumberFormatException {
+    public static ArrayList<UserAnswer> convertUserAnswerDTOsToUserAnswers(ArrayList<UserAnswerDTO> userAnswerDTOs, Result result) throws NumberFormatException {
         ArrayList<UserAnswer> userAnswers = new ArrayList<>();
         for (UserAnswerDTO userAnswerDTO : userAnswerDTOs) {
             if (!userAnswerDTO.getAnswerId().isEmpty()) {

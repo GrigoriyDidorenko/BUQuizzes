@@ -22,8 +22,7 @@ import java.util.*;
 @Service
 public class TestService {
 
-    @Autowired
-    private Converter converter;
+
     @Autowired
     private ResultDAO resultDAO;
     @Autowired
@@ -44,7 +43,7 @@ public class TestService {
         ResultDTO resultDTO = null;
         Result result = resultDAO.find(resultId);
         try {
-            ArrayList<UserAnswer> userAnswers = converter.convertUserAnswerDTOsToUserAnswers(answerDTOs, result);
+            ArrayList<UserAnswer> userAnswers = Converter.convertUserAnswerDTOsToUserAnswers(answerDTOs, result);
             for (UserAnswer userAnswer : userAnswers) {
                 userAnswerDAO.save(userAnswer);
             }
