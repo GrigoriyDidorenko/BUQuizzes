@@ -16,7 +16,10 @@ import java.util.Date;
                         "JOIN test.questions question JOIN question.answers answer WHERE test.id = :testId " +
                         "AND user.id = :userId AND result.permission.id = :permissionId"),
         @NamedQuery(name = "getAvailableTestsNames",
-                query = "SELECT test.id, test.testName, test.duration FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId")
+                query = "SELECT test.id, test.testName, test.duration FROM Result result " +
+                        "JOIN result.test test " +
+                        "JOIN result.user user " +
+                        "where user.id = :userId AND result.submited = false")
 })
 @NamedNativeQueries({
         @NamedNativeQuery(name = "getResultByIds", query = "SELECT result.id FROM Result result " +

@@ -65,8 +65,6 @@ public class StudentService {
         if(firstEnter) {
             Result result = resultDAO.find(getLongId(resultIdStr));
             result.setBeginTime(new Date(System.currentTimeMillis()));
-            //TODO ask for this method
-            result.setSubmited(true);
             resultDAO.save(result);
         }
     }

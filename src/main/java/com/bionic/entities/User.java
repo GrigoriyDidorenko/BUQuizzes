@@ -37,7 +37,7 @@ public class User {
     private String position;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "role_id")
+    @Column(name = "role_id", nullable = false)
     private Role role;
 
     @ManyToMany(fetch = FetchType.EAGER)

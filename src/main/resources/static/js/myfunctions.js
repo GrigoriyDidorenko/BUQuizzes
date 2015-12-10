@@ -27,13 +27,13 @@ $(document).ready(function ($) {
 //getting results
     jQuery.ajax({
         type: "GET",
-        url: "http://localhost:8080/superAdmin/addUser",
+        url: "http://localhost:8081/superAdmin/addUser",
         contentType: 'application/json; charset=utf-8',
         success: function (jsonrols) {
             var rols;
             rols = jsonrols;
             $.each(rols, function (index, rolsone) {
-                    $('#roles').append('<option value="role' + index + '">' + rolsone + '</option>');
+                    $('#roles').append('<option value=' + index + '>' + rolsone + '</option>');
             })
         }
     });

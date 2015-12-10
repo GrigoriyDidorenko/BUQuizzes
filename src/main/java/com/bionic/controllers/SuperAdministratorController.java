@@ -35,10 +35,10 @@ public class SuperAdministratorController {
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public
     @ResponseBody
-    String addUser(@ModelAttribute UserDTO user, Model model) {
+    String addUser(@ModelAttribute UserDTO userDTO, Model model) {
         try {
-            model.addAttribute("user", user);
-            superAdministratorService.addUser(user);
+            model.addAttribute("user", userDTO);
+            superAdministratorService.addUser(userDTO);
             return "successful";
         } catch (Exception e) {
             return "You failed to upload";

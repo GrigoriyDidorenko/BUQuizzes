@@ -66,7 +66,7 @@ public class Converter {
         return userAnswers;
     }
 
-    public static User converUserDTOToUser(UserDTO userDTO) {
+    public static User convertUserDTOToUser(UserDTO userDTO) {
         try {
             return new User(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
                     userDTO.getCell(), userDTO.getPosition(), userDTO.getRole());

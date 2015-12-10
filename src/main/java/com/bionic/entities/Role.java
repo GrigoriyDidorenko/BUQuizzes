@@ -17,11 +17,11 @@ import java.util.Map;
  */
 @Resource
 public enum Role {
-    ADMINISTRATOR(1, "administrator"),
-    TRAINER(2, "trainer"),
-    STUDENT(3, "student"),
-    RESTRICTED_ADMINISTRATOR(4, "restricted_administrator"),
-    RESTRICTED_TRAINER(5, "restricted_trainer");
+    ADMINISTRATOR(0, "administrator"),
+    TRAINER(1, "trainer"),
+    STUDENT(2, "student"),
+    RESTRICTED_ADMINISTRATOR(3, "restricted_administrator"),
+    RESTRICTED_TRAINER(4, "restricted_trainer");
 
     private long id;
     private String name;
