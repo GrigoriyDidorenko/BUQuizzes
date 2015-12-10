@@ -1,8 +1,11 @@
 package com.bionic.controllers;
 
+import com.bionic.DAO.UserDAO;
 import com.bionic.DTO.ResultDTO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
+import com.bionic.entities.Role;
+import com.bionic.entities.User;
 import com.bionic.services.StudentService;
 import com.bionic.services.TestService;
 import com.bionic.wrappers.TestWrapper;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,13 +44,6 @@ public class StudentController {
 
     }
 
-//    /*Test method*/
-//    @RequestMapping(value = "/import", method = RequestMethod.GET)
-//    public
-//    @ResponseBody
-//    String getSample(){
-//        return testService.importTest(new File("d:\\file.json"));
-//    }
 
 
     @RequestMapping(value = "/tests/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -54,17 +51,16 @@ public class StudentController {
     @ResponseBody
     ResponseEntity<Set<TestWrapper>> getAvailableTestsNames(@PathVariable("id") String id) {
         Set<TestWrapper> tests = studentService.getAvailableTestsNames(id);
-
+        tests.addAll(studentService.getPassTests(id));
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
-
 
     @RequestMapping(value = "/tests/{id}/pass/{resultId}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     ResponseEntity<TestDTO> getCurrentTest(@PathVariable("id") String id, @PathVariable("resultId") String resultId) {
-        TestDTO testDTO = studentService.getCurrentTest(id, resultId);
         studentService.setTestBeginTime(resultId);
+        TestDTO testDTO = studentService.getCurrentTest(id, resultId);
         return new ResponseEntity<>(testDTO, HttpStatus.OK);
     }
 
@@ -76,11 +72,11 @@ public class StudentController {
     public
     @ResponseBody
     ResponseEntity<ResultDTO> setAnswers(@RequestBody String JSONAnswers, @PathVariable("resultId") String resultId) {
-        ResultDTO resultDTO = new ResultDTO(56, "false");
+        ResultDTO resultDTO = null;
         try {
-            //  TypeFactory typeFactory = objectMapper.getTypeFactory();
-            //    ArrayList<UserAnswerDTO> userAnswerDTOs = objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(ArrayList.class, UserAnswerDTO.class));
-            //     resultDTO = testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
+              TypeFactory typeFactory = objectMapper.getTypeFactory();
+              ArrayList<UserAnswerDTO> userAnswerDTOs = objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(ArrayList.class, UserAnswerDTO.class));
+              resultDTO = testService.processingAnswers(userAnswerDTOs, Long.valueOf(resultId));
         } catch (NumberFormatException e) {
             resultDTO.setCheckStatus("resultId string cannot be parsed");
         } catch (Exception e) {

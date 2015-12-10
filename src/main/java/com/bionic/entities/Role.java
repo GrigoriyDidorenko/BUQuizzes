@@ -1,26 +1,48 @@
 package com.bionic.entities;
 
-import javax.persistence.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * package: com.bionic.services
+ * package: com.bionic.entities
+ * project: Test
+ * class:
  *
- * @author: Balitsky Alexandr
- * @date: 12.11.2015
+ * @author: Grigoriy Didorenko
+ * @date: 05.12.2015
  */
-@Entity
-@Table(catalog = "quizzes")
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@Resource
+public enum Role {
+    ADMINISTRATOR(0, "administrator"),
+    TRAINER(1, "trainer"),
+    STUDENT(2, "student"),
+    RESTRICTED_ADMINISTRATOR(3, "restricted_administrator"),
+    RESTRICTED_TRAINER(4, "restricted_trainer");
+
     private long id;
-    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-
-    public Role() {
+    private static Map<Long, Role> roleMap = new HashMap<>();
+    static {
+        for(Role role : values())
+            roleMap.put(role.id, role);
     }
 
+    public static Role findById(long id){
+        return roleMap.get(id);
+    }
+
+
+    Role(){}
+
+    private Role(long id, String name) {
+        this.name = name;
+        this.id = id;
+    }
 
     public long getId() {
         return id;
@@ -38,13 +60,11 @@ public class Role {
         this.name = name;
     }
 
-
-
     @Override
     public String toString() {
         return "Role{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
+                ", id=" + id +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 package com.bionic.DTO;
 
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -13,25 +14,53 @@ import java.util.Set;
 
 public class TestDTO {
 
+    // General filds
     private long id;
     private String testName;
+    //Filds for Avaliable Tests
     private int duration;
     private Set<QuestionDTO> questions;
+    //Filds for Submited Tests
+    private boolean isChecked;
+    private int mark;
 
     public TestDTO() {
     }
 
-    public TestDTO(long id,String testName, int duration) {
+    public TestDTO(long id, String testName, int duration) {
         this.id = id;
         this.duration = duration;
         this.testName = testName;
     }
 
-    public TestDTO(long id,String testName, int duration, Set<QuestionDTO> questions) {
+    public TestDTO(long id, String testName, int duration, Set<QuestionDTO> questions) {
         this.id = id;
         this.duration = duration;
         this.testName = testName;
         this.questions = questions;
+    }
+
+    public TestDTO(long id, String testName, int mark, boolean isChecked) {
+        this.id = id;
+        this.testName = testName;
+        this.mark = mark;
+        this.isChecked = isChecked;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(boolean isChecked) {
+        this.isChecked = isChecked;
+    }
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
     }
 
     public TestDTO(String testName) {
@@ -75,7 +104,7 @@ public class TestDTO {
 
         if (id != testDTO.id) return false;
         if (duration != testDTO.duration) return false;
-        if (!testName.equals(testDTO.testName)) return false;
+        if (testName != null ? !testName.equals(testDTO.testName) : testDTO.testName != null) return false;
         return !(questions != null ? !questions.equals(testDTO.questions) : testDTO.questions != null);
 
     }
@@ -83,7 +112,7 @@ public class TestDTO {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + testName.hashCode();
+        result = 31 * result + (testName != null ? testName.hashCode() : 0);
         result = 31 * result + duration;
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
         return result;

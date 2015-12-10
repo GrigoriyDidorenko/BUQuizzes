@@ -15,9 +15,14 @@ public class TestWrapper {
     private TestDTO  testDTO;
     private long resultId;
 
+
     public TestWrapper(TestDTO testDTO, long resultId) {
         this.testDTO = testDTO;
         this.resultId = resultId;
+    }
+
+    public TestWrapper(TestDTO testDTO) {
+        this.testDTO = testDTO;
     }
 
     public TestDTO getTestDTO() {

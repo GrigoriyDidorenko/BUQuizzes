@@ -1,6 +1,7 @@
 package com.bionic.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -31,7 +32,7 @@ public class Question {
     private Test test;
     @Column(name = "archived", nullable = false)
     private boolean isArchived;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "question", fetch = FetchType.EAGER)
     private Set<Answer> answers;
 
     public Question() {
@@ -107,6 +108,16 @@ public class Question {
 
     public Set<Answer> getAnswers() {
         return answers;
+    }
+
+    public Set<Answer> getAnswersNotArchived() {
+        Set<Answer> notArchivedAnswers = new HashSet<>();
+        for(Answer answer : answers)
+            if (!answer.getIsArchived())
+                notArchivedAnswers.add(answer);
+        if(notArchivedAnswers.isEmpty() && !answers.isEmpty())
+            this.setIsArchived(true);
+        return notArchivedAnswers;
     }
 
     public void setAnswers(Set<Answer> answers) {

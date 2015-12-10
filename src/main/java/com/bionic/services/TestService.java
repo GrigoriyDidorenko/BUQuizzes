@@ -22,8 +22,7 @@ import java.util.*;
 @Service
 public class TestService {
 
-    @Autowired
-    private Converter converter;
+
     @Autowired
     private ResultDAO resultDAO;
     @Autowired
@@ -42,19 +41,31 @@ public class TestService {
 
     public ResultDTO processingAnswers(ArrayList<UserAnswerDTO> answerDTOs, long resultId) {
         ResultDTO resultDTO = null;
+        Result result = resultDAO.find(resultId);
         try {
-            Result result = resultDAO.find(resultId);
-            ArrayList<UserAnswer> userAnswers = converter.convertUserAnswerDTOsToUserAnswers(answerDTOs, result);
+            ArrayList<UserAnswer> userAnswers = Converter.convertUserAnswerDTOsToUserAnswers(answerDTOs, result);
             for (UserAnswer userAnswer : userAnswers) {
                 userAnswerDAO.save(userAnswer);
             }
             result = calcResult(result, userAnswers);
-            resultDAO.update(result);
-            resultDTO = new ResultDTO(result.getMark(),String.valueOf(result.isChecked()));
+
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
+        }finally {
+            result.setSubmited(true);
+            resultDAO.update(result);
+            resultDTO = new ResultDTO(result.getMark(),String.valueOf(result.isChecked()));
         }
         return resultDTO;
+    }
+
+    public void saveCreatedTest(TestDTO testDTO){
+        try {
+            Test test = Converter.convertTestDTOToTest(testDTO);
+            testDAO.save(test);
+        }catch (Exception e){
+            System.out.println("failed to save test");
+        }
     }
 
     public Result calcResult(Result result, ArrayList<UserAnswer> userAnswers) throws Exception {

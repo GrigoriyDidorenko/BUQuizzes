@@ -19,7 +19,7 @@ public class UserAnswer {
     private String userAnswer;
     @Column(name = "questionId", nullable = false)
     private long questionId;
-    @Column(name = "answerId", nullable = false)
+    @Column(name = "answerId", nullable = true)
     private long answerId;
 
 
