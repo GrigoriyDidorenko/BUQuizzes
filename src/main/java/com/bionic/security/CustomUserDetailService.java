@@ -24,12 +24,11 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user=userDAO.getUserByEmail(email);
-        Set<GrantedAuthority> roles = new HashSet();
-        roles.add(new SimpleGrantedAuthority(user.getRole().name()));
+
         UserDetails userDetails =
                 new org.springframework.security.core.userdetails.User(user.getEmail(),
                         user.getPassword(),
-                        roles);
+                        user.getAuthorities());
 
         return userDetails;
     }

@@ -25,6 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailService customUserDetailService;
     @Autowired
+    private CustomAuthenticationHandler customAuthenticationHandler;
+    @Autowired
     public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(customUserDetailService)
@@ -45,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests();
 
         http.formLogin()
-                .loginPage("/pages/LoginPage.html")
+                .loginPage("/pages/LoginPage.html").successHandler(customAuthenticationHandler)
                 .usernameParameter("email").passwordParameter("password")
                 .failureUrl("/login?error")
                 .permitAll();
@@ -57,13 +59,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         // указываем URL логаута
                 .logoutUrl("/logout")
                         // указываем URL при удачном логауте
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl("/pages/LoginPage.html")
                         // делаем не валидной текущую сессию
                 .invalidateHttpSession(true);
 
         http.authorizeRequests()
-                .antMatchers("/").permitAll();
-                //.antMatchers("/student/**").access("hasRole('STUDENT')");
+                .antMatchers("/").authenticated()
+                .antMatchers("/pages/**").authenticated()
+                //.antMatchers("/trainer/**").access("hasRole('trainer')")
+                .antMatchers("/admin/**").access("hasRole('administrator')");
+
 
     }
 
@@ -75,5 +80,3 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 }
-
-
