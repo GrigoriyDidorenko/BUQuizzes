@@ -1,7 +1,10 @@
 package com.bionic.entities;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import javax.persistence.*;
-import java.util.Set;
+import java.util.*;
 
 /**
  * package: com.bionic.services
@@ -15,9 +18,8 @@ import java.util.Set;
                 query = "SELECT u.tests FROM User u WHERE u.id = :id"),
         @NamedQuery(name = "getUserByEmail",
                 query = "SELECT u FROM User u WHERE u.email=:email"),
+
 })
-@NamedNativeQuery(name = "getUsersNames",
-        query = "SELECT u.id, u.first_name, u.last_name FROM User u")
 @Table(catalog = "quizzes")
 public class User {
     @Id
@@ -36,9 +38,18 @@ public class User {
     @Column(name="position")
     private String position;
 
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "role_id", nullable = false)
-    private Role role;
+    @CollectionTable(name = "User_roles"
+            , joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role", nullable = false)
+    private  Set<Role> roles;
+
+    {
+        this.roles = EnumSet.noneOf(Role.class);
+    }
+
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "result", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "test_id"))
@@ -47,13 +58,10 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String cell, String position, Role role) {
+    public User(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.cell = cell;
-        this.position = position;
-        this.role = role;
     }
 
     public String getPosition() {
@@ -101,12 +109,22 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public Collection<GrantedAuthority> getAuthorities() {
+        Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+        Iterator<Role> itr=getRoles().iterator();
+        while (itr.hasNext()){
+            authorities.add(new SimpleGrantedAuthority("ROLE_"+itr.next().getName()));
+        }
+        return authorities;
+    }
+
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public Set<Test> getTests() {
@@ -136,7 +154,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", cell='" + cell + '\'' +
                 ", position='" + position + '\'' +
-                ", role=" + role +
+                ", roles=" + roles.toString() +
                 '}';
     }
 
@@ -155,7 +173,7 @@ public class User {
         if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) return false;
         if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
             return false;
-        return !(getRole() != null ? !getRole().equals(user.getRole()) : user.getRole() != null);
+        return !(getRoles() != null ? !getRoles().equals(user.getRoles()) : user.getRoles() != null);
 
     }
 
@@ -166,7 +184,7 @@ public class User {
         result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
         result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
         result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
-        result = 31 * result + (getRole() != null ? getRole().hashCode() : 0);
+        result = 31 * result + (getRoles() != null ? getRoles().hashCode() : 0);
         return result;
     }
 }

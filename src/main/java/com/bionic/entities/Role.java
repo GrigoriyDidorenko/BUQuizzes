@@ -17,12 +17,40 @@ import java.util.Map;
  */
 @Resource
 public enum Role {
-    ADMINISTRATOR,
-    TRAINER,
-    STUDENT,
-    RESTRICTED_ADMINISTRATOR,
-    RESTRICTED_TRAINER;
+        ADMINISTRATOR(1, "ADMINISTRATOR"),
+        TRAINER(2, "TRAINER"),
+        STUDENT(3, "STUDENT"),
+        RESTRICTED_ADMINISTRATOR(4, "RESTRICTED_ADMINISTRATOR"),
+        RESTRICTED_TRAINER(5, "RESTRICTED_TRAINER");
 
+        private long id;
+        private String name;
+
+        private Role(long id, String name) {
+            this.name = name;
+            this.id = id;
+        }
+
+        public long getId() {
+            return id;
+        }
+
+        public void setId(long id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+
+    public static Map<String, Role> getRoleMap() {
+        return roleMap;
+    }
 
     private static Map<String, Role> roleMap = new HashMap<>();
     static {
@@ -34,7 +62,5 @@ public enum Role {
         return roleMap.get(name);
     }
 
-
-    Role(){}
 
 }
