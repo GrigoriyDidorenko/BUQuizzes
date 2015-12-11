@@ -26,7 +26,7 @@ public class SuperAdministratorService {
 
     public void addUser(UserDTO userDTO){
         try {
-            userDTO.setRole(Role.findById(userDTO.getRoleId()));
+            userDTO.setRole(Role.findByName(userDTO.getRoleName()));
             User user = Converter.convertUserDTOToUser(userDTO);
             user.setPassword(generator.generateToken());
             mailManager.send(user.getEmail(),"test","Hello "+user.getFirstName()+

@@ -33,11 +33,11 @@ public class ResultDAO extends AbstractDAO<Result> {
         super(Result.class);
     }
 
-    public Test getCurrentTest(long id, long testId, long permissionId) {
+    public Test getCurrentTest(long id, long testId, Permission permission) {
         Query query = em.createNamedQuery("getCurrentTestById");
         query.setParameter("userId", id);
         query.setParameter("testId", testId);
-        query.setParameter("permissionId", permissionId);
+        query.setParameter("permission", permission);
         return (Test) query.getSingleResult();
     }
 

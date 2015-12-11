@@ -11,10 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * package: com.bionic.controllers
@@ -48,11 +45,9 @@ public class SuperAdministratorController {
     @RequestMapping(value = "/addUser", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity<Map<Long, String>> getRoles() {
-        HashMap<Long, String> roles = new HashMap<>();
-        roles.put(Role.RESTRICTED_ADMINISTRATOR.getId(), Role.RESTRICTED_ADMINISTRATOR.getName());
-        roles.put(Role.RESTRICTED_TRAINER.getId(), Role.RESTRICTED_TRAINER.getName());
-        return new ResponseEntity<>(roles, HttpStatus.OK);
+    ResponseEntity<List<String>> getRoles() {
+        return new ResponseEntity<>(new ArrayList<>(Arrays.asList(Role.RESTRICTED_ADMINISTRATOR.name()
+                , Role.RESTRICTED_TRAINER.name())), HttpStatus.OK);
     }
 
 }

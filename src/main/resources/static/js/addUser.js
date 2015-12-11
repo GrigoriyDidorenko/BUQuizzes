@@ -10,7 +10,7 @@ jQuery.ajax({
         var rols;
         rols = jsonrols;
         $.each(rols, function (index, rolsone) {
-            $('#roles').append('<option value=' + index + '>' + rolsone + '</option>')
+            $('#roles').append('<option>' + rolsone + '</option>')
         })
     }
 });

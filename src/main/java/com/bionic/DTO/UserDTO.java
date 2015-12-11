@@ -20,7 +20,7 @@ public class UserDTO {
     private String cell;
     private String position;
     private Role role;
-    private long roleId;
+    private String roleName;
 
     public long getId() {
         return id;
@@ -86,12 +86,12 @@ public class UserDTO {
         this.role = role;
     }
 
-    public long getRoleId() {
-        return roleId;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRoleId(long roleId) {
-        this.roleId = roleId;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     @Override
