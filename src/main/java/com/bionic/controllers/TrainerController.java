@@ -1,5 +1,6 @@
 package com.bionic.controllers;
 
+import com.bionic.DTO.TestDTO;
 import com.bionic.entities.User;
 import com.bionic.services.TestService;
 import com.bionic.services.TrainerService;
@@ -65,6 +66,11 @@ public class TrainerController {
         } catch (Exception e) {
             return "You failed to add user";
         }
+    }
+
+    @RequestMapping(value = "/saveTest", method = RequestMethod.POST)
+    public void saveTest(@RequestBody TestDTO testDTO) {
+        testService.saveCreatedTest(testDTO);
     }
 
 }

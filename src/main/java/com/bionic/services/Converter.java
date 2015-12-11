@@ -113,8 +113,8 @@ public class Converter {
 
     public static User convertUserDTOToUser(UserDTO userDTO) {
         try {
-//            return new User(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
-//                    userDTO.getCell(), userDTO.getPosition(), userDTO.getRole());
+            return new User(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
+                    userDTO.getCell(), userDTO.getPosition(), userDTO.getRole());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -64,10 +64,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true);
 
         http.authorizeRequests()
-                .antMatchers("/").authenticated()
-                .antMatchers("/pages/**").authenticated()
+//                .antMatchers("/").authenticated()
+//                .antMatchers("/pages/**").authenticated()
                 //.antMatchers("/trainer/**").access("hasRole('trainer')")
-                .antMatchers("/admin/**").access("hasRole('administrator')");
+                .antMatchers("/admin/**").access("hasRole(ADMINISTRATOR)");
 
 
     }

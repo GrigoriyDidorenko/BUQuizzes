@@ -6,6 +6,9 @@ import com.bionic.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 /**
  * package: com.bionic.services
  * project: Test
@@ -26,7 +29,7 @@ public class SuperAdministratorService {
 
     public void addUser(UserDTO userDTO){
         try {
-            userDTO.setRole(Role.findByName(userDTO.getRoleName()));
+            userDTO.setRole(new HashSet<>(Arrays.asList(Role.findByName(userDTO.getRoleName()))));
             User user = Converter.convertUserDTOToUser(userDTO);
             user.setPassword(generator.generateToken());
             mailManager.send(user.getEmail(),"test","Hello "+user.getFirstName()+

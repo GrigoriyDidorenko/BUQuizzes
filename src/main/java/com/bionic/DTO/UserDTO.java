@@ -2,6 +2,8 @@ package com.bionic.DTO;
 
 import com.bionic.entities.Role;
 
+import java.util.Set;
+
 /**
  * package: com.bionic.DTO
  * project: Test
@@ -19,7 +21,7 @@ public class UserDTO {
     private String password;
     private String cell;
     private String position;
-    private Role role;
+    private Set<Role> role;
     private String roleName;
 
     public long getId() {
@@ -78,11 +80,11 @@ public class UserDTO {
         this.position = position;
     }
 
-    public Role getRole() {
+    public Set<Role> getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(Set<Role> role) {
         this.role = role;
     }
 
