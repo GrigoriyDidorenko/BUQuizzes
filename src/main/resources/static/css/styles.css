@@ -35,14 +35,14 @@ th {
 [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
   position: relative;
   left: 0;
-  visibility: visible;
-  width: 30px; }
+  width: 30px;
+  visibility: visible; }
 
 [type="radio"]:not(:checked), [type="radio"]:checked {
   position: relative;
   left: 0;
-  visibility: visible;
-  width: 30px; }
+  width: 30px;
+  visibility: visible; }
 
 .results {
   margin-top: 30px; }
@@ -262,6 +262,12 @@ ul {
 .tab_span {
   color: #6d6e71;
   display: inline; }
+  .tab_span a {
+    color: #6d6e71; }
+  .tab_span:hover {
+    color: #2dadf0; }
+  .tab_span:visited {
+    color: #3f51b5; }
 
 .positions {
   margin: 0;

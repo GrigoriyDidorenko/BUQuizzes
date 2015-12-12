@@ -57,14 +57,14 @@ th{
 [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
   position: relative;
   left: 0;
-  visibility: visible;
   width: 30px;
+  visibility: visible;
 }
 [type="radio"]:not(:checked), [type="radio"]:checked {
   position: relative;
   left: 0;
-  visibility: visible;
   width: 30px;
+  visibility: visible;
 }
 .results{
   margin-top: 30px;
@@ -320,6 +320,15 @@ ul {
 .tab_span{
   color: $dark_gray_color;
   display: inline;
+  a{
+    color: $dark_gray_color;
+  }
+  &:hover{
+    color: $main_color;
+  }
+  &:visited{
+    color: #3f51b5;
+  }
 }
 .positions{
   margin: 0; padding: 0;
@@ -338,3 +347,5 @@ textarea.materialize-textarea{
   margin-bottom: 20px;
   min-height: 100px;
 }
+
+

@@ -47,14 +47,14 @@ $(document).ready(function ($) {
 
 // 2.3 get each category of this article
             var qmass = $.each(testinfo.questions, function (i, questionone) {
-                var div_q = $("<div style='margin: 0; padding: 0;'/>");
+                var div_q = $("<div class='positions'/>");
                 $.each(questionone.answers, function (j, answersone) {
-                    var span = $("<span style='margin: 0; padding: 0;'/>");
+                    var span = $("<span class='positions'/>");
                     if (questionone.multichoice) {
-                        span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input type="checkbox" value="' + answersone.answerText + '" name="answer' + i + '" id ="'+answersone.id+'" style="margin: 0; padding: 0;">' +
+                        span.html('<p class="positions"><label class="positions"><input type="checkbox" value="' + answersone.answerText + '" name="answer' + i + '" id ="'+answersone.id+'" lass="positions">' +
                             answersone.answerText + '</label></p>')
                     } else {
-                        span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input type="radio" value="' + answersone.answerText + '" name="answer' + i + '" id ="'+answersone.id+'" style="margin: 0; padding: 0;">' +
+                        span.html('<p class="positions"><label class="positions"><input type="radio" class="positions" value="' + answersone.answerText + '" name="answer' + i + '" id ="'+answersone.id+'">' +
                             answersone.answerText + '</label></p>')
                     }
                     div_q.append(span);
@@ -62,24 +62,24 @@ $(document).ready(function ($) {
 
                     if (!questionone.open) {
                         $("#tabs").append($('<div id="tabs-' + i + '" style="margin-bottom: 20px; padding: 0;" class="alldiv" />')
-                                .append($('<div style="margin: 0; padding: 0;"/>').html(i + 1 + '. ' + '<span id="' + questionone.id + '" class="questionclass">' + questionone.question + '</span></div>'))
+                                .append($('<div class="positions"/>').html(i + 1 + '. ' + '<span id="' + questionone.id + '" class="questionclass">' + questionone.question + '</span></div>'))
                                 .append(div_q)
                         );
                     } else {
                         $("#tabs").append($('<div id="tabs-' + i + '" style="margin-bottom: 20px; padding: 0;" class="alldiv"/>')
-                                .append($('<div style="margin: 0; padding: 0;"/>').html(i + 1 + '. ' + '<span id="' + questionone.id + '" class="questionclass">' + questionone.question + '</span></div>'))
-                                .append($('<div style="margin: 0; padding: 0;"/>').html('<label for=".icon_prefix2">' + 'Відповідь:' + '</label>' +
-                                    '<textarea class="materialize-textarea icon_prefix2" style="padding: 0; margin-bottom: 0;"></textarea>'))
+                                .append($('<div class="positions"/>').html(i + 1 + '. ' + '<span id="' + questionone.id + '" class="questionclass">' + questionone.question + '</span></div>'))
+                                .append($('<div class="positions"/>').html('<label for=".icon_prefix2">' + 'Відповідь:' + '</label>' +
+                                    '<textarea class="materialize-textarea icon_prefix2 positions"></textarea>'))
                         );
                     }
             })
             var mytabs = [];
             mytabs.length = qmass.length
             for(i=0; i<mytabs.length; i++) {
-                $('#demo').append('<li class="tab" style="display: inline"><a href="#tabs-' + i + '">' + i + ' ' + '</a></li>');
+                $('#demo').append('<li class="tab" style="display: inline"><a href="#tabs-'+i+'"><span class="tab_span">' + (i+1)+ '</span></a>' + ' | ' + '</li>');
+                       }
+            var $tabs = $('#tabs').tabs();
 
-            }
-            $( "#tabs" ).tabs();
         }
     });
     $(".modalAppear").click(function() {
