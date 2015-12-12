@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true);
 
         http.authorizeRequests()
-                .antMatchers("/").authenticated()
+                //.antMatchers("/").authenticated()
                 .antMatchers("/pages/addUser.html").access("hasRole('SUPERADMINISTRATOR')");
 
 
