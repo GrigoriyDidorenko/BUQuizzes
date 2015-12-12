@@ -58,11 +58,13 @@ th{
   position: relative;
   left: 0;
   visibility: visible;
+  width: 30px;
 }
 [type="radio"]:not(:checked), [type="radio"]:checked {
   position: relative;
   left: 0;
   visibility: visible;
+  width: 30px;
 }
 .results{
   margin-top: 30px;
@@ -183,8 +185,7 @@ label {
 }
 .submit-but{
   margin: 0;
-  width: 80px;
-  height: 30px;
+  padding:5px;
   background-color: $main_color;
   color: $white_color;
   font-size: 15px;
@@ -309,7 +310,31 @@ label {
   line-height: 12px;
   color: $dark_gray_color;
 }
-#question{
+ul {
+  padding: 0 0 5px 0;
+  border-bottom: 1px solid $light_gray_color;
+}
+.tab{
+  display: inline;
+}
+.tab_span{
+  color: $dark_gray_color;
+  display: inline;
+}
+.positions{
+  margin: 0; padding: 0;
+}
+textarea.materialize-textarea{
+  margin: 0;
+  padding: 0;
+  &:focus:not([readonly]) {
+    border: none;
+    border-bottom: 1px solid $main_color;
+    box-shadow: none;
+  }
+}
+.alldiv{
+  padding: 0;
   margin-bottom: 20px;
-  background-color: red;
+  min-height: 100px;
 }

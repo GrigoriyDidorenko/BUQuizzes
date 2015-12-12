@@ -22,7 +22,8 @@ $(document).ready(function ($) {
         }
     }
     var tech = GetURLParameter('resultId');
-    var urltest = 'http://localhost:8080/student/tests/1/pass/' + tech;
+    var userok = GetURLParameter('user');
+    var urltest = 'http://localhost:8080/student/tests/'+userok+'/pass/'+tech;
     var testinfo;
     var globalVariable;
     jQuery.ajax({
@@ -50,10 +51,10 @@ $(document).ready(function ($) {
                 $.each(questionone.answers, function (j, answersone) {
                     var span = $("<span style='margin: 0; padding: 0;'/>");
                     if (questionone.multichoice) {
-                        span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input type="checkbox" class="filled-in" value="' + answersone.answerText + '" name="answer' + i + '" id ="'+answersone.id+'" style="margin: 0; padding: 0;">' +
+                        span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input type="checkbox" value="' + answersone.answerText + '" name="answer' + i + '" id ="'+answersone.id+'" style="margin: 0; padding: 0;">' +
                             answersone.answerText + '</label></p>')
                     } else {
-                        span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input class="with-gap" type="radio" value="' + answersone.answerText + '" name="answer' + i + '" id ="'+answersone.id+'" style="margin: 0; padding: 0;">' +
+                        span.html('<p style="margin: 0; padding: 0;"><label style="margin: 0; padding: 0;"><input type="radio" value="' + answersone.answerText + '" name="answer' + i + '" id ="'+answersone.id+'" style="margin: 0; padding: 0;">' +
                             answersone.answerText + '</label></p>')
                     }
                     div_q.append(span);
@@ -79,32 +80,15 @@ $(document).ready(function ($) {
 
             }
             $( "#tabs" ).tabs();
-            $(".ui-tabs-panel").each(function(i){
-
-                var totalSize = $(".ui-tabs-panel").size() - 1;
-
-                if (i != totalSize) {
-                    next = i + 2;
-                    $(this).append("<a href='#' class='next-tab mover' rel='" + next + "'>Next Page &#187;</a>");
-                }
-
-                if (i != 0) {
-                    prev = i;
-                    $(this).append("<a href='#' class='prev-tab mover' rel='" + prev + "'>&#171; Prev Page</a>");
-                }
-
-            });
-
-            $('.next-tab, .prev-tab').click(function() {
-                $tabs.tabs('select', $(this).attr("rel"));
-                return false;
-            });
-
         }
     });
-
-    $("#save").click(function() {
+    $(".modalAppear").click(function() {
         $('#modal2').openModal();
+        $('#modal2').append('<div class="modal-content"><p>' + 'Після збереження відповіді будуть відправлені. Зберегти?' +
+            '</p></div><div class="modal-footer"><a href="../pages/UserPage.html" class="modal-action modal-close waves-effect waves-green btn-flat" id="save">' +
+            'Так' + '</a><a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">' + 'Ні' + '</a></div>');
+    });
+    $("#save").click(function() {
         var answerId=[];
         var answerText=[];
         var eventArray = [];
@@ -143,9 +127,6 @@ $(document).ready(function ($) {
             contentType: "application/json; charset=utf-8",
             data:globalVariable,
             success: function() {
-            },
-            error: function (e) {
-                alert(e.message);
             }
         });
     })
