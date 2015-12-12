@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                .withUser("root@gmail.com").password("root").roles("STUDENT");
+                .withUser("superadmin@gmail.com").password("root").roles("SUPERADMIN");
     }
 
     @Override
@@ -64,10 +64,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true);
 
         http.authorizeRequests()
-//                .antMatchers("/").authenticated()
-//                .antMatchers("/pages/**").authenticated()
-                //.antMatchers("/trainer/**").access("hasRole('trainer')")
-                .antMatchers("/admin/**").access("hasRole(ADMINISTRATOR)");
+                .antMatchers("/").authenticated()
+                .antMatchers("/pages/addUser.html").access("hasRole('SUPERADMINISTRATOR')");
 
 
     }

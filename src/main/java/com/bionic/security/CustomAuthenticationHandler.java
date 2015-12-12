@@ -26,9 +26,16 @@ public class CustomAuthenticationHandler extends SimpleUrlAuthenticationSuccessH
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         String studentTargetUrl = "/pages/UserPage.html";
-        String restrictedTargetUrl = "/pages/PageOfConfirm.html";
+        String restrictedTargetUrl = "/pages/UserPage.html";;
+        String targetUrl=getDefaultTargetUrl();
         SavedRequest savedRequest = requestCache.getRequest(request, response);
-        String targetUrl = savedRequest.getRedirectUrl();
+        try {
+            targetUrl = savedRequest.getRedirectUrl();
+        }
+        catch (NullPointerException e){
+            targetUrl=determineTargetUrl(request,response);
+        }
+
         Collection<? extends GrantedAuthority> authorities =  authentication.getAuthorities();
         List<String> roles = new ArrayList<String>();
         for (GrantedAuthority a : authorities) {
@@ -37,10 +44,11 @@ public class CustomAuthenticationHandler extends SimpleUrlAuthenticationSuccessH
 
         if (roles.contains("ROLE_STUDENT")) {
             getRedirectStrategy().sendRedirect(request, response, studentTargetUrl);
-        } else if (roles.contains("RESTRICTED_ADMINISTRATOR")||(roles.contains("RESTRICTED_TRAINER"))) {
+        } else if (roles.contains("ROLE_RESTRICTED_ADMINISTRATOR")||(roles.contains("ROLE_RESTRICTED_TRAINER"))) {
             getRedirectStrategy().sendRedirect(request, response, restrictedTargetUrl);
         } else {
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
+            super.onAuthenticationSuccess(request,response,authentication);
         }
     }
 }
