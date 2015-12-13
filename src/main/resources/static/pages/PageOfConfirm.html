@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TestPage</title>
+    <title>UserPage</title>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -15,15 +15,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/styles.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="../js/owl.carousel.min.js"></script>
-    <script src="../js/jquery.countdownTimer.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-    <script src="../js/TestPage.js"></script>
-    <script src="../js/UserPage.js"></script>
+    <script src="../js/Confirm.js"></script>
     <script src="../js/final.js"></script>
     <script type="text/javascript" src="../materialize-src/js/bin/materialize.min.js"></script>
+
 </head>
 <body>
 <header>
@@ -39,44 +37,29 @@
     <div class="header-title">
         <div class="container">
             <div class="row">
-                <div class="col s12">
-                    <h1>тестування</h1>
+                <div class="col s9 m10 l11">
+                    <h1>створення тестів</h1>
+                </div>
+                <div class="col s3 m2 l1">
+                    <button class="out-but">вийти</button>
                 </div>
             </div>
         </div>
     </div>
 </header>
-<main class="user-main">
+<!--MAIN-->
+<main class="page-main">
     <div class="container">
         <div class="row">
-            <div class="col s6">
-                <div class="test-info"></div>
-                <div id="hms_timer" style="border:2px solid #2dadf0; border-radius:5px; padding:3px; margin: 5px 0 15px 0; color: #2dadf0; width:80px; text-align: center;"></div>
-                <div id="tabs">
-                    <ul id="demo"></ul>
-                </div>
-
-                <a href="#modal2" class="start-test-btn modalAppear" id="save">Зберегти</a>
-
-                <div id="modal2" class="modal">
-                </div>
-
+            <div class="col s12">
                 <div id="testid"></div>
-
-                <!-- Modal Trigger -->
-                <div id="modal1" class="modal">
-                    <div class="modal-content">
-                        <p>Час тестування вийшов. Ваші результати збережено.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="UserPage.html" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-                    </div>
-                </div>
-
+                <div id="mark"></div>
+                <a href="UserPage.html"><button>На головну</button></a>
             </div>
         </div>
     </div>
 </main>
+<!--/MAIN-->
 <footer class="footer">
     <div class="container">
         <div class="row">
@@ -87,6 +70,7 @@
                 </div>
                 <div class="partner valign-wrapper">
                     <p>партнери</p>
+
                     <div id="owl-example" class="owl-carousel">
                         <div class="item"><img src="../img/logo/berkeley.png"></div>
                         <div class="item"><img src="../img/logo/cisco.png"></div>

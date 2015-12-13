@@ -19,7 +19,6 @@ $(document).ready(function ($) {
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             myjson = json;
-            var mymark;
             $.each(myjson, function (index, myjs) {
                 if(myjs.resultId=='0'){
                     if(myjs.testDTO.checked){
@@ -31,7 +30,7 @@ $(document).ready(function ($) {
                     }
                 }else{
                     $('.avaliableTests').append('<tr><td>' + myjs.testDTO.testName + '</td><td>' +
-                        myjs.testDTO.duration + " хв" + '</td><td><a href="TestPage.html?resultId='+myjs.resultId+'&user='+userId+'"><button class="start-test-btn">' +
+                        myjs.testDTO.duration + " хв" + '</td><td><a href="TestPage.html?resultId='+myjs.resultId+'&user='+userId+'&testid='+myjs.testDTO.id+'"><button class="start-test-btn">' +
                         "розпочати тест" + '</button></a></td></tr>');
                 }
             })

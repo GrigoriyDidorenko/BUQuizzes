@@ -23,6 +23,7 @@ $(document).ready(function ($) {
     }
     var tech = GetURLParameter('resultId');
     var userok = GetURLParameter('user');
+    var testid = GetURLParameter('testid');
     var urltest = 'http://localhost:8080/student/tests/'+userok+'/pass/'+tech;
     var testinfo;
     var globalVariable;
@@ -82,10 +83,12 @@ $(document).ready(function ($) {
 
         }
     });
+    $('#testid').append(testid);
+
     $(".modalAppear").click(function() {
         $('#modal2').openModal();
         $('#modal2').append('<div class="modal-content"><p>' + 'Після збереження відповіді будуть відправлені. Зберегти?' +
-            '</p></div><div class="modal-footer"><a href="../pages/UserPage.html" class="modal-action modal-close waves-effect waves-green btn-flat" id="save">' +
+            '</p></div><div class="modal-footer"><a href="../pages/PageOfConfirm.html?testid='+testid+'" class="modal-action modal-close waves-effect waves-green btn-flat" id="save">' +
             'Так' + '</a><a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">' + 'Ні' + '</a></div>');
     });
     $("#save").click(function() {
