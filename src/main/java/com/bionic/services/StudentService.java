@@ -104,4 +104,13 @@ public class StudentService {
         return null;
     }
 
+    public Set<TestWrapper> getTestsForUserId(String idStr) {
+        try {
+            HashSet<TestWrapper> result = new HashSet<>(resultDAO.getTestsForUserId(getLongId(idStr)));
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

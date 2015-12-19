@@ -5,6 +5,7 @@ import com.bionic.entities.Permission;
 import com.bionic.entities.Result;
 import com.bionic.entities.Role;
 import com.bionic.entities.Test;
+import com.bionic.wrappers.TestWrapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +33,7 @@ public class ResultDAO extends AbstractDAO<Result> {
     public ResultDAO() {
         super(Result.class);
     }
-
+    //todo if in table Result is mor than two same rows (uswerId, testId) - exeption query.getSingleResult();
     public Test getCurrentTest(long id, long testId, Permission permission) {
         Query query = em.createNamedQuery("getCurrentTestById");
         query.setParameter("userId", id);
@@ -70,6 +71,19 @@ public class ResultDAO extends AbstractDAO<Result> {
             Object[] tmp = (Object[]) iterator.next();
             TestDTO testDTO = new TestDTO((long) tmp[0], (String) tmp[1], (int) tmp[2], (boolean) tmp[3]);
             list.add(testDTO);
+        }
+        return list;
+    }
+
+    public List<TestWrapper> getTestsForUserId(long id) {
+        List<TestWrapper> list = new ArrayList<>();
+        Query query = em.createNamedQuery("getTestsForUserId");
+        query.setParameter("userId", id);
+        Iterator iterator = query.getResultList().iterator();
+        while (iterator.hasNext()) {
+            Object[] tmp = (Object[]) iterator.next();
+            TestDTO testDTO = new TestDTO((long) tmp[0], (String) tmp[1], (int) tmp[2], (boolean) tmp[3], (boolean) tmp[4]);
+            list.add(new TestWrapper(testDTO, (long) tmp[5]));
         }
         return list;
     }

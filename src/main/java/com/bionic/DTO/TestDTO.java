@@ -23,6 +23,7 @@ public class TestDTO {
     //Filds for Submited Tests
     private boolean isChecked;
     private int mark;
+    private boolean submited;
 
     public TestDTO() {
     }
@@ -45,6 +46,14 @@ public class TestDTO {
         this.testName = testName;
         this.mark = mark;
         this.isChecked = isChecked;
+    }
+
+    public TestDTO(long id, String testName, int mark, boolean isChecked, boolean submited) {
+        this.id = id;
+        this.testName = testName;
+        this.mark = mark;
+        this.isChecked = isChecked;
+        this.submited = submited;
     }
 
     public boolean isChecked() {
@@ -95,16 +104,27 @@ public class TestDTO {
         this.questions = questions;
     }
 
+    public boolean isSubmited() {
+        return submited;
+    }
+
+    public void setSubmited(boolean submited) {
+        this.submited = submited;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof TestDTO)) return false;
 
         TestDTO testDTO = (TestDTO) o;
 
         if (id != testDTO.id) return false;
         if (duration != testDTO.duration) return false;
-        if (testName != null ? !testName.equals(testDTO.testName) : testDTO.testName != null) return false;
+        if (isChecked != testDTO.isChecked) return false;
+        if (mark != testDTO.mark) return false;
+        if (submited != testDTO.submited) return false;
+        if (!testName.equals(testDTO.testName)) return false;
         return !(questions != null ? !questions.equals(testDTO.questions) : testDTO.questions != null);
 
     }
@@ -112,9 +132,13 @@ public class TestDTO {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (testName != null ? testName.hashCode() : 0);
+        result = 31 * result + testName.hashCode();
         result = 31 * result + duration;
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
+        result = 31 * result + (isChecked ? 1 : 0);
+        result = 31 * result + mark;
+        result = 31 * result + (submited ? 1 : 0);
         return result;
     }
+
 }

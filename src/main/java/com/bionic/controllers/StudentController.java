@@ -46,12 +46,11 @@ public class StudentController {
 
 
 
-    @RequestMapping(value = "/tests/{id}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/tests/{userId}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity<Set<TestWrapper>> getAvailableTestsNames(@PathVariable("id") String id) {
-        Set<TestWrapper> tests = studentService.getAvailableTestsNames(id);
-        tests.addAll(studentService.getPassTests(id));
+    ResponseEntity<Set<TestWrapper>> getAvailableTestsNames(@PathVariable("userId") String userId) {
+        Set<TestWrapper> tests = studentService.getTestsForUserId(userId);
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
 
