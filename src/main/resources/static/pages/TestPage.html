@@ -20,10 +20,18 @@
     <script src="../js/jquery.countdownTimer.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <script>
+        $(document).ready(function ($) {
+            //owlCarousel
+            $("#owl-example").owlCarousel({
+                autoPlay: 3000
+            });
+        })
+    </script>
     <script src="../js/TestPage.js"></script>
     <script src="../js/UserPage.js"></script>
-    <script src="../js/final.js"></script>
-    <script type="text/javascript" src="../materialize-src/js/bin/materialize.min.js"></script>
+
+    <script type="text/javascript" src="../materialize-src/js/bin/materialize.js"></script>
 </head>
 <body>
 <header>
@@ -49,30 +57,18 @@
 <main class="user-main">
     <div class="container">
         <div class="row">
-            <div class="col s6">
+            <div class="col m6 s12">
                 <div class="test-info"></div>
                 <div id="hms_timer" style="border:2px solid #2dadf0; border-radius:5px; padding:3px; margin: 5px 0 15px 0; color: #2dadf0; width:80px; text-align: center;"></div>
-                <div id="tabs">
+                <form id="tabs">
                     <ul id="demo"></ul>
-                </div>
+                </form>
 
-                <a href="#modal2" class="start-test-btn modalAppear" id="save">Зберегти</a>
-
+                <a href="#modal2" class="save-btn-test waves-effect waves-light modalAppear">Зберегти результати</a>
                 <div id="modal2" class="modal">
                 </div>
-
-                <div id="testid"></div>
-
                 <!-- Modal Trigger -->
-                <div id="modal1" class="modal">
-                    <div class="modal-content">
-                        <p>Час тестування вийшов. Ваші результати збережено.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="UserPage.html" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-                    </div>
-                </div>
-
+                <div id="modal1" class="modal"></div>
             </div>
         </div>
     </div>

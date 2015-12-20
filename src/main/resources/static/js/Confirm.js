@@ -24,7 +24,7 @@ $(document).ready(function ($) {
                     }
                 }
             }
-            var testid = GetURLParameter('testid');
+            var resultid = GetURLParameter('resultId');
             var myjson;
             jQuery.ajax({
                 type: "GET",
@@ -34,12 +34,12 @@ $(document).ready(function ($) {
                 success: function (json) {
                     myjson = json;
                     $.each(myjson, function (index, myjs) {
-                        if(myjs.testDTO.id==testid){
+                        if(myjs.resultId==resultid){
                             $('#mark').append(myjs.testDTO.mark);
                             if(myjs.testDTO.checked){
-                                
+
                             }else
-                            $('#testid').append("В тесті наявні відкриті відповіді, які потребують перевірки.");
+                                $('#testid').append("В тесті наявні відкриті відповіді, які потребують перевірки. На Ваш e-mail буде надіслано лист з остаточним результатом тестування.");
                         }
                     })
                 }
