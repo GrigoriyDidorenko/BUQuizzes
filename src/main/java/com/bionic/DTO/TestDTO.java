@@ -48,12 +48,13 @@ public class TestDTO {
         this.isChecked = isChecked;
     }
 
-    public TestDTO(long id, String testName, int mark, boolean isChecked, boolean submited) {
+    public TestDTO(long id, String testName, int mark, boolean isChecked, boolean submited, int duration) {
         this.id = id;
         this.testName = testName;
         this.mark = mark;
         this.isChecked = isChecked;
         this.submited = submited;
+        this.duration = duration;
     }
 
     public boolean isChecked() {
