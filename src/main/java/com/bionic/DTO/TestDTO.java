@@ -24,6 +24,9 @@ public class TestDTO {
     private boolean isChecked;
     private int mark;
     private boolean submited;
+    private boolean oneTime ;
+    private long categoryTestId;
+
 
     public TestDTO() {
     }
@@ -111,6 +114,22 @@ public class TestDTO {
 
     public void setSubmited(boolean submited) {
         this.submited = submited;
+    }
+
+    public boolean isOneTime() {
+        return oneTime;
+    }
+
+    public void setOneTime(boolean oneTime) {
+        this.oneTime = oneTime;
+    }
+
+    public long getCategoryTestId() {
+        return categoryTestId;
+    }
+
+    public void setCategoryTestId(long categoryTestId) {
+        this.categoryTestId = categoryTestId;
     }
 
     @Override

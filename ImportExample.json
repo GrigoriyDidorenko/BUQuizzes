@@ -1,6 +1,34 @@
 [ {
   "testName" : "C#",
   "duration" : 30,
+  "oneTime" : true,
+  "categoryTestId" : 1,
+  "questions" : [ {
+    "question" : "How are you?",
+    "answers" : [ {
+      "answerText" : "Fine",
+      "mark" : 3
+    } ]
+  }, {
+    "question" : "Which programming language is the best?",
+    "answers" : [ {
+      "answerText" : "Java",
+      "mark" : 3
+    }, {
+      "answerText" : "C#",
+      "mark" : -1
+    }, {
+      "answerText" : "Scala",
+      "mark" : -1
+    } ]
+  }, {
+    "question" : "Open Question?"
+  } ]
+},{
+  "testName" : "C#2",
+  "duration" : 30,
+  "oneTime" : false,
+  "categoryTestId" : 1,
   "questions" : [ {
     "question" : "How are you?",
     "answers" : [ {

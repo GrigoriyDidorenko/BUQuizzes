@@ -35,6 +35,8 @@ public class TestService {
     private QuestionDAO questionDAO;
     @Autowired
     private AnswerDAO answerDAO;
+    @Autowired
+    private CategoryTestDAO categoryTestDAO ;
 
     public TestService() {
     }
@@ -122,6 +124,11 @@ public class TestService {
                 Test test = new Test();
                 test.setDuration(testDTO.getDuration());
                 test.setTestName(testDTO.getTestName());
+                test.setOneTime(testDTO.isOneTime());
+
+                CategoryTest categoryTest = categoryTestDAO.find(testDTO.getCategoryTestId() );
+                test.setCategoryTest(categoryTest);
+
                 if (testDTO.getQuestions() != null)
                     for (QuestionDTO questionDTO : testDTO.getQuestions()) {
                         int positiveMark = 0;

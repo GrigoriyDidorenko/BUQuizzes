@@ -1,6 +1,7 @@
 package com.bionic.entities;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +14,10 @@ import java.util.Set;
  * @date: 01.11.2015
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "getUnarchivedOneTimeTests",
+                query = "SELECT t.id, t.testName, t.duration, t.categoryTest   FROM Test t  WHERE t.archived = FALSE and t.oneTime = TRUE")
+})
 @NamedNativeQuery(name = "getUnarchivedTestsNames",
         query = "SELECT t.id, t.test_name FROM Test t WHERE t.archived = FALSE")
 @Table(name = "test", catalog = "quizzes")
@@ -27,10 +32,23 @@ public class Test {
     private String testName;
     @Column(name = "archived", nullable = false)
     private boolean archived;
+    @Column(name = "one_time", nullable = false)
+    private boolean oneTime;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "test", fetch = FetchType.EAGER)
     private Set<Question> questions;
     @ManyToMany(mappedBy = "tests")
     private Set<User> users;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private CategoryTest categoryTest;
+
+    public CategoryTest getCategoryTest() {
+        return categoryTest;
+    }
+
+    public void setCategoryTest(CategoryTest categoryTest) {
+        this.categoryTest = categoryTest;
+    }
 
     public Test() {
     }
@@ -81,6 +99,14 @@ public class Test {
 
     public Set<Question> getQuestions() {
         return questions;
+    }
+
+    public boolean isOneTime() {
+        return oneTime;
+    }
+
+    public void setOneTime(boolean oneTime) {
+        this.oneTime = oneTime;
     }
 
     public Set<Question> getQuestionsNotArchived() {
@@ -138,4 +164,5 @@ public class Test {
                 ", testName='" + testName + '\'' +
                 '}';
     }
+
 }
