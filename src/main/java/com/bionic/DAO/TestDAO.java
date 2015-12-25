@@ -3,6 +3,7 @@ package com.bionic.DAO;
 
 
 import com.bionic.DTO.TestDTO;
+import com.bionic.DTO.TestDTOForOneTimeTest;
 import com.bionic.entities.Test;
 import com.bionic.wrappers.TestWrapper;
 import org.springframework.stereotype.Repository;
@@ -27,13 +28,13 @@ public class TestDAO extends AbstractDAO<Test> {
         return (List<TestDTO>)query.getResultList();
     }
 
-  public List<TestDTO> getUnarchivedOneTimeTests(){
-        List<TestDTO > list = new ArrayList<>();
+  public List<TestDTOForOneTimeTest> getUnarchivedOneTimeTests(){
+        List<TestDTOForOneTimeTest> list = new ArrayList<>();
         Query query = em.createNamedQuery("getUnarchivedOneTimeTests");
         Iterator iterator = query.getResultList().iterator();
         while (iterator.hasNext()) {
             Object[] tmp = (Object[]) iterator.next();
-            TestDTO testDTO = new TestDTO((long) tmp[0], (String) tmp[1], (int) tmp[2]);
+            TestDTOForOneTimeTest testDTO = new TestDTOForOneTimeTest((long) tmp[0], (String) tmp[1], (int) tmp[2], (String) tmp[3]);
             list.add(testDTO );
         }
         return list;

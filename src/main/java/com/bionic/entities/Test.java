@@ -16,7 +16,7 @@ import java.util.Set;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "getUnarchivedOneTimeTests",
-                query = "SELECT t.id, t.testName, t.duration, t.categoryTest   FROM Test t  WHERE t.archived = FALSE and t.oneTime = TRUE")
+                query = "SELECT t.id, t.testName, t.duration, t1.categoryName   FROM Test t, CategoryTest t1  WHERE t.archived = FALSE and t.oneTime = TRUE and t.categoryTest = t1")
 })
 @NamedNativeQuery(name = "getUnarchivedTestsNames",
         query = "SELECT t.id, t.test_name FROM Test t WHERE t.archived = FALSE")
