@@ -69,4 +69,6 @@ public class UserAnswer {
     public void setAnswerId(long answerId) {
         this.answerId = answerId;
     }
+
+
 }

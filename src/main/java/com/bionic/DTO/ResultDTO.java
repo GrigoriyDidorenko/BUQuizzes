@@ -16,6 +16,9 @@ public class ResultDTO {
         this.checkStatus = checkStatus;
     }
 
+    public ResultDTO(Integer mark) {
+    }
+
     public int getMark() {
         return mark;
     }

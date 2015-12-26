@@ -36,7 +36,9 @@ public class TestService {
     @Autowired
     private AnswerDAO answerDAO;
     @Autowired
-    private CategoryTestDAO categoryTestDAO ;
+    private CategoryTestDAO categoryTestDAO;
+    @Autowired
+    private OneTimeTestDAO oneTimeTestDAO;
 
     public TestService() {
     }
@@ -53,25 +55,25 @@ public class TestService {
 
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
-        }finally {
+        } finally {
             result.setSubmited(true);
             resultDAO.update(result);
-            resultDTO = new ResultDTO(result.getMark(),String.valueOf(result.isChecked()));
+            resultDTO = new ResultDTO(result.getMark(), String.valueOf(result.isChecked()));
         }
         return resultDTO;
     }
 
-    public void saveCreatedTest(TestDTO testDTO){
+    public void saveCreatedTest(TestDTO testDTO) {
         try {
             Test test = Converter.convertTestDTOToTest(testDTO);
             testDAO.save(test);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("failed to save test");
         }
     }
 
     public Result calcResult(Result result, ArrayList<UserAnswer> userAnswers) throws Exception {
-        int mark = 0,  maxmark=0 ;
+        int mark = 0, maxmark = 0;
         result.setIsChecked(true);
         for (Question question : result.getTest().getQuestions()) {
             if (question.getIsOpen()) {
@@ -82,7 +84,7 @@ public class TestService {
                 for (UserAnswer userAnswer : userAnswers) {
                     if (userAnswer.getQuestionId() == question.getId()) {
                         for (Answer answer : question.getAnswers()) {
-                            maxmark+=mark;
+                            maxmark += mark;
                             if (answer.getId() == userAnswer.getAnswerId()) {
                                 mark += answer.getMark();
                             }
@@ -96,7 +98,7 @@ public class TestService {
                 for (UserAnswer userAnswer : userAnswers) {
                     if (userAnswer.getQuestionId() == question.getId()) {
                         for (Answer answer : question.getAnswers()) {
-                            if (answer.getMark()>0) maxmark+= answer.getMark();
+                            if (answer.getMark() > 0) maxmark += answer.getMark();
                             if (answer.getId() == userAnswer.getAnswerId()) {
                                 preMark += answer.getMark();
                             }
@@ -108,7 +110,7 @@ public class TestService {
                 continue;
             }
         }
-        mark= Math.round(((float) mark/ (float)maxmark )*100);
+        mark = Math.round(((float) mark / (float) maxmark) * 100);
         result.setMark(mark);
         return result;
     }
@@ -126,7 +128,7 @@ public class TestService {
                 test.setTestName(testDTO.getTestName());
                 test.setOneTime(testDTO.isOneTime());
 
-                CategoryTest categoryTest = categoryTestDAO.find(testDTO.getCategoryTestId() );
+                CategoryTest categoryTest = categoryTestDAO.find(testDTO.getCategoryTestId());
                 test.setCategoryTest(categoryTest);
 
                 if (testDTO.getQuestions() != null)
@@ -143,10 +145,10 @@ public class TestService {
                                 answer.setQuestion(question);
                                 answer.setMark(answerDTO.getMark());
                                 answers.add(answer);
-                                if(answer.getMark()>0)
+                                if (answer.getMark() > 0)
                                     positiveMark++;
                             }
-                        if(answers.size()!=0 && positiveMark == 0)
+                        if (answers.size() != 0 && positiveMark == 0)
                             throw new Exception("Question should have at least one answer with positive" +
                                     " mark or doesn't have any answers at all");
                         switch (positiveMark) {
@@ -177,5 +179,60 @@ public class TestService {
             e.printStackTrace();
         }
         return "successful";
+    }
+
+
+    public ResultDTO processingAnswersForOneTimeTest(ArrayList<UserAnswerDTO> answerDTOs, long testId) {
+        OneTimeTest oneTimeTest = new OneTimeTest();
+        Test test = testDAO.find(testId);
+        ResultDTO resultDTO = new ResultDTO();
+        try {
+            ArrayList<UserAnswer> userAnswers = Converter.convertUserAnswerDTOsToTempUserAnswers(answerDTOs);
+            oneTimeTest.setMark(calcResultForOneTimeTest(userAnswers,test));
+        } catch (Exception e) {
+            resultDTO.setCheckStatus(e.getMessage());
+        } finally {
+            oneTimeTestDAO.update(oneTimeTest);
+            resultDTO = new ResultDTO(oneTimeTest.getMark());
+        }
+        return resultDTO;
+    }
+
+    private Integer calcResultForOneTimeTest(ArrayList<UserAnswer> userAnswers, Test test) {
+        int mark = 0, maxmark = 0;
+        for (Question question : test.getQuestions()) {
+            if (!question.getIsMultichoice()) {
+                for (UserAnswer userAnswer : userAnswers) {
+                    if (userAnswer.getQuestionId() == question.getId()) {
+                        for (Answer answer : question.getAnswers()) {
+                            maxmark += mark;
+                            if (answer.getId() == userAnswer.getAnswerId()) {
+                                mark += answer.getMark();
+                            }
+                        }
+                    }
+                }
+                continue;
+            }
+            if (question.getIsMultichoice()) {
+                int preMark = 0;
+                for (UserAnswer userAnswer : userAnswers) {
+                    if (userAnswer.getQuestionId() == question.getId()) {
+                        for (Answer answer : question.getAnswers()) {
+                            if (answer.getMark() > 0) maxmark += answer.getMark();
+                            if (answer.getId() == userAnswer.getAnswerId()) {
+                                preMark += answer.getMark();
+                            }
+                        }
+                    }
+                }
+                preMark = preMark < 0 ? 0 : preMark;
+                mark += preMark;
+                continue;
+            }
+
+        }
+        mark = Math.round(((float) mark / (float) maxmark) * 100);
+        return mark;
     }
 }

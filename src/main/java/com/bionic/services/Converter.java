@@ -121,4 +121,20 @@ public class Converter {
         return null;
     }
 
+    public static ArrayList<UserAnswer> convertUserAnswerDTOsToTempUserAnswers(ArrayList<UserAnswerDTO> guestAnswerDTOs) {
+        ArrayList<UserAnswer> userAnswers = new ArrayList<>();
+        for (UserAnswerDTO userAnswerDTO : guestAnswerDTOs) {
+            if (!userAnswerDTO.getAnswerId().isEmpty()) {
+                for (String answerId : userAnswerDTO.getAnswerId()) {
+                    UserAnswer userAnswer = new UserAnswer();
+                    userAnswer.setAnswerId(Long.valueOf(answerId)) ;
+                    userAnswer.setQuestionId(userAnswerDTO.getQuestionId());
+                    userAnswers.add(userAnswer);
+                }
+            } else {
+                continue;
+            }
+        }
+        return userAnswers;
+    }
 }

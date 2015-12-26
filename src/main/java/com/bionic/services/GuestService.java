@@ -1,8 +1,10 @@
 package com.bionic.services;
 
 import com.bionic.DAO.TestDAO;
+import com.bionic.DTO.ResultDTO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.TestDTOForOneTimeTest;
+import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.entities.Permission;
 import com.bionic.entities.Result;
 import com.bionic.entities.Test;
@@ -10,6 +12,7 @@ import com.bionic.wrappers.TestWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +26,8 @@ public class GuestService {
     @Autowired
     private TestDAO testDAO;
 
+    public GuestService() {
+    }
 
     public Set<TestDTOForOneTimeTest> getAvailableOneTimeTests() {
         try {
