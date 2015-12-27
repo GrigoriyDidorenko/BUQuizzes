@@ -2,7 +2,6 @@ package com.bionic.entities;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * Created by rondo104 on 23.12.2015.

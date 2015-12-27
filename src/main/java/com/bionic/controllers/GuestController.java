@@ -50,7 +50,7 @@ public class GuestController {
         TestDTO testDTO = guestService.getCurrentTest(testId);
         return new ResponseEntity<>(testDTO, HttpStatus.OK);
     }
-
+    //ToDo User, Mail, Security
     @RequestMapping(value = "/answers/{testId}", method = RequestMethod.POST, produces = "application/json")
     public
     @ResponseBody

@@ -52,15 +52,14 @@ public class TestService {
                 userAnswerDAO.save(userAnswer);
             }
             result = calcResult(result, userAnswers);
-
-        } catch (Exception e) {
-            resultDTO.setCheckStatus(e.getMessage());
-        } finally {
             result.setSubmited(true);
             resultDAO.update(result);
             resultDTO = new ResultDTO(result.getMark(), String.valueOf(result.isChecked()));
+        } catch (Exception e) {
+            resultDTO.setCheckStatus(e.getMessage());
+        } finally {
+            return resultDTO;
         }
-        return resultDTO;
     }
 
     public void saveCreatedTest(TestDTO testDTO) {
@@ -84,7 +83,7 @@ public class TestService {
                 for (UserAnswer userAnswer : userAnswers) {
                     if (userAnswer.getQuestionId() == question.getId()) {
                         for (Answer answer : question.getAnswers()) {
-                            maxmark += mark;
+                            if (answer.getMark() > 0) maxmark += answer.getMark();
                             if (answer.getId() == userAnswer.getAnswerId()) {
                                 mark += answer.getMark();
                             }
@@ -181,31 +180,34 @@ public class TestService {
         return "successful";
     }
 
-
+    //ToDo Update in DB line 192
     public ResultDTO processingAnswersForOneTimeTest(ArrayList<UserAnswerDTO> answerDTOs, long testId) {
         OneTimeTest oneTimeTest = new OneTimeTest();
         Test test = testDAO.find(testId);
         ResultDTO resultDTO = new ResultDTO();
         try {
             ArrayList<UserAnswer> userAnswers = Converter.convertUserAnswerDTOsToTempUserAnswers(answerDTOs);
-            oneTimeTest.setMark(calcResultForOneTimeTest(userAnswers,test));
+            oneTimeTest.setMark(calcResultForOneTimeTest(userAnswers, test));
+            resultDTO.setMark(oneTimeTest.getMark());
+            oneTimeTestDAO.update(oneTimeTest);
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
         } finally {
-            oneTimeTestDAO.update(oneTimeTest);
-            resultDTO = new ResultDTO(oneTimeTest.getMark());
+            return resultDTO;
         }
-        return resultDTO;
     }
 
     private Integer calcResultForOneTimeTest(ArrayList<UserAnswer> userAnswers, Test test) {
         int mark = 0, maxmark = 0;
         for (Question question : test.getQuestions()) {
+            if (question.getIsOpen()) {
+                continue;
+            }
             if (!question.getIsMultichoice()) {
                 for (UserAnswer userAnswer : userAnswers) {
                     if (userAnswer.getQuestionId() == question.getId()) {
                         for (Answer answer : question.getAnswers()) {
-                            maxmark += mark;
+                            if (answer.getMark() > 0) maxmark += answer.getMark();
                             if (answer.getId() == userAnswer.getAnswerId()) {
                                 mark += answer.getMark();
                             }
