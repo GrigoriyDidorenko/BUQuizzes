@@ -51,13 +51,14 @@ public class GuestService {
     }
 
     public boolean getPermisionForOneTest(String email, String nickName){
-        boolean permision = false ;
+        boolean permision = true ;
         String conditional = "table.nickname =" + "'" + nickName + "'";
         List<OneTimeTest> oneTimeTests = oneTimeTestDAO.findByTableWhere(conditional);
         for (OneTimeTest oneTimeTest : oneTimeTests){
             if (email.equals(oneTimeTest.getEmail())){
                 permision = true ;
-            }
+                break; 
+            }else permision = false;
         }
         return permision;
     }
