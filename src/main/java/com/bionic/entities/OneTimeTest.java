@@ -15,6 +15,8 @@ public class OneTimeTest {
     private long id;
     @Column(name = "name", nullable = false)
     private String name;
+    @Column(name = "nickname", nullable = false)
+    private String name;
     @Column(name = "email", nullable = false)
     private String email;
     @Column(name = "mark", nullable = false)
