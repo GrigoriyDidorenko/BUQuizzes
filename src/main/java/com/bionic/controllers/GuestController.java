@@ -1,5 +1,6 @@
 package com.bionic.controllers;
 
+import com.bionic.DTO.GuestAnswerDTO;
 import com.bionic.DTO.ResultDTO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
@@ -64,19 +65,26 @@ public class GuestController {
         return new ResponseEntity<>(guestService.getLeaderBoard(testId, pageNumber), HttpStatus.OK);
     }
 
+/*    {   "email" :  "rondo104@gmail.com",
+        "nickName" :  "roma",
+        "name" : "name",
+        "userAnswerDTO" : [{"questionId":3,"answerId":[3,4],"answerText":""},
+                           {"questionId":2,"answerId":[],"answerText":"bnm"},
+                           {"questionId":2,"answerId":[2],"answerText":""}] }*/
     @RequestMapping(value = "/answers/{testId}", method = RequestMethod.POST, produces = "application/json")
     public
     @ResponseBody
     ResponseEntity<ResultDTO> setAnswers(@RequestBody String JSONAnswers,
-                                         @PathVariable("testId") String testId) {
+                                         @PathVariable("testId") String testId){
         ResultDTO resultDTO = null;
         try {
-            String email = "grigoriy.didorenko@gmail.com";
+        /*    String email = "mail";
             String nickName = "nick";
-            String name = "Name" ;
+            String name = "Name" ;*/
             TypeFactory typeFactory = objectMapper.getTypeFactory();
-            ArrayList<UserAnswerDTO> userAnswerDTOs = objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(ArrayList.class, UserAnswerDTO.class));
-            resultDTO = testService.processingAnswersForOneTimeTest(userAnswerDTOs, Long.valueOf(testId), nickName, email, name) ;
+            GuestAnswerDTO guestAnswerDTO = objectMapper.readValue(JSONAnswers,GuestAnswerDTO.class);
+            List<UserAnswerDTO> userAnswerDTOs = guestAnswerDTO.getUserAnswerDTO();
+            resultDTO = testService.processingAnswersForOneTimeTest((ArrayList<UserAnswerDTO>) userAnswerDTOs, Long.valueOf(testId), guestAnswerDTO.getNickName(), guestAnswerDTO.getEmail() , guestAnswerDTO.getEmail()) ;
         } catch (NumberFormatException e) {
             resultDTO.setCheckStatus("resultId string cannot be parsed");
         } catch (Exception e) {
