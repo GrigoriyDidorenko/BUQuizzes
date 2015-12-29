@@ -140,6 +140,14 @@ public class TestDTO {
         this.categoryTestId = categoryTestId;
     }
 
+    public String getCategoryTestName() {
+        return categoryTestName;
+    }
+
+    public void setCategoryTestName(String categoryTestName) {
+        this.categoryTestName = categoryTestName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
