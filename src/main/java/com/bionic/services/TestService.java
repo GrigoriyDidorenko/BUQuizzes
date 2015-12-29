@@ -190,7 +190,7 @@ public class TestService {
             ArrayList<UserAnswer> userAnswers = Converter.convertUserAnswerDTOsToTempUserAnswers(answerDTOs);
             oneTimeTest.setMark(calcResultForOneTimeTest(userAnswers, test));
             resultDTO.setMark(oneTimeTest.getMark());
-            resultDTO.setCheckStatus("Ok");
+            resultDTO.setCheckStatus(name + ",відправився результат на поштову скриньку:" + email);
             mailManager.send(email, "Passing test " + testDAO.find(testId).getTestName(), "You have successfully passed " +
                     "test " + testDAO.find(testId).getTestName() + "\nYour mark: " + resultDTO.getMark());
             oneTimeTestDAO.save(oneTimeTest);
