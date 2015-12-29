@@ -71,7 +71,7 @@ public class GuestController {
                                          @PathVariable("testId") String testId) {
         ResultDTO resultDTO = null;
         try {
-            String email = "mail";
+            String email = "grigoriy.didorenko@gmail.com";
             String nickName = "nick";
             String name = "Name" ;
             TypeFactory typeFactory = objectMapper.getTypeFactory();
