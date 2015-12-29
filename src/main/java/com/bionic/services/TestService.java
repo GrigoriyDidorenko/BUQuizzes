@@ -180,16 +180,16 @@ public class TestService {
         return "successful";
     }
 
-    //ToDo Update in DB line 192
-    public ResultDTO processingAnswersForOneTimeTest(ArrayList<UserAnswerDTO> answerDTOs, long testId) {
-        OneTimeTest oneTimeTest = new OneTimeTest();
+    public ResultDTO processingAnswersForOneTimeTest(ArrayList<UserAnswerDTO> answerDTOs, long testId, String nickName, String email, String name) {
+        OneTimeTest oneTimeTest = new OneTimeTest( name,nickName, email, testId);
         Test test = testDAO.find(testId);
         ResultDTO resultDTO = new ResultDTO();
         try {
             ArrayList<UserAnswer> userAnswers = Converter.convertUserAnswerDTOsToTempUserAnswers(answerDTOs);
             oneTimeTest.setMark(calcResultForOneTimeTest(userAnswers, test));
             resultDTO.setMark(oneTimeTest.getMark());
-            oneTimeTestDAO.update(oneTimeTest);
+            resultDTO.setCheckStatus("Ok");
+            oneTimeTestDAO.save(oneTimeTest);
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
         } finally {

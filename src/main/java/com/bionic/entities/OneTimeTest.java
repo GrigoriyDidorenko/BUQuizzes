@@ -42,6 +42,14 @@ public class OneTimeTest {
     public OneTimeTest() {
     }
 
+
+    public OneTimeTest(String name, String nickname, String email, long testId) {
+        this.name = name;
+        this.nickname = nickname;
+        this.email = email;
+        this.testId = testId;
+    }
+
     public long getId() {
         return id;
     }

@@ -47,7 +47,7 @@ public class GuestController {
     public
     @ResponseBody
     ResponseEntity<TestDTO> getCurrentTest(@PathVariable("testId") String testId, @RequestParam ("email") String email,
-                                           @RequestParam ("nickName") String nickName, @RequestParam ("name") String name ) {
+                                           @RequestParam ("nickName") String nickName ) {
         if (guestService.getPermisionForOneTest(email, nickName)) {
             TestDTO testDTO = guestService.getCurrentTest(testId);
             return new ResponseEntity<>(testDTO, HttpStatus.OK);}
@@ -64,16 +64,19 @@ public class GuestController {
         return new ResponseEntity<>(guestService.getLeaderBoard(testId, pageNumber), HttpStatus.OK);
     }
 
-    //ToDo User, Mail, Security
     @RequestMapping(value = "/answers/{testId}", method = RequestMethod.POST, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity<ResultDTO> setAnswers(@RequestBody String JSONAnswers, @PathVariable("testId") String testId) {
+    ResponseEntity<ResultDTO> setAnswers(@RequestBody String JSONAnswers,
+                                         @PathVariable("testId") String testId) {
         ResultDTO resultDTO = null;
         try {
+            String email = "mail";
+            String nickName = "nick";
+            String name = "Name" ;
             TypeFactory typeFactory = objectMapper.getTypeFactory();
             ArrayList<UserAnswerDTO> userAnswerDTOs = objectMapper.readValue(JSONAnswers, typeFactory.constructCollectionType(ArrayList.class, UserAnswerDTO.class));
-            resultDTO = testService.processingAnswersForOneTimeTest(userAnswerDTOs, Long.valueOf(testId)) ;
+            resultDTO = testService.processingAnswersForOneTimeTest(userAnswerDTOs, Long.valueOf(testId), nickName, email, name) ;
         } catch (NumberFormatException e) {
             resultDTO.setCheckStatus("resultId string cannot be parsed");
         } catch (Exception e) {
