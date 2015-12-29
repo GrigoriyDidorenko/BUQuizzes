@@ -46,9 +46,14 @@ public class GuestController {
     @RequestMapping(value = "/tests/{testId}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity<TestDTO> getCurrentTest(@PathVariable("testId") String testId) {
-        TestDTO testDTO = guestService.getCurrentTest(testId);
-        return new ResponseEntity<>(testDTO, HttpStatus.OK);
+    ResponseEntity<TestDTO> getCurrentTest(@PathVariable("testId") String testId, @RequestParam ("email") String email,
+                                           @RequestParam ("nickName") String nickName, @RequestParam ("name") String name ) {
+        if (guestService.getPermisionForOneTest(email, nickName)) {
+            TestDTO testDTO = guestService.getCurrentTest(testId);
+            return new ResponseEntity<>(testDTO, HttpStatus.OK);}
+        else {
+         return new ResponseEntity("Invalid data",HttpStatus.CONFLICT );
+        }
     }
 
     @RequestMapping(value = "/leaderBoard/{testId}/{pageNumber}", method = RequestMethod.GET, produces = "application/json")

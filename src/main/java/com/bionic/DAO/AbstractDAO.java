@@ -48,8 +48,9 @@ public abstract class AbstractDAO<T> {
 
     @Deprecated
     public List<T> findByTableWhere(String condition) {
-        String JPQL = "from " + entityClass.getSimpleName() + " table where " + condition;
+        String JPQL ="SELECT table  FROM " + entityClass.getSimpleName() + " table where " + condition;
         Query query = em.createQuery(JPQL);
-        return query.getResultList();
+        List<T> list =  query.getResultList();
+        return list ;
     }
 }

@@ -3,6 +3,8 @@ package com.bionic.services;
 import com.bionic.DAO.OneTimeTestDAO;
 import com.bionic.DAO.TestDAO;
 import com.bionic.DTO.TestDTO;
+import com.bionic.entities.OneTimeTest;
+import com.bionic.entities.Permission;
 import com.bionic.entities.Test;
 import com.bionic.wrappers.NickMarkWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,18 @@ public class GuestService {
         }
         return null;
 
+    }
+
+    public boolean getPermisionForOneTest(String email, String nickName){
+        boolean permision = false ;
+        String conditional = "table.nickname =" + "'" + nickName + "'";
+        List<OneTimeTest> oneTimeTests = oneTimeTestDAO.findByTableWhere(conditional);
+        for (OneTimeTest oneTimeTest : oneTimeTests){
+            if (email.equals(oneTimeTest.getEmail())){
+                permision = true ;
+            }
+        }
+        return permision;
     }
 
     public TestDTO getCurrentTest(String testId) {
