@@ -16,7 +16,7 @@ public class OneTimeTest {
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "nickname", nullable = false)
-    private String name;
+    private String nickname;
     @Column(name = "email", nullable = false)
     private String email;
     @Column(name = "mark", nullable = false)
@@ -74,6 +74,14 @@ public class OneTimeTest {
         this.testId = testId;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -83,20 +91,22 @@ public class OneTimeTest {
 
         if (id != that.id) return false;
         if (testId != that.testId) return false;
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
         if (!name.equals(that.name)) return false;
+        if (!nickname.equals(that.nickname)) return false;
         if (!email.equals(that.email)) return false;
-        return mark != null ? mark.equals(that.mark) : that.mark == null;
+        if (mark != null ? !mark.equals(that.mark) : that.mark != null) return false;
+        return userId != null ? userId.equals(that.userId) : that.userId == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + name.hashCode();
+        result = 31 * result + nickname.hashCode();
         result = 31 * result + email.hashCode();
         result = 31 * result + (mark != null ? mark.hashCode() : 0);
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (int) (testId ^ (testId >>> 32));
         return result;
     }
