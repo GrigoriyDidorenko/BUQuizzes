@@ -1,12 +1,15 @@
 package com.bionic.services;
 
+import com.bionic.DAO.OneTimeTestDAO;
 import com.bionic.DAO.TestDAO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.entities.Test;
+import com.bionic.wrappers.NickMarkWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,8 +20,21 @@ public class GuestService {
 
     @Autowired
     private TestDAO testDAO;
+    @Autowired
+    private OneTimeTestDAO oneTimeTestDAO;
 
     public GuestService() {
+    }
+
+    public NickMarkWrapper getLeaderBoard(String testId, String pageNumber){
+        try {
+            long limitCounter = (Converter.getLongId(pageNumber)-1)*1;
+            return new NickMarkWrapper(oneTimeTestDAO.getLeaderBoard(Converter.getLongId(testId),
+                    limitCounter),oneTimeTestDAO.getBoardsPageCount().longValue());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public Set<TestDTO> getAvailableOneTimeTests() {

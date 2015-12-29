@@ -6,6 +6,18 @@ import javax.persistence.*;
  * Created by rondo104 on 23.12.2015.
  */
 @Entity
+
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "getLeaderBoard", query = "SELECT sql_calc_found_rows ott.`name`, MAX(ott.mark) " +
+                "FROM quizzes.one_time_test ott " +
+                "JOIN test t ON ott.test_id = t.id " +
+                "WHERE test_id = :testId " +
+                "GROUP BY `name` " +
+                "ORDER BY MAX(mark) DESC " +
+                "LIMIT :pageNumber, 1"),
+        @NamedNativeQuery(name = "getBoardsPageCount",
+        query = "select found_rows()")
+})
 @Table(name = "one_time_test", catalog = "quizzes")
 public class OneTimeTest {
 

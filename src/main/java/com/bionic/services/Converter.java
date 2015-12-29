@@ -137,4 +137,16 @@ public class Converter {
         }
         return userAnswers;
     }
+
+    public static long getLongId(String idStr) {
+        long id = 0;
+        try {
+            id = Long.parseLong(idStr);
+        } catch (NumberFormatException e) {
+            System.out.println("incorrect id");
+        }
+        if (id == 0)
+            throw new RuntimeException("invalid id");
+        return id;
+    }
 }

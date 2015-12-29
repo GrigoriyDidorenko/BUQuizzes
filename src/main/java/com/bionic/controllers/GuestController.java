@@ -5,6 +5,7 @@ import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.services.GuestService;
 import com.bionic.services.TestService;
+import com.bionic.wrappers.NickMarkWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,7 +35,7 @@ public class GuestController {
     public GuestController() {
     }
 
-    @RequestMapping(value = "/OneTimeTests", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/oneTimeTests", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     ResponseEntity<Set<TestDTO>> getAvailableOneTimeTests() {
@@ -47,6 +49,14 @@ public class GuestController {
     ResponseEntity<TestDTO> getCurrentTest(@PathVariable("testId") String testId) {
         TestDTO testDTO = guestService.getCurrentTest(testId);
         return new ResponseEntity<>(testDTO, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/leaderBoard/{testId}/{pageNumber}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    ResponseEntity <NickMarkWrapper> getLeaderBoard(@PathVariable("testId") String testId,
+                                                          @PathVariable("pageNumber") String pageNumber) {
+        return new ResponseEntity<>(guestService.getLeaderBoard(testId, pageNumber), HttpStatus.OK);
     }
 
     //ToDo User, Mail, Security

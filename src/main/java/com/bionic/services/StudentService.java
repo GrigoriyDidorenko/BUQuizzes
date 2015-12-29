@@ -43,9 +43,9 @@ public class StudentService {
     public Set<TestWrapper> getAvailableTestsNames(String idStr) {
         try {
             HashSet<TestWrapper> result = new HashSet<>();
-            HashSet<TestDTO> testDTOs = new HashSet<>(resultDAO.getAvailableTestsNames(getLongId(idStr)));
+            HashSet<TestDTO> testDTOs = new HashSet<>(resultDAO.getAvailableTestsNames(Converter.getLongId(idStr)));
             for (TestDTO testDTO : testDTOs)
-                result.add(new TestWrapper(testDTO, resultDAO.getResultByIds(getLongId(idStr),
+                result.add(new TestWrapper(testDTO, resultDAO.getResultByIds(Converter.getLongId(idStr),
                         testDTO.getId()).longValue()));
             return result;
         } catch (Exception e) {
@@ -56,11 +56,11 @@ public class StudentService {
 
     public TestDTO getCurrentTest(String idStr, String resultIdStr) {
         try {
-            Result result = resultDAO.find(getLongId(resultIdStr));
+            Result result = resultDAO.find(Converter.getLongId(resultIdStr));
                 Date testBeginTime = result.getBeginTime();
                 testBeginTime.setTime(testBeginTime.getTime()+60000*result.getTest().getDuration());
                 if (new Date(System.currentTimeMillis()).before(testBeginTime)) {
-                    Test test = resultDAO.getCurrentTest(getLongId(idStr),
+                    Test test = resultDAO.getCurrentTest(Converter.getLongId(idStr),
                             result.getTest().getId(), Permission.EDIT_THE_TEST);
                     return Converter.convertUsersTestToDTO(test);
                 }
@@ -72,29 +72,16 @@ public class StudentService {
 
     public void setTestBeginTime(String resultIdStr) {
         if(firstEnter) {
-            Result result = resultDAO.find(getLongId(resultIdStr));
+            Result result = resultDAO.find(Converter.getLongId(resultIdStr));
             result.setBeginTime(new Date(System.currentTimeMillis()));
             resultDAO.save(result);
         }
     }
-
-    public long getLongId(String idStr) {
-        long id = 0;
-        try {
-            id = Long.parseLong(idStr);
-        } catch (NumberFormatException e) {
-            System.out.println("incorrect id");
-        }
-        if (id == 0)
-            throw new RuntimeException("invalid id");
-        return id;
-    }
-
-
+    
     public HashSet<TestWrapper> getPassTests(String idStr) {
         try {
             HashSet<TestWrapper> result = new HashSet<>();
-            HashSet<TestDTO> testDTOs = new HashSet<>(resultDAO.getPassTests(getLongId(idStr)));
+            HashSet<TestDTO> testDTOs = new HashSet<>(resultDAO.getPassTests(Converter.getLongId(idStr)));
             for (TestDTO testDTO : testDTOs){
                 result.add(new TestWrapper(testDTO));}
             return result;
@@ -106,7 +93,7 @@ public class StudentService {
 
     public Set<TestWrapper> getTestsForUserId(String idStr) {
         try {
-            HashSet<TestWrapper> result = new HashSet<>(resultDAO.getTestsForUserId(getLongId(idStr)));
+            HashSet<TestWrapper> result = new HashSet<>(resultDAO.getTestsForUserId(Converter.getLongId(idStr)));
             return result;
         } catch (Exception e) {
             e.printStackTrace();
