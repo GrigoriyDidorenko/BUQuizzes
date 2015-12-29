@@ -36,6 +36,8 @@ public class TestService {
     @Autowired
     private AnswerDAO answerDAO;
     @Autowired
+    private MailManager mailManager;
+    @Autowired
     private CategoryTestDAO categoryTestDAO;
     @Autowired
     private OneTimeTestDAO oneTimeTestDAO;
@@ -181,7 +183,7 @@ public class TestService {
     }
 
     public ResultDTO processingAnswersForOneTimeTest(ArrayList<UserAnswerDTO> answerDTOs, long testId, String nickName, String email, String name) {
-        OneTimeTest oneTimeTest = new OneTimeTest( name,nickName, email, testId);
+        OneTimeTest oneTimeTest = new OneTimeTest(name, nickName, email, testId);
         Test test = testDAO.find(testId);
         ResultDTO resultDTO = new ResultDTO();
         try {
@@ -189,6 +191,8 @@ public class TestService {
             oneTimeTest.setMark(calcResultForOneTimeTest(userAnswers, test));
             resultDTO.setMark(oneTimeTest.getMark());
             resultDTO.setCheckStatus("Ok");
+            mailManager.send(email, "Passing test " + testDAO.find(testId).getTestName(), "You have successfully passed " +
+                    "test " + testDAO.find(testId).getTestName() + "\nYour mark: " + resultDTO.getMark());
             oneTimeTestDAO.save(oneTimeTest);
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
