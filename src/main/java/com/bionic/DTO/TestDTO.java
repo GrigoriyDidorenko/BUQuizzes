@@ -26,9 +26,17 @@ public class TestDTO {
     private boolean submited;
     private boolean oneTime ;
     private long categoryTestId;
+    private String categoryTestName;
 
 
     public TestDTO() {
+    }
+
+    public TestDTO(String categoryTestName, long id, String testName, int duration ) {
+        this.id = id;
+        this.testName = testName;
+        this.duration = duration;
+        this.categoryTestName = categoryTestName;
     }
 
     public TestDTO(long id, String testName, int duration) {

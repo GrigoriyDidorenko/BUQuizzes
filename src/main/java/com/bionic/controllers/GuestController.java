@@ -2,11 +2,9 @@ package com.bionic.controllers;
 
 import com.bionic.DTO.ResultDTO;
 import com.bionic.DTO.TestDTO;
-import com.bionic.DTO.TestDTOForOneTimeTest;
 import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.services.GuestService;
 import com.bionic.services.TestService;
-import com.bionic.wrappers.TestWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +36,8 @@ public class GuestController {
     @RequestMapping(value = "/OneTimeTests", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity<Set<TestDTOForOneTimeTest>> getAvailableOneTimeTests() {
-        Set<TestDTOForOneTimeTest> tests = guestService.getAvailableOneTimeTests();
+    ResponseEntity<Set<TestDTO>> getAvailableOneTimeTests() {
+        Set<TestDTO> tests = guestService.getAvailableOneTimeTests();
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
 
@@ -50,6 +48,7 @@ public class GuestController {
         TestDTO testDTO = guestService.getCurrentTest(testId);
         return new ResponseEntity<>(testDTO, HttpStatus.OK);
     }
+
     //ToDo User, Mail, Security
     @RequestMapping(value = "/answers/{testId}", method = RequestMethod.POST, produces = "application/json")
     public

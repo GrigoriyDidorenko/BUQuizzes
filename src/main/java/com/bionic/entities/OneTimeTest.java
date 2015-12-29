@@ -21,7 +21,7 @@ public class OneTimeTest {
     private String email;
     @Column(name = "mark", nullable = false)
     private Integer mark;
-    @Column(name = "userId", nullable = false )
+    @Column(name = "userId")
     private String userId;
     @Column(name = "testId", nullable = false)
     private long testId;
