@@ -58,6 +58,7 @@ public class StudentService {
         try {
             Result result = resultDAO.find(Converter.getLongId(resultIdStr));
                 Date testBeginTime = result.getBeginTime();
+            //todo check if it works and check submit option
                 testBeginTime.setTime(testBeginTime.getTime()+60000*result.getTest().getDuration());
                 if (new Date(System.currentTimeMillis()).before(testBeginTime)) {
                     Test test = resultDAO.getCurrentTest(Converter.getLongId(idStr),

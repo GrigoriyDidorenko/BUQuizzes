@@ -23,7 +23,7 @@ public class OneTimeTestDAO extends AbstractDAO<OneTimeTest>  {
     }
 
 
-    public List<NickMarkWrapper.NickMark> getLeaderBoard(long testId, long pageNumber){
+    public List<NickMarkWrapper.NickMark> getLeaderBoard(long testId, long pageNumber, long pageStackSize){
 
         Query query = em.createNamedQuery("getLeaderBoard");
         query.setParameter("testId", testId);

@@ -4,6 +4,8 @@ package com.bionic.DTO;
  * Created by Sergiy on 08.12.2015.
  */
 public class ProfileDTO {
+
+    //TODO delete userId
     private long userId;
     private String firstName;
     private String lastName;

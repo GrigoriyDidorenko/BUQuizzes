@@ -12,8 +12,9 @@ import java.util.*;
 /**
  * Created by User on 13.11.2015.
  */
-@Service
-public class Converter {
+public final class Converter {
+
+    private Converter(){}
 
     private static boolean alreadyExecuted;
 

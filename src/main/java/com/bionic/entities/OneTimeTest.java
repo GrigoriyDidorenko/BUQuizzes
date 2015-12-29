@@ -14,7 +14,7 @@ import javax.persistence.*;
                 "WHERE test_id = :testId " +
                 "GROUP BY `name` " +
                 "ORDER BY MAX(mark) DESC " +
-                "LIMIT :pageNumber, 50"),
+                "LIMIT :pageNumber, :pageStackSize"),
         @NamedNativeQuery(name = "getBoardsPageCount",
         query = "select found_rows()")
 })

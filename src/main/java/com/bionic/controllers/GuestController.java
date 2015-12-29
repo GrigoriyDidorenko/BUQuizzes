@@ -49,7 +49,7 @@ public class GuestController {
     @ResponseBody
     ResponseEntity<TestDTO> getCurrentTest(@PathVariable("testId") String testId, @RequestParam ("email") String email,
                                            @RequestParam ("nickName") String nickName ) {
-        if (guestService.getPermisionForOneTest(email, nickName)) {
+        if (guestService.getPermissionForOneTest(email, nickName)) {
             TestDTO testDTO = guestService.getCurrentTest(testId);
             return new ResponseEntity<>(testDTO, HttpStatus.OK);}
         else {
@@ -82,7 +82,7 @@ public class GuestController {
             String nickName = "nick";
             String name = "Name" ;*/
             TypeFactory typeFactory = objectMapper.getTypeFactory();
-            GuestAnswerDTO guestAnswerDTO = objectMapper.readValue(JSONAnswers,GuestAnswerDTO.class);
+            GuestAnswerDTO guestAnswerDTO = objectMapper.readValue(JSONAnswers, GuestAnswerDTO.class);
             List<UserAnswerDTO> userAnswerDTOs = guestAnswerDTO.getUserAnswerDTO();
             resultDTO = testService.processingAnswersForOneTimeTest((ArrayList<UserAnswerDTO>) userAnswerDTOs, Long.valueOf(testId), guestAnswerDTO.getNickName(), guestAnswerDTO.getEmail() , guestAnswerDTO.getEmail()) ;
         } catch (NumberFormatException e) {
