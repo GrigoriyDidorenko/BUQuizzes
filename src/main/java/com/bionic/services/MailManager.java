@@ -24,9 +24,9 @@ public class MailManager {
     private static final Properties props = new Properties();
     private static String server = "smtp.gmail.com";
     private static String port = "587";
-    private static String username = "grifan91";
-    private static String password = "GRIfan4EVER";
-    private static String fromAddr = "grifan91@gmail.com";
+    private static String username = "university.bionic";
+    private static String password = "test-platform";
+    private static String fromAddr = "university.bionic@gmail.com";
 
     public MailManager(){
         props.put("mail.smtp.host",  server);
