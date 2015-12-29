@@ -32,7 +32,7 @@ public class GuestService {
         try {
             long limitCounter = (Converter.getLongId(pageNumber)-1)*50;
             return new NickMarkWrapper(oneTimeTestDAO.getLeaderBoard(Converter.getLongId(testId),
-                    limitCounter),oneTimeTestDAO.getBoardsPageCount().longValue());
+                    limitCounter),oneTimeTestDAO.getBoardsPageCount().longValue()/50 +1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -57,7 +57,7 @@ public class GuestService {
         for (OneTimeTest oneTimeTest : oneTimeTests){
             if (email.equals(oneTimeTest.getEmail())){
                 permision = true ;
-                break; 
+                break;
             }else permision = false;
         }
         return permision;
