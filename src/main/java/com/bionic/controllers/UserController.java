@@ -29,7 +29,7 @@ public class UserController {
     ResponseEntity<ProfileDTO> getCurrentUserInfo(){
         Authentication auth= SecurityContextHolder.getContext().getAuthentication();
         User currentUser=userDAO.getUserByEmail(auth.getName());
-        ProfileDTO profileDTO=new ProfileDTO(currentUser.getId(),currentUser.getFirstName(),currentUser.getLastName());
+        ProfileDTO profileDTO=new ProfileDTO(currentUser.getFirstName(),currentUser.getLastName());
         return new ResponseEntity<>(profileDTO,HttpStatus.OK);
     }
 }

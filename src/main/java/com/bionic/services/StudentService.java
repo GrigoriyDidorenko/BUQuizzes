@@ -6,15 +6,15 @@ import com.bionic.DAO.QuestionDAO;
 import com.bionic.DAO.ResultDAO;
 import com.bionic.DAO.UserAnswerDAO;
 import com.bionic.DAO.UserDAO;
-import com.bionic.DTO.ResultDTO;
 import com.bionic.DTO.TestDTO;
-import com.bionic.entities.Question;
 import com.bionic.entities.Permission;
 import com.bionic.entities.Result;
 import com.bionic.entities.Test;
 import com.bionic.entities.User;
 import com.bionic.wrappers.TestWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -34,6 +34,8 @@ public class StudentService {
     @Autowired
     private ResultDAO resultDAO;
     @Autowired
+    private UserDAO userDAO;
+    @Autowired
     private QuestionDAO questionDAO;
     @Autowired
     private UserAnswerDAO userAnswerDAO;
@@ -43,9 +45,9 @@ public class StudentService {
     public Set<TestWrapper> getAvailableTestsNames(String idStr) {
         try {
             HashSet<TestWrapper> result = new HashSet<>();
-            HashSet<TestDTO> testDTOs = new HashSet<>(resultDAO.getAvailableTestsNames(Converter.getLongId(idStr)));
+            HashSet<TestDTO> testDTOs = new HashSet<>(resultDAO.getAvailableTestsNames(Util.getLongId(idStr)));
             for (TestDTO testDTO : testDTOs)
-                result.add(new TestWrapper(testDTO, resultDAO.getResultByIds(Converter.getLongId(idStr),
+                result.add(new TestWrapper(testDTO, resultDAO.getResultByIds(Util.getLongId(idStr),
                         testDTO.getId()).longValue()));
             return result;
         } catch (Exception e) {
@@ -54,16 +56,16 @@ public class StudentService {
         return null;
     }
 
-    public TestDTO getCurrentTest(String idStr, String resultIdStr) {
+    public TestDTO getCurrentTest(long id, String resultIdStr) {
         try {
-            Result result = resultDAO.find(Converter.getLongId(resultIdStr));
+            Result result = resultDAO.find(Util.getLongId(resultIdStr));
                 Date testBeginTime = result.getBeginTime();
             //todo check if it works and check submit option
                 testBeginTime.setTime(testBeginTime.getTime()+60000*result.getTest().getDuration());
                 if (new Date(System.currentTimeMillis()).before(testBeginTime)) {
-                    Test test = resultDAO.getCurrentTest(Converter.getLongId(idStr),
+                    Test test = resultDAO.getCurrentTest(id,
                             result.getTest().getId(), Permission.EDIT_THE_TEST);
-                    return Converter.convertUsersTestToDTO(test);
+                    return Util.convertUsersTestToDTO(test);
                 }
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +75,7 @@ public class StudentService {
 
     public void setTestBeginTime(String resultIdStr) {
         if(firstEnter) {
-            Result result = resultDAO.find(Converter.getLongId(resultIdStr));
+            Result result = resultDAO.find(Util.getLongId(resultIdStr));
             result.setBeginTime(new Date(System.currentTimeMillis()));
             resultDAO.save(result);
         }
@@ -82,7 +84,7 @@ public class StudentService {
     public HashSet<TestWrapper> getPassTests(String idStr) {
         try {
             HashSet<TestWrapper> result = new HashSet<>();
-            HashSet<TestDTO> testDTOs = new HashSet<>(resultDAO.getPassTests(Converter.getLongId(idStr)));
+            HashSet<TestDTO> testDTOs = new HashSet<>(resultDAO.getPassTests(Util.getLongId(idStr)));
             for (TestDTO testDTO : testDTOs){
                 result.add(new TestWrapper(testDTO));}
             return result;
@@ -92,13 +94,18 @@ public class StudentService {
         return null;
     }
 
-    public Set<TestWrapper> getTestsForUserId(String idStr) {
+    public Set<TestWrapper> getTestsForUserId(long id) {
         try {
-            HashSet<TestWrapper> result = new HashSet<>(resultDAO.getTestsForUserId(Converter.getLongId(idStr)));
+            HashSet<TestWrapper> result = new HashSet<>(resultDAO.getTestsForUserId(id));
             return result;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public User getAuthorizedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userDAO.getUserByEmail(auth.getName());
     }
 }

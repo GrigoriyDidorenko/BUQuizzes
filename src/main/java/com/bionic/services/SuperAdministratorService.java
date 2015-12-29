@@ -30,7 +30,7 @@ public class SuperAdministratorService {
     public void addUser(UserDTO userDTO){
         try {
             userDTO.setRole(new HashSet<>(Arrays.asList(Role.findByName(userDTO.getRoleName()))));
-            User user = Converter.convertUserDTOToUser(userDTO);
+            User user = Util.convertUserDTOToUser(userDTO);
             user.setPassword(generator.generateToken());
             mailManager.send(user.getEmail(),"test","Hello "+user.getFirstName()+
                     ", your new password:"+"\n"+user.getPassword()+"\nit's OTP, please change it");

@@ -8,11 +8,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -49,7 +47,7 @@ public class TestService {
         ResultDTO resultDTO = null;
         Result result = resultDAO.find(resultId);
         try {
-            ArrayList<UserAnswer> userAnswers = Converter.convertUserAnswerDTOsToUserAnswers(answerDTOs, result);
+            ArrayList<UserAnswer> userAnswers = Util.convertUserAnswerDTOsToUserAnswers(answerDTOs, result);
             for (UserAnswer userAnswer : userAnswers) {
                 userAnswerDAO.save(userAnswer);
             }
@@ -66,7 +64,7 @@ public class TestService {
 
     public void saveCreatedTest(TestDTO testDTO) {
         try {
-            Test test = Converter.convertTestDTOToTest(testDTO);
+            Test test = Util.convertTestDTOToTest(testDTO);
             testDAO.save(test);
         } catch (Exception e) {
             System.out.println("failed to save test");
@@ -187,7 +185,7 @@ public class TestService {
         Test test = testDAO.find(testId);
         ResultDTO resultDTO = new ResultDTO();
         try {
-            ArrayList<UserAnswer> userAnswers = Converter.convertUserAnswerDTOsToTempUserAnswers(answerDTOs);
+            ArrayList<UserAnswer> userAnswers = Util.convertUserAnswerDTOsToTempUserAnswers(answerDTOs);
             oneTimeTest.setMark(calcResultForOneTimeTest(userAnswers, test));
             resultDTO.setMark(oneTimeTest.getMark());
             resultDTO.setCheckStatus(name + ",відправився результат на поштову скриньку:" + email);

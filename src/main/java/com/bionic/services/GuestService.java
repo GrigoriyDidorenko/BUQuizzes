@@ -4,7 +4,6 @@ import com.bionic.DAO.OneTimeTestDAO;
 import com.bionic.DAO.TestDAO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.entities.OneTimeTest;
-import com.bionic.entities.Permission;
 import com.bionic.entities.Test;
 import com.bionic.wrappers.NickMarkWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +30,8 @@ public class GuestService {
     public NickMarkWrapper getLeaderBoard(String testId, String pageNumber){
         try {
             double pageStackSize = 50.0;
-            long limitCounter = (Converter.getLongId(pageNumber)-1)*(long)pageStackSize;
-            return new NickMarkWrapper(oneTimeTestDAO.getLeaderBoard(Converter.getLongId(testId),
+            long limitCounter = (Util.getLongId(pageNumber)-1)*(long)pageStackSize;
+            return new NickMarkWrapper(oneTimeTestDAO.getLeaderBoard(Util.getLongId(testId),
                     limitCounter),(long)Math.ceil(oneTimeTestDAO.getBoardsPageCount().longValue()/pageStackSize));
         }catch (Exception e){
             e.printStackTrace();
@@ -67,7 +66,7 @@ public class GuestService {
     public TestDTO getCurrentTest(String testId) {
         try {
             Test test = testDAO.find(Long.valueOf(testId));
-            return Converter.convertUsersTestToDTO(test);
+            return Util.convertUsersTestToDTO(test);
         } catch (Exception e) {
             e.printStackTrace();
         }

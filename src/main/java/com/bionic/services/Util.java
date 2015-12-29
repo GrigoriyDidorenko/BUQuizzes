@@ -5,6 +5,8 @@ import com.bionic.entities.*;
 import com.bionic.entities.Answer;
 import com.bionic.entities.Question;
 import com.bionic.entities.Test;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -12,21 +14,22 @@ import java.util.*;
 /**
  * Created by User on 13.11.2015.
  */
-public final class Converter {
+public final class Util {
 
-    private Converter(){}
+    private Util() {
+    }
 
     private static boolean alreadyExecuted;
 
-    public static Test convertTestDTOToTest(TestDTO testDTO){
+    public static Test convertTestDTOToTest(TestDTO testDTO) {
         Test test = new Test();
         test.setTestName(testDTO.getTestName());
         test.setDuration(testDTO.getDuration());
         Set<Question> questions = new HashSet<>();
-        for (QuestionDTO questionDTO : testDTO.getQuestions()){
+        for (QuestionDTO questionDTO : testDTO.getQuestions()) {
             Question question = new Question();
             question.setQuestion(questionDTO.getQuestion());
-            if (questionDTO.getAnswers().size()==0 /* || questionDTO.getAnswers() == null*/){
+            if (questionDTO.getAnswers().size() == 0 /* || questionDTO.getAnswers() == null*/) {
                 question.setIsOpen(true);
                 question.setIsMultichoice(false);
                 question.setTest(test);
@@ -35,17 +38,17 @@ public final class Converter {
             }
             Set<Answer> answers = new HashSet<>();
             int isMultichoice = 0;
-            for (AnswerDTO answerDTO : questionDTO.getAnswers()){
+            for (AnswerDTO answerDTO : questionDTO.getAnswers()) {
                 Answer answer = new Answer();
                 answer.setAnswerText(answerDTO.getAnswerText());
                 answer.setMark(answerDTO.getMark());
                 answer.setQuestion(question);
                 answers.add(answer);
-                if (answerDTO.getMark() > 0){
+                if (answerDTO.getMark() > 0) {
                     isMultichoice++;
                 }
             }
-            if (isMultichoice > 1){
+            if (isMultichoice > 1) {
                 question.setIsMultichoice(true);
             }
             question.setIsOpen(false);
@@ -128,7 +131,7 @@ public final class Converter {
             if (!userAnswerDTO.getAnswerId().isEmpty()) {
                 for (String answerId : userAnswerDTO.getAnswerId()) {
                     UserAnswer userAnswer = new UserAnswer();
-                    userAnswer.setAnswerId(Long.valueOf(answerId)) ;
+                    userAnswer.setAnswerId(Long.valueOf(answerId));
                     userAnswer.setQuestionId(userAnswerDTO.getQuestionId());
                     userAnswers.add(userAnswer);
                 }

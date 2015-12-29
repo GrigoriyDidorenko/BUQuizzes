@@ -14,6 +14,8 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,29 +42,30 @@ public class StudentController {
     private TestService testService;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private UserDAO userDAO;
 
 
     public StudentController() {
-
     }
 
 
-
-    @RequestMapping(value = "/tests/{userId}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/tests/", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity<Set<TestWrapper>> getAvailableTestsNames(@PathVariable("userId") String userId) {
-        Set<TestWrapper> tests = studentService.getTestsForUserId(userId);
+    ResponseEntity<Set<TestWrapper>> getAvailableTestsNames() {
+        Set<TestWrapper> tests = studentService.getTestsForUserId(studentService.getAuthorizedUser().getId());
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "/tests/{id}/pass/{resultId}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/tests/pass/{resultId}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity<TestDTO> getCurrentTest(@PathVariable("id") String id, @PathVariable("resultId") String resultId) {
+    ResponseEntity<TestDTO> getCurrentTest(@PathVariable("resultId") String resultId) {
+
         studentService.setTestBeginTime(resultId);
-        TestDTO testDTO = studentService.getCurrentTest(id, resultId);
+        TestDTO testDTO = studentService.getCurrentTest(studentService.getAuthorizedUser().getId(), resultId);
         return new ResponseEntity<>(testDTO, HttpStatus.OK);
     }
 
