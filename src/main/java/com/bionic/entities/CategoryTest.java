@@ -6,6 +6,12 @@ import java.util.Collection;
 /**
  * Created by rondo104 on 23.12.2015.
  */
+
+
+@NamedQueries({
+        @NamedQuery(name = "getСategoryTestByTestName",
+                query = "SELECT t FROM CategoryTest t WHERE t.categoryName  = :categoryTestName")
+})
 @Entity
 @Table(name = "category_test", catalog = "quizzes")
 public class CategoryTest {
@@ -30,6 +36,10 @@ public class CategoryTest {
     }
 
     public CategoryTest() {
+    }
+
+    public CategoryTest(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getCategoryName() {

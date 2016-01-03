@@ -126,10 +126,11 @@ public class TestService {
                 test.setDuration(testDTO.getDuration());
                 test.setTestName(testDTO.getTestName());
                 test.setOneTime(testDTO.isOneTime());
-
-                CategoryTest categoryTest = categoryTestDAO.find(testDTO.getCategoryTestId());
+                CategoryTest categoryTest = categoryTestDAO.getСategoryTestByTestName(testDTO.getCategoryTestName());
+                if (categoryTest == null) {
+                    categoryTest = new CategoryTest(testDTO.getCategoryTestName());
+                }
                 test.setCategoryTest(categoryTest);
-
                 if (testDTO.getQuestions() != null)
                     for (QuestionDTO questionDTO : testDTO.getQuestions()) {
                         int positiveMark = 0;
@@ -188,10 +189,10 @@ public class TestService {
             ArrayList<UserAnswer> userAnswers = Util.convertUserAnswerDTOsToTempUserAnswers(answerDTOs);
             oneTimeTest.setMark(calcResultForOneTimeTest(userAnswers, test));
             resultDTO.setMark(oneTimeTest.getMark());
+            oneTimeTestDAO.save(oneTimeTest);
             resultDTO.setCheckStatus(name + ",відправився результат на поштову скриньку:" + email);
             mailManager.send(email, "Passing test " + testDAO.find(testId).getTestName(), "You have successfully passed " +
                     "test " + testDAO.find(testId).getTestName() + "\nYour mark: " + resultDTO.getMark());
-            oneTimeTestDAO.save(oneTimeTest);
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
         } finally {
