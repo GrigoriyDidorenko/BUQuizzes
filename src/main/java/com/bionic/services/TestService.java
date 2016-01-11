@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -114,6 +115,7 @@ public class TestService {
         return result;
     }
 
+    @Transactional
     public String importTest(MultipartFile file) throws Exception {
         HashSet<TestDTO> testDTOs;
         try {
