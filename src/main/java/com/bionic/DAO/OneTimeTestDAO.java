@@ -36,4 +36,10 @@ public class OneTimeTestDAO extends AbstractDAO<OneTimeTest>  {
         Query query = em.createNamedQuery("getBoardsPageCount");
         return (BigInteger) query.getSingleResult();
     }
+
+    public List<OneTimeTest> getTestsForNickname(String nickName) {
+        Query query = em.createNamedQuery("getTestsForNickname");
+        query.setParameter("nickName", nickName);
+        return (List<OneTimeTest>) query.getResultList();
+    }
 }

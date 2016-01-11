@@ -2,7 +2,7 @@
   "testName" : "C#",
   "duration" : 30,
   "oneTime" : true,
-  "categoryTestId" : 1,
+  "categoryTestName" : "C#",
   "questions" : [ {
     "question" : "How are you?",
     "answers" : [ {
@@ -28,7 +28,7 @@
   "testName" : "C#2",
   "duration" : 30,
   "oneTime" : false,
-  "categoryTestId" : 1,
+  "categoryTestName" : "C#",
   "questions" : [ {
     "question" : "How are you?",
     "answers" : [ {

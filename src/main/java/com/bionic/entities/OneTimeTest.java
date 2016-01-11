@@ -18,9 +18,10 @@ import javax.persistence.*;
         @NamedNativeQuery(name = "getBoardsPageCount",
         query = "select found_rows()")
 })
+@NamedQueries({ @NamedQuery( name = "getTestsForNickname",
+        query = "SELECT t From OneTimeTest t where t.nickname = :nickName") })
 @Table(name = "one_time_test", catalog = "quizzes")
 public class OneTimeTest {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
