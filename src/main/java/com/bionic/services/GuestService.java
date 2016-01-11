@@ -72,6 +72,8 @@ public class GuestService {
         return null;
     }
 
+    public boolean getPermissionForOneTest(String email, String nickName) {
+    }
 }
 
 
