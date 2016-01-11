@@ -6,7 +6,7 @@ $(document).ready(function ($) {
     var myjs;
     jQuery.ajax({
         type: "GET",
-        url: "http://localhost:8080/trainer/testToUser",
+        url: "http://localhost:8081/trainer/testToUser",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (json) {

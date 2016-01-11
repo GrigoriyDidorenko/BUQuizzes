@@ -1,7 +1,6 @@
 package com.bionic.services;
 
 
-
 import com.bionic.DAO.QuestionDAO;
 import com.bionic.DAO.ResultDAO;
 import com.bionic.DAO.UserAnswerDAO;
@@ -40,7 +39,6 @@ public class StudentService {
     @Autowired
     private UserAnswerDAO userAnswerDAO;
 
-    private boolean firstEnter = true;
 
     public Set<TestWrapper> getAvailableTestsNames(String idStr) {
         try {
@@ -59,14 +57,13 @@ public class StudentService {
     public TestDTO getCurrentTest(long id, String resultIdStr) {
         try {
             Result result = resultDAO.find(Util.getLongId(resultIdStr));
-                Date testBeginTime = result.getBeginTime();
-            //todo check if it works and check submit option
-                testBeginTime.setTime(testBeginTime.getTime()+60000*result.getTest().getDuration());
-                if (new Date(System.currentTimeMillis()).before(testBeginTime)) {
-                    Test test = resultDAO.getCurrentTest(id,
-                            result.getTest().getId(), Permission.EDIT_THE_TEST);
-                    return Util.convertUsersTestToDTO(test);
-                }
+            Date testBeginTime = result.getBeginTime();
+            testBeginTime.setTime(testBeginTime.getTime() + 60000 * result.getTest().getDuration());
+            if (new Date(System.currentTimeMillis()).before(testBeginTime)) {
+                Test test = resultDAO.getCurrentTest(id,
+                        result.getTest().getId(), Permission.EDIT_THE_TEST);
+                return Util.convertUsersTestToDTO(test);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,19 +71,20 @@ public class StudentService {
     }
 
     public void setTestBeginTime(String resultIdStr) {
-        if(firstEnter) {
-            Result result = resultDAO.find(Util.getLongId(resultIdStr));
+        Result result = resultDAO.find(Util.getLongId(resultIdStr));
+        if (result.getBeginTime() == null) {
             result.setBeginTime(new Date(System.currentTimeMillis()));
-            resultDAO.save(result);
+            resultDAO.update(result);
         }
     }
-    
+
     public HashSet<TestWrapper> getPassTests(String idStr) {
         try {
             HashSet<TestWrapper> result = new HashSet<>();
             HashSet<TestDTO> testDTOs = new HashSet<>(resultDAO.getPassTests(Util.getLongId(idStr)));
-            for (TestDTO testDTO : testDTOs){
-                result.add(new TestWrapper(testDTO));}
+            for (TestDTO testDTO : testDTOs) {
+                result.add(new TestWrapper(testDTO));
+            }
             return result;
         } catch (Exception e) {
             e.printStackTrace();

@@ -57,11 +57,14 @@ public class TrainerService {
         return new TestUserWrapper(getUnarchivedTestsNames(), getAllUsersNames());
     }
 
-    public String saveTestToUser(TestUserWrapper testUserWrapper){
+    public String saveTestToUser(TestUserWrapper testUserWrapper) {
         //TODO check if user already has this test
-        //if(resultDAO.getResultByIds())
-        resultDAO.save(new Result(false,false, Permission.PASS_THE_TEST,
-                userDAO.find(testUserWrapper.getUser().getId()),testDAO.find(testUserWrapper.getTest().getId())));
+        Permission permission = Permission.PASS_THE_TEST;
+        long userId = testUserWrapper.getUser().getId();
+        long testId = testUserWrapper.getTest().getId();
+        if (resultDAO.countCurrentTestGivenToUser(testId, userId, permission).intValue()==0)
+            resultDAO.save(new Result(false, false, permission,
+                    userDAO.find(userId), testDAO.find(testId)));
         return "successful";
     }
 }
