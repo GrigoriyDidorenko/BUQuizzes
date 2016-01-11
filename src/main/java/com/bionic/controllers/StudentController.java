@@ -31,7 +31,6 @@ import java.util.Set;
  * @date: 12.11.2015
  */
 
-//TODO REMOVE USER ID, REPLACE IT BY VALUE FROM SESSION
 @Controller
 @RequestMapping(value = "/student")
 public class StudentController {

@@ -33,13 +33,20 @@ public class ResultDAO extends AbstractDAO<Result> {
     public ResultDAO() {
         super(Result.class);
     }
-    //todo if in table Result is mor than two same rows (uswerId, testId) - exeption query.getSingleResult();
     public Test getCurrentTest(long id, long testId, Permission permission) {
         Query query = em.createNamedQuery("getCurrentTestById");
         query.setParameter("userId", id);
         query.setParameter("testId", testId);
         query.setParameter("permission", permission);
-        return (Test) query.getSingleResult();
+        return (Test)query.getResultList().get(0);
+    }
+
+    public BigInteger countCurrentTestGivenToUser(long testId, long userId, Permission permission){
+        Query query = em.createNamedQuery("countCurrentTestGivenToUser");
+        query.setParameter("testId", testId);
+        query.setParameter("userId", userId);
+        query.setParameter("permission", permission);
+        return (BigInteger) query.getSingleResult();
     }
 
     public List<TestDTO> getAvailableTestsNames(long id) {

@@ -18,7 +18,10 @@ import java.util.*;
                 query = "SELECT u.tests FROM User u WHERE u.id = :id"),
         @NamedQuery(name = "getUserByEmail",
                 query = "SELECT u FROM User u WHERE u.email=:email"),
-
+})
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "getUsersNames",
+        query = "SELECT u.id, u.first_name, u.last_name FROM User u")
 })
 @Table(catalog = "quizzes")
 public class User {

@@ -30,15 +30,12 @@ import java.util.Date;
 @NamedNativeQueries({
         @NamedNativeQuery(name = "getResultByIds", query = "SELECT result.id FROM Result result " +
                 "WHERE result.test_id = :testId AND result.user_id = :userId "),
-//        @NamedNativeQuery(name = "getCurrentTestById",
-//                query = "SELECT t.id, t.test_name, t.duration, q.id as qId, " +
-//                        "q.question as question, q.is_multichoice as is_multichoice, " +
-//                        "q.is_open as is_open, a.id as aId, a.answer_text as answer_text  FROM result r " +
-//                        "JOIN test t ON r.test_id = t.id " +
-//                        "JOIN user u ON r.user_id = u.id " +
-//                        "JOIN question q ON t.id = q.test_id JOIN answer a ON q.id = a.question_id " +
-//                        "WHERE t.id = :testId AND u.id = :userId AND r.permission = :permissionId " +
-//                        "AND q.archived = false AND a.archived = false", resultClass = com.bionic.entities.Test.class)
+        @NamedNativeQuery(name = "countCurrentTestGivenToUser",
+        query = "SELECT count(*) " +
+                "FROM result r " +
+                "JOIN user u on r.user_id = u.id " +
+                "JOIN test t on r.test_id = t.id " +
+                "WHERE r.test_id = :testId AND r.user_id = :userId AND r.permission = :permission AND r.begin_time IS NULL")
 })
 @Table(catalog = "quizzes")
 public class Result {
