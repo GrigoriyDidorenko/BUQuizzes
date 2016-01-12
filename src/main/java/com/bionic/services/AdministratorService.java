@@ -18,7 +18,7 @@ import java.util.HashSet;
  * @date: 29.11.2015
  */
 @Service
-public class SuperAdministratorService {
+public class AdministratorService {
 
     @Autowired
     private UserService userService;

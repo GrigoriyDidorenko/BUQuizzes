@@ -3,7 +3,7 @@ package com.bionic.exceptions;
 /**
  * Created by c2411 on 29.12.2015.
  */
-public class ServerException {
+public class ServerException extends Exception {
 
     private String message;
     private Throwable cause;

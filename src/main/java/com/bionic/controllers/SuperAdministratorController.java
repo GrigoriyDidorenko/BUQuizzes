@@ -2,8 +2,7 @@ package com.bionic.controllers;
 
 import com.bionic.DTO.UserDTO;
 import com.bionic.entities.Role;
-import com.bionic.entities.User;
-import com.bionic.services.SuperAdministratorService;
+import com.bionic.services.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,7 @@ import java.util.*;
 public class SuperAdministratorController {
 
     @Autowired
-    private SuperAdministratorService superAdministratorService;
+    private AdministratorService administratorService;
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public
@@ -35,7 +34,7 @@ public class SuperAdministratorController {
     String addUser(@ModelAttribute UserDTO userDTO, Model model) {
         try {
             model.addAttribute("user", userDTO);
-            superAdministratorService.addUser(userDTO);
+            administratorService.addUser(userDTO);
             return "successful";
         } catch (Exception e) {
             return "You failed to upload";
