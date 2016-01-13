@@ -32,7 +32,7 @@ public class GuestService {
             double pageStackSize = 50.0;
             long limitCounter = (Util.getLongId(pageNumber)-1)*(long)pageStackSize;
             return new NickMarkWrapper(oneTimeTestDAO.getLeaderBoard(Util.getLongId(testId),
-                    limitCounter, pageStackSize),(long)Math.ceil(oneTimeTestDAO.getBoardsPageCount().longValue()/pageStackSize));
+                    limitCounter, (long)pageStackSize),(long)Math.ceil(oneTimeTestDAO.getBoardsPageCount().longValue()/pageStackSize));
         }catch (Exception e){
             e.printStackTrace();
         }
