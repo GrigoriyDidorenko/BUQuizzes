@@ -14,5 +14,7 @@ $(document).ready(function ($) {
             }
             var mark = GetURLParameter('mark');
             $("#mark").append(mark);
+    var email = GetURLParameter('email');
+    $("#email").append(email);
 
 });
