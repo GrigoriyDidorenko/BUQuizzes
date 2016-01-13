@@ -194,7 +194,8 @@ public class TestService {
             oneTimeTestDAO.save(oneTimeTest);
             resultDTO.setCheckStatus(name + ",відправився результат на поштову скриньку:" + email);
             mailManager.send(email, "Passing test " + testDAO.find(testId).getTestName(), "You have successfully passed " +
-                    "test " + testDAO.find(testId).getTestName() + "\nYour mark: " + resultDTO.getMark());
+                    "test " + testDAO.find(testId).getTestName() + "\nYour mark: " + resultDTO.getMark() +
+                    "\nYou are able to check your result : " + "/pages/openTests/LeaderBoard.html?testId="+testDAO.find(testId).getId());
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
         } finally {
