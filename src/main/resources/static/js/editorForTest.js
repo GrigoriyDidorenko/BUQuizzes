@@ -3,7 +3,7 @@
  */
 function myfun(){
 
-    var url = "http://localhost:8080/trainer/addOpenTest/1";
+    var url = "/trainer/addOpenTest/1";
     var text  = document.getElementById("cont").value;
 
     $.post(url,

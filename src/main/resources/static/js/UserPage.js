@@ -2,7 +2,7 @@ $(document).ready(function ($) {
     var getuser;
     jQuery.ajax({
         type: "GET",
-        url: "http://localhost:8080/profile/currentUser",
+        url: "/profile/currentUser",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (json) {
@@ -14,7 +14,7 @@ $(document).ready(function ($) {
             var myjson;
             jQuery.ajax({
                 type: "GET",
-                url: 'http://localhost:8080/student/tests/'+userId,
+                url: '/student/tests/'+userId,
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (json) {

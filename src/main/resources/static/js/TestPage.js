@@ -15,7 +15,7 @@ $(document).ready(function ($) {
     }
     var tech = GetURLParameter('resultId');
     var userok = GetURLParameter('user');
-    var urltest = 'http://localhost:8080/student/tests/'+userok+'/pass/'+tech;
+    var urltest = '/student/tests/'+userok+'/pass/'+tech;
     var testinfo;
     var globalVariable;
     jQuery.ajax({
@@ -118,7 +118,7 @@ $(document).ready(function ($) {
 
             globalVariable=JSON.stringify(eventArray);
             console.log(globalVariable);
-            var exurl = 'http://localhost:8080/student/answers/' + tech;
+            var exurl = '/student/answers/' + tech;
 
             $.ajax({
                 url:exurl,
@@ -162,7 +162,7 @@ $(document).ready(function ($) {
 
         globalVariable=JSON.stringify(eventArray);
         console.log(globalVariable);
-        var exurl = 'http://localhost:8080/student/answers/' + tech;
+        var exurl = '/student/answers/' + tech;
 
         $.ajax({
             url:exurl,

@@ -4,7 +4,7 @@
 //getting results
 jQuery.ajax({
     type: "GET",
-    url: "http://localhost:8080/superAdmin/addUser",
+    url: "/superAdmin/addUser",
     contentType: 'application/json; charset=utf-8',
     success: function (jsonrols) {
         var rols;
