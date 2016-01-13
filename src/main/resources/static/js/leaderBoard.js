@@ -2,10 +2,10 @@
  * Created by rondo104 on 12.01.2016.
  */
 
-function viewBoard(page){
+function viewBoard(testId,page){
     var getboard;
     var pageCount;
-    var urll = "/guest/leaderBoard/1/"+page;
+    var urll = "/guest/leaderBoard/" + testId +"/"+page;
     jQuery.ajax({
         type: "GET",
         url: urll,
@@ -33,8 +33,22 @@ function writePageNumber(count){
     }
 }
 
+function GetURLParameter(sParam) {
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++)
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam)
+        {
+            return sParameterName[1];
+        }
+    }
+}
+
 function calls(){
-    viewBoard(1);
+    var testId = GetURLParameter('testId');
+    viewBoard(testId,1);
 }
 
 

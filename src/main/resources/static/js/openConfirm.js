@@ -1,16 +1,4 @@
 $(document).ready(function ($) {
-    var getuser;
-    jQuery.ajax({
-        type: "GET",
-        url: "/profile/currentUser",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (json) {
-            getuser = json;
-            $('#name').append(getuser.firstName + " " + getuser.lastName);
-
-//getting tests
-            var userId=getuser.id;
             function GetURLParameter(sParam) {
 
                 var sPageURL = window.location.search.substring(1);
@@ -24,28 +12,9 @@ $(document).ready(function ($) {
                     }
                 }
             }
-            var resultid = GetURLParameter('resultId');
-            var myjson;
-            jQuery.ajax({
-                type: "GET",
-                url: 'http://localhost:8080/student/tests/'+userId,
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (json) {
-                    myjson = json;
-                    $.each(myjson, function (index, myjs) {
-                        if(myjs.resultId==resultid){
-                            $('#mark').append(myjs.testDTO.mark);
-                            if(myjs.testDTO.checked){
+            var mark = GetURLParameter('mark');
+            $("#mark").append(mark);
+    var email = GetURLParameter('email');
+    $("#email").append(email);
 
-                            }else
-                                $('#testid').append("В тесті наявні відкриті відповіді, які потребують перевірки. На Ваш e-mail буде надіслано лист з остаточним результатом тестування.");
-                        }
-                    })
-                }
-            })
-        }
-    })
-});/**
- * Created by c2413 on 29.12.2015.
- */
+});
