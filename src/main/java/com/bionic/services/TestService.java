@@ -203,6 +203,12 @@ public class TestService {
         }
     }
 
+    public int getUserPositionInLeaderBoard(long testId, String userName){
+        oneTimeTestDAO.getTestsForNickname(testId, userName);
+        /*TODO: finish that*/
+        return 0;
+    }
+
     private Integer calcResultForOneTimeTest(ArrayList<UserAnswer> userAnswers, Test test) {
         int mark = 0, maxmark = 0;
         for (Question question : test.getQuestions()) {

@@ -47,35 +47,35 @@ public class GuestController {
     @RequestMapping(value = "/tests/{testId}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity<TestDTO> getCurrentTest(@PathVariable("testId") String testId, @RequestParam ("email") String email,
-                                           @RequestParam ("nickName") String nickName ) {
-        if (guestService.getPermisionForOneTest(email, nickName) ) {
+    ResponseEntity<TestDTO> getCurrentTest(@PathVariable("testId") String testId, @RequestParam("email") String email,
+                                           @RequestParam("nickName") String nickName) {
+        if (guestService.getPermisionForOneTest(email, nickName)) {
             TestDTO testDTO = guestService.getCurrentTest(testId);
-            return new ResponseEntity<>(testDTO, HttpStatus.OK);}
-        else {
-         return new ResponseEntity("Invalid data",HttpStatus.CONFLICT );
+            return new ResponseEntity<>(testDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Invalid data", HttpStatus.CONFLICT);
         }
     }
 
     @RequestMapping(value = "/leaderBoard/{testId}/{pageNumber}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity <NickMarkWrapper> getLeaderBoard(@PathVariable("testId") String testId,
-                                                          @PathVariable("pageNumber") String pageNumber) {
+    ResponseEntity<NickMarkWrapper> getLeaderBoard(@PathVariable("testId") String testId,
+                                                   @PathVariable("pageNumber") String pageNumber) {
         return new ResponseEntity<>(guestService.getLeaderBoard(testId, pageNumber), HttpStatus.OK);
     }
 
-/*    {   "email" :  "rondo104@gmail.com",
-        "nickName" :  "roma",
-        "name" : "name",
-        "userAnswerDTO" : [{"questionId":3,"answerId":[3,4],"answerText":""},
-                           {"questionId":2,"answerId":[],"answerText":"bnm"},
-                           {"questionId":2,"answerId":[2],"answerText":""}] }*/
+    /*    {   "email" :  "rondo104@gmail.com",
+            "nickName" :  "roma",
+            "name" : "name",
+            "userAnswerDTO" : [{"questionId":3,"answerId":[3,4],"answerText":""},
+                               {"questionId":2,"answerId":[],"answerText":"bnm"},
+                               {"questionId":2,"answerId":[2],"answerText":""}] }*/
     @RequestMapping(value = "/answers/{testId}", method = RequestMethod.POST, produces = "application/json")
     public
     @ResponseBody
     ResponseEntity<ResultDTO> setAnswers(@RequestBody String JSONAnswers,
-                                         @PathVariable("testId") String testId){
+                                         @PathVariable("testId") String testId) {
         ResultDTO resultDTO = null;
         try {
         /*    String email = "mail";
@@ -84,7 +84,7 @@ public class GuestController {
             TypeFactory typeFactory = objectMapper.getTypeFactory();
             GuestAnswerDTO guestAnswerDTO = objectMapper.readValue(JSONAnswers, GuestAnswerDTO.class);
             List<UserAnswerDTO> userAnswerDTOs = guestAnswerDTO.getUserAnswerDTO();
-            resultDTO = testService.processingAnswersForOneTimeTest((ArrayList<UserAnswerDTO>) userAnswerDTOs, Long.valueOf(testId), guestAnswerDTO.getNickName(), guestAnswerDTO.getEmail() , guestAnswerDTO.getEmail()) ;
+            resultDTO = testService.processingAnswersForOneTimeTest((ArrayList<UserAnswerDTO>) userAnswerDTOs, Long.valueOf(testId), guestAnswerDTO.getNickName(), guestAnswerDTO.getEmail(), guestAnswerDTO.getEmail());
         } catch (NumberFormatException e) {
             resultDTO.setCheckStatus("resultId string cannot be parsed");
         } catch (Exception e) {
