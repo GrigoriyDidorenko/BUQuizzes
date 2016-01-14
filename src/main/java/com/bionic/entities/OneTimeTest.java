@@ -15,7 +15,7 @@ import javax.persistence.*;
                 "GROUP BY `name` " +
                 "ORDER BY MAX(mark) DESC " +
                 "LIMIT :pageNumber, :pageStackSize"),
-        @NamedNativeQuery(name = "countPositionInLeaderBoard",
+        /*@NamedNativeQuery(name = "countPositionInLeaderBoard",
         query = "SELECT z.rank FROM " +
                 "(SELECT t.`name`, @rownum := @rownum + 1 AS rank FROM " +
                 "(SELECT ott.`name`, MAX(ott.mark) FROM one_time_test ott " +
@@ -23,7 +23,7 @@ import javax.persistence.*;
                 "GROUP BY `name` " +
                 "ORDER BY MAX(ott.mark) DESC) as t, " +
                 "(SELECT @rownum := 0) r) as z " +
-                "WHERE z.`name` = :userName"),
+                "WHERE z.`name` = :userName"),*/
         @NamedNativeQuery(name = "getBoardsPageCount",
         query = "select found_rows()")
 })
