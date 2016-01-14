@@ -25,10 +25,10 @@ import javax.persistence.*;
                 "(SELECT @rownum \\:= 0) r) as z " +
                 "WHERE z.`name` = :userName"),
         @NamedNativeQuery(name = "getBoardsPageCount",
-        query = "select found_rows()")
+        query = "select found_rows()"),
+        @NamedNativeQuery(name = "getEmailByNickName",
+        query = "SELECT ott.email FROM one_time_test ott WHERE ott.nickname = :nickName")
 })
-@NamedQueries({ @NamedQuery( name = "getTestsForNickname",
-        query = "SELECT t From OneTimeTest t where t.nickname = :nickName") })
 @Table(name = "one_time_test", catalog = "quizzes")
 public class OneTimeTest {
     @Id

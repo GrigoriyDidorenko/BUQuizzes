@@ -74,8 +74,6 @@ public class GuestController {
                                                    @PathVariable("nickName") String nickName) {
         try {
             return new ResponseEntity<>(guestService.getLeaderBoard(testId, testService.getUserPageInLeaderBoard(Util.getLongId(testId), nickName)), HttpStatus.OK);
-        } catch (ServerException e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }

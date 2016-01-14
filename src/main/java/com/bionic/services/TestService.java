@@ -211,9 +211,9 @@ public class TestService {
             int page = (int) Math.ceil(oneTimeTestDAO.countPositionInLeaderBoard(testId, userName).intValue() / GuestService.getPageStackSize());
             return String.valueOf(page);
         }catch (Exception e){
-            throw new ServerException("Such user " + userName + " was not found in " + testDAO.find(testId).getTestName());
+            e.printStackTrace();
         }
-
+        return null;
     }
 
     private Integer calcResultForOneTimeTest(ArrayList<UserAnswer> userAnswers, Test test) {
