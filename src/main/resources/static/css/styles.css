@@ -266,7 +266,7 @@ ul {
     color: #6d6e71; }
   .tab_span:hover {
     color: #2dadf0; }
-  .tab_span:visited {
+  .tab_span:active a {
     color: #3f51b5; }
 
 .positions {
@@ -316,7 +316,7 @@ input:-webkit-autofill {
   .modal {
     width: 500px; } }
 .page-confirm {
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom: 100px; }
 
 .span-confirm {
@@ -553,21 +553,23 @@ td, th {
   -o-transform: scale(.5);
   transform: scale(.5);
 }
-.error{
-  color: firebrick;
+.act{
+  color: #2dadf0;
+  font-size: 15px;
 }
-input[type=email]{
-  border: 1px solid #ccc;
-  box-shadow: none;
+.mother{
+  color: #43a047 ;
   font-size: 18px;
-  line-height: 18px;
-  color: black;
-  width: 100%;
-  border-radius: 5px;
-  background-color: white;
-  height: 35px;
-  padding: 0 10px 0 10px;
-  box-sizing: border-box;
-  margin-bottom: 15px;
+}
+.cmxform label.error{
+  color: crimson;
+}
+#error-back{
+  color: crimson;
+  margin-bottom: -5px;
+}
+input[name=email].em{
+  border-bottom: 1px solid crimson;
+  box-shadow: 0 1px 0 0 crimson;
 }
 /*# sourceMappingURL=styles.css.map */
