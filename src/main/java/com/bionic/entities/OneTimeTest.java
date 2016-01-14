@@ -20,7 +20,7 @@ import javax.persistence.*;
                 "(SELECT t.`nickname`, @rownum \\:= @rownum + 1 AS rank FROM " +
                 "(SELECT ott.`nickname`, MAX(ott.mark) FROM one_time_test ott " +
                 "JOIN test t ON ott.test_id = t.id WHERE test_id = :testId " +
-                "GROUP BY `name` " +
+                "GROUP BY `nickname` " +
                 "ORDER BY MAX(ott.mark) DESC) as t, " +
                 "(SELECT @rownum \\:= 0) r) as z " +
                 "WHERE z.`nickname` = :userName"),

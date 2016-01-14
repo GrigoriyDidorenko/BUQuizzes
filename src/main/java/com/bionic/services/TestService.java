@@ -208,7 +208,7 @@ public class TestService {
     public String getUserPageInLeaderBoard(long testId, String userName) throws ServerException {
         /*TODO: BETA*/
         try {
-            int page = (int) Math.ceil(oneTimeTestDAO.countPositionInLeaderBoard(testId, userName).intValue() / GuestService.getPageStackSize());
+            int page = (int) Math.ceil(oneTimeTestDAO.countPositionInLeaderBoard(testId, userName) / GuestService.getPageStackSize());
             return String.valueOf(page);
         }catch (Exception e){
             e.printStackTrace();

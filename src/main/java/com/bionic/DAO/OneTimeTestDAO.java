@@ -32,11 +32,11 @@ public class OneTimeTestDAO extends AbstractDAO<OneTimeTest> {
         return (List<NickMarkWrapper.NickMark>) query.getResultList();
     }
 
-    public BigInteger countPositionInLeaderBoard(long testId, String userName) {
+    public double countPositionInLeaderBoard(long testId, String userName) {
         Query query = em.createNamedQuery("countPositionInLeaderBoard");
         query.setParameter("testId", testId);
         query.setParameter("userName", userName);
-        return (BigInteger) query.getSingleResult();
+        return (double) query.getSingleResult();
     }
 
     public BigInteger getBoardsPageCount() {
