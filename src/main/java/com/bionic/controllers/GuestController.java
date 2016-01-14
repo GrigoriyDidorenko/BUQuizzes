@@ -4,8 +4,10 @@ import com.bionic.DTO.GuestAnswerDTO;
 import com.bionic.DTO.ResultDTO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
+import com.bionic.exceptions.ServerException;
 import com.bionic.services.GuestService;
 import com.bionic.services.TestService;
+import com.bionic.services.Util;
 import com.bionic.wrappers.NickMarkWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -64,6 +66,24 @@ public class GuestController {
                                                    @PathVariable("pageNumber") String pageNumber) {
         return new ResponseEntity<>(guestService.getLeaderBoard(testId, pageNumber), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/leaderBoard/userPosition/{testId}/{nickName}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    ResponseEntity<NickMarkWrapper> getLeaderBoardForUser(@PathVariable("testId") String testId,
+                                                   @PathVariable("nickName") String nickName) {
+        try {
+            return new ResponseEntity<>(guestService.getLeaderBoard(testId, testService.getUserPageInLeaderBoard(Util.getLongId(testId), nickName)), HttpStatus.OK);
+        } catch (ServerException e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+
+
 
     /*    {   "email" :  "rondo104@gmail.com",
             "nickName" :  "roma",
