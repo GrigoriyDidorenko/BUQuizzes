@@ -32,8 +32,9 @@ public class OneTimeTestDAO extends AbstractDAO<OneTimeTest>  {
         return (List<NickMarkWrapper.NickMark>) query.getResultList();
     }
 
-    public BigInteger countPositionInLeaderBoard(String userName){
+    public BigInteger countPositionInLeaderBoard(long testId, String userName){
         Query query = em.createNamedQuery("countPositionInLeaderBoard");
+        query.setParameter("testId", testId);
         query.setParameter("userName", userName);
         return (BigInteger) query.getSingleResult();
     }
@@ -43,9 +44,8 @@ public class OneTimeTestDAO extends AbstractDAO<OneTimeTest>  {
         return (BigInteger) query.getSingleResult();
     }
 
-    public List<OneTimeTest> getTestsForNickname(long testId, String nickName) {
+    public List<OneTimeTest> getTestsForNickname( String nickName) {
         Query query = em.createNamedQuery("getTestsForNickname");
-        query.setParameter("testId", testId);
         query.setParameter("nickName", nickName);
         return (List<OneTimeTest>) query.getResultList();
     }

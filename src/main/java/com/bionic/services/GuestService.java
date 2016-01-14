@@ -24,12 +24,13 @@ public class GuestService {
     @Autowired
     private OneTimeTestDAO oneTimeTestDAO;
 
+    private static double pageStackSize = 50.0;
+
     public GuestService() {
     }
 
     public NickMarkWrapper getLeaderBoard(String testId, String pageNumber){
         try {
-            double pageStackSize = 50.0;
             long limitCounter = (Util.getLongId(pageNumber)-1)*(long)pageStackSize;
             return new NickMarkWrapper(oneTimeTestDAO.getLeaderBoard(Util.getLongId(testId),
                     limitCounter, (long)pageStackSize),(long)Math.ceil(oneTimeTestDAO.getBoardsPageCount().longValue()/pageStackSize));
@@ -50,7 +51,7 @@ public class GuestService {
 
     }
 
-    public boolean getPermisionForOneTest(String email, String nickName){
+    public boolean getPermissionForOneTest(String email, String nickName){
         boolean permission = true ;
         List<OneTimeTest> oneTimeTests = oneTimeTestDAO.getTestsForNickname(nickName);
         for (OneTimeTest oneTimeTest : oneTimeTests){
@@ -70,6 +71,14 @@ public class GuestService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static double getPageStackSize() {
+        return pageStackSize;
+    }
+
+    public static void setPageStackSize(double pageStackSize) {
+        GuestService.pageStackSize = pageStackSize;
     }
 }
 

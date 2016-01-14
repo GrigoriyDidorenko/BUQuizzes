@@ -203,10 +203,9 @@ public class TestService {
         }
     }
 
-    public int getUserPositionInLeaderBoard(long testId, String userName){
-        oneTimeTestDAO.getTestsForNickname(testId, userName);
-        /*TODO: finish that*/
-        return 0;
+    public int getUserPageInLeaderBoard(long testId, String userName){
+        /*TODO: BETA*/
+        return (int)Math.ceil(oneTimeTestDAO.countPositionInLeaderBoard(testId, userName).intValue()/GuestService.getPageStackSize());
     }
 
     private Integer calcResultForOneTimeTest(ArrayList<UserAnswer> userAnswers, Test test) {

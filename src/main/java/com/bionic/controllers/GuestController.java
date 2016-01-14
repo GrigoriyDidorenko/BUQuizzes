@@ -49,7 +49,7 @@ public class GuestController {
     @ResponseBody
     ResponseEntity<TestDTO> getCurrentTest(@PathVariable("testId") String testId, @RequestParam("email") String email,
                                            @RequestParam("nickName") String nickName) {
-        if (guestService.getPermisionForOneTest(email, nickName)) {
+        if (guestService.getPermissionForOneTest(email, nickName)) {
             TestDTO testDTO = guestService.getCurrentTest(testId);
             return new ResponseEntity<>(testDTO, HttpStatus.OK);
         } else {
