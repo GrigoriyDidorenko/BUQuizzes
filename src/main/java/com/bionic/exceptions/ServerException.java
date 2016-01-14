@@ -45,4 +45,38 @@ public class ServerException extends Exception {
                 ", writableStackTrace=" + writableStackTrace +
                 '}';
     }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public Throwable getCause() {
+        return cause;
+    }
+
+    public void setCause(Throwable cause) {
+        this.cause = cause;
+    }
+
+    public boolean isEnableSuppression() {
+        return enableSuppression;
+    }
+
+    public void setEnableSuppression(boolean enableSuppression) {
+        this.enableSuppression = enableSuppression;
+    }
+
+    public boolean isWritableStackTrace() {
+        return writableStackTrace;
+    }
+
+    public void setWritableStackTrace(boolean writableStackTrace) {
+        this.writableStackTrace = writableStackTrace;
+    }
 }

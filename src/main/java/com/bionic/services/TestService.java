@@ -3,6 +3,7 @@ package com.bionic.services;
 import com.bionic.DAO.*;
 import com.bionic.DTO.*;
 import com.bionic.entities.*;
+import com.bionic.exceptions.ServerException;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -73,7 +74,7 @@ public class TestService {
     }
 
     public Result calcResult(Result result, ArrayList<UserAnswer> userAnswers) throws Exception {
-        int mark = 0, maxmark = 0;
+        int mark = 0, maxMark = 0;
         result.setIsChecked(true);
         for (Question question : result.getTest().getQuestions()) {
             if (question.getIsOpen()) {
@@ -84,7 +85,7 @@ public class TestService {
                 for (UserAnswer userAnswer : userAnswers) {
                     if (userAnswer.getQuestionId() == question.getId()) {
                         for (Answer answer : question.getAnswers()) {
-                            if (answer.getMark() > 0) maxmark += answer.getMark();
+                            if (answer.getMark() > 0) maxMark += answer.getMark();
                             if (answer.getId() == userAnswer.getAnswerId()) {
                                 mark += answer.getMark();
                             }
@@ -98,7 +99,7 @@ public class TestService {
                 for (UserAnswer userAnswer : userAnswers) {
                     if (userAnswer.getQuestionId() == question.getId()) {
                         for (Answer answer : question.getAnswers()) {
-                            if (answer.getMark() > 0) maxmark += answer.getMark();
+                            if (answer.getMark() > 0) maxMark += answer.getMark();
                             if (answer.getId() == userAnswer.getAnswerId()) {
                                 preMark += answer.getMark();
                             }
@@ -110,7 +111,7 @@ public class TestService {
                 continue;
             }
         }
-        mark = Math.round(((float) mark / (float) maxmark) * 100);
+        mark = Math.round(((float) mark / (float) maxMark) * 100);
         result.setMark(mark);
         return result;
     }
@@ -195,7 +196,8 @@ public class TestService {
             resultDTO.setCheckStatus(name + ",відправився результат на поштову скриньку:" + email);
             mailManager.send(email, "Passing test " + testDAO.find(testId).getTestName(), "You have successfully passed " +
                     "test " + testDAO.find(testId).getTestName() + "\nYour mark: " + resultDTO.getMark() +
-                    "\nYou are able to check your result : " + "http://localhost:8080/pages/openTests/LeaderBoard.html?testId="+testDAO.find(testId).getId());
+                    "\nYou are able to check your result : " + "http://localhost:8080/pages/openTests/LeaderBoard.html?testId="+
+                    testDAO.find(testId).getId() + "&page="+getUserPageInLeaderBoard(testId, nickName));
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
         } finally {
@@ -203,9 +205,15 @@ public class TestService {
         }
     }
 
-    public int getUserPageInLeaderBoard(long testId, String userName){
+    public String getUserPageInLeaderBoard(long testId, String userName) throws ServerException {
         /*TODO: BETA*/
-        return (int)Math.ceil(oneTimeTestDAO.countPositionInLeaderBoard(testId, userName).intValue()/GuestService.getPageStackSize());
+        try {
+            int page = (int) Math.ceil(oneTimeTestDAO.countPositionInLeaderBoard(testId, userName).intValue() / GuestService.getPageStackSize());
+            return String.valueOf(page);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private Integer calcResultForOneTimeTest(ArrayList<UserAnswer> userAnswers, Test test) {

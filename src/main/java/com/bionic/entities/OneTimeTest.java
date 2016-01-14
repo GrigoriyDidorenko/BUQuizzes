@@ -15,20 +15,20 @@ import javax.persistence.*;
                 "GROUP BY `name` " +
                 "ORDER BY MAX(mark) DESC " +
                 "LIMIT :pageNumber, :pageStackSize"),
-        /*@NamedNativeQuery(name = "countPositionInLeaderBoard",
+        @NamedNativeQuery(name = "countPositionInLeaderBoard",
         query = "SELECT z.rank FROM " +
-                "(SELECT t.`name`, @rownum := @rownum + 1 AS rank FROM " +
+                "(SELECT t.`name`, @rownum \\:= @rownum + 1 AS rank FROM " +
                 "(SELECT ott.`name`, MAX(ott.mark) FROM one_time_test ott " +
                 "JOIN test t ON ott.test_id = t.id WHERE test_id = :testId " +
                 "GROUP BY `name` " +
                 "ORDER BY MAX(ott.mark) DESC) as t, " +
-                "(SELECT @rownum := 0) r) as z " +
-                "WHERE z.`name` = :userName"),*/
+                "(SELECT @rownum \\:= 0) r) as z " +
+                "WHERE z.`name` = :userName"),
         @NamedNativeQuery(name = "getBoardsPageCount",
-        query = "select found_rows()")
+        query = "select found_rows()"),
+        @NamedNativeQuery(name = "getEmailByNickName",
+        query = "SELECT ott.email FROM one_time_test ott WHERE ott.nickname = :nickName")
 })
-@NamedQueries({ @NamedQuery( name = "getTestsForNickname",
-        query = "SELECT t From OneTimeTest t where t.nickname = :nickName") })
 @Table(name = "one_time_test", catalog = "quizzes")
 public class OneTimeTest {
     @Id

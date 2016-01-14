@@ -52,14 +52,10 @@ public class GuestService {
     }
 
     public boolean getPermissionForOneTest(String email, String nickName){
-        boolean permission = true ;
-        List<OneTimeTest> oneTimeTests = oneTimeTestDAO.getTestsForNickname(nickName);
-        for (OneTimeTest oneTimeTest : oneTimeTests){
-            if (email.equals(oneTimeTest.getEmail())){
+        boolean permission;
+            if (email.equals(oneTimeTestDAO.getEmailByNick(nickName))){
                 permission = true;
-                break;
             }else permission = false;
-        }
         return permission;
     }
 

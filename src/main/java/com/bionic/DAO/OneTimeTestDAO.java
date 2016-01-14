@@ -16,14 +16,14 @@ import java.util.List;
  */
 @Repository("oneTimeTestDAO")
 @Transactional(propagation = Propagation.REQUIRED)
-public class OneTimeTestDAO extends AbstractDAO<OneTimeTest>  {
+public class OneTimeTestDAO extends AbstractDAO<OneTimeTest> {
 
     public OneTimeTestDAO() {
         super(OneTimeTest.class);
     }
 
 
-    public List<NickMarkWrapper.NickMark> getLeaderBoard(long testId, long pageNumber, long pageStackSize){
+    public List<NickMarkWrapper.NickMark> getLeaderBoard(long testId, long pageNumber, long pageStackSize) {
 
         Query query = em.createNamedQuery("getLeaderBoard");
         query.setParameter("testId", testId);
@@ -32,21 +32,21 @@ public class OneTimeTestDAO extends AbstractDAO<OneTimeTest>  {
         return (List<NickMarkWrapper.NickMark>) query.getResultList();
     }
 
-    public BigInteger countPositionInLeaderBoard(long testId, String userName){
+    public BigInteger countPositionInLeaderBoard(long testId, String userName) {
         Query query = em.createNamedQuery("countPositionInLeaderBoard");
         query.setParameter("testId", testId);
         query.setParameter("userName", userName);
         return (BigInteger) query.getSingleResult();
     }
 
-    public BigInteger getBoardsPageCount(){
+    public BigInteger getBoardsPageCount() {
         Query query = em.createNamedQuery("getBoardsPageCount");
         return (BigInteger) query.getSingleResult();
     }
 
-    public List<OneTimeTest> getTestsForNickname( String nickName) {
-        Query query = em.createNamedQuery("getTestsForNickname");
+    public String getEmailByNick(String nickName) {
+        Query query = em.createNamedQuery("getEmailByNick");
         query.setParameter("nickName", nickName);
-        return (List<OneTimeTest>) query.getResultList();
+        return (String)query.getSingleResult();
     }
 }
