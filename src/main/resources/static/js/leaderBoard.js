@@ -37,7 +37,7 @@ function viewBoard(testId,currentPage){
             $('#myTable').empty();
             $.each(getboard, function (index, nickMarks) {
                 $.each(nickMarks, function (index, nickMark) {
-                    $('#myTable').append('<tr><td>'+ ((currentPage*itemOnPage)+index-1) +'</td><td>'+ nickMark[0]+'</td><td>'+ nickMark[1]+'</td></tr>');
+                    $('#myTable').append('<tr><td>'+ (((currentPage-1)*itemOnPage)+index+1) +'</td><td>'+ nickMark[0]+'</td><td>'+ nickMark[1]+'</td></tr>');
                 })
             })
         }
