@@ -14,7 +14,7 @@ function viewBoard(testId,page){
         success: function (json) {
             getboard = json;
             pageCount= Number(getboard.pageCount);
-            writePageNumber(pageCount);
+            writePageNumber(testId,pageCount);
             $('#myTable').empty();
             $.each(getboard, function (index, nickMarks) {
                 $.each(nickMarks, function (index, nickMark) {
@@ -26,10 +26,10 @@ function viewBoard(testId,page){
 
 }
 
-function writePageNumber(count){
+function writePageNumber(testId, count){
     $('#pageNumber').empty();
     for (var i = 1; i <= count ; i++) {
-        $('#pageNumber').append('<button onclick="viewBoard('+i+')">'+ i +'</button>'+' ');
+        $('#pageNumber').append('<button onclick="viewBoard('+testId+","+i+')">'+ i +'</button>'+' ');
     }
 }
 
