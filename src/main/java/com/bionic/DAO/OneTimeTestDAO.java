@@ -44,9 +44,9 @@ public class OneTimeTestDAO extends AbstractDAO<OneTimeTest> {
         return (BigInteger) query.getSingleResult();
     }
 
-    public String getEmailByNick(String nickName) {
+    public List<String> getEmailByNick(String nickName) {
         Query query = em.createNamedQuery("getEmailByNick");
         query.setParameter("nickName", nickName);
-        return (String)query.getSingleResult();
+        return (List<String>)query.getSingleResult();
     }
 }

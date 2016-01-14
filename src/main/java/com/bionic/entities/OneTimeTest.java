@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 
 @NamedNativeQueries({
-        @NamedNativeQuery(name = "getLeaderBoard", query = "SELECT sql_calc_found_rows ott.`name`, MAX(ott.mark) " +
+        @NamedNativeQuery(name = "getLeaderBoard", query = "SELECT sql_calc_found_rows ott.`nickname`, MAX(ott.mark) " +
                 "FROM quizzes.one_time_test ott " +
                 "JOIN test t ON ott.test_id = t.id " +
                 "WHERE test_id = :testId " +
@@ -17,13 +17,13 @@ import javax.persistence.*;
                 "LIMIT :pageNumber, :pageStackSize"),
         @NamedNativeQuery(name = "countPositionInLeaderBoard",
         query = "SELECT z.rank FROM " +
-                "(SELECT t.`name`, @rownum \\:= @rownum + 1 AS rank FROM " +
-                "(SELECT ott.`name`, MAX(ott.mark) FROM one_time_test ott " +
+                "(SELECT t.`nickname`, @rownum \\:= @rownum + 1 AS rank FROM " +
+                "(SELECT ott.`nickname`, MAX(ott.mark) FROM one_time_test ott " +
                 "JOIN test t ON ott.test_id = t.id WHERE test_id = :testId " +
                 "GROUP BY `name` " +
                 "ORDER BY MAX(ott.mark) DESC) as t, " +
                 "(SELECT @rownum \\:= 0) r) as z " +
-                "WHERE z.`name` = :userName"),
+                "WHERE z.`nickname` = :userName"),
         @NamedNativeQuery(name = "getBoardsPageCount",
         query = "select found_rows()"),
         @NamedNativeQuery(name = "getEmailByNickName",
