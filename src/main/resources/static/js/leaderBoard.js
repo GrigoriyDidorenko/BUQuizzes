@@ -1,6 +1,7 @@
 /**
  * Created by rondo104 on 12.01.2016.
  */
+//http://flaviusmatis.github.io/simplePagination.js
 
 function viewBoard(testId,page){
     var getboard;
@@ -14,7 +15,7 @@ function viewBoard(testId,page){
         success: function (json) {
             getboard = json;
             pageCount= Number(getboard.pageCount);
-            writePageNumber(testId,pageCount);
+            writePageNumber(testId,pageCount,page);
             $('#myTable').empty();
             $.each(getboard, function (index, nickMarks) {
                 $.each(nickMarks, function (index, nickMark) {
@@ -26,11 +27,19 @@ function viewBoard(testId,page){
 
 }
 
-function writePageNumber(testId, count){
+function writePageNumber(testId, count, page){
+    var viewPage=6;
     $('#pageNumber').empty();
+    if (page > 1) $('#pageNumber').append('<button onclick="viewBoard('+testId+","+1+')">First</button>');
+    if (page > 1) $('#pageNumber').append('<button onclick="viewBoard('+testId+","+(parseInt(page)-1)+')">Mines1</button>');
     for (var i = 1; i <= count ; i++) {
-        $('#pageNumber').append('<button onclick="viewBoard('+testId+","+i+')">'+ i +'</button>'+' ');
+        if (count >= viewPage){
+        if (i>=page-viewPage/2 && i<=page+viewPage/2){
+        $('#pageNumber').append('<button onclick="viewBoard('+testId+","+i+')">'+ i +'</button>');}}
+        else{ $('#pageNumber').append('<button onclick="viewBoard('+testId+","+i+')">'+ i +'</button>');}
     }
+    if (page < count) $('#pageNumber').append('<button onclick="viewBoard('+testId+","+(parseInt(page)+1)+')">Plus1</button>');
+    if (page < count) $('#pageNumber').append('<button onclick="viewBoard('+testId+","+count+')">End</button>');
 }
 
 function GetURLParameter(sParam) {
@@ -46,9 +55,8 @@ function GetURLParameter(sParam) {
     }
 }
 
-function calls(){
+$(document).ready(function() {
     var testId = GetURLParameter('testId');
     viewBoard(testId,1);
-}
-
+});
 
