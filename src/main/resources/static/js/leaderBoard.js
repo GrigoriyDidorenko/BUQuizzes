@@ -10,7 +10,10 @@ $(document).ready(function() {
 
 function viewBoard(testId,currentPage){
     var getboard;
-    var urll = "/guest/leaderBoard/" + testId +"/"+currentPage;
+    var nickName = GetURLParameter('nickName');
+    if (nickName != null) {
+        var urll = "/guest/leaderBoard/userPosition/" + testId +"/"+nickName;
+    }else urll = "/guest/leaderBoard/" + testId +"/"+currentPage;
     jQuery.ajax({
         type: "GET",
         url: urll,
