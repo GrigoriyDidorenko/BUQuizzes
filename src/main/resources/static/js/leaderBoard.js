@@ -41,8 +41,12 @@ function viewBoard(testId,currentPage,flag){
     $('#myTable').empty();
     $.each(getboard, function (index, nickMarks) {
         $.each(nickMarks, function (index, nickMark) {
-            $('#myTable').append('<tr><td style="width: 40px;">'+ (((currentPage-1)*itemOnPage)+index+1) +'</td><td>'+ nickMark[0]+'</td><td style="width: 40px;">'+ nickMark[1]+'%</td></tr>');
+            if (nickName == nickMark[0]) {
+            $('#myTable').append('<tr><td style="width: 40px; background: #2dadf0;">' + (((currentPage - 1) * itemOnPage) + index + 1) + '</td><td style="background: #2dadf0;">' + nickMark[0] + '</td><td style="width: 40px; background: #2dadf0;">' + nickMark[1] + '%</td></tr>');
+        }else { $('#myTable').append('<tr><td style="width: 40px;">'+ (((currentPage-1)*itemOnPage)+index+1) +'</td><td>'+ nickMark[0]+'</td><td style="width: 40px;">'+ nickMark[1]+'%</td></tr>');
+            }
         })
+
     })
 }
 })
