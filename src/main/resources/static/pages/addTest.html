@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link type="text/css" rel="stylesheet" href="../materialize-src/sass/materialize.css" media="screen,projection"/>
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <script type="text/javascript" src="../js/__code.jquery.com_jquery-1.11.3.js"></script>
+    <script type="text/javascript" src="../materialize-src/js/bin/materialize.min.js"></script>
+    <script type="text/javascript" src="../js/addTests.js"></script>
+
+    <style>
+        select {
+            display: flex;
+        }
+    </style>
+
+</head>
+<body>
+testName
+<input id="testName" type="text">
+<br>
+oneTime
+<input id="oneTime" type="text">
+<br>
+CategoryTestName
+<select id="selectCategoryTestName">
+<option>112</option>
+</select>
+<input id="categoryTestName" type="text">
+<button id="buttonCategoryTestName" type="button">Додати нову категорію</button>
+<br>
+
+
+
+<div id="accordion">
+    <ul class="collapsible" id="questions" data-collapsible="accordion">
+        <li id="question1">
+            <div class="collapsible-header"><input type="email" value="Нове запитання">
+            </div>
+
+            <div class="collapsible-body"><p>Відповіді</p></div>
+        </li>
+</div>
+<br>
+<button id="addQuestion" type="button">Додати запитання</button>
+
+</body>
+</html>
