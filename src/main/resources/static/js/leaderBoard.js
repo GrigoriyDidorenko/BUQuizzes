@@ -27,8 +27,8 @@ function viewBoard(testId,currentPage){
                     items: getboard.nickMarks.length,
                     itemsOnPage: itemOnPage,
                     cssStyle: 'light-theme',
-                    pages: getboard.pageCount,
-                    currentPage:currentPage,
+                    pages: getboard.pageNumber,
+                    currentPage:getboard.currentPageNumber,
                     onPageClick(pageNumber){
                     viewBoard(testId,pageNumber);
                 }
