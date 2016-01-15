@@ -27,8 +27,8 @@ function viewBoard(testId,currentPage){
                     items: getboard.nickMarks.length,
                     itemsOnPage: itemOnPage,
                     cssStyle: 'light-theme',
-                    pages: getboard.pageCount,
-                    currentPage:currentPage,
+                    pages: getboard.pageNumber,
+                    currentPage:getboard.currentPageNumber,
                     onPageClick(pageNumber){
                     viewBoard(testId,pageNumber);
                 }
@@ -37,7 +37,7 @@ function viewBoard(testId,currentPage){
     $('#myTable').empty();
     $.each(getboard, function (index, nickMarks) {
         $.each(nickMarks, function (index, nickMark) {
-            $('#myTable').append('<tr><td>'+ (((currentPage-1)*itemOnPage)+index+1) +'</td><td>'+ nickMark[0]+'</td><td>'+ nickMark[1]+'</td></tr>');
+            $('#myTable').append('<tr><td style="width: 40px;">'+ (((currentPage-1)*itemOnPage)+index+1) +'</td><td>'+ nickMark[0]+'</td><td style="width: 40px;">'+ nickMark[1]+'%</td></tr>');
         })
     })
 }
