@@ -5,16 +5,18 @@
 
 $(document).ready(function() {
     var testId = GetURLParameter('testId');
-    viewBoard(testId,1);
+    var flag = 0;
+    viewBoard(testId,1, flag);
 });
 
-function viewBoard(testId,currentPage){
+function viewBoard(testId,currentPage,flag){
     var getboard;
     var nickName = GetURLParameter('nickName');
-    if (nickName != null) {
+    if (nickName != null && flag==0 ) {
         var urll = "/guest/leaderBoard/userPosition/" + testId +"/"+nickName;
-        deleteURLParameter('nickName');
+        ++flag;
     }else urll = "/guest/leaderBoard/" + testId +"/"+currentPage;
+
     jQuery.ajax({
         type: "GET",
         url: urll,
@@ -31,10 +33,11 @@ function viewBoard(testId,currentPage){
                     pages: getboard.pageNumber,
                     currentPage:getboard.currentPageNumber,
                     onPageClick(pageNumber){
-                    viewBoard(testId,pageNumber);
+                    viewBoard(testId,pageNumber, flag);
                 }
             });
         });
+
     $('#myTable').empty();
     $.each(getboard, function (index, nickMarks) {
         $.each(nickMarks, function (index, nickMark) {
@@ -56,10 +59,4 @@ function GetURLParameter(sParam) {
             return sParameterName[1];
         }
     }
-}
-
-function deleteURLParameter(sParam) {
-    var urk  = window.location.search;
-    var pos = urk.indexOf(sParam);
-    window.location.search = urk.slice(0,pos-1);
 }
