@@ -568,8 +568,33 @@ td, th {
   color: crimson;
   margin-bottom: -5px;
 }
-input[name=email].em{
+input[name=nick].em{
   border-bottom: 1px solid crimson;
   box-shadow: 0 1px 0 0 crimson;
+}
+#myTable {
+  margin-bottom: 10px;
+  height: 320px;
+}
+table, tr, td {
+  vertical-align:top;
+}
+.light-theme .current {
+  background: #2dadf0;
+  color: #FFF;
+  border-color: #2dadf0;
+  box-shadow: none;
+  cursor: default;
+}
+.pagination li.active {
+  background: none;
+}
+.simple-pagination li {
+  margin-bottom: 5px;
+}
+#myTableHead{
+  color: #2dadf0;
+  margin: 0 0 -5px 0;
+  padding: 0;
 }
 /*# sourceMappingURL=styles.css.map */
