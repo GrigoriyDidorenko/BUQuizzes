@@ -16,9 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.*;
 
-import static j2html.TagCreator.body;
-import static j2html.TagCreator.h1;
-import static j2html.TagCreator.img;
+import static j2html.TagCreator.*;
 
 /**
  * Created by rondo104 on 25.11.2015.
@@ -203,8 +201,25 @@ public class TestService {
                     "\nYou are able to check your result : " + "http://localhost:8080/pages/openTests/LeaderBoard.html?testId="+
                     testDAO.find(testId).getId() + "&page="+getUserPageInLeaderBoard(testId, nickName) +*/
                     body().with(
-                            h1("Heading!").withClass("static/css/styles.css"),
-                            img().withSrc("static/img/logo.png")
+                            link().withRel("stylesheet").withHref("https://drive.google.com/file/d/0B7j_ITsxx7qJVWJTaEtaREFSMzQ/view?usp=sharing"),
+                            div().withClass("logo").with(
+                                    img().withSrc("http://cs630017.vk.me/v630017821/e3e8/Kud7zeUHjGM.jpg"),
+                                    p().with(
+                                            style().with(
+                                            ),
+                                            span("You have successfully passed test: "),
+                                            span(testDAO.find(testId).getTestName())
+                                    ),
+                                    p().with(
+                                            span("Your mark: "),
+                                            span(String.valueOf(resultDTO.getMark()))
+                                    ),
+                                    p().with(
+                                            span("You are able to check your result: "),
+                                            a("http://localhost:8080/pages/openTests/LeaderBoard.html?testId=" +testDAO.find(testId).getId() + "&page="+getUserPageInLeaderBoard(testId, nickName))
+                                    )
+
+                            )
                     ).render());
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
