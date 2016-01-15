@@ -12,7 +12,7 @@ import javax.persistence.*;
                 "FROM quizzes.one_time_test ott " +
                 "JOIN test t ON ott.test_id = t.id " +
                 "WHERE test_id = :testId " +
-                "GROUP BY `name` " +
+                "GROUP BY `nickname` " +
                 "ORDER BY MAX(mark) DESC " +
                 "LIMIT :pageNumber, :pageStackSize"),
         @NamedNativeQuery(name = "countPositionInLeaderBoard",
