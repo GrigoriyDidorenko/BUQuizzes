@@ -55,13 +55,8 @@ public class GuestService {
 
     public boolean getPermissionForOneTest(String email, String nickName){
         boolean permission = true;
-        List<String> emails;
-        try{
-           emails = oneTimeTestDAO.getEmailByNick(nickName);
-        }catch (NoResultException e){
-            emails = null;
-        }
-        if(emails != null)
+        List<String> emails = oneTimeTestDAO.getEmailByNick(nickName);
+        if(!emails.isEmpty())
             if (email.equals(oneTimeTestDAO.getEmailByNick(nickName).get(0))) permission = true;
             else permission = false;
         return permission;
