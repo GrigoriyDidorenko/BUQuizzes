@@ -13,6 +13,7 @@ function viewBoard(testId,currentPage){
     var nickName = GetURLParameter('nickName');
     if (nickName != null) {
         var urll = "/guest/leaderBoard/userPosition/" + testId +"/"+nickName;
+        deleteURLParameter('nickName');
     }else urll = "/guest/leaderBoard/" + testId +"/"+currentPage;
     jQuery.ajax({
         type: "GET",
@@ -57,3 +58,8 @@ function GetURLParameter(sParam) {
     }
 }
 
+function deleteURLParameter(sParam) {
+    var urk  = window.location.search;
+    var pos = urk.indexOf(sParam);
+    window.location.search = urk.slice(0,pos-1);
+}
