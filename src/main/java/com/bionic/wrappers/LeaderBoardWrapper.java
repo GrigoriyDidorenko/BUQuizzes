@@ -5,14 +5,29 @@ import java.util.List;
 /**
  * Created by c2411 on 29.12.2015.
  */
-public class NickMarkWrapper {
+public class LeaderBoardWrapper {
 
     private List<NickMark> nickMarks;
-    private long pageCount;
+    private long currentPageNumber;
+    private long pageNumber;
 
-    public NickMarkWrapper(List<NickMark> nickMarks, long pageCount) {
+    public LeaderBoardWrapper(List<NickMark> nickMarks, long pageNumber) {
         this.nickMarks = nickMarks;
-        this.pageCount = pageCount;
+        this.pageNumber = pageNumber;
+    }
+
+    public LeaderBoardWrapper(List<NickMark> nickMarks, long pageNumber, long currentPageNumber) {
+        this.nickMarks = nickMarks;
+        this.pageNumber = pageNumber;
+        this.currentPageNumber = currentPageNumber;
+    }
+
+    public long getCurrentPageNumber() {
+        return currentPageNumber;
+    }
+
+    public void setCurrentPageNumber(long currentPageNumber) {
+        this.currentPageNumber = currentPageNumber;
     }
 
     public List<NickMark> getNickMarks() {
@@ -23,12 +38,12 @@ public class NickMarkWrapper {
         this.nickMarks = nickMarks;
     }
 
-    public long getPageCount() {
-        return pageCount;
+    public long getPageNumber() {
+        return pageNumber;
     }
 
-    public void setPageCount(long pageCount) {
-        this.pageCount = pageCount;
+    public void setPageNumber(long pageNumber) {
+        this.pageNumber = pageNumber;
     }
 
     public class NickMark{

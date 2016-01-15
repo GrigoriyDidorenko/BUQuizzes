@@ -61,7 +61,7 @@ public class StudentService {
             testBeginTime.setTime(testBeginTime.getTime() + 60000 * result.getTest().getDuration());
             if (new Date(System.currentTimeMillis()).before(testBeginTime)) {
                 Test test = resultDAO.getCurrentTest(id,
-                        result.getTest().getId(), Permission.EDIT_THE_TEST);
+                        result.getTest().getId(), Permission.PASS_THE_TEST);
                 return Util.convertUsersTestToDTO(test);
             }
         } catch (Exception e) {

@@ -3,14 +3,11 @@ package com.bionic.services;
 import com.bionic.DAO.OneTimeTestDAO;
 import com.bionic.DAO.TestDAO;
 import com.bionic.DTO.TestDTO;
-import com.bionic.entities.OneTimeTest;
 import com.bionic.entities.Test;
-import com.bionic.wrappers.NickMarkWrapper;
+import com.bionic.wrappers.LeaderBoardWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NoResultException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,16 +28,20 @@ public class GuestService {
     public GuestService() {
     }
 
-    public NickMarkWrapper getLeaderBoard(String testId, String pageNumber){
+    public LeaderBoardWrapper getLeaderBoard(String testId, String pageNumber){
         try {
             long limitCounter = (Util.getLongId(pageNumber)-1)*(long)pageStackSize;
-            return new NickMarkWrapper(oneTimeTestDAO.getLeaderBoard(Util.getLongId(testId),
-                    limitCounter, (long)pageStackSize),(long)Math.ceil(oneTimeTestDAO.getBoardsPageCount().longValue()/pageStackSize));
+            return new LeaderBoardWrapper(
+                    oneTimeTestDAO.getLeaderBoard(Util.getLongId(testId),limitCounter, (long)pageStackSize),
+                    (long)Math.ceil(oneTimeTestDAO.getBoardsPageCount().longValue()/pageStackSize),
+                    Util.getLongId(pageNumber));
         }catch (Exception e){
             e.printStackTrace();
         }
         return null;
     }
+
+    /*TODO: REWRITE*/
 
     public Set<TestDTO> getAvailableOneTimeTests() {
         try {
@@ -61,6 +62,8 @@ public class GuestService {
             else permission = false;
         return permission;
     }
+
+    /*TODO: REWRITE*/
 
     public TestDTO getCurrentTest(String testId) {
         try {

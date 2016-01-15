@@ -4,11 +4,10 @@ import com.bionic.DTO.GuestAnswerDTO;
 import com.bionic.DTO.ResultDTO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
-import com.bionic.exceptions.ServerException;
 import com.bionic.services.GuestService;
 import com.bionic.services.TestService;
 import com.bionic.services.Util;
-import com.bionic.wrappers.NickMarkWrapper;
+import com.bionic.wrappers.LeaderBoardWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +61,7 @@ public class GuestController {
     @RequestMapping(value = "/leaderBoard/{testId}/{pageNumber}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity<NickMarkWrapper> getLeaderBoard(@PathVariable("testId") String testId,
+    ResponseEntity<LeaderBoardWrapper> getLeaderBoard(@PathVariable("testId") String testId,
                                                    @PathVariable("pageNumber") String pageNumber) {
         return new ResponseEntity<>(guestService.getLeaderBoard(testId, pageNumber), HttpStatus.OK);
     }
@@ -70,7 +69,7 @@ public class GuestController {
     @RequestMapping(value = "/leaderBoard/userPosition/{testId}/{nickName}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ResponseEntity<NickMarkWrapper> getLeaderBoardForUser(@PathVariable("testId") String testId,
+    ResponseEntity<LeaderBoardWrapper> getLeaderBoardForUser(@PathVariable("testId") String testId,
                                                    @PathVariable("nickName") String nickName) {
         try {
             return new ResponseEntity<>(guestService.getLeaderBoard(testId, testService.getUserPageInLeaderBoard(Util.getLongId(testId), nickName)), HttpStatus.OK);
