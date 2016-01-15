@@ -21,7 +21,7 @@ function viewBoard(testId,currentPage){
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             getboard = json;
-            var itemOnPage = 5;
+            var itemOnPage = 10;
             $(function() {
                 $('#light-pagination').pagination({
                     items: getboard.nickMarks.length,
@@ -30,18 +30,18 @@ function viewBoard(testId,currentPage){
                     pages: getboard.pageCount,
                     currentPage:currentPage,
                     onPageClick(pageNumber){
-                        viewBoard(testId,pageNumber);
-                    }
-                });
+                    viewBoard(testId,pageNumber);
+                }
             });
-            $('#myTable').empty();
-            $.each(getboard, function (index, nickMarks) {
-                $.each(nickMarks, function (index, nickMark) {
-                    $('#myTable').append('<tr><td>'+ (((currentPage-1)*itemOnPage)+index+1) +'</td><td>'+ nickMark[0]+'</td><td>'+ nickMark[1]+'</td></tr>');
-                })
-            })
-        }
+        });
+    $('#myTable').empty();
+    $.each(getboard, function (index, nickMarks) {
+        $.each(nickMarks, function (index, nickMark) {
+            $('#myTable').append('<tr><td>'+ (((currentPage-1)*itemOnPage)+index+1) +'</td><td>'+ nickMark[0]+'</td><td>'+ nickMark[1]+'</td></tr>');
+        })
     })
+}
+})
 }
 
 function GetURLParameter(sParam) {
@@ -56,5 +56,4 @@ function GetURLParameter(sParam) {
         }
     }
 }
-
 

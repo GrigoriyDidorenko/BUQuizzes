@@ -9,6 +9,8 @@ import com.bionic.wrappers.NickMarkWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,7 +26,7 @@ public class GuestService {
     @Autowired
     private OneTimeTestDAO oneTimeTestDAO;
 
-    private static double pageStackSize = 50.0;
+    private static double pageStackSize = 10.0;
 
     public GuestService() {
     }
@@ -53,7 +55,13 @@ public class GuestService {
 
     public boolean getPermissionForOneTest(String email, String nickName){
         boolean permission = true;
-        if(!oneTimeTestDAO.getEmailByNick(nickName).isEmpty())
+        List<String> emails;
+        try{
+           emails = oneTimeTestDAO.getEmailByNick(nickName);
+        }catch (NoResultException e){
+            emails = null;
+        }
+        if(emails != null)
             if (email.equals(oneTimeTestDAO.getEmailByNick(nickName).get(0))) permission = true;
             else permission = false;
         return permission;

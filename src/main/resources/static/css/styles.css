@@ -79,7 +79,7 @@ th {
 .header-title h1 {
   text-align: left;
   font-size: 24px;
-  line-height: 24px;
+  line-height: 25px;
   text-transform: uppercase;
   color: white; }
 
@@ -312,9 +312,9 @@ input:-webkit-autofill {
   border-radius: 2px;
   will-change: top, opacity; }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 600px) {
   .modal {
-    width: 500px; } }
+    width: 80%; } }
 .page-confirm {
   margin-top: 20px;
   margin-bottom: 100px; }
@@ -558,7 +558,7 @@ td, th {
   font-size: 15px;
 }
 .mother{
-  color: #43a047 ;
+  color: #DC143C ;
   font-size: 18px;
 }
 .cmxform label.error{

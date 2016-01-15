@@ -26,7 +26,7 @@ import javax.persistence.*;
                 "WHERE z.`nickname` = :userName"),
         @NamedNativeQuery(name = "getBoardsPageCount",
         query = "select found_rows()"),
-        @NamedNativeQuery(name = "getEmailByNickName",
+        @NamedNativeQuery(name = "getEmailByNick",
         query = "SELECT ott.email FROM one_time_test ott WHERE ott.nickname = :nickName")
 })
 @Table(name = "one_time_test", catalog = "quizzes")
