@@ -16,6 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.*;
 
+import static j2html.TagCreator.body;
+import static j2html.TagCreator.h1;
+import static j2html.TagCreator.img;
+
 /**
  * Created by rondo104 on 25.11.2015.
  */
@@ -194,10 +198,14 @@ public class TestService {
             resultDTO.setMark(oneTimeTest.getMark());
             oneTimeTestDAO.save(oneTimeTest);
             resultDTO.setCheckStatus(name + ",відправився результат на поштову скриньку:" + email);
-            mailManager.send(email, "Passing test " + testDAO.find(testId).getTestName(), "You have successfully passed " +
+            mailManager.send(email, "Passing test " + testDAO.find(testId).getTestName(), /*"You have successfully passed " +
                     "test " + testDAO.find(testId).getTestName() + "\nYour mark: " + resultDTO.getMark() +
                     "\nYou are able to check your result : " + "http://localhost:8080/pages/openTests/LeaderBoard.html?testId="+
-                    testDAO.find(testId).getId() + "&page="+getUserPageInLeaderBoard(testId, nickName));
+                    testDAO.find(testId).getId() + "&page="+getUserPageInLeaderBoard(testId, nickName) +*/
+                    body().with(
+                            h1("Heading!").withClass("static/css/styles.css"),
+                            img().withSrc("static/img/logo.png")
+                    ).render());
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
         } finally {

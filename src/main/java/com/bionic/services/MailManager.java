@@ -57,7 +57,8 @@ public class MailManager {
             msg.setFrom(new InternetAddress(fromAddr));
             msg.setRecipient(Message.RecipientType.TO, address);
             msg.setSubject(subject);
-            msg.setText(messageText);
+//            msg.setText(messageText);
+            msg.setContent(messageText, "text/html");
             Transport.send(msg);
         } catch (MessagingException e) {
            e.printStackTrace();
