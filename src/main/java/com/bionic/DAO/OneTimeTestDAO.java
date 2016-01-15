@@ -1,8 +1,7 @@
 package com.bionic.DAO;
 
-import com.bionic.entities.CategoryTest;
 import com.bionic.entities.OneTimeTest;
-import com.bionic.wrappers.NickMarkWrapper;
+import com.bionic.wrappers.LeaderBoardWrapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,13 +22,13 @@ public class OneTimeTestDAO extends AbstractDAO<OneTimeTest> {
     }
 
 
-    public List<NickMarkWrapper.NickMark> getLeaderBoard(long testId, long pageNumber, long pageStackSize) {
+    public List<LeaderBoardWrapper.NickMark> getLeaderBoard(long testId, long pageNumber, long pageStackSize) {
 
         Query query = em.createNamedQuery("getLeaderBoard");
         query.setParameter("testId", testId);
         query.setParameter("pageNumber", pageNumber);
         query.setParameter("pageStackSize", pageStackSize);
-        return (List<NickMarkWrapper.NickMark>) query.getResultList();
+        return (List<LeaderBoardWrapper.NickMark>) query.getResultList();
     }
 
     public double countPositionInLeaderBoard(long testId, String userName) {
