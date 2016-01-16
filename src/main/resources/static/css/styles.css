@@ -558,8 +558,7 @@ td, th {
   font-size: 15px;
 }
 .mother{
-  color: #DC143C ;
-  font-size: 18px;
+  color: #ab47bc;
 }
 .cmxform label.error{
   color: crimson;
@@ -574,7 +573,6 @@ input[name=nick].em{
 }
 #myTable {
   margin-bottom: 10px;
-  height: 320px;
 }
 table, tr, td {
   vertical-align:top;
@@ -596,5 +594,8 @@ table, tr, td {
   color: #2dadf0;
   margin: 0 0 -5px 0;
   padding: 0;
+}
+#metab{
+  height: 320px;
 }
 /*# sourceMappingURL=styles.css.map */
