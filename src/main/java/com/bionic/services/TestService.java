@@ -200,32 +200,11 @@ public class TestService {
                     "test " + testDAO.find(testId).getTestName() + "\nYour mark: " + resultDTO.getMark() +
                     "\nYou are able to check your result : " + "http://localhost:8080/pages/openTests/LeaderBoard.html?testId="+
                     testDAO.find(testId).getId() + "&page="+getUserPageInLeaderBoard(testId, nickName) +*/
-            "<div style='margin:0 auto; width:60%; height:60px; margin-top:-30px; margin-bottom:5px;'><img src='http://cs630017.vk.me/v630017821/ef59/DY0m5ySG0iQ.jpg' style='padding:0; margin:0; padding-left:20px;'></div>" +
+            "<div style='margin:0 auto; width:60%; height:60px; margin-top:-30px; margin-bottom:10px;'><img src='http://cs630017.vk.me/v630017821/ef59/DY0m5ySG0iQ.jpg' style='padding:0; margin:0; padding-left:20px;'></div>" +
             "<div style='margin:0 auto;width:60%;height:32px;background-color:#0090b9;margin-bottom:20px;padding-top:15px;'><span style='color:white; font-size: 18px; padding-top:8px; padding-left:20px;'>TEST RESULTS</span></div>" +
             "<div style='margin:0 auto; width:60%; padding-left:40px;margin-bottom:5px;'><span>You have successfully passed test: "+"</span><span style ='color:#0090b9;'>"+testDAO.find(testId).getTestName()+"</span></div>"+
             "<div style='margin:0 auto; width:60%; padding-left:40px;margin-bottom:5px;'><span>Your mark: "+"</span><span style ='color:#0090b9;'>"+String.valueOf(resultDTO.getMark())+"%</span></div>"+
             "<div style='margin:0 auto; width:60%; padding-left:40px;'><span>You are able to check your result: " + "</span><span style ='color:#0090b9; font-decoration:none;'>http://localhost:8080/pages/openTests/LeaderBoard.html?testId=" +testDAO.find(testId).getId() + "&page="+getUserPageInLeaderBoard(testId, nickName));
-//                    body().with(
-//                            link().withRel("stylesheet").withHref("https://drive.google.com/file/d/0B7j_ITsxx7qJVWJTaEtaREFSMzQ/view?usp=sharing"),
-//                            div().withClass("logo").with(
-//                                    img().withSrc("http://cs630017.vk.me/v630017821/e5b9/Mwf2Bxr-AaU.jpg"),
-//                                    p().with(
-//                                            style().with(
-//                                            ),
-//                                            span("You have successfully passed test: "),
-//                                            span(testDAO.find(testId).getTestName())
-//                                    ),
-//                                    p().with(
-//                                            span("Your mark: "),
-//                                            span(String.valueOf(resultDTO.getMark()))
-//                                    ),
-//                                    p().with(
-//                                            span("You are able to check your result: "),
-//                                            a("http://localhost:8080/pages/openTests/LeaderBoard.html?testId=" +testDAO.find(testId).getId() + "&page="+getUserPageInLeaderBoard(testId, nickName))
-//                                    )
-//
-//                            )
-//                    ).render());
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
         } finally {
