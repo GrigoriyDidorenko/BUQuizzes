@@ -4,7 +4,7 @@
 
 $(document).ready(function () {
 
-     addQuestion();
+    addQuestion();
 
     //  $('#addAnswer1').onclick(addAnswer(question1));
 
@@ -17,14 +17,20 @@ $(document).ready(function () {
     });
     //Add new Question
     $("#addQuestion").click(function () {
-        $('#selectCategoryTestName').append(addQuestion());
+        addQuestion();
     });
+    $('#importTest').click(function () {
+        importTest();
+    });
+
     //ToDo ADD category TestName
+/*
     var urllForGetTestId = "/guest/getTestCategoryName/";
     var JSON = getJSON(urllForGetTestId);
     $.each(JSON, function (index, categoryTestName) {
         $('#selectCategoryTestName').append('<option>categoryTestName</option>');
     });
+*/
 
     $('.collapsible').collapsible({
         accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
@@ -72,28 +78,29 @@ function addAnswer(questionId) {
     var countAnswer = listAnswer.querySelectorAll('div [class="collapsible-body"]').length;
     var childDivAnswer = document.createElement('div');
     childDivAnswer.setAttribute("class", "collapsible-body");
-    childDivAnswer.id = questionId + "_answer" + ++countAnswer;
+    ++countAnswer;
+    childDivAnswer.id = questionId + "_answer" + countAnswer;
     //inp field
     var childInp1 = document.createElement('input');
-    childInp1.id = questionId + "_a" + ++countAnswer;
+    childInp1.id = questionId + "_a" + countAnswer;
     childInp1.type = "email";
     childInp1.value = "Відповідь";
     var childInp2 = document.createElement('input');
-    childInp2.id = questionId + "_m" + ++countAnswer;
+    childInp2.id = questionId + "_m" + countAnswer;
     childInp2.type = "email";
     childInp2.value = "0";
     //button
     var childDelButton = document.createElement('button');
     //Add id
     childDelButton.appendChild(document.createTextNode("Del"));
-    childDelButton.id = questionId + "_delAnswer" + ++countAnswer;
+    childDelButton.id = questionId + "_delAnswer" + countAnswer;
     childDelButton.type = "button";
     childDelButton.addEventListener("click", function () {
         removeAnswer(childDivAnswer.id)
     });
     var childAddButton = document.createElement('button');
     childAddButton.appendChild(document.createTextNode("Add"));
-    childAddButton.id = questionId + "_addAnswer" + ++countAnswer;
+    childAddButton.id = questionId + "_addAnswer" + countAnswer;
     childAddButton.type = "button";
     childAddButton.addEventListener("click", function () {
         addAnswer(questionId)
@@ -112,6 +119,42 @@ function removeAnswer(question_answer){
     document.getElementById(del[0]).removeChild(delEle);
 }
 
+
+function importTest(){
+    var testName = $('#testName').val();
+    var duration = $('#duration').val();
+    var oneTime= $('#oneTime').val();
+    var categoryTestName= $('#selectCategoryTestName').val();
+    var questions = [];
+    $.each( $('#questions li') , function( indexQ, questionLi ) {
+      var questionD;
+      var answers =[];
+      var question;
+        $.each( questionLi.querySelectorAll("div"), function( indexA, answerDiv ) {
+            if (answerDiv.className == 'collapsible-header' || answerDiv.className == 'collapsible-header active' ){
+                questionD = answerDiv.querySelector('input').value;
+            }else {
+                var answer;
+                $.each( answerDiv.querySelectorAll("input"), function( indexI, answerInput ) {
+                    if(answerInput.id = questionLi.id + "_a1") {
+                        var answerText = answerInput.value ;
+                    }
+                    if (answerInput.id = questionLi.id + "_m1"){
+                        var mark= answerInput.value;
+                    }
+                    answer = new Answer(answerText, mark);
+                });
+            answers.push(answer);
+            }
+            question = new Question(questionD, answers);
+        });
+         questions.push(question);
+    });
+    var test = Test(testName, duration, oneTime, categoryTestName, questions);
+
+   // getRequest(urll, test);
+}
+
 function Test(testName, duration, oneTime, categoryTestName, questions) {
     this.testName = testName;
     this.duration = duration;
@@ -125,15 +168,16 @@ function Question(question, answers) {
     this.answers = answers;
 }
 
-function Answers(answerText, mark) {
+function Answer(answerText, mark) {
     this.answerText = answerText;
     this.mark = mark;
 }
 
-function getJSON(urll) {
+function getRequest(urll, data) {
     jQuery.ajax({
         type: "GET",
         url: urll,
+        data:data,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (json) {
