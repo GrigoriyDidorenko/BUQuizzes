@@ -8,6 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by rondo104 on 23.12.2015.
@@ -28,4 +31,15 @@ public class CategoryTestDAO extends AbstractDAO<CategoryTest> {
             return null;
         }
     }
+
+    public Set<String> getAllСategoryTestName() {
+        try {
+            Query query = em.createNamedQuery("getAllСategoryTestName");
+            Set<String> allСategoryTestName = new HashSet<>((List<String>) query.getResultList());
+            return  allСategoryTestName;
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
 }

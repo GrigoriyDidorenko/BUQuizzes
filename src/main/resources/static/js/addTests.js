@@ -3,11 +3,7 @@
  */
 
 $(document).ready(function () {
-
     addQuestion();
-
-    //  $('#addAnswer1').onclick(addAnswer(question1));
-
     $('#categoryTestName').hide();
     //ToDo
     $("#buttonCategoryTestName").click(function () {
@@ -24,13 +20,21 @@ $(document).ready(function () {
     });
 
     //ToDo ADD category TestName
-/*
-    var urllForGetTestId = "/guest/getTestCategoryName/";
-    var JSON = getJSON(urllForGetTestId);
-    $.each(JSON, function (index, categoryTestName) {
-        $('#selectCategoryTestName').append('<option>categoryTestName</option>');
-    });
-*/
+    jQuery.ajax({
+        type: "GET",
+        url: "/trainer/getAllСategoryTestName",
+        dataType: "json",
+        async: false,
+        contentType: "application/json; charset=utf-8",
+        success: function (json) {
+            $.each(json, function (index, categoryTestName) {
+                $('#selectCategoryTestName').append('<option>' + categoryTestName +'</option>');
+            });
+        },
+        error: function (http) {
+            return http.responseText;
+        }
+    })
 
     $('.collapsible').collapsible({
         accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
@@ -135,24 +139,41 @@ function importTest(){
                 questionD = answerDiv.querySelector('input').value;
             }else {
                 var answer;
+                var answerText;
+                var mark;
                 $.each( answerDiv.querySelectorAll("input"), function( indexI, answerInput ) {
-                    if(answerInput.id = questionLi.id + "_a1") {
-                        var answerText = answerInput.value ;
+                    if(answerInput.id == questionLi.id + "_a1") {
+                        answerText = answerInput.value ;
                     }
-                    if (answerInput.id = questionLi.id + "_m1"){
-                        var mark= answerInput.value;
+                    if (answerInput.id == questionLi.id + "_m1"){
+                        mark= answerInput.value;
                     }
-                    answer = new Answer(answerText, mark);
                 });
+            answer = new Answer(answerText, mark);
             answers.push(answer);
             }
             question = new Question(questionD, answers);
         });
          questions.push(question);
     });
-    var test = Test(testName, duration, oneTime, categoryTestName, questions);
-
-   // getRequest(urll, test);
+    var test = new Test(testName, duration, oneTime, categoryTestName, questions);
+    console.log(test);
+    var json = JSON.stringify(test)
+    console.log(json);
+    jQuery.ajax({
+        url: "/trainer/addNewTest",
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: json,
+        success: function (json) {
+           alert(json);
+        },
+        error: function (http) {
+            alert(http.responseText);
+            return http.responseText;
+        }
+    })
 }
 
 function Test(testName, duration, oneTime, categoryTestName, questions) {

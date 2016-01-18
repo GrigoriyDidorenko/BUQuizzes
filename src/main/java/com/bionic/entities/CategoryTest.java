@@ -10,8 +10,11 @@ import java.util.Collection;
 
 @NamedQueries({
         @NamedQuery(name = "getСategoryTestByTestName",
-                query = "SELECT t FROM CategoryTest t WHERE t.categoryName  = :categoryTestName")
+                query = "SELECT t FROM CategoryTest t WHERE t.categoryName  = :categoryTestName"),
+        @NamedQuery(name = "getAllСategoryTestName",
+                query = "SELECT t.categoryName FROM CategoryTest t")
 })
+
 @Entity
 @Table(name = "category_test", catalog = "quizzes")
 public class CategoryTest {

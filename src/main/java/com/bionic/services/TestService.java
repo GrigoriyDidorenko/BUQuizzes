@@ -30,8 +30,6 @@ public class TestService {
     @Autowired
     private UserAnswerDAO userAnswerDAO;
     @Autowired
-    private ObjectMapper mapper;
-    @Autowired
     private TestDAO testDAO;
     @Autowired
     private QuestionDAO questionDAO;
@@ -119,12 +117,7 @@ public class TestService {
     }
 
     @Transactional
-    public String importTest(MultipartFile file) throws Exception {
-        HashSet<TestDTO> testDTOs;
-        try {
-            testDTOs = mapper.readValue(file.getInputStream(),
-                    new TypeReference<Set<TestDTO>>() {
-                    });
+    public String importTest(HashSet<TestDTO> testDTOs) throws Exception {
             for (TestDTO testDTO : testDTOs) {
                 HashSet<Question> questions = new HashSet<>();
                 Test test = new Test();
@@ -176,13 +169,6 @@ public class TestService {
                 test.setQuestions(questions);
                 testDAO.save(test);
             }
-        } catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            return "Invalid format";
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return "successful";
     }
 
@@ -263,5 +249,9 @@ public class TestService {
         }
         mark = Math.round(((float) mark / (float) maxmark) * 100);
         return mark;
+    }
+
+    public Set<String> getAllСategoryTestName() {
+        return categoryTestDAO.getAllСategoryTestName();
     }
 }
