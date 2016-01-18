@@ -142,10 +142,10 @@ function importTest(){
                 var answerText;
                 var mark;
                 $.each( answerDiv.querySelectorAll("input"), function( indexI, answerInput ) {
-                    if(answerInput.id == questionLi.id + "_a1") {
+                    if(answerInput.id == questionLi.id + "_a" + indexA ) {
                         answerText = answerInput.value ;
                     }
-                    if (answerInput.id == questionLi.id + "_m1"){
+                    if (answerInput.id == questionLi.id + "_m" + indexA){
                         mark= answerInput.value;
                     }
                 });

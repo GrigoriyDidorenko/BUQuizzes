@@ -119,56 +119,62 @@ public class TestService {
     @Transactional
     public String importTest(HashSet<TestDTO> testDTOs) throws Exception {
             for (TestDTO testDTO : testDTOs) {
-                HashSet<Question> questions = new HashSet<>();
-                Test test = new Test();
-                test.setDuration(testDTO.getDuration());
-                test.setTestName(testDTO.getTestName());
-                test.setOneTime(testDTO.isOneTime());
-                CategoryTest categoryTest = categoryTestDAO.getСategoryTestByTestName(testDTO.getCategoryTestName());
-                if (categoryTest == null) {
-                    categoryTest = new CategoryTest(testDTO.getCategoryTestName());
-                }
-                test.setCategoryTest(categoryTest);
-                if (testDTO.getQuestions() != null)
-                    for (QuestionDTO questionDTO : testDTO.getQuestions()) {
-                        int positiveMark = 0;
-                        HashSet<Answer> answers = new HashSet<>();
-                        Question question = new Question();
-                        question.setTest(test);
-                        question.setQuestion(questionDTO.getQuestion());
-                        if (questionDTO.getAnswers() != null)
-                            for (AnswerDTO answerDTO : questionDTO.getAnswers()) {
-                                Answer answer = new Answer();
-                                answer.setAnswerText(answerDTO.getAnswerText());
-                                answer.setQuestion(question);
-                                answer.setMark(answerDTO.getMark());
-                                answers.add(answer);
-                                if (answer.getMark() > 0)
-                                    positiveMark++;
-                            }
-                        if (answers.size() != 0 && positiveMark == 0)
-                            throw new Exception("Question should have at least one answer with positive" +
-                                    " mark or doesn't have any answers at all");
-                        switch (positiveMark) {
-                            case 0:
-                                question.setIsOpen(true);
-                                question.setIsMultichoice(false);
-                                break;
-                            case 1:
-                                question.setIsOpen(false);
-                                question.setIsMultichoice(false);
-                                break;
-                            default:
-                                question.setIsOpen(false);
-                                question.setIsMultichoice(true);
-                                break;
-                        }
-                        question.setAnswers(answers);
-                        questions.add(question);
-                    }
-                test.setQuestions(questions);
-                testDAO.save(test);
+                importTest(testDTO);
             }
+        return "successful";
+    }
+
+    @Transactional
+    public String importTest(TestDTO testDTO) throws Exception{
+        HashSet<Question> questions = new HashSet<>();
+        Test test = new Test();
+        test.setDuration(testDTO.getDuration());
+        test.setTestName(testDTO.getTestName());
+        test.setOneTime(testDTO.isOneTime());
+        CategoryTest categoryTest = categoryTestDAO.getСategoryTestByTestName(testDTO.getCategoryTestName());
+        if (categoryTest == null) {
+            categoryTest = new CategoryTest(testDTO.getCategoryTestName());
+        }
+        test.setCategoryTest(categoryTest);
+        if (testDTO.getQuestions() != null)
+            for (QuestionDTO questionDTO : testDTO.getQuestions()) {
+                int positiveMark = 0;
+                HashSet<Answer> answers = new HashSet<>();
+                Question question = new Question();
+                question.setTest(test);
+                question.setQuestion(questionDTO.getQuestion());
+                if (questionDTO.getAnswers() != null)
+                    for (AnswerDTO answerDTO : questionDTO.getAnswers()) {
+                        Answer answer = new Answer();
+                        answer.setAnswerText(answerDTO.getAnswerText());
+                        answer.setQuestion(question);
+                        answer.setMark(answerDTO.getMark());
+                        answers.add(answer);
+                        if (answer.getMark() > 0)
+                            positiveMark++;
+                    }
+                if (answers.size() != 0 && positiveMark == 0)
+                    throw new Exception("Question should have at least one answer with positive" +
+                            " mark or doesn't have any answers at all");
+                switch (positiveMark) {
+                    case 0:
+                        question.setIsOpen(true);
+                        question.setIsMultichoice(false);
+                        break;
+                    case 1:
+                        question.setIsOpen(false);
+                        question.setIsMultichoice(false);
+                        break;
+                    default:
+                        question.setIsOpen(false);
+                        question.setIsMultichoice(true);
+                        break;
+                }
+                question.setAnswers(answers);
+                questions.add(question);
+            }
+        test.setQuestions(questions);
+        testDAO.save(test);
         return "successful";
     }
 

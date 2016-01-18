@@ -65,11 +65,11 @@ public class TrainerController {
     public
     @ResponseBody
     String handleFileUpload(@RequestBody String JSON) {
-        HashSet<TestDTO> testDTOs;
+        TestDTO testDTO;
         try {
-            testDTOs = objectMapper.readValue(JSON, new TypeReference<Set<TestDTO>>() {
+            testDTO = objectMapper.readValue(JSON, new TypeReference<TestDTO>() {
             });
-            return testService.importTest(testDTOs);
+            return testService.importTest(testDTO);
         } catch (JsonGenerationException e) {
             return new String(e.getMessage());
         } catch (JsonMappingException e) {
