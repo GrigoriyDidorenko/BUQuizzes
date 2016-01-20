@@ -45,7 +45,7 @@ public class SuperAdministratorController {
     public
     @ResponseBody
     ResponseEntity<List<String>> getRoles() {
-        return new ResponseEntity<>(new ArrayList<>(Arrays.asList(Role.RESTRICTED_ADMINISTRATOR.name()
+        return new ResponseEntity<List<String>>(new ArrayList<>(Arrays.asList(Role.RESTRICTED_ADMINISTRATOR.name()
                 , Role.RESTRICTED_TRAINER.name())), HttpStatus.OK);
     }
 

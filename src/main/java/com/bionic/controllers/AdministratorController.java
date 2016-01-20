@@ -28,6 +28,6 @@ public class AdministratorController extends SuperAdministratorController {
     public
     @ResponseBody
     ResponseEntity<List<String>> getRoles() {
-        return new ResponseEntity<>(new ArrayList<>(Arrays.asList(Role.RESTRICTED_TRAINER.name())), HttpStatus.OK);
+        return new ResponseEntity<List<String>>(new ArrayList<>(Arrays.asList(Role.RESTRICTED_TRAINER.name())), HttpStatus.OK);
     }
 }
