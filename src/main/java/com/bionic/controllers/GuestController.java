@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -96,7 +97,7 @@ public class GuestController {
                                          @PathVariable("testId") String testId, HttpServletRequest request) {
         ResultDTO resultDTO = null;
         try {
-            String host = "http://" + request.getServerName() + ":" + String.valueOf(request.getLocalPort());
+            String host = "http://" + request.getServerName() + ":" + String.valueOf(request.getServerPort());
             TypeFactory typeFactory = objectMapper.getTypeFactory();
             GuestAnswerDTO guestAnswerDTO = objectMapper.readValue(JSONAnswers, GuestAnswerDTO.class);
             List<UserAnswerDTO> userAnswerDTOs = guestAnswerDTO.getUserAnswerDTO();
