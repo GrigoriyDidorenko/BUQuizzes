@@ -5,18 +5,17 @@
 
 $(document).ready(function() {
     var testId = GetURLParameter('testId');
-    var flag = 0;
-    viewBoard(testId,1, flag);
+    var page = GetURLParameter('page');
+    if (page == undefined ) {
+        page = 1;
+    }
+    viewBoard(testId,page);
 });
 
-function viewBoard(testId,currentPage,flag){
+function viewBoard(testId,currentPage){
     var getboard;
     var nickName = GetURLParameter('nickName');
-    if (nickName != null && flag==0 ) {
-        var urll = "/guest/leaderBoard/userPosition/" + testId +"/"+nickName;
-        ++flag;
-    }else urll = "/guest/leaderBoard/" + testId +"/"+currentPage;
-
+    urll = "/guest/leaderBoard/" + testId +"/"+currentPage;
     jQuery.ajax({
         type: "GET",
         url: urll,
@@ -33,7 +32,7 @@ function viewBoard(testId,currentPage,flag){
                     pages: getboard.pageNumber,
                     currentPage:getboard.currentPageNumber,
                     onPageClick(pageNumber){
-                    viewBoard(testId,pageNumber, flag);
+                    viewBoard(testId,pageNumber);
                 }
             });
         });

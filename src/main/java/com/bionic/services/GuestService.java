@@ -23,7 +23,7 @@ public class GuestService {
     @Autowired
     private OneTimeTestDAO oneTimeTestDAO;
 
-    private static double pageStackSize = 5.0;
+    private static double pageStackSize = 10.0;
 
     public GuestService() {
     }

@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -92,16 +93,14 @@ public class GuestController {
     public
     @ResponseBody
     ResponseEntity<ResultDTO> setAnswers(@RequestBody String JSONAnswers,
-                                         @PathVariable("testId") String testId) {
+                                         @PathVariable("testId") String testId, HttpServletRequest request) {
         ResultDTO resultDTO = null;
         try {
-        /*    String email = "mail";
-            String nickName = "nick";
-            String name = "Name" ;*/
+            String host = "http://" + request.getServerName() + ":" + String.valueOf(request.getLocalPort());
             TypeFactory typeFactory = objectMapper.getTypeFactory();
             GuestAnswerDTO guestAnswerDTO = objectMapper.readValue(JSONAnswers, GuestAnswerDTO.class);
             List<UserAnswerDTO> userAnswerDTOs = guestAnswerDTO.getUserAnswerDTO();
-            resultDTO = testService.processingAnswersForOneTimeTest((ArrayList<UserAnswerDTO>) userAnswerDTOs, Long.valueOf(testId), guestAnswerDTO.getNickName(), guestAnswerDTO.getEmail(), guestAnswerDTO.getEmail());
+            resultDTO = testService.processingAnswersForOneTimeTest((ArrayList<UserAnswerDTO>) userAnswerDTOs, Long.valueOf(testId), guestAnswerDTO.getNickName(), guestAnswerDTO.getEmail(), guestAnswerDTO.getEmail(), host);
         } catch (NumberFormatException e) {
             resultDTO.setCheckStatus("resultId string cannot be parsed");
         } catch (Exception e) {

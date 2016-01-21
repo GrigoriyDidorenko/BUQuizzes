@@ -1,0 +1,170 @@
+[ {
+  "testName": "Java First",
+  "duration": "30",
+  "oneTime": true,
+  "categoryTestName": "Java",
+  "questions": [
+    {
+      "question": "Принципи ООП?",
+      "answers": [
+        {
+          "answerText": "Наслідування",
+          "mark": "1"
+        },
+        {
+          "answerText": "Поліморфізм",
+          "mark": "1"
+        },
+        {
+          "answerText": "Інкапсуляція",
+          "mark": "1"
+        },
+        {
+          "answerText": "Деструкція",
+          "mark": "-1"
+        }
+      ]
+    },
+    {
+      "question": "Як можна знищити об`єкт в Java?",
+      "answers": [
+        {
+          "answerText": "присвоїти null всім посиланням на об'ект",
+          "mark": "0"
+        },
+        {
+          "answerText": "визвати Runtime.getRuntime().gc()",
+          "mark": "0"
+        },
+        {
+          "answerText": "це не можна зробити вручну",
+          "mark": "1"
+        }
+      ]
+    },
+    {
+      "question": "Java це -",
+      "answers": [
+        {
+          "answerText": "Мова програмування",
+          "mark": "1"
+        },
+        {
+          "answerText": "Чайник",
+          "mark": "0"
+        },
+        {
+          "answerText": "Бренд мобільних телефонів",
+          "mark": "0"
+        }
+      ]
+    },
+    {
+      "question": "Java = Java Script",
+      "answers": [
+        {
+          "answerText": "Так",
+          "mark": "0"
+        },
+        {
+          "answerText": "Ні",
+          "mark": "1"
+        }
+      ]
+    },
+    {
+      "question": "Java (вимовляється Джава; інколи — Ява) — об'єктно-орієнтована мова програмування, випущена компанією Sun Microsystems у",
+      "answers": [
+        {
+          "answerText": "1980",
+          "mark": "0"
+        },
+        {
+          "answerText": "1985",
+          "mark": "0"
+        },
+        {
+          "answerText": "1995",
+          "mark": "1"
+        },
+        {
+          "answerText": "2001",
+          "mark": "0"
+        }
+      ]
+    },
+    {
+      "question": "Що це таке boolean, byte, byte",
+      "answers": [
+        {
+          "answerText": "Типи даних",
+          "mark": "1"
+        },
+        {
+          "answerText": "Незрозумілі слова",
+          "mark": "0"
+        }
+      ]
+    },
+    {
+      "question": "Головним мотивом створення Java була потреба в мові програмування, яка б",
+      "answers": [
+        {
+          "answerText": "Не залежала від платформи",
+          "mark": "1"
+        },
+        {
+          "answerText": "Була зрозуміла",
+          "mark": "0"
+        },
+        {
+          "answerText": "Була нова",
+          "mark": "0"
+        }
+      ]
+    },
+    {
+      "question": "jdk - Java Development Kit",
+      "answers": [
+        {
+          "answerText": "Набір бібліотек і інструментів для створення, компілювання і дебага программ. Включає в себя jre",
+          "mark": "1"
+        },
+        {
+          "answerText": "Середовище ('віртуальне'), в якому виконується твій скомпільований код",
+          "mark": "0"
+        },
+        {
+          "answerText": "Пакет, який включає в себя JVM і мінімальний набір бібліотек для работи программ. І ще браузерний плагін, де будуть виконуватися апплети",
+          "mark": "0"
+        }
+      ]
+    },
+    {
+      "question": "Чи є різниця між класом та об'єктом",
+      "answers": [
+        {
+          "answerText": "Так",
+          "mark": "1"
+        },
+        {
+          "answerText": "Ні",
+          "mark": "0"
+        }
+      ]
+    },
+    {
+      "question": "Наслідування це принцип ООП",
+      "answers": [
+        {
+          "answerText": "Так",
+          "mark": "1"
+        },
+        {
+          "answerText": "Ні",
+          "mark": "0"
+        }
+      ]
+    }
+  ]
+} ]
