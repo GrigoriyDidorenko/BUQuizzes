@@ -58,6 +58,17 @@ public class User {
     @JoinTable(name = "result", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "test_id"))
     private Set<Test> tests;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<UserStudyGroup> studyGroup;
+
+    public Collection<UserStudyGroup> getStudyGroup() {
+        return studyGroup;
+    }
+
+    public void setStudyGroup(Collection<UserStudyGroup> studyGroup) {
+        this.studyGroup = studyGroup;
+    }
+
     public User() {
     }
 
@@ -193,4 +204,6 @@ public class User {
         result = 31 * result + (getRoles() != null ? getRoles().hashCode() : 0);
         return result;
     }
+
+
 }
