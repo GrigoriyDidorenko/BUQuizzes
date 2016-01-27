@@ -1,6 +1,5 @@
 package com.bionic.DTO;
 
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -23,7 +22,7 @@ public class TestDTO {
     //Filds for Submited Tests
     private boolean isChecked;
     private int mark;
-    private boolean submited;
+    private boolean submitted;
     private boolean oneTime ;
     private long categoryTestId;
     private String categoryTestName;
@@ -59,12 +58,12 @@ public class TestDTO {
         this.isChecked = isChecked;
     }
 
-    public TestDTO(long id, String testName, int mark, boolean isChecked, boolean submited, int duration) {
+    public TestDTO(long id, String testName, int mark, boolean isChecked, boolean submitted, int duration) {
         this.id = id;
         this.testName = testName;
         this.mark = mark;
         this.isChecked = isChecked;
-        this.submited = submited;
+        this.submitted = submitted;
         this.duration = duration;
     }
 
@@ -116,12 +115,12 @@ public class TestDTO {
         this.questions = questions;
     }
 
-    public boolean isSubmited() {
-        return submited;
+    public boolean isSubmitted() {
+        return submitted;
     }
 
-    public void setSubmited(boolean submited) {
-        this.submited = submited;
+    public void setSubmitted(boolean submitted) {
+        this.submitted = submitted;
     }
 
     public boolean isOneTime() {
@@ -159,7 +158,7 @@ public class TestDTO {
         if (duration != testDTO.duration) return false;
         if (isChecked != testDTO.isChecked) return false;
         if (mark != testDTO.mark) return false;
-        if (submited != testDTO.submited) return false;
+        if (submitted != testDTO.submitted) return false;
         if (!testName.equals(testDTO.testName)) return false;
         return !(questions != null ? !questions.equals(testDTO.questions) : testDTO.questions != null);
 
@@ -173,7 +172,7 @@ public class TestDTO {
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
         result = 31 * result + (isChecked ? 1 : 0);
         result = 31 * result + mark;
-        result = 31 * result + (submited ? 1 : 0);
+        result = 31 * result + (submitted ? 1 : 0);
         return result;
     }
 
