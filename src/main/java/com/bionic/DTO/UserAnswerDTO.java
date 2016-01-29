@@ -1,6 +1,5 @@
 package com.bionic.DTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,18 +10,29 @@ public class UserAnswerDTO {
     private long id;
     private String answerText;
     private long questionId;
-    private List<String> answerId;
+    private List<String> answersId;
     private long resultId;
+
+
     private int counter;
+    private int mark;
 
 
     public UserAnswerDTO() {
     }
 
-    public UserAnswerDTO(String answerText, long questionId, List<String> answerId) {
+    public UserAnswerDTO(String answerText, long questionId, List<String> answersId) {
         this.answerText = answerText;
         this.questionId = questionId;
-        this.answerId = answerId;
+        this.answersId = answersId;
+    }
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
     }
 
     public String getAnswerText() {
@@ -41,12 +51,12 @@ public class UserAnswerDTO {
         this.questionId = questionId;
     }
 
-    public List<String> getAnswerId() {
-        return answerId;
+    public List<String> getAnswersId() {
+        return answersId;
     }
 
-    public void setAnswerId(List<String> answerId) {
-        this.answerId = answerId;
+    public void setAnswersId(List<String> answersId) {
+        this.answersId = answersId;
     }
 
     public long getId() {
@@ -82,7 +92,7 @@ public class UserAnswerDTO {
 
         if (questionId != that.questionId) return false;
         if (answerText != null ? !answerText.equals(that.answerText) : that.answerText != null) return false;
-        return !(answerId != null ? !answerId.equals(that.answerId) : that.answerId != null);
+        return !(answersId != null ? !answersId.equals(that.answersId) : that.answersId != null);
 
     }
 
@@ -90,7 +100,7 @@ public class UserAnswerDTO {
     public int hashCode() {
         int result = answerText != null ? answerText.hashCode() : 0;
         result = 31 * result + (int) (questionId ^ (questionId >>> 32));
-        result = 31 * result + (answerId != null ? answerId.hashCode() : 0);
+        result = 31 * result + (answersId != null ? answersId.hashCode() : 0);
         return result;
     }
 }
