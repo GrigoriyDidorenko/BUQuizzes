@@ -33,6 +33,13 @@ public class ResultDAO extends AbstractDAO<Result> {
     public ResultDAO() {
         super(Result.class);
     }
+
+    public BigInteger hasUncheckedAnswers(long resultId){
+        Query query = em.createNamedQuery("hasUncheckedAnswers");
+        query.setParameter("resultId", resultId);
+        return (BigInteger) query.getSingleResult();
+    }
+
     public Test getCurrentTest(long id, long testId, Permission permission) {
         Query query = em.createNamedQuery("getCurrentTestById");
         query.setParameter("userId", id);

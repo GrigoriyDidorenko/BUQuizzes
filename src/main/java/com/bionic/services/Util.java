@@ -5,9 +5,6 @@ import com.bionic.entities.*;
 import com.bionic.entities.Answer;
 import com.bionic.entities.Question;
 import com.bionic.entities.Test;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 
@@ -104,8 +101,8 @@ public final class Util {
     public static ArrayList<UserAnswer> convertUserAnswerDTOsToUserAnswers(ArrayList<UserAnswerDTO> userAnswerDTOs, Result result) throws NumberFormatException {
         ArrayList<UserAnswer> userAnswers = new ArrayList<>();
         for (UserAnswerDTO userAnswerDTO : userAnswerDTOs) {
-            if (!userAnswerDTO.getAnswerId().isEmpty()) {
-                for (String answerId : userAnswerDTO.getAnswerId()) {
+            if (!userAnswerDTO.getAnswersId().isEmpty()) {
+                for (String answerId : userAnswerDTO.getAnswersId()) {
                     userAnswers.add(convertUserAnswerDTOToUserAnswer(userAnswerDTO, result, Long.parseLong(answerId)));
                 }
             } else {
@@ -128,8 +125,8 @@ public final class Util {
     public static ArrayList<UserAnswer> convertUserAnswerDTOsToTempUserAnswers(ArrayList<UserAnswerDTO> guestAnswerDTOs) {
         ArrayList<UserAnswer> userAnswers = new ArrayList<>();
         for (UserAnswerDTO userAnswerDTO : guestAnswerDTOs) {
-            if (!userAnswerDTO.getAnswerId().isEmpty()) {
-                for (String answerId : userAnswerDTO.getAnswerId()) {
+            if (!userAnswerDTO.getAnswersId().isEmpty()) {
+                for (String answerId : userAnswerDTO.getAnswersId()) {
                     UserAnswer userAnswer = new UserAnswer();
                     userAnswer.setAnswerId(Long.valueOf(answerId));
                     userAnswer.setQuestionId(userAnswerDTO.getQuestionId());
