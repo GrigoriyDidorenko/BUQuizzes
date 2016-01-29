@@ -101,9 +101,4 @@ public class StudentService {
         }
         return null;
     }
-
-    public User getAuthorizedUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return userDAO.getUserByEmail(auth.getName());
-    }
 }

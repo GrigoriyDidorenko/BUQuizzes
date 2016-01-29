@@ -11,8 +11,8 @@ public class BionicAPI {
     public BionicAPI() {
     }
 
-    private boolean PermisionUser(String login, String pass) {
-        boolean access = false;
+    private boolean PermissionUser(String login, String pass) {
+        boolean access;
 
         //To DO BU API
         access = true;
