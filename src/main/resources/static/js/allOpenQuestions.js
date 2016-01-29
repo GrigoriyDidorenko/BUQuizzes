@@ -70,7 +70,7 @@ function addOneTest(test, indexI,flag){
     childButton.id = childLI.id + "_d";
     childButton.appendChild(document.createTextNode("Перевірити"));
     childButton.addEventListener("click", function(){
-        window.location = "auditOpenQuestions.html?" + "question=" + test.questionId;
+        window.location = "auditOpenQuestions.html?" + "questionId=" + test.questionId + "&question=" + test.question;
     });
     childDiv2.appendChild(childButton);
     childDiv2.appendChild(document.createTextNode(test.numberOfUncheckedAnswers));
