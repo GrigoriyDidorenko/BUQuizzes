@@ -57,10 +57,10 @@ function addQuestion() {
     childDiv.setAttribute("class", "collapsible-header");
     var childInp = document.createElement('input');
     childInp.type = "text";
-    childInp.placeholder = "Нове запитання";
-    var childDelButton = document.createElement('button');
+    childInp.placeholder = "Question";
+    var childDelButton = document.createElement('i');
     childDelButton.id = childLI.id + "_d";
-    childDelButton.appendChild(document.createTextNode("-"));
+    childDelButton.setAttribute("class", "fa fa-times closeicon");
     childDelButton.addEventListener("click", function(){
         deleteQuestion(childLI.id);
     });
@@ -87,22 +87,22 @@ function addAnswer(questionId) {
     var childInp1 = document.createElement('input');
     childInp1.id = questionId + "_a" + countAnswer;
     childInp1.type = "text";
-    childInp1.placeholder = "Відповідь";
+    childInp1.placeholder = "Answer";
     var childInp2 = document.createElement('input');
     childInp2.id = questionId + "_m" + countAnswer;
     childInp2.type = "number";
     childInp2.placeholder = "mark";
     //button
-    var childDelButton = document.createElement('button');
+    var childDelButton = document.createElement('i');
     //Add id
-    childDelButton.appendChild(document.createTextNode("-"));
+    childDelButton.setAttribute("class", "fa fa-times fa-1x closeicon");
     childDelButton.id = questionId + "_delAnswer" + countAnswer;
     childDelButton.type = "button";
     childDelButton.addEventListener("click", function () {
         removeAnswer(childDivAnswer.id)
     });
-    var childAddButton = document.createElement('button');
-    childAddButton.appendChild(document.createTextNode("+"));
+    var childAddButton = document.createElement('i');
+    childAddButton.setAttribute("class", "fa fa-plus fa-1x yesicon");
     childAddButton.id = questionId + "_addAnswer" + countAnswer;
     childAddButton.type = "button";
     childAddButton.addEventListener("click", function () {
@@ -174,10 +174,11 @@ function importTest() {
         contentType: "application/json; charset=utf-8",
         data: json,
         success: function (json) {
-           alert(json);
+           //alert(json);
         },
         error: function (http) {
-            alert(http.responseText);
+            $('#exeption').empty();
+            $('#exeption').append(http.responseText);
             return http.responseText;
         }
     })
