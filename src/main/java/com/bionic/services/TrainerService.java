@@ -2,13 +2,16 @@ package com.bionic.services;
 
 import com.bionic.DAO.ResultDAO;
 import com.bionic.DAO.TestDAO;
+import com.bionic.DAO.UserAnswerDAO;
 import com.bionic.DAO.UserDAO;
 import com.bionic.DTO.TestDTO;
+import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.DTO.UserDTO;
 import com.bionic.entities.Permission;
 import com.bionic.entities.Result;
 import com.bionic.entities.Test;
 import com.bionic.entities.User;
+import com.bionic.wrappers.OpenQuestionWrapper;
 import com.bionic.wrappers.TestUserWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,8 @@ public class TrainerService {
     private TestDAO testDAO;
     @Autowired
     private ResultDAO resultDAO;
+    @Autowired
+    private UserAnswerDAO userAnswerDAO;
 
     public List<UserDTO> getAllUsersNames() {
         try {
@@ -48,6 +53,24 @@ public class TrainerService {
         try {
             return testDAO.getUnarchivedTestsNames();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<OpenQuestionWrapper> getUncheckedTests(long userId){
+        try {
+            return userAnswerDAO.getUncheckedTests(userId);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<UserAnswerDTO> getUncheckedAnswersForCurrentQuestion(String questionId){
+        try{
+            return userAnswerDAO.getUncheckedAnswersForCurrentQuestion(Util.getLongId(questionId));
+        } catch (Exception e){
             e.printStackTrace();
         }
         return null;

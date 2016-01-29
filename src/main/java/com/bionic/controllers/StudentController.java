@@ -8,6 +8,7 @@ import com.bionic.entities.Role;
 import com.bionic.entities.User;
 import com.bionic.services.StudentService;
 import com.bionic.services.TestService;
+import com.bionic.services.UserService;
 import com.bionic.wrappers.TestWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -42,7 +43,7 @@ public class StudentController {
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    private UserDAO userDAO;
+    private UserService userService;
 
 
     public StudentController() {
@@ -53,7 +54,7 @@ public class StudentController {
     public
     @ResponseBody
     ResponseEntity<Set<TestWrapper>> getAvailableTestsNames() {
-        Set<TestWrapper> tests = studentService.getTestsForUserId(studentService.getAuthorizedUser().getId());
+        Set<TestWrapper> tests = studentService.getTestsForUserId(userService.getAuthorizedUser().getId());
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
 
@@ -64,7 +65,7 @@ public class StudentController {
     ResponseEntity<TestDTO> getCurrentTest(@PathVariable("resultId") String resultId) {
 
         studentService.setTestBeginTime(resultId);
-        TestDTO testDTO = studentService.getCurrentTest(studentService.getAuthorizedUser().getId(), resultId);
+        TestDTO testDTO = studentService.getCurrentTest(userService.getAuthorizedUser().getId(), resultId);
         return new ResponseEntity<>(testDTO, HttpStatus.OK);
     }
 

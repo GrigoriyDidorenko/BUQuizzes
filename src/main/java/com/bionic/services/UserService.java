@@ -25,4 +25,9 @@ public class UserService {
         userDAO.save(user);
     }
 
+    public User getAuthorizedUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userDAO.getUserByEmail(auth.getName());
+    }
+
 }

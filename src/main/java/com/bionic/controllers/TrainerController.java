@@ -1,9 +1,12 @@
 package com.bionic.controllers;
 
 import com.bionic.DTO.TestDTO;
+import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.entities.User;
 import com.bionic.services.TestService;
 import com.bionic.services.TrainerService;
+import com.bionic.services.UserService;
+import com.bionic.wrappers.OpenQuestionWrapper;
 import com.bionic.wrappers.TestUserWrapper;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,6 +44,8 @@ public class TrainerController {
     private TrainerService trainerService;
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public
@@ -81,6 +87,30 @@ public class TrainerController {
         }
     }
 
+
+    @RequestMapping(value = "/uncheckedTests", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    List<OpenQuestionWrapper> getUncheckedTests() {
+        try {
+            return trainerService.getUncheckedTests(/*userService.getAuthorizedUser().getId()*/1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/uncheckedTests/{questionId}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    List<UserAnswerDTO> getUncheckedAnswersForCurrentQuestion(@PathVariable("questionId") String questionId) {
+        try {
+            return trainerService.getUncheckedAnswersForCurrentQuestion(questionId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @RequestMapping(value = "/testToUser", method = RequestMethod.GET, produces = "application/json")
     public

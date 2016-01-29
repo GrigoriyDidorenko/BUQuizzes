@@ -4,13 +4,11 @@
 
 $(document).ready(function () {
     addQuestion();
-    $('#categoryTestName').hide();
+    //$('#newCategory').hide();
     //ToDo
-    $("#buttonCategoryTestName").click(function () {
-        $('#buttonCategoryTestName').hide();
-        $('#selectCategoryTestName').hide();
-        $('#categoryTestName').show();
-    });
+    //$("#addCategory").click(function () {
+    //    $('#newCategory').show();
+    //});
     //Add new Question
     $("#addQuestion").click(function () {
         addQuestion();
@@ -27,8 +25,9 @@ $(document).ready(function () {
         async: false,
         contentType: "application/json; charset=utf-8",
         success: function (json) {
-            $.each(json, function (index, categoryTestName) {
-                $('#selectCategoryTestName').append('<option>' + categoryTestName +'</option>');
+            var rols = json;
+            $.each(rols, function (index, rolsone) {
+                $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
             });
         },
         error: function (http) {
@@ -57,11 +56,11 @@ function addQuestion() {
     var childDiv = document.createElement('div');
     childDiv.setAttribute("class", "collapsible-header");
     var childInp = document.createElement('input');
-    childInp.type = "email";
-    childInp.value = "Нове запитання";
+    childInp.type = "text";
+    childInp.placeholder = "Нове запитання";
     var childDelButton = document.createElement('button');
     childDelButton.id = childLI.id + "_d";
-    childDelButton.appendChild(document.createTextNode("del"));
+    childDelButton.appendChild(document.createTextNode("-"));
     childDelButton.addEventListener("click", function(){
         deleteQuestion(childLI.id);
     });
@@ -87,23 +86,23 @@ function addAnswer(questionId) {
     //inp field
     var childInp1 = document.createElement('input');
     childInp1.id = questionId + "_a" + countAnswer;
-    childInp1.type = "email";
-    childInp1.value = "Відповідь";
+    childInp1.type = "text";
+    childInp1.placeholder = "Відповідь";
     var childInp2 = document.createElement('input');
     childInp2.id = questionId + "_m" + countAnswer;
-    childInp2.type = "email";
-    childInp2.value = "0";
+    childInp2.type = "number";
+    childInp2.placeholder = "mark";
     //button
     var childDelButton = document.createElement('button');
     //Add id
-    childDelButton.appendChild(document.createTextNode("Del"));
+    childDelButton.appendChild(document.createTextNode("-"));
     childDelButton.id = questionId + "_delAnswer" + countAnswer;
     childDelButton.type = "button";
     childDelButton.addEventListener("click", function () {
         removeAnswer(childDivAnswer.id)
     });
     var childAddButton = document.createElement('button');
-    childAddButton.appendChild(document.createTextNode("Add"));
+    childAddButton.appendChild(document.createTextNode("+"));
     childAddButton.id = questionId + "_addAnswer" + countAnswer;
     childAddButton.type = "button";
     childAddButton.addEventListener("click", function () {
@@ -122,13 +121,21 @@ function removeAnswer(question_answer){
     var delEle = document.getElementById(question_answer);
     document.getElementById(del[0]).removeChild(delEle);
 }
+function importTest() {
+    var value=$.trim($("#categoryTestName").val());
 
-
-function importTest(){
+    if(value.length>0)
+    {
+        var categoryTestName= $('#categoryTestName').val();
+        console.log(categoryTestName)
+    }
+    else {
+        var categoryTestName= $('#selectCategoryTestName').val();
+        console.log(categoryTestName)
+    }
     var testName = $('#testName').val();
     var duration = $('#duration').val();
-    var oneTime= $('#oneTime').val();
-    var categoryTestName= $('#selectCategoryTestName').val();
+    var oneTime=$('#oneTime').prop("checked");
     var questions = [];
     $.each( $('#questions li') , function( indexQ, questionLi ) {
       var questionD;
@@ -158,7 +165,7 @@ function importTest(){
     });
     var test = new Test(testName, duration, oneTime, categoryTestName, questions);
     console.log(test);
-    var json = JSON.stringify(test)
+    var json = JSON.stringify(test);
     console.log(json);
     jQuery.ajax({
         url: "/trainer/addNewTest",
