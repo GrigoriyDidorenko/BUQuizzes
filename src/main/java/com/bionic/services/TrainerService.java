@@ -5,6 +5,7 @@ import com.bionic.DAO.TestDAO;
 import com.bionic.DAO.UserAnswerDAO;
 import com.bionic.DAO.UserDAO;
 import com.bionic.DTO.TestDTO;
+import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.DTO.UserDTO;
 import com.bionic.entities.Permission;
 import com.bionic.entities.Result;
@@ -60,6 +61,15 @@ public class TrainerService {
     public List<OpenQuestionWrapper> getUncheckedTests(long userId){
         try {
             return userAnswerDAO.getUncheckedTests(userId);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<UserAnswerDTO> getUncheckedAnswersForCurrentQuestion(String questionId){
+        try{
+            return userAnswerDAO.getUncheckedAnswersForCurrentQuestion(Util.getLongId(questionId));
         } catch (Exception e){
             e.printStackTrace();
         }

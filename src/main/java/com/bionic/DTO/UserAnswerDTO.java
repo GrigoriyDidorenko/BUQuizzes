@@ -8,9 +8,12 @@ import java.util.List;
  */
 public class UserAnswerDTO {
 
+    private long id;
     private String answerText;
     private long questionId;
     private List<String> answerId;
+    private long resultId;
+    private int counter;
 
 
     public UserAnswerDTO() {
@@ -44,6 +47,30 @@ public class UserAnswerDTO {
 
     public void setAnswerId(List<String> answerId) {
         this.answerId = answerId;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getResultId() {
+        return resultId;
+    }
+
+    public void setResultId(long resultId) {
+        this.resultId = resultId;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 
     @Override

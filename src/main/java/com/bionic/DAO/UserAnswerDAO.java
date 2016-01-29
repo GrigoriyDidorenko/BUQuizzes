@@ -1,5 +1,6 @@
 package com.bionic.DAO;
 
+import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.entities.Test;
 import com.bionic.entities.UserAnswer;
 import com.bionic.wrappers.OpenQuestionWrapper;
@@ -24,5 +25,11 @@ public UserAnswerDAO() {
                 Query query = em.createNamedQuery("getUncheckedTests");
                 query.setParameter("userId", userId);
                 return (List<OpenQuestionWrapper>)query.getResultList();
+        }
+
+        public List<UserAnswerDTO> getUncheckedAnswersForCurrentQuestion(long questionId){
+                Query query = em.createNamedQuery("getUncheckedAnswersForCurrentQuestion");
+                query.setParameter("questionId", questionId);
+                return (List<UserAnswerDTO>)query.getResultList();
         }
 }

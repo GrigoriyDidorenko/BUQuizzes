@@ -8,6 +8,7 @@ import java.util.Map;
 public class OpenQuestionWrapper {
 
     private String testName;
+    private long questionId;
     private String question;
     private int numberOfUncheckedAnswers;
 
@@ -17,6 +18,14 @@ public class OpenQuestionWrapper {
 
     public void setTestName(String testName) {
         this.testName = testName;
+    }
+
+    public long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(long questionId) {
+        this.questionId = questionId;
     }
 
     public String getQuestion() {

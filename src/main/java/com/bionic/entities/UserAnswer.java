@@ -1,5 +1,7 @@
 package com.bionic.entities;
 
+import com.bionic.wrappers.OpenQuestionWrapper;
+
 import javax.persistence.*;
 
 /**
@@ -8,16 +10,20 @@ import javax.persistence.*;
 @Entity
 @NamedNativeQueries({
         @NamedNativeQuery(name = "getUncheckedTests",
-        query = "SELECT t.test_name, q.question, @counter \\:= COUNT(ua.is_checked=0) AS uncheckedAnswers FROM user_answer ua" +
-                " JOIN result r on r.id = ua.result_id" +
-                " JOIN test t on r.test_id = t.id" +
-                " JOIN question q on ua.question_id = q.id" +
-                " WHERE r.is_checked = false AND q.is_open = true AND ua.is_checked = false" +
-                " AND r.test_id IN (SELECT t.id FROM result r" +
-                " JOIN test t on t.id = r.test_id" +
-                " JOIN user u on u.id = r.user_id" +
-                " WHERE r.permission = 2 AND u.id = :userId) and r.permission = 1 and @counter > 0" +
-                " GROUP BY ua.question_id")
+        query = "SELECT t.test_name AS test_name, q.id AS questionId, q.question AS question, COUNT(ua.is_checked=0) AS uncheckedAnswers FROM user_answer ua" +
+                "                 JOIN result r on r.id = ua.result_id " +
+                "                 JOIN test t on r.test_id = t.id" +
+                "                 JOIN question q on ua.question_id = q.id" +
+                "                 WHERE r.is_checked = false AND q.is_open = true AND ua.is_checked = false" +
+                "                 AND r.test_id IN (SELECT t.id FROM result r" +
+                "                 JOIN test t on t.id = r.test_id" +
+                "                 JOIN user u on u.id = r.user_id" +
+                "                 WHERE r.permission = 2 AND u.id = :userId) and r.permission = 1" +
+                "                 GROUP BY ua.question_id" +
+                "                 HAVING COUNT(ua.is_checked=0) > 0"),
+        @NamedNativeQuery(name = "getUncheckedAnswersForCurrentQuestion",
+        query = "SELECT ua.id, ua.result_id, ua.user_answer, COUNT(ua.is_checked=0) FROM user_answer ua" +
+                " WHERE is_checked = false AND question_id = :questionId")
 })
 @Table(catalog = "quizzes")
 public class UserAnswer {

@@ -1,6 +1,7 @@
 package com.bionic.controllers;
 
 import com.bionic.DTO.TestDTO;
+import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.entities.User;
 import com.bionic.services.TestService;
 import com.bionic.services.TrainerService;
@@ -93,6 +94,18 @@ public class TrainerController {
     List<OpenQuestionWrapper> getUncheckedTests() {
         try {
             return trainerService.getUncheckedTests(/*userService.getAuthorizedUser().getId()*/1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/uncheckedTests/{questionId}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    List<UserAnswerDTO> getUncheckedAnswersForCurrentQuestion(@PathVariable("questionId") String questionId) {
+        try {
+            return trainerService.getUncheckedAnswersForCurrentQuestion(questionId);
         }catch (Exception e){
             e.printStackTrace();
         }
