@@ -60,7 +60,8 @@ public class TrainerController {
         try {
             testDTOs = objectMapper.readValue(file.getInputStream(), new TypeReference<Set<TestDTO>>() {
             });
-            return testService.importTest(testDTOs);
+            testService.importTest(testDTOs);
+            return "success";
         } catch (JsonGenerationException e) {
             return new String(e.getMessage());
         } catch (JsonMappingException e) {
@@ -80,7 +81,8 @@ public class TrainerController {
         try {
             testDTO = objectMapper.readValue(JSON, new TypeReference<TestDTO>() {
             });
-            return testService.importTest(testDTO);
+            testService.saveAndImportTest(testDTO);
+            return "success";
         } catch (JsonGenerationException e) {
             return new String(e.getMessage());
         } catch (JsonMappingException e) {
@@ -171,6 +173,27 @@ public class TrainerController {
             e.printStackTrace();
         }
         return 0;
+    }
+
+
+    /*TODO: CHECK THAT*/
+
+    @RequestMapping(value = "/updateTest", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String updateTest(@RequestBody String test) {
+        try {
+            testService.updateTest(objectMapper.readValue(test, TestDTO.class));
+            return "success";
+        } catch (JsonGenerationException e) {
+            return new String(e.getMessage());
+        } catch (JsonMappingException e) {
+            return "Invalid format";
+        } catch (IOException e) {
+            return new String(e.getMessage());
+        } catch (Exception e) {
+            return "Duplicate row in DB";
+        }
     }
 
 }
