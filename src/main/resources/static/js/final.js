@@ -1,7 +1,7 @@
 $(document).ready(function ($) {
 //owlCarousel
     $("#owl-example").owlCarousel({
-        autoPlay: 3000
+        autoPlay: 1800
     });
 //*owlCarousel
 });
