@@ -608,6 +608,7 @@ button:focus {
    border-top: none;
    border-right: none;
    border-left: none;
+  margin-bottom: 0;
 }
 .z-depth-1, nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-floating, .dropdown-content, .collapsible, .side-nav {
    box-shadow: none;
@@ -648,5 +649,40 @@ input[type=number]:focus:not([readonly]) {
 ul {
   border-bottom: none;
 }
-
+.collapsible-header i {
+  width: 2rem;
+  font-size: 15px;
+  line-height: 3rem;
+  display: inline;
+  float: none;
+  text-align: center;
+  margin-right: 1rem;
+}
+.closeicon{
+  color: darkred;
+  margin-right: 5px;
+}
+.yesicon {
+  color: darkgreen;
+  font-size: 13px;
+}
+.add-test{
+  margin: 0 auto;
+  background-color: white;
+  color: darkgreen;
+  border: none;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+  padding: 5px 5px 2.5px 5px;
+  font-size: 12px;
+  text-transform: uppercase;
+  border-radius: 5px;
+}
+#exeption{
+  width: 100%;
+  color: crimson;
+  text-align: center;
+  margin-top: -5px;
+}
 /*# sourceMappingURL=styles.css.map */
