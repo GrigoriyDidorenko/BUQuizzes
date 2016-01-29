@@ -47,8 +47,8 @@ public class TestService {
 
     public ResultDTO processingAnswers(ArrayList<UserAnswerDTO> answerDTOs, long resultId) {
         ResultDTO resultDTO = null;
-        Result result = resultDAO.find(resultId);
         try {
+            Result result = resultDAO.find(resultId);
             ArrayList<UserAnswer> userAnswers = Util.convertUserAnswerDTOsToUserAnswers(answerDTOs, result);
             for (UserAnswer userAnswer : userAnswers) {
                 userAnswerDAO.save(userAnswer);
@@ -62,6 +62,20 @@ public class TestService {
         } finally {
             return resultDTO;
         }
+    }
+
+    public int processingOpenedAnswers(UserAnswerDTO answerDTO) {
+        Result result = resultDAO.find(answerDTO.getResultId());
+        UserAnswer answer = userAnswerDAO.find(answerDTO.getId());
+        answer.setIsChecked(true);
+        result.setMark(result.getMark() + answerDTO.getMark());
+        userAnswerDAO.update(answer);
+        int counter = resultDAO.hasUncheckedAnswers(answerDTO.getResultId()).intValue();
+        if (counter == 0) {
+            result.setIsChecked(true);
+            resultDAO.update(result);
+        }
+        return counter;
     }
 
     public void saveCreatedTest(TestDTO testDTO) {
@@ -118,14 +132,14 @@ public class TestService {
 
     @Transactional
     public String importTest(HashSet<TestDTO> testDTOs) throws Exception {
-            for (TestDTO testDTO : testDTOs) {
-                importTest(testDTO);
-            }
+        for (TestDTO testDTO : testDTOs) {
+            importTest(testDTO);
+        }
         return "successful";
     }
 
     @Transactional
-    public String importTest(TestDTO testDTO) throws Exception{
+    public String importTest(TestDTO testDTO) throws Exception {
         HashSet<Question> questions = new HashSet<>();
         Test test = new Test();
         test.setDuration(testDTO.getDuration());
@@ -192,11 +206,11 @@ public class TestService {
                     "test " + testDAO.find(testId).getTestName() + "\nYour mark: " + resultDTO.getMark() +
                     "\nYou are able to check your result : " + "http://localhost:8080/pages/openTests/LeaderBoard.html?testId="+
                     testDAO.find(testId).getId() + "&page="+getUserPageInLeaderBoard(testId, nickName) +*/
-            "<div style='margin:0 auto; width:60%; height:60px; margin-top:-30px; margin-bottom:10px;'><img src='http://cs630017.vk.me/v630017821/ef59/DY0m5ySG0iQ.jpg' style='padding:0; margin:0; padding-left:20px;'></div>" +
-            "<div style='margin:0 auto;width:60%;height:32px;background-color:#0090b9;margin-bottom:20px;padding-top:15px;'><span style='color:white; font-size: 18px; padding-top:8px; padding-left:20px;'>TEST RESULTS</span></div>" +
-            "<div style='margin:0 auto; width:60%; padding-left:40px;margin-bottom:5px;'><span>You have successfully passed test: "+"</span><span style ='color:#0090b9;'>"+testDAO.find(testId).getTestName()+"</span></div>"+
-            "<div style='margin:0 auto; width:60%; padding-left:40px;margin-bottom:5px;'><span>Your mark: "+"</span><span style ='color:#0090b9;'>"+String.valueOf(resultDTO.getMark())+"%</span></div>"+
-            "<div style='margin:0 auto; width:60%; padding-left:40px;'><span>You are able to check your result: " + "</span><span style ='color:#0090b9; font-decoration:none;'>" + host + "/pages/openTests/LeaderBoard.html?testId=" +testDAO.find(testId).getId() + "&page=" + getUserPageInLeaderBoard(testId, nickName) + "&nickName=" + nickName);
+                    "<div style='margin:0 auto; width:60%; height:60px; margin-top:-30px; margin-bottom:10px;'><img src='http://cs630017.vk.me/v630017821/ef59/DY0m5ySG0iQ.jpg' style='padding:0; margin:0; padding-left:20px;'></div>" +
+                            "<div style='margin:0 auto;width:60%;height:32px;background-color:#0090b9;margin-bottom:20px;padding-top:15px;'><span style='color:white; font-size: 18px; padding-top:8px; padding-left:20px;'>TEST RESULTS</span></div>" +
+                            "<div style='margin:0 auto; width:60%; padding-left:40px;margin-bottom:5px;'><span>You have successfully passed test: " + "</span><span style ='color:#0090b9;'>" + testDAO.find(testId).getTestName() + "</span></div>" +
+                            "<div style='margin:0 auto; width:60%; padding-left:40px;margin-bottom:5px;'><span>Your mark: " + "</span><span style ='color:#0090b9;'>" + String.valueOf(resultDTO.getMark()) + "%</span></div>" +
+                            "<div style='margin:0 auto; width:60%; padding-left:40px;'><span>You are able to check your result: " + "</span><span style ='color:#0090b9; font-decoration:none;'>" + host + "/pages/openTests/LeaderBoard.html?testId=" + testDAO.find(testId).getId() + "&page=" + getUserPageInLeaderBoard(testId, nickName) + "&nickName=" + nickName);
         } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
         } finally {
@@ -210,7 +224,7 @@ public class TestService {
         try {
             int page = (int) (Math.ceil(userPositionInLeaderBoard / GuestService.getPageStackSize()));
             return String.valueOf(page);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

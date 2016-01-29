@@ -35,7 +35,11 @@ import java.util.Date;
                 "FROM result r " +
                 "JOIN user u on r.user_id = u.id " +
                 "JOIN test t on r.test_id = t.id " +
-                "WHERE r.test_id = :testId AND r.user_id = :userId AND r.permission = :permission AND r.begin_time IS NULL")
+                "WHERE r.test_id = :testId AND r.user_id = :userId AND r.permission = :permission AND r.begin_time IS NULL"),
+        @NamedNativeQuery(name = "hasUncheckedAnswers",
+        query = "SELECT COUNT(*) from result r" +
+                "                JOIN user_answer ua ON r.id = ua.result_id" +
+                "                WHERE r.id = :resultId AND ua.is_checked = false")
 })
 @Table(catalog = "quizzes")
 public class Result {
@@ -136,7 +140,7 @@ public class Result {
     }
 
     public Integer getMark() {
-        return mark;
+        return (mark==null) ? 0 : mark;
     }
 
     public void setMark(Integer mark) {

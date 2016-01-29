@@ -1,5 +1,6 @@
 package com.bionic.controllers;
 
+import com.bionic.DTO.ResultDTO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.entities.User;
@@ -10,8 +11,11 @@ import com.bionic.wrappers.OpenQuestionWrapper;
 import com.bionic.wrappers.TestUserWrapper;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationConfig;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,9 +66,9 @@ public class TrainerController {
         } catch (JsonMappingException e) {
             return "Invalid format";
         } catch (IOException e) {
-           return  new String(e.getMessage());
+            return new String(e.getMessage());
         } catch (Exception e) {
-           return "Duplicate row in DB";
+            return "Duplicate row in DB";
         }
     }
 
@@ -81,7 +86,7 @@ public class TrainerController {
         } catch (JsonMappingException e) {
             return "Invalid format";
         } catch (IOException e) {
-            return  new String(e.getMessage());
+            return new String(e.getMessage());
         } catch (Exception e) {
             return "Duplicate row in DB";
         }
@@ -94,7 +99,7 @@ public class TrainerController {
     List<OpenQuestionWrapper> getUncheckedTests() {
         try {
             return trainerService.getUncheckedTests(/*userService.getAuthorizedUser().getId()*/1);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -106,7 +111,7 @@ public class TrainerController {
     List<UserAnswerDTO> getUncheckedAnswersForCurrentQuestion(@PathVariable("questionId") String questionId) {
         try {
             return trainerService.getUncheckedAnswersForCurrentQuestion(questionId);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -116,12 +121,12 @@ public class TrainerController {
     public
     @ResponseBody
     ResponseEntity<TestUserWrapper> getUsersAndUnarchivedTests() {
-       try {
-           TestUserWrapper testUserWrapper = trainerService.getAllUsersNamesAndUnarchivedTestsNames();
-           return new ResponseEntity<>(testUserWrapper, HttpStatus.OK);
-       }catch (Exception e){
-           e.printStackTrace();
-       }
+        try {
+            TestUserWrapper testUserWrapper = trainerService.getAllUsersNamesAndUnarchivedTestsNames();
+            return new ResponseEntity<>(testUserWrapper, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -148,8 +153,24 @@ public class TrainerController {
     public
     @ResponseBody
     ResponseEntity<Set<String>> categoryTestName() {
-        Set<String> categoruTestName = testService.getAllСategoryTestName();
-        return new ResponseEntity<>(categoruTestName, HttpStatus.OK);
+        Set<String> categoryTestName = testService.getAllСategoryTestName();
+        return new ResponseEntity<>(categoryTestName, HttpStatus.OK);
+    }
+
+    /*first value - answerId*/
+     /*Example JSON {"id" : 2 , "resultId" : 1, "mark" : 5}*/
+
+    @RequestMapping(value = "/uncheckedTests/answers", method = RequestMethod.POST, produces = "application/json")
+    public
+    @ResponseBody
+    int setAnswers(@RequestBody String JSONAnswers) {
+        try {
+            UserAnswerDTO userAnswerDTO = objectMapper.readValue(JSONAnswers, UserAnswerDTO.class);
+            return testService.processingOpenedAnswers(userAnswerDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }
