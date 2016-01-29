@@ -3,59 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
-    <link type="text/css" rel="stylesheet" href="../materialize-src/sass/materialize.css" media="screen,projection"/>
-    <link rel="stylesheet" href="../css/styles.css">
-
     <script type="text/javascript" src="../js/__code.jquery.com_jquery-1.11.3.js"></script>
     <script type="text/javascript" src="../materialize-src/js/bin/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script type="text/javascript" src="../js/addTests.js"></script>
-
-    <style>
-        select {
-            display: flex;
-        }
-    </style>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/owl.carousel.min.js"></script>
+    <script src="../js/final.js"></script>
 </head>
 <body>
-testName
-<input id="testName" type="text">
-<br>
-duration
-<input id="duration" type="text">
-//ToDo Катя не видно цього чекбокса
-oneTime
-<input id="oneTime" type="checkbox">
-<br>
-CategoryTestName
-<select id="selectCategoryTestName">
-    <!--dinamic content-->
-<!--<option>112</option>-->
-</select>
-<input id="categoryTestName" type="text">
-<button id="buttonCategoryTestName" type="button">Додати нову категорію</button>
-<br>
+<header>
+    <div class="logo">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <img src="../../img/logo.png">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-title">
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <h1>open tests</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<main style="margin-top: 30px; ">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m5 newTest">
+                <label for="testName">Test name</label>
+                <input id="testName" type="text">
+                <label for="duration">Duration</label>
+                <input id="duration" type="text">
+                        <input id="oneTime" type="checkbox"  class="positions filled-in">
+                        <label for="oneTime">Open test</label>
+                <div style="margin-top: 10px;">
+                <label for="selectCategoryTestName">Select tests category</label>
+                <select id="selectCategoryTestName" class="addTestSelect">
+                    <option value="" disabled selected>Select tests category</option>
+                </select>
+                </div>
+                <label for="categoryTestName" class="CategoryTestName">Or add new tests category</label>
+                <input id="categoryTestName" type="text" class="addTestSelect">
+                </div>
+            <div class="col s12 m7">
+                <label for="accordion">Add questions and answers</label>
+                <div id="accordion">
+                    <ul class="collapsible" id="questions" data-collapsible="accordion">
+                        <!--dinamic content-->
+                        <!--<li id="question-1">-->
+                        <!--<div class="collapsible-header" ><input type="email" value="Нове запитання">-->
+                        <!--</div>-->
+                        <!--<div class="collapsible-body" id="question-1_answer1">-->
+                        <!--<input type="email" id="question-1_a1" value="Відповідь">-->
+                        <!--<input type="email" id="question-1_m1" value="0">-->
+                        <!--<button id="question1_addAnswer1" type="button" onclick="addAnswer('question1')" >ADD</button>-->
+                        <!--</div>-->
+                        <!--</li>-->
+                    </ul>
+                </div>
+                <br>
+                <button id="addQuestion" type="button">Додати запитання</button>
+                <button id="importTest" type="button">Додати тест у базу</button>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m8 author-part">
+                <div class="author valign-wrapper">
+                    <p>ініціатор</p>
+                    <img src="../../img/logo/bionic-hill.png">
+                </div>
+                <div class="partner valign-wrapper">
+                    <p>партнери</p>
 
+                    <div id="owl-example" class="owl-carousel">
+                        <div class="item"><img src="../../img/logo/berkeley.png"></div>
+                        <div class="item"><img src="../../img/logo/cisco.png"></div>
+                        <div class="item"><img src="../../img/logo/bms.png"></div>
+                        <div class="item"><img src="../../img/logo/infopulse.png"></div>
+                        <div class="item"><img src="../../img/logo/jansen.png"></div>
+                        <div class="item"><img src="../../img/logo/kma.png"></div>
+                        <div class="item"><img src="../../img/logo/macpaw.png"></div>
+                        <div class="item"><img src="../../img/logo/nulp.png"></div>
+                        <div class="item"><img src="../../img/logo/paymentwall.png"></div>
+                        <div class="item"><img src="../../img/logo/uaid.png"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4 right-foot">
+                <p>UNIVERSITY@BIONIC-HILL.COM<i class="fa fa-envelope fa-1x"></i></p>
 
-<div id="accordion">
-    <ul class="collapsible" id="questions" data-collapsible="accordion" >
-       <!--dinamic content-->
-        <!--<li id="question-1">-->
-            <!--<div class="collapsible-header" ><input type="email" value="Нове запитання">-->
-            <!--</div>-->
+                <p>+380 (44) 361 34 50<i class="fa fa-phone fa-1x"></i></p>
 
-            <!--<div class="collapsible-body" id="question-1_answer1">-->
-                <!--<input type="email" id="question-1_a1" value="Відповідь">-->
-                <!--<input type="email" id="question-1_m1" value="0">-->
-                <!--<button id="question1_addAnswer1" type="button" onclick="addAnswer('question1')" >ADD</button>-->
-            <!--</div>-->
-        <!--</li>-->
-    </ul>
-</div>
-<br>
-<button id="addQuestion" type="button">Додати запитання</button>
-<button id="importTest" type="button">Додати тест у базу</button>
-
+                <p><i class="fa fa-facebook fa-1x"></i>
+                    <i class="fa fa-linkedin-square fa-1x"></i>
+                    <i class="fa fa-vk fa-1x"></i></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 copyright valign-wrapper">
+                Copyright © 2012-2015, «Bionic University»
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
