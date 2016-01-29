@@ -6,7 +6,7 @@
     <script type="text/javascript" src="../js/__code.jquery.com_jquery-1.11.3.js"></script>
     <script type="text/javascript" src="../materialize-src/js/bin/materialize.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <script type="text/javascript" src="../js/addTests.js"></script>
+    <script type="text/javascript" src="../js/editTest.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <script src="../js/owl.carousel.min.js"></script>
@@ -27,7 +27,7 @@
         <div class="container">
             <div class="row">
                 <div class="col s12">
-                    <h1>add tests</h1>
+                    <h1>edit tests</h1>
                 </div>
             </div>
         </div>
@@ -37,36 +37,41 @@
     <div class="container">
         <div class="row">
             <div class="col s12 m5 newTest">
+                <div id="my"></div>
                 <label for="testName">Test name</label>
                 <input id="testName" type="text" name="testName">
                 <div id="exeption" class="positions"></div>
                 <label for="duration">Duration</label>
                 <input id="duration" type="text">
-                        <input id="oneTime" type="checkbox"  class="positions filled-in">
-                        <label for="oneTime">Open test</label>
+                <input id="oneTime" type="checkbox" class="positions filled-in">
+                <label for="oneTime">Open test</label>
                 <div style="margin-top: 10px;">
-                <label for="selectCategoryTestName">Select tests category</label>
-                <select id="selectCategoryTestName" class="addTestSelect">
-                    <option value="" disabled selected>Select tests category</option>
-                </select>
+                    <label for="selectCategoryTestName">Select tests category</label>
+                    <select id="selectCategoryTestName" class="addTestSelect">
+                    </select>
                 </div>
                 <label for="categoryTestName" class="CategoryTestName">Or add new tests category</label>
                 <input id="categoryTestName" type="text" class="addTestSelect">
-                </div>
+            </div>
             <div class="col s12 m7">
-                <label for="accordion">Add questions and answers</label>
+                <!--<label for="accordion">Add questions and answers</label>-->
+                <!--<div id="accordion">-->
+                    <!--<ul class="collapsible" data-collapsible="accordion">-->
+                        <!--&lt;!&ndash;dinamic content&ndash;&gt;-->
+                        <!--&lt;!&ndash;<li id="question-1">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="collapsible-header"><input type="email" value="Нове запитання">&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="collapsible-body" id="question-1_answer1">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<input type="email" id="question-1_a1" value="Відповідь">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<input type="email" id="question-1_m1" value="0">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button id="question1_addAnswer1" type="button" onclick="addAnswer('question1')" >ADD</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                    <!--</ul>-->
+                <!--</div>-->
                 <div id="accordion">
-                    <ul class="collapsible" id="questions" data-collapsible="accordion">
-                        <!--dinamic content-->
-                        <!--<li id="question-1">-->
-                        <!--<div class="collapsible-header" ><input type="email" value="Нове запитання">-->
-                        <!--</div>-->
-                        <!--<div class="collapsible-body" id="question-1_answer1">-->
-                        <!--<input type="email" id="question-1_a1" value="Відповідь">-->
-                        <!--<input type="email" id="question-1_m1" value="0">-->
-                        <!--<button id="question1_addAnswer1" type="button" onclick="addAnswer('question1')" >ADD</button>-->
-                        <!--</div>-->
-                        <!--</li>-->
+                    <ul class="collapsible" data-collapsible="accordion">
+
                     </ul>
                 </div>
                 <button id="addQuestion" type="button" class="add-test"><i class="fa fa-plus yesicon" style="margin-right: 3px"></i>add question</button>
