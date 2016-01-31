@@ -124,9 +124,12 @@ input[type=email], input[type=password] {
   height: 35px;
   padding: 0 10px 0 10px;
   box-sizing: border-box; }
-input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonly]) {
-  border: 1px solid #2dadf0;
-  border-bottom: 1px solid #2dadf0; }
+input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=text]:focus:not([readonly])+label {
+  color:#2dadf0;
+  display: inline-block;
+  margin-bottom: 15px;
+  margin-top: -20px;
+}
 
 label {
   font-size: 14px;
@@ -526,8 +529,11 @@ td, th {
 .mother{
   color: #ab47bc;
 }
-.cmxform label.error{
+form.cmxform label.error, label.error {
   color: crimson;
+  display: inline-block;
+  margin-bottom: 15px;
+  margin-top: -20px;
 }
 #error-back{
   color: crimson;
@@ -659,17 +665,17 @@ ul {
   margin-right: 1rem;
 }
 .closeicon{
-  color: darkred;
+  color: crimson;
   margin-right: 5px;
 }
 .yesicon {
-  color: darkgreen;
+  color: #4CAF50;
   font-size: 13px;
 }
 .add-test{
   margin: 0 auto;
   background-color: white;
-  color: darkgreen;
+  color: #4CAF50;
   border: none;
   width: auto;
   height: auto;
@@ -684,5 +690,10 @@ ul {
   color: crimson;
   text-align: center;
   margin-top: -5px;
+}
+::-webkit-input-placeholder {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
 }
 /*# sourceMappingURL=styles.css.map */

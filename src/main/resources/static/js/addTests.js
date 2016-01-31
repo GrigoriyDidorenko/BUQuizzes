@@ -4,7 +4,6 @@
 
 $(document).ready(function () {
     addQuestion();
-    //$('#newCategory').hide();
     //ToDo
     //$("#addCategory").click(function () {
     //    $('#newCategory').show();
@@ -13,8 +12,47 @@ $(document).ready(function () {
     $("#addQuestion").click(function () {
         addQuestion();
     });
+
     $('#importTest').click(function () {
-        importTest();
+        $.validator.setDefaults({
+            submitHandler: function() {
+                $(".questioninput").each(function(index) {
+                    var my = $(this).attr('id');
+                    var value=$.trim($(this).val());
+                    //alert(value);
+                    if(value.length>0)
+                    {
+                        //alert('yes');
+                    }
+                    else {
+                        //alert('no');
+                        deleteQuestion('question-'+(index+1)+'');
+                    }
+                });
+                importTest();
+            }
+        });
+        $().ready(function() {
+            var catVal=$.trim($('#categoryTestName').val());
+            if(catVal.length>0){
+                $("#selectCategoryTestName").prop('required',false);
+            }
+            else {
+                $("#selectCategoryTestName").prop('required',true);
+            }
+            // validate the comment form when it is submitted
+            $("#commentForm").validate({
+                messages: {
+                    testName: {
+                        required: "Please enter test name"
+                    },
+                    selectCategory: {
+                        required: "Please select tests category or add new"
+                    }
+                }
+            });
+
+        });
     });
 
     //ToDo ADD category TestName
@@ -53,10 +91,13 @@ function addQuestion() {
    // var countQuestion = listQuestion.getElementsByTagName('li').length-1;
     var childLI = document.createElement('li');
     childLI.id = 'question-' + ++countQuestion;
+    childLI.setAttribute("class", "question");
     var childDiv = document.createElement('div');
     childDiv.setAttribute("class", "collapsible-header");
     var childInp = document.createElement('input');
     childInp.type = "text";
+    childInp.id = 'questioninput-' + +countQuestion;
+    childInp.setAttribute("class", "questioninput");
     childInp.placeholder = "Question";
     var childDelButton = document.createElement('i');
     childDelButton.id = childLI.id + "_d";
@@ -215,5 +256,5 @@ function getRequest(urll, data) {
         error: function (http) {
             return http.responseText;
         }
-    })
+    });
 }
