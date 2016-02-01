@@ -55,7 +55,7 @@ public class TrainerController {
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public
     @ResponseBody
-    String handleFileUpload(@RequestParam("file") MultipartFile file) {
+    String saveNewTest(@RequestParam("file") MultipartFile file) {
         HashSet<TestDTO> testDTOs;
         try {
             testDTOs = objectMapper.readValue(file.getInputStream(), new TypeReference<Set<TestDTO>>() {
@@ -76,7 +76,7 @@ public class TrainerController {
     @RequestMapping(value = "/addNewTest", method = RequestMethod.POST)
     public
     @ResponseBody
-    String handleFileUpload(@RequestBody String JSON) {
+    String saveNewTest(@RequestBody String JSON) {
         TestDTO testDTO;
         try {
             testDTO = objectMapper.readValue(JSON, new TypeReference<TestDTO>() {
@@ -145,10 +145,10 @@ public class TrainerController {
         }
     }
 
-    @RequestMapping(value = "/saveTest", method = RequestMethod.POST)
-    public void saveTest(@RequestBody TestDTO testDTO) {
-        testService.saveCreatedTest(testDTO);
-    }
+//    @RequestMapping(value = "/saveTest", method = RequestMethod.POST)
+//    public void saveTest(@RequestBody TestDTO testDTO) {
+//        testService.saveCreatedTest(testDTO);
+//    }
 
 
     @RequestMapping(value = "/getAllСategoryTestName", method = RequestMethod.GET, produces = "application/json")

@@ -26,7 +26,7 @@ public class Test {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(name = "duration", nullable = false)
+    @Column(name = "duration")
     private int duration;
     @Column(name = "test_name", nullable = false, unique = true)
     private String testName;

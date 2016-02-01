@@ -168,9 +168,12 @@ public class TestService {
                         if (answer.getMark() > 0)
                             positiveMark++;
                     }
-                if (answers.size() != 0 && positiveMark == 0)
+
+                /*TODO : заглушка, исправить + проверка на дьюрейшн*/
+
+/*                if (answers.size() != 0 && positiveMark == 0)
                     throw new UserException("Question should have at least one answer with positive" +
-                            " mark or doesn't have any answers at all");
+                            " mark or doesn't have any answers at all");*/
                 switch (positiveMark) {
                     case 0:
                         question.setIsOpen(true);
