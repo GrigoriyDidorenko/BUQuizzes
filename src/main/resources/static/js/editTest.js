@@ -43,6 +43,8 @@ $(document).ready(function () {
     });
 
     $('#importTest').click(function () {
+        var mi = $('#questioninput-1').val();
+        alert(mi);
         importTest();
     });
 
@@ -90,6 +92,7 @@ function importTest() {
         $.each( questionLi.querySelectorAll("div"), function( indexA, answerDiv ) {
             if (answerDiv.className == 'collapsible-header' || answerDiv.className == 'collapsible-header active' ){
                 questionD = answerDiv.querySelector('input').value;
+                alert(questionD);
             }else {
                 var answer;
                 var answerText;

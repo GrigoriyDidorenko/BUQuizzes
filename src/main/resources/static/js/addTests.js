@@ -24,12 +24,19 @@ $(document).ready(function () {
                         $('#question-' + iM + '_error').show();
                     }
                     $('.mark-question-' + iM + '').each(function (index) {
-                        var mu = $(this).attr('id');
-                        var val = $.trim($('#question-' + iM + '_m' + (index + 1) + '').val());
-                        if (val.length > 0) {
+                        var questV = '#question-' + iM + '_a'+(index+1)+'';
+                        var value=$.trim($(questV).val());
+                        if(value.length > 0){
+                            var mu = $(this).attr('id');
+                            var val = $.trim($('#question-' + iM + '_m' + (index + 1) + '').val());
+                            if (val.length > 0) {
+                            }
+                            else {
+                                $('#question-' + iM + '_error2').show();
+                            }
                         }
-                        else {
-                            $('#question-' + iM + '_error2').show();
+                        else{
+                            alert('no')
                         }
                     });
                 });
