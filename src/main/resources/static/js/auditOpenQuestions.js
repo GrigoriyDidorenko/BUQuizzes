@@ -4,39 +4,73 @@
 $(document).ready(function() {
 
     $("#question").text(urldecode(GetURLParameter('question')));
-
-    //var URL = "/trainer/uncheckedTests/" + GetURLParameter('questionId');
-    //jQuery.ajax({
-    //    type: "GET",
-    //    url: "/trainer/uncheckedTests",
-    //    dataType: "json",
-    //    async: false,
-    //    contentType: "application/json; charset=utf-8",
-    //    success: function (json) {
-    //        $.each( json, function( indexI, test ) {
-    //            var obj = new tests(test[0],test[1],test[2],test[3])
-    //            testss.push(obj);
-    //        });
-    //        creatTestsTable(testss);
-    //    },
-    //    error: function (http) {
-    //        alert(http.responseText);
-    //    }
-    //});
-
-    $( "#next, #preview" ).click(function() {
-        setMark();
-        //TO DO next answer
+    var onPageAnswer;
+    var answers = [];
+    var count;
+    var checkedCount;
+    var URL = "/trainer/uncheckedTests/" + GetURLParameter('questionId');
+    jQuery.ajax({
+        type: "GET",
+        url: URL,
+        dataType: "json",
+        async: false,
+        contentType: "application/json; charset=utf-8",
+        success: function (json) {
+            //console.log(json);
+            //json = [ [ 5, 4, "1", 2 ], [ 7, 6, "2", 2 ]  ]
+            $.each( json, function( indexI, ans ) {
+                var Answer = new answer(ans[0],ans[1],ans[2],ans[3])
+                answers.push(Answer);
+            });
+            count = answers.length;
+            checkedCount = 0;
+            onPageAnswer = 0;
+            $("#count").text(checkedCount +'/'+ count);
+            $("#answer").text(answers[0].answer);
+        },
+        error: function (http) {
+            alert(http.responseText);
+        }
     });
+
+    $( "#next" ).click(function() {
+        if (count > onPageAnswer)  ++onPageAnswer;
+        $("#answer").text(answers[onPageAnswer].answer);
+    });
+
+    $( "#preview" ).click(function() {
+        if (onPageAnswer >= 1)  --onPageAnswer;
+        $("#answer").text(answers[onPageAnswer].answer);
+    });
+
+    $( "#saveMark" ).click(function() {
+        setMark(answers[onPageAnswer]);
+    });
+
     $( "#exit" ).click(function() {
         window.location = "allOpenQuestions.html"
     });
 
 });
 
+function setMark(answer){
+    var mark = Number($("#mark").val());
+    var sent = new  sentJSON(answer.userAnswerId, answer.resultId, mark);
+    var json = JSON.stringify(sent);
+    jQuery.ajax({
+        url: "/trainer/uncheckedTests/answers",
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: json,
+        success: function (json) {
+            $("#count").text(++checkedCount +'/'+ count);
+        },
+        error: function (http) {
+        //TOdo
+        }
+    })
 
-function setMark(){
-    alert( "Handler for .click() called." );
 }
 
 function GetURLParameter(sParam) {
@@ -52,11 +86,17 @@ function GetURLParameter(sParam) {
     }
 }
 
-function tests(testname, questionId, question, numberOfUncheckedAnswers){
-    this.testname = testname;
-    this.questionId = questionId;
-    this.question = question;
+function answer(userAnswerId, resultId, answer, numberOfUncheckedAnswers){
+    this.userAnswerId = userAnswerId;
+    this.resultId = resultId;
+    this.answer = answer;
     this.numberOfUncheckedAnswers = numberOfUncheckedAnswers;
+}
+
+function sentJSON(useranswerId, resultId, mark){
+    this.id = useranswerId;
+    this.resultId = resultId;
+    this.mark = mark;
 }
 
 function urldecode(str) {
