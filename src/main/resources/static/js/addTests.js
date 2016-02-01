@@ -3,13 +3,8 @@
  */
 
 $(document).ready(function () {
-
-
     addQuestion();
     //ToDo
-    //$("#addCategory").click(function () {
-    //    $('#newCategory').show();
-    //});
     //Add new Question
     $("#addQuestion").click(function () {
         addQuestion();
@@ -87,7 +82,7 @@ $(document).ready(function () {
         error: function (http) {
             return http.responseText;
         }
-    })
+    });
 
     $('.collapsible').collapsible({
         accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style

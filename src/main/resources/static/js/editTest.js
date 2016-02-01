@@ -22,13 +22,22 @@ $(document).ready(function () {
             var categoryTestName = "java";
             $('#selectCategoryTestName').append('<option disabled selected id="selected">'+categoryTestName+'</option>');
 
-            $('.collapsible').collapsible({
-                accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-            });
-
-            $.each(myJson.questions, function (index, quest) {
-                $('.collapsible').append('<li><div class="collapsible-header" style="background-color: plum">'+quest.question+'</div>'+
-                    '<div class="collapsible-body">'+quest.question+'</div></li>');
+                $.each(myJson.questions, function (index, quest) {
+                    var mu = ''+(index+1)+'';
+                    var my = 'question-'+(index+1)+'';
+                    $('.collapsible').append('<li id="question-'+(index+1)+'" class="question"><div class="collapsible-header">'+
+                        '<input type="text" id="questioninput-'+(index+1)+'" placeholder="Question" name="questioninput" style="width: 85%" value="'+quest.question+'">'+
+                        '<i id="question-'+(index+1)+'_d" class="fa fa-times closeicon"></i></div></li>');
+                    $.each(quest.answers, function (index, answer) {
+                        $('#'+my+'').append('<div style="display: block" class="collapsible-body" id="question-'+mu+'_answer'+(index+1)+'">'+
+                            '<input id="question-'+mu+'_a'+(index+1)+'" type="text" placeholder="Answer" value="'+answer.answerText+'">'+
+                            '<input id="question-'+mu+'_m'+(index+1)+'" type="number" class="mark-question-'+mu+'" placeholder="mark">'+
+                            '<i class="fa fa-times fa-1x closeicon" id="question-'+mu+'_delAnswer'+(index+1)+'"></i>'+
+                            '<i class="fa fa-plus fa-1x yesicon" id="question-'+mu+'_addAnswer'+(index+1)+'"></i></div>');
+                    });
+                $('.collapsible').collapsible({
+                    accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+                });
             });
         }
     });
