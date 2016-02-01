@@ -35,9 +35,6 @@ $(document).ready(function () {
                                 $('#question-' + iM + '_error2').show();
                             }
                         }
-                        else{
-                            alert('no')
-                        }
                     });
                 });
                 if($('.mama').is(":visible") || $('.papa').is(":visible")){
