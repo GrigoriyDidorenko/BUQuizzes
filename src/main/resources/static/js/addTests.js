@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function () {
+
     addQuestion();
     //ToDo
     //$("#addCategory").click(function () {
@@ -12,24 +13,36 @@ $(document).ready(function () {
     $("#addQuestion").click(function () {
         addQuestion();
     });
-
     $('#importTest').click(function () {
         $.validator.setDefaults({
             submitHandler: function() {
-                $(".questioninput").each(function(index) {
-                    var my = $(this).attr('id');
-                    var value=$.trim($(this).val());
-                    //alert(value);
-                    if(value.length>0)
-                    {
-                        //alert('yes');
+                $(".question").each(function (index) {
+                    var iM = (index + 1);
+                    $('#question-' + iM + '_error').hide();
+                    $('#question-' + iM + '_error2').hide();
+                    var value = $.trim($('#questioninput-' + iM + '').val());
+                    if (value.length > 0) {
+                        $('#question-' + iM + '_error').hide();
                     }
                     else {
-                        //alert('no');
-                        deleteQuestion('question-'+(index+1)+'');
+                        $('#question-' + iM + '_error').show();
                     }
+                    $('.mark-question-' + iM + '').each(function (index) {
+                        var mu = $(this).attr('id');
+                        var val = $.trim($('#question-' + iM + '_m' + (index + 1) + '').val());
+                        if (val.length > 0) {
+                        }
+                        else {
+                            $('#question-' + iM + '_error2').show();
+                        }
+                    });
                 });
-                importTest();
+                if($('.mama').is(":visible") || $('.papa').is(":visible")){
+                }
+                else {
+                    importTest();
+                }
+
             }
         });
         $().ready(function() {
@@ -51,8 +64,8 @@ $(document).ready(function () {
                     }
                 }
             });
-
         });
+
     });
 
     //ToDo ADD category TestName
@@ -99,17 +112,32 @@ function addQuestion() {
     childInp.id = 'questioninput-' + +countQuestion;
     childInp.setAttribute("class", "questioninput");
     childInp.placeholder = "Question";
+    childInp.name = "questioninput";
     var childDelButton = document.createElement('i');
     childDelButton.id = childLI.id + "_d";
     childDelButton.setAttribute("class", "fa fa-times closeicon");
     childDelButton.addEventListener("click", function(){
         deleteQuestion(childLI.id);
     });
+    var childError = document.createElement('i');
+    childError.id = childLI.id + "_error";
+    childError.textContent = "Please enter question";
+    childError.style = 'display: block; font-size: 14px; width: 50%; margin: -25px 0 -23px 0; padding: 0px; text-align: left;font-style:normal;';
+    childError.setAttribute("class", "mama");
+    var childError2 = document.createElement('i');
+    childError2.id = childLI.id + "_error2";
+    childError2.textContent = "Please enter mark";
+    childError2.style = 'display: block; font-size: 14px; width: 50%; margin: -15px 0px -10px 0px; text-align:left; font-style:normal;';
+    childError2.setAttribute("class", "papa");
     childDiv.appendChild(childInp);
     childDiv.appendChild(childDelButton);
+    childDiv.appendChild(childError);
+    childDiv.appendChild(childError2);
     childLI.appendChild(childDiv);
     document.getElementById('questions').appendChild(childLI);
     addAnswer(childLI.id);
+    $('.mama').hide();
+    $('.papa').hide();
 }
 
 function deleteQuestion(idQuestion) {
@@ -132,6 +160,7 @@ function addAnswer(questionId) {
     var childInp2 = document.createElement('input');
     childInp2.id = questionId + "_m" + countAnswer;
     childInp2.type = "number";
+    childInp2.setAttribute("class", "mark-"+questionId+"");
     childInp2.placeholder = "mark";
     //button
     var childDelButton = document.createElement('i');
