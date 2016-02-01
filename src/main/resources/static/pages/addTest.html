@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>LoginPage</title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../materialize-src/sass/materialize.scss" media="screen,projection"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <script src="../js/__code.jquery.com_jquery-1.11.3.js"></script>
@@ -47,8 +49,8 @@
                 <input id="duration" type="text">
                 <input id="oneTime" type="checkbox"  class="positions filled-in" name="oneTime">
                 <label for="oneTime">Open test</label>
-                <div style="margin-top: 10px;">
-                <label for="selectCategoryTestName">Select tests category</label>
+                <div style="margin-top: 10px;" class="input-field">
+                <p id="label">Select tests category</p>
                 <select id="selectCategoryTestName" class="addTestSelect" name="selectCategory">
                     <option value="" disabled selected>Select tests category</option>
                 </select>
@@ -60,20 +62,10 @@
                 <label for="accordion">Add questions and answers</label>
                 <div id="accordion">
                     <ul class="collapsible" id="questions" data-collapsible="accordion">
-                        <!--dinamic content-->
-                        <!--<li id="question-1">-->
-                        <!--<div class="collapsible-header" ><input type="email" value="Нове запитання">-->
-                        <!--</div>-->
-                        <!--<div class="collapsible-body" id="question-1_answer1">-->
-                        <!--<input type="email" id="question-1_a1" value="Відповідь">-->
-                        <!--<input type="email" id="question-1_m1" value="0">-->
-                        <!--<button id="question1_addAnswer1" type="button" onclick="addAnswer('question1')" >ADD</button>-->
-                        <!--</div>-->
-                        <!--</li>-->
                     </ul>
                 </div>
                 <button id="addQuestion" type="button" class="add-test"><i class="fa fa-plus yesicon" style="margin-right: 3px"></i>add question</button>
-                <div><button id="importTest" type="submit" class="save-btn-test" value="Submit" style="margin-top: 10px; float: none;">save test</button></div>
+                <div style="width: 90%; text-align: center;"><button id="importTest" type="submit" class="save-btn-test" value="Submit" style="margin-top: 10px; float: none;">save test</button></div>
             </div>
                 </form>
         </div>

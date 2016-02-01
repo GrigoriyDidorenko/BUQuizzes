@@ -125,7 +125,7 @@ input[type=email], input[type=password] {
   padding: 0 10px 0 10px;
   box-sizing: border-box; }
 input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=text]:focus:not([readonly])+label {
-  color:#2dadf0;
+  color:crimson;
   display: inline-block;
   margin-bottom: 15px;
   margin-top: -20px;
@@ -133,7 +133,7 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
 
 label {
   font-size: 14px;
-  color: #6d6e71;
+  color: #2dadf0;
   margin-right: 10px; }
 
 ::-webkit-input-placeholder {
@@ -361,13 +361,6 @@ input[type=text] {
   padding: 10px 0 10px 0;
   margin-bottom: 15px; }
 
-.dropdown-content li > span {
-  font-size: 14px;
-  color: #6d6e71;
-  display: block;
-  line-height: 22px;
-  padding: 0px 0px; }
-
 label {
   padding: 15px 0 0px 0; }
 
@@ -571,23 +564,6 @@ table, tr, td {
   height: 320px;
   margin-bottom: 15px;
 }
-.addTestSelect{
-  position: relative;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid #9e9e9e;
-  outline: none;
-  height: 30.5px;
-  line-height: 2.5rem;
-  width: 100%;
-  margin: 0 0 15px 0;
-  padding: 0;
-  display: block;
-  color: #2dadf0;
-  font-size: 14px;
-  padding-left: 5px;
-}
 .newTest [type="checkbox"]+label, [type="radio"]+label {
   position: relative;
   padding-left: 25px;
@@ -616,8 +592,11 @@ button:focus {
    border-left: none;
   margin-bottom: 0;
 }
-.z-depth-1, nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-floating, .dropdown-content, .collapsible, .side-nav {
-   box-shadow: none;
+.dropdown-content{
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.collapsible{
+  box-shadow: none;
 }
 .collapsible-header {
   display: block;
@@ -626,7 +605,7 @@ button:focus {
    line-height: 0;
    padding: 0;
    border-bottom: none;
-  margin-top: -7px;
+  margin-top: -15.5px;
 }
 .collapsible-body {
   display: none;
