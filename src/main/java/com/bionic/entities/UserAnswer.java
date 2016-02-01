@@ -24,8 +24,8 @@ import javax.persistence.*;
         @NamedNativeQuery(name = "getUncheckedAnswersForCurrentQuestion",
         query = "SELECT ua.id, ua.result_id, ua.user_answer, a.amount FROM user_answer ua, (" +
                 "SELECT  COUNT(*) as amount FROM user_answer as ua" +
-                "                WHERE ua.is_checked = false AND ua.question_id = 1 AND ua.is_checked = 0) as a" +
-                "                WHERE ua.is_checked = false AND ua.question_id = 1 AND ua.is_checked = 0")
+                "                WHERE ua.is_checked = false AND ua.question_id = :questionId AND ua.is_checked = 0) as a" +
+                "                WHERE ua.is_checked = false AND ua.question_id = :questionId AND ua.is_checked = 0")
 })
 @Table(catalog = "quizzes")
 public class UserAnswer {
