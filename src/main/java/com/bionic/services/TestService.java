@@ -205,33 +205,36 @@ public class TestService {
         testDAO.save(importTest(testDTO));
     }
 
-    public ResultDTO processingAnswersForOneTimeTest(ArrayList<UserAnswerDTO> answerDTOs, long testId, String nickName, String email, String name, String host) {
+    public ResultDTO processingAnswersForOneTimeTest(ArrayList<UserAnswerDTO> answerDTOs, final long testId, final String nickName, final String email, final String name, final String host) {
         OneTimeTest oneTimeTest = new OneTimeTest(name, nickName, email, testId);
         Test test = testDAO.find(testId);
-        ResultDTO resultDTO = new ResultDTO();
+        final ResultDTO resultDTO = new ResultDTO();
         try {
             ArrayList<UserAnswer> userAnswers = Util.convertUserAnswerDTOsToTempUserAnswers(answerDTOs);
             oneTimeTest.setMark(calcResultForOneTimeTest(userAnswers, test));
             resultDTO.setMark(oneTimeTest.getMark());
             oneTimeTestDAO.save(oneTimeTest);
             resultDTO.setCheckStatus(name + ",відправився результат на поштову скриньку:" + email);
-            mailManager.send(email, "Passing test " + testDAO.find(testId).getTestName(), /*"You have successfully passed " +
-                    "test " + testDAO.find(testId).getTestName() + "\nYour mark: " + resultDTO.getMark() +
-                    "\nYou are able to check your result : " + "http://localhost:8080/pages/openTests/LeaderBoard.html?testId="+
-                    testDAO.find(testId).getId() + "&page="+getUserPageInLeaderBoard(testId, nickName) +*/
-                    "<div style='margin:0 auto; width:60%; height:60px; margin-top:-30px; margin-bottom:10px;'><img src='http://cs630017.vk.me/v630017821/ef59/DY0m5ySG0iQ.jpg' style='padding:0; margin:0; padding-left:20px;'></div>" +
-                            "<div style='margin:0 auto;width:60%;height:32px;background-color:#0090b9;margin-bottom:20px;padding-top:15px;'><span style='color:white; font-size: 18px; padding-top:8px; padding-left:20px;'>TEST RESULTS</span></div>" +
-                            "<div style='margin:0 auto; width:60%; padding-left:40px;margin-bottom:5px;'><span>You have successfully passed test: " + "</span><span style ='color:#0090b9;'>" + testDAO.find(testId).getTestName() + "</span></div>" +
-                            "<div style='margin:0 auto; width:60%; padding-left:40px;margin-bottom:5px;'><span>Your mark: " + "</span><span style ='color:#0090b9;'>" + String.valueOf(resultDTO.getMark()) + "%</span></div>" +
-                            "<div style='margin:0 auto; width:60%; padding-left:40px;'><span>You are able to check your result: " + "</span><span style ='color:#0090b9; font-decoration:none;'>" + host + "/pages/openTests/LeaderBoard.html?testId=" + testDAO.find(testId).getId() + "&page=" + getUserPageInLeaderBoard(testId, nickName) + "&nickName=" + nickName);
-        } catch (Exception e) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    mailManager.send(email, "Passing test " + testDAO.find(testId).getTestName(),
+                            "<div style='margin:0 auto; width:60%; height:60px; margin-top:-30px; margin-bottom:10px;'><img src='http://cs630017.vk.me/v630017821/ef59/DY0m5ySG0iQ.jpg' style='padding:0; margin:0; padding-left:20px;'></div>" +
+                                    "<div style='margin:0 auto;width:60%;height:32px;background-color:#0090b9;margin-bottom:20px;padding-top:15px;'><span style='color:white; font-size: 18px; padding-top:8px; padding-left:20px;'>TEST RESULTS</span></div>" +
+                                    "<div style='margin:0 auto; width:60%; padding-left:40px;margin-bottom:5px;'><span>You have successfully passed test: " + "</span><span style ='color:#0090b9;'>" + testDAO.find(testId).getTestName() + "</span></div>" +
+                                    "<div style='margin:0 auto; width:60%; padding-left:40px;margin-bottom:5px;'><span>Your mark: " + "</span><span style ='color:#0090b9;'>" + String.valueOf(resultDTO.getMark()) + "%</span></div>" +
+                                    "<div style='margin:0 auto; width:60%; padding-left:40px;'><span>You are able to check your result: " + "</span><span style ='color:#0090b9; font-decoration:none;'>" + host + "/pages/openTests/LeaderBoard.html?testId=" + testDAO.find(testId).getId() + "&page=" + getUserPageInLeaderBoard(testId, nickName) + "&nickName=" + nickName);
+
+                }
+            }).start();
+            } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
         } finally {
             return resultDTO;
         }
     }
 
-    public String getUserPageInLeaderBoard(long testId, String userName) throws ServerException {
+    public String getUserPageInLeaderBoard(long testId, String userName) {
         /*TODO: BETA*/
         double userPositionInLeaderBoard = oneTimeTestDAO.countPositionInLeaderBoard(testId, userName);
         try {
