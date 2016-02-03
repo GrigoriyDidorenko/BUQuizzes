@@ -47,6 +47,7 @@ $(document).ready(function () {
         });
         $().ready(function() {
             var catVal=$.trim($('#categoryTestName').val());
+            var mamula=$.trim($('#selectCategoryTestName').val());
             if(catVal.length>0){
                 $("#selectCategoryTestName").prop('required',false);
             }
@@ -77,11 +78,9 @@ $(document).ready(function () {
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             var rols = json;
-            $('select').material_select(
             $.each(rols, function (index, rolsone) {
                 $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
-            })
-            );
+            });
         },
         error: function (http) {
             return http.responseText;

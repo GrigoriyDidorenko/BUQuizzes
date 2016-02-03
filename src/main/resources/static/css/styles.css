@@ -700,4 +700,7 @@ ul {
 .collapsible-body{
 margin: 15px;
 }
+select{
+  display: block;
+}
 /*# sourceMappingURL=styles.css.map */

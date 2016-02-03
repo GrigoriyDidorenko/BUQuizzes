@@ -11,7 +11,7 @@ $(document).ready(function () {
     //get Test
     jQuery.ajax({
         type: "GET",
-        url:"http://localhost:8080/guest/tests/1?email=atia29@mail.ru&nickName=katya&name=kate",
+        url:"http://localhost:8080/guest/tests/34?email=atia29@mail.ru&nickName=katya&name=kate",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (json) {
@@ -77,7 +77,6 @@ $(document).ready(function () {
     });
 
 
-    //ToDo ADD category TestName
     jQuery.ajax({
         type: "GET",
         url: "/trainer/getAllСategoryTestName",
@@ -86,16 +85,14 @@ $(document).ready(function () {
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             var rols = json;
-            $('select').material_select(
                 $.each(rols, function (index, rolsone) {
                     $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
-                })
-            );
+                });
         },
         error: function (http) {
             return http.responseText;
         }
-    })
+    });
 
 
 });

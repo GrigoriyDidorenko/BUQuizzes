@@ -45,9 +45,10 @@
                 <input id="duration" type="text">
                 <input id="oneTime" type="checkbox" class="positions filled-in">
                 <label for="oneTime">Open test</label>
-                <div style="margin-top: 10px;" class="input-field">
-                    <label for="selectCategoryTestName">Select tests category</label>
-                    <select id="selectCategoryTestName" class="addTestSelect" style="display: block">
+                <div style="margin-top: 10px;">
+                    <p id="label">Select tests category</p>
+                    <select id="selectCategoryTestName" class="addTestSelect" name="selectCategory">
+                        <option value="" disabled selected>Select tests category</option>
                     </select>
                 </div>
                 <label for="categoryTestName" class="CategoryTestName">Or add new tests category</label>
