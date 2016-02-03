@@ -55,12 +55,13 @@ public class TrainerController {
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public
     @ResponseBody
-    String handleFileUpload(@RequestParam("file") MultipartFile file) {
+    String saveNewTest(@RequestParam("file") MultipartFile file) {
         HashSet<TestDTO> testDTOs;
         try {
             testDTOs = objectMapper.readValue(file.getInputStream(), new TypeReference<Set<TestDTO>>() {
             });
-            return testService.importTest(testDTOs);
+            testService.importTest(testDTOs);
+            return "success";
         } catch (JsonGenerationException e) {
             return new String(e.getMessage());
         } catch (JsonMappingException e) {
@@ -75,12 +76,13 @@ public class TrainerController {
     @RequestMapping(value = "/addNewTest", method = RequestMethod.POST)
     public
     @ResponseBody
-    String handleFileUpload(@RequestBody String JSON) {
+    String saveNewTest(@RequestBody String JSON) {
         TestDTO testDTO;
         try {
             testDTO = objectMapper.readValue(JSON, new TypeReference<TestDTO>() {
             });
-            return testService.importTest(testDTO);
+            testService.saveAndImportTest(testDTO);
+            return "success";
         } catch (JsonGenerationException e) {
             return new String(e.getMessage());
         } catch (JsonMappingException e) {
@@ -143,10 +145,10 @@ public class TrainerController {
         }
     }
 
-    @RequestMapping(value = "/saveTest", method = RequestMethod.POST)
-    public void saveTest(@RequestBody TestDTO testDTO) {
-        testService.saveCreatedTest(testDTO);
-    }
+//    @RequestMapping(value = "/saveTest", method = RequestMethod.POST)
+//    public void saveTest(@RequestBody TestDTO testDTO) {
+//        testService.saveCreatedTest(testDTO);
+//    }
 
 
     @RequestMapping(value = "/getAllСategoryTestName", method = RequestMethod.GET, produces = "application/json")
@@ -171,6 +173,27 @@ public class TrainerController {
             e.printStackTrace();
         }
         return 0;
+    }
+
+
+    /*TODO: CHECK THAT*/
+
+    @RequestMapping(value = "/updateTest", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String updateTest(@RequestBody String test) {
+        try {
+            testService.updateTest(objectMapper.readValue(test, TestDTO.class));
+            return "success";
+        } catch (JsonGenerationException e) {
+            return new String(e.getMessage());
+        } catch (JsonMappingException e) {
+            return "Invalid format";
+        } catch (IOException e) {
+            return new String(e.getMessage());
+        } catch (Exception e) {
+            return "Duplicate row in DB";
+        }
     }
 
 }

@@ -124,13 +124,16 @@ input[type=email], input[type=password] {
   height: 35px;
   padding: 0 10px 0 10px;
   box-sizing: border-box; }
-input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonly]) {
-  border: 1px solid #2dadf0;
-  border-bottom: 1px solid #2dadf0; }
+input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=text]:focus:not([readonly])+label {
+  color:crimson;
+  display: inline-block;
+  margin-bottom: 15px;
+  margin-top: -20px;
+}
 
 label {
   font-size: 14px;
-  color: #6d6e71;
+  color: #2dadf0;
   margin-right: 10px; }
 
 ::-webkit-input-placeholder {
@@ -358,13 +361,6 @@ input[type=text] {
   padding: 10px 0 10px 0;
   margin-bottom: 15px; }
 
-.dropdown-content li > span {
-  font-size: 14px;
-  color: #6d6e71;
-  display: block;
-  line-height: 22px;
-  padding: 0px 0px; }
-
 label {
   padding: 15px 0 0px 0; }
 
@@ -526,8 +522,11 @@ td, th {
 .mother{
   color: #ab47bc;
 }
-.cmxform label.error{
+form.cmxform label.error, label.error {
   color: crimson;
+  display: inline-block;
+  margin-bottom: 15px;
+  margin-top: -20px;
 }
 #error-back{
   color: crimson;
@@ -565,23 +564,6 @@ table, tr, td {
   height: 320px;
   margin-bottom: 15px;
 }
-.addTestSelect{
-  position: relative;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid #9e9e9e;
-  outline: none;
-  height: 30.5px;
-  line-height: 2.5rem;
-  width: 100%;
-  margin: 0 0 15px 0;
-  padding: 0;
-  display: block;
-  color: #2dadf0;
-  font-size: 14px;
-  padding-left: 5px;
-}
 .newTest [type="checkbox"]+label, [type="radio"]+label {
   position: relative;
   padding-left: 25px;
@@ -610,8 +592,11 @@ button:focus {
    border-left: none;
   margin-bottom: 0;
 }
-.z-depth-1, nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-floating, .dropdown-content, .collapsible, .side-nav {
-   box-shadow: none;
+.dropdown-content{
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.collapsible{
+  box-shadow: none;
 }
 .collapsible-header {
   display: block;
@@ -620,7 +605,7 @@ button:focus {
    line-height: 0;
    padding: 0;
    border-bottom: none;
-  margin-top: -7px;
+  margin-top: -15.5px;
 }
 .collapsible-body {
   display: none;
@@ -659,22 +644,22 @@ ul {
   margin-right: 1rem;
 }
 .closeicon{
-  color: darkred;
+  color: crimson;
   margin-right: 5px;
 }
 .yesicon {
-  color: darkgreen;
+  color: #4CAF50;
   font-size: 13px;
 }
 .add-test{
   margin: 0 auto;
   background-color: white;
-  color: darkgreen;
+  color: #4CAF50;
   border: none;
   width: auto;
   height: auto;
   overflow: hidden;
-  padding: 5px 5px 2.5px 5px;
+  padding: 0;
   font-size: 12px;
   text-transform: uppercase;
   border-radius: 5px;
@@ -684,5 +669,35 @@ ul {
   color: crimson;
   text-align: center;
   margin-top: -5px;
+}
+::-webkit-input-placeholder {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+.mama, .papa{
+  color: crimson;
+}
+
+.collapsible-header {
+  display: block;
+  cursor: pointer;
+  min-height: 3rem;
+   line-height: normal;
+   padding: 0;
+   border-bottom: none;
+   margin-top: 0;
+}
+.collapsible-body {
+  display: none;
+  border-bottom: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+   margin-left: 0;
+   margin-top: 0;
+}
+.collapsible-body{
+margin: 15px;
 }
 /*# sourceMappingURL=styles.css.map */

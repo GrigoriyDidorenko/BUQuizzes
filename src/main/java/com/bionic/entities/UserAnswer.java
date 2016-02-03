@@ -22,8 +22,10 @@ import javax.persistence.*;
                 "                 GROUP BY ua.question_id" +
                 "                 HAVING COUNT(ua.is_checked=0) > 0"),
         @NamedNativeQuery(name = "getUncheckedAnswersForCurrentQuestion",
-        query = "SELECT ua.id, ua.result_id, ua.user_answer, COUNT(ua.is_checked=0) FROM user_answer ua" +
-                " WHERE is_checked = false AND question_id = :questionId")
+        query = "SELECT ua.id, ua.result_id, ua.user_answer, a.amount FROM user_answer ua, (" +
+                "SELECT  COUNT(*) as amount FROM user_answer as ua" +
+                "                WHERE ua.is_checked = false AND ua.question_id = :questionId AND ua.is_checked = 0) as a" +
+                "                WHERE ua.is_checked = false AND ua.question_id = :questionId AND ua.is_checked = 0")
 })
 @Table(catalog = "quizzes")
 public class UserAnswer {

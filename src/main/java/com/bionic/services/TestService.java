@@ -4,6 +4,7 @@ import com.bionic.DAO.*;
 import com.bionic.DTO.*;
 import com.bionic.entities.*;
 import com.bionic.exceptions.ServerException;
+import com.bionic.exceptions.UserException;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -131,17 +132,17 @@ public class TestService {
     }
 
     @Transactional
-    public String importTest(HashSet<TestDTO> testDTOs) throws Exception {
+    public void importTest(HashSet<TestDTO> testDTOs) throws UserException {
         for (TestDTO testDTO : testDTOs) {
-            importTest(testDTO);
+           saveAndImportTest(testDTO);
         }
-        return "successful";
     }
 
     @Transactional
-    public String importTest(TestDTO testDTO) throws Exception {
+    public Test importTest(TestDTO testDTO) throws UserException {
         HashSet<Question> questions = new HashSet<>();
         Test test = new Test();
+            test.setId(testDTO.getId());
         test.setDuration(testDTO.getDuration());
         test.setTestName(testDTO.getTestName());
         test.setOneTime(testDTO.isOneTime());
@@ -167,9 +168,12 @@ public class TestService {
                         if (answer.getMark() > 0)
                             positiveMark++;
                     }
-                if (answers.size() != 0 && positiveMark == 0)
-                    throw new Exception("Question should have at least one answer with positive" +
-                            " mark or doesn't have any answers at all");
+
+                /*TODO : заглушка, исправить + проверка на дьюрейшн*/
+
+/*                if (answers.size() != 0 && positiveMark == 0)
+                    throw new UserException("Question should have at least one answer with positive" +
+                            " mark or doesn't have any answers at all");*/
                 switch (positiveMark) {
                     case 0:
                         question.setIsOpen(true);
@@ -188,8 +192,17 @@ public class TestService {
                 questions.add(question);
             }
         test.setQuestions(questions);
-        testDAO.save(test);
-        return "successful";
+        return test;
+    }
+
+    /*TODO: CHECK IT*/
+
+    public void updateTest(TestDTO testDTO) throws UserException {
+        testDAO.update(importTest(testDTO));
+    }
+
+    public void saveAndImportTest(TestDTO testDTO) throws UserException {
+        testDAO.save(importTest(testDTO));
     }
 
     public ResultDTO processingAnswersForOneTimeTest(ArrayList<UserAnswerDTO> answerDTOs, long testId, String nickName, String email, String name, String host) {

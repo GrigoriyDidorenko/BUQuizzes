@@ -3,32 +3,69 @@
  */
 
 $(document).ready(function () {
-    // validate the comment form when it is submitted
-
     addQuestion();
-    //$('#newCategory').hide();
     //ToDo
-    //$("#addCategory").click(function () {
-    //    $('#newCategory').show();
-    //});
     //Add new Question
     $("#addQuestion").click(function () {
         addQuestion();
     });
     $('#importTest').click(function () {
-        $("#myForm").validate({
-            submitHandler: function () {},
-            rules: {
-                duration: "required"
-            },
-            messages: {
-                duration: {
-                    required: "Please enter your name",
-                    minlength: "Your name must consist of at least 2 characters"
+        $.validator.setDefaults({
+            submitHandler: function() {
+                $(".question").each(function (index) {
+                    var iM = (index + 1);
+                    $('#question-' + iM + '_error').hide();
+                    $('#question-' + iM + '_error2').hide();
+                    var value = $.trim($('#questioninput-' + iM + '').val());
+                    if (value.length > 0) {
+                        $('#question-' + iM + '_error').hide();
+                    }
+                    else {
+                        $('#question-' + iM + '_error').show();
+                    }
+                    $('.mark-question-' + iM + '').each(function (index) {
+                        var questV = '#question-' + iM + '_a'+(index+1)+'';
+                        var value=$.trim($(questV).val());
+                        if(value.length > 0){
+                            var mu = $(this).attr('id');
+                            var val = $.trim($('#question-' + iM + '_m' + (index + 1) + '').val());
+                            if (val.length > 0) {
+                            }
+                            else {
+                                $('#question-' + iM + '_error2').show();
+                            }
+                        }
+                    });
+                });
+                if($('.mama').is(":visible") || $('.papa').is(":visible")){
                 }
+                else {
+                    importTest();
+                }
+
             }
         });
-        importTest();
+        $().ready(function() {
+            var catVal=$.trim($('#categoryTestName').val());
+            if(catVal.length>0){
+                $("#selectCategoryTestName").prop('required',false);
+            }
+            else {
+                $("#selectCategoryTestName").prop('required',true);
+            }
+            // validate the comment form when it is submitted
+            $("#commentForm").validate({
+                messages: {
+                    testName: {
+                        required: "Please enter test name"
+                    },
+                    selectCategory: {
+                        required: "Please select tests category or add new"
+                    }
+                }
+            });
+        });
+
     });
 
     //ToDo ADD category TestName
@@ -40,14 +77,16 @@ $(document).ready(function () {
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             var rols = json;
+            $('select').material_select(
             $.each(rols, function (index, rolsone) {
                 $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
-            });
+            })
+            );
         },
         error: function (http) {
             return http.responseText;
         }
-    })
+    });
 
     $('.collapsible').collapsible({
         accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
@@ -67,22 +106,41 @@ function addQuestion() {
    // var countQuestion = listQuestion.getElementsByTagName('li').length-1;
     var childLI = document.createElement('li');
     childLI.id = 'question-' + ++countQuestion;
+    childLI.setAttribute("class", "question");
     var childDiv = document.createElement('div');
     childDiv.setAttribute("class", "collapsible-header");
     var childInp = document.createElement('input');
     childInp.type = "text";
+    childInp.id = 'questioninput-' + +countQuestion;
+    childInp.setAttribute("class", "questioninput");
     childInp.placeholder = "Question";
+    childInp.name = "questioninput";
+    childInp.style = 'width:85%';
     var childDelButton = document.createElement('i');
     childDelButton.id = childLI.id + "_d";
     childDelButton.setAttribute("class", "fa fa-times closeicon");
     childDelButton.addEventListener("click", function(){
         deleteQuestion(childLI.id);
     });
+    var childError = document.createElement('i');
+    childError.id = childLI.id + "_error";
+    childError.textContent = "Please enter question";
+    childError.style = 'display: block; font-size: 14px; width: 50%; margin: -25px 0 -23px 0; padding: 0px; text-align: left;font-style:normal;';
+    childError.setAttribute("class", "mama");
+    var childError2 = document.createElement('i');
+    childError2.id = childLI.id + "_error2";
+    childError2.textContent = "Please enter mark";
+    childError2.style = 'display: block; font-size: 14px; width: 50%; margin: -15px 0px -10px 0px; text-align:left; font-style:normal;';
+    childError2.setAttribute("class", "papa");
     childDiv.appendChild(childInp);
     childDiv.appendChild(childDelButton);
+    childDiv.appendChild(childError);
+    childDiv.appendChild(childError2);
     childLI.appendChild(childDiv);
     document.getElementById('questions').appendChild(childLI);
     addAnswer(childLI.id);
+    $('.mama').hide();
+    $('.papa').hide();
 }
 
 function deleteQuestion(idQuestion) {
@@ -105,6 +163,7 @@ function addAnswer(questionId) {
     var childInp2 = document.createElement('input');
     childInp2.id = questionId + "_m" + countAnswer;
     childInp2.type = "number";
+    childInp2.setAttribute("class", "mark-"+questionId+"");
     childInp2.placeholder = "mark";
     //button
     var childDelButton = document.createElement('i');
@@ -229,5 +288,5 @@ function getRequest(urll, data) {
         error: function (http) {
             return http.responseText;
         }
-    })
+    });
 }
