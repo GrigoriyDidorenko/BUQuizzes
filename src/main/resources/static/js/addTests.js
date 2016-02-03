@@ -3,6 +3,8 @@
  */
 
 $(document).ready(function () {
+    // validate the comment form when it is submitted
+
     addQuestion();
     //$('#newCategory').hide();
     //ToDo
@@ -14,6 +16,18 @@ $(document).ready(function () {
         addQuestion();
     });
     $('#importTest').click(function () {
+        $("#myForm").validate({
+            submitHandler: function () {},
+            rules: {
+                duration: "required"
+            },
+            messages: {
+                duration: {
+                    required: "Please enter your name",
+                    minlength: "Your name must consist of at least 2 characters"
+                }
+            }
+        });
         importTest();
     });
 
