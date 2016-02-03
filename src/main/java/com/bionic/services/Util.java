@@ -101,8 +101,8 @@ public final class Util {
     public static ArrayList<UserAnswer> convertUserAnswerDTOsToUserAnswers(ArrayList<UserAnswerDTO> userAnswerDTOs, Result result) throws NumberFormatException {
         ArrayList<UserAnswer> userAnswers = new ArrayList<>();
         for (UserAnswerDTO userAnswerDTO : userAnswerDTOs) {
-            if (!userAnswerDTO.getAnswersId().isEmpty()) {
-                for (String answerId : userAnswerDTO.getAnswersId()) {
+            if (!userAnswerDTO.getAnswerId().isEmpty()) {
+                for (String answerId : userAnswerDTO.getAnswerId()) {
                     userAnswers.add(convertUserAnswerDTOToUserAnswer(userAnswerDTO, result, Long.parseLong(answerId)));
                 }
             } else {
@@ -125,8 +125,8 @@ public final class Util {
     public static ArrayList<UserAnswer> convertUserAnswerDTOsToTempUserAnswers(ArrayList<UserAnswerDTO> guestAnswerDTOs) {
         ArrayList<UserAnswer> userAnswers = new ArrayList<>();
         for (UserAnswerDTO userAnswerDTO : guestAnswerDTOs) {
-            if (!userAnswerDTO.getAnswersId().isEmpty()) {
-                for (String answerId : userAnswerDTO.getAnswersId()) {
+            if (!userAnswerDTO.getAnswerId().isEmpty()) {
+                for (String answerId : userAnswerDTO.getAnswerId()) {
                     UserAnswer userAnswer = new UserAnswer();
                     userAnswer.setAnswerId(Long.valueOf(answerId));
                     userAnswer.setQuestionId(userAnswerDTO.getQuestionId());
