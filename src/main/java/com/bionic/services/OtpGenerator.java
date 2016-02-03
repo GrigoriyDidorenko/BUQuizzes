@@ -12,7 +12,6 @@ import java.util.Random;
  * Generates random OTP tokens using the letters A-Z and digits 0-9.
  */
 @Service
-@Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class OtpGenerator {
     private static final char[] CHARS = {'A', 'a', 'B', 'b', 'C', 'c', 'D', 'd', 'E', 'e', 'F',
             'f', 'G', 'g', 'H', 'h', 'I', 'i', 'J', 'j', 'K', 'k', 'L', 'l',
