@@ -28,60 +28,44 @@ $(document).ready(function () {
             var categoryTestName = "java";
             $('#selectCategoryTestName').append('<option selected id="selected">'+categoryTestName+'</option>');
 
-                $.each(myJson.questions, function (index, quest) {
-                    var mu = ''+(index+1)+'';
-                    var my = 'question-'+(index+1)+'';
-                    $('.collapsible').append('<li id="question-'+(index+1)+'" class="question" name="'+(index+1)+'"><div class="collapsible-header">'+
-                        '<input type="text" id="questioninput-'+(index+1)+'" placeholder="Question" name="questioninput" style="width: 85%" value="'+quest.question+'">'+
-                        '<i id="question-'+(index+1)+'_d" class="fa fa-times closeicon" style="cursor: pointer"></i>'+
-                        '<button id="addAnswer" name="'+(index+1)+'"><i class="fa fa-plus fa-1x yesicon" style="cursor: pointer"></i>add answer</button></div></li>');
-                    $( '#question-'+(index+1)+'_d' ).click(function() {
-                            $('#question-'+(index+1)+'').remove();
+            $.each(myJson.questions, function (index, quest) {
+                var mu = ''+(index+1)+'';
+                var my = 'question-'+(index+1)+'';
+                $('.collapsible').append('<li id="question-'+(index+1)+'" class="question" name="'+(index+1)+'"><div class="collapsible-header">'+
+                    '<input type="text" id="questioninput-'+(index+1)+'" placeholder="Question" name="questioninput" style="width: 85%" value="'+quest.question+'">'+
+                    '<i id="question-'+(index+1)+'_d" class="fa fa-times closeicon" style="cursor: pointer"></i></div></li>');
+                $( '#question-'+(index+1)+'_d' ).click(function() {
+                    $('#question-'+(index+1)+'').remove();
+                });
+                $.each(quest.answers, function (index, answer) {
+                    $('#'+my+'').append('<div style="display: block; margin: 1px 0 -10px 10px;" class="collapsible-body" id="question-'+mu+'_answer'+(index+1)+'">'+
+                        '<input id="question-'+mu+'_a'+(index+1)+'" type="text" class="mur-'+mu+'" name="'+(index+1)+'" placeholder="Answer" value="'+answer.answerText+'">'+
+                        '<input id="question-'+mu+'_m'+(index+1)+'" type="number" class="mark-question-'+mu+'" placeholder="mark" value="'+answer.mark+'">'+
+                        '<i class="fa fa-times fa-1x closeicon" name="'+(index+1)+'" id="question-'+mu+'_delAnswer'+(index+1)+'" style="cursor: pointer"></i>'+
+                        '<i class="fa fa-plus fa-1x yesicon '+mu+'" name="'+mu+'" id="question-'+mu+'_addAnswer'+(index+1)+'" style="cursor: pointer"></i></div>');
+                    $('#question-'+mu+'_delAnswer'+(index+1)+'').click(function() {
+                        $('#question-'+mu+'_answer'+(index+1)+'').remove();
                     });
-                    $.each(quest.answers, function (index, answer) {
-                        $('#'+my+'').append('<div style="display: block" class="collapsible-body" id="question-'+mu+'_answer'+(index+1)+'">'+
-                            '<input id="question-'+mu+'_a'+(index+1)+'" type="text" class="mur-'+mu+'" name="'+(index+1)+'" placeholder="Answer" value="'+answer.answerText+'">'+
-                            '<input id="question-'+mu+'_m'+(index+1)+'" type="number" class="mark-question-'+mu+'" placeholder="mark" value="'+answer.mark+'">'+
-                            '<i class="fa fa-times fa-1x closeicon" name="'+(index+1)+'" id="question-'+mu+'_delAnswer'+(index+1)+'" style="cursor: pointer"></i>'+
-                            '<i class="fa fa-plus fa-1x yesicon '+mu+'" name="'+mu+'" id="question-'+mu+'_addAnswer'+(index+1)+'" style="cursor: pointer"></i></div>');
-                        $('#question-'+mu+'_delAnswer'+(index+1)+'').click(function() {
-                            $('#question-'+mu+'_answer'+(index+1)+'').remove();
-                        });
-                    });
+                });
                 $('.collapsible').collapsible({
                     accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
                 });
             });
             $(".yesicon").click(function () {
                 var myau = $(this).attr('name');
-                alert('pur='+myau+'');
-                katya(myau);
-            });
-            function katya (myau) {
-                alert('name='+myau+'');
                 var kio = $('.mur-'+myau+':last').attr('id');
-                alert(kio);
                 var kiss = $('.mur-'+myau+':last').attr('name');
-                alert(kiss);
                 var kissAdd = (+kiss+1);
-                alert(kissAdd);
-                alert('#question-'+myau+'_answer'+kiss+'');
-                $('#question-'+myau+'_answer'+kiss+'').after($('<div style="display: block" class="collapsible-body" id="question-'+myau+'_answer'+kissAdd+'">'+
+                $('#question-'+myau+'_answer'+kiss+'').after($('<div style="display: block; margin: 1px 0 -10px 10px;" class="collapsible-body" id="question-'+myau+'_answer'+kissAdd+'">'+
                     '<input id="question-'+myau+'_a'+kissAdd+'" class="mur-'+myau+'" name="'+kissAdd+'" type="text" placeholder="Answer">'+
                     '<input id="question-'+myau+'_m'+kissAdd+'" type="number" class="mark-question-'+myau+'" placeholder="mark">'+
-                    '<i class="fa fa-times fa-1x closeicon" name="'+kissAdd+'" id="question-'+myau+'_delAnswer'+kissAdd+'" style="cursor: pointer"></i>'+
-                    '<i class="fa fa-plus fa-1x yesicon '+myau+'" name="'+myau+'" id="question-'+myau+'_addAnswer'+kissAdd+'" style="cursor: pointer"></i></div>'));
+                    '<i class="fa fa-times fa-1x closeicon" name="'+kissAdd+'" id="question-'+myau+'_delAnswer'+kissAdd+'" style="cursor: pointer"></i></div>'));
 
                 $('.closeicon').click(function () {
                     var miq = $(this).attr('name');
                     $('#question-' + myau + '_answer' +miq+ '').remove();
                 });
-                $(".yesicon").click(function () {
-                    var myau = $(this).attr('name');
-                    alert('pur='+myau+'');
-                    katya(myau);
-                });
-            }
+            });
         }
     });
 
@@ -114,15 +98,12 @@ $(document).ready(function () {
 });
 function addQuestion() {
     var kissname = $('.question:last').attr('name');
-    alert(kissname);
     var kissnameAdd = (+kissname+1);
-    alert(kissnameAdd);
     var kissm = $('.question:last').attr('id');
-    alert(kissm);
     $('#'+kissm+'').after($('<li id="question-'+kissnameAdd+'" class="question" name="'+kissnameAdd+'"><div class="collapsible-header">'+
         '<input type="text" id="questioninput-'+kissnameAdd+'" placeholder="Question" name="questioninput" style="width: 85%">'+
         '<i id="question-'+kissnameAdd+'_d" class="fa fa-times closeicon" style="cursor: pointer"></i></div>'+
-        '<div style="display: block" class="collapsible-body" id="question-'+kissnameAdd+'_answer1">'+
+        '<div style="display: block; margin: 1px 0 -10px 10px;" class="collapsible-body" id="question-'+kissnameAdd+'_answer1">'+
         '<input id="question-'+kissnameAdd+'_a1" class="mur-'+kissnameAdd+'" name="1" type="text" placeholder="Answer">'+
         '<input id="question-'+kissnameAdd+'_m1" type="number" class="mark-question-'+kissnameAdd+'" placeholder="mark">'+
         '<i class="fa fa-times fa-1x closeicon" name="'+kissnameAdd+'" id="question-'+kissnameAdd+'_delAnswer1" style="cursor: pointer"></i>'+
@@ -136,8 +117,18 @@ function addQuestion() {
     });
     $(".yesicon").click(function () {
         var myau = $(this).attr('name');
-        alert('pur='+myau+'');
-        katya(myau);
+        var kio = $('.mur-'+myau+':last').attr('id');
+        var kiss = $('.mur-'+myau+':last').attr('name');
+        var kissAdd = (+kiss+1);
+        $('#question-'+myau+'_answer'+kiss+'').after($('<div style="display: block;  margin: 1px 0 -10px 10px;" class="collapsible-body" id="question-'+myau+'_answer'+kissAdd+'">'+
+            '<input id="question-'+myau+'_a'+kissAdd+'" class="mur-'+myau+'" name="'+kissAdd+'" type="text" placeholder="Answer">'+
+            '<input id="question-'+myau+'_m'+kissAdd+'" type="number" class="mark-question-'+myau+'" placeholder="mark">'+
+            '<i class="fa fa-times fa-1x closeicon" name="'+kissAdd+'" id="question-'+myau+'_delAnswer'+kissAdd+'" style="cursor: pointer"></i></div>'));
+
+        $('.closeicon').click(function () {
+            var miq = $(this).attr('name');
+            $('#question-' + myau + '_answer' +miq+ '').remove();
+        });
     });
     $('.collapsible').collapsible({
         accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
