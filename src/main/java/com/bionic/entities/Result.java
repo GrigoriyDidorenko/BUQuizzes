@@ -52,6 +52,10 @@ public class Result {
     private boolean submited;
     @Column(name = "mark")
     private Integer mark;
+    @Column(name = "access_begin")
+    private Date accessBegin;
+    @Column(name = "access_end")
+    private Date accessEnd;
     @Column(name = "begin_time")
     private Date beginTime;
     @Column(name = "pass_time")
@@ -74,6 +78,16 @@ public class Result {
     public Result(boolean isChecked, boolean submited, Permission permission, User user, Test test) {
         this.isChecked = isChecked;
         this.submited = submited;
+        this.permission = permission;
+        this.user = user;
+        this.test = test;
+    }
+
+    public Result(boolean isChecked, boolean submited, Date accessBegin, Date accessEnd, Permission permission, User user, Test test) {
+        this.isChecked = isChecked;
+        this.submited = submited;
+        this.accessBegin = accessBegin;
+        this.accessEnd = accessEnd;
         this.permission = permission;
         this.user = user;
         this.test = test;
@@ -153,6 +167,22 @@ public class Result {
 
     public void setPermission(Permission permission) {
         this.permission = permission;
+    }
+
+    public Date getAccessBegin() {
+        return accessBegin;
+    }
+
+    public void setAccessBegin(Date accessBegin) {
+        this.accessBegin = accessBegin;
+    }
+
+    public Date getAccessEnd() {
+        return accessEnd;
+    }
+
+    public void setAccessEnd(Date accessEnd) {
+        this.accessEnd = accessEnd;
     }
 
     @Override

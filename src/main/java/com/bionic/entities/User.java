@@ -15,7 +15,8 @@ import java.util.*;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "getAvailableTestsById",
-                query = "SELECT u.tests FROM User u WHERE u.id = :id"),
+                query = "SELECT u.tests FROM User u " +
+                        "WHERE u.id = :id AND test.archived = false"),
         @NamedQuery(name = "getUserByEmail",
                 query = "SELECT u FROM User u WHERE u.email=:email"),
 })
@@ -59,13 +60,13 @@ public class User {
     private Set<Test> tests;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Collection<UserStudyGroup> studyGroup;
+    private Collection<UserGroup> studyGroup;
 
-    public Collection<UserStudyGroup> getStudyGroup() {
+    public Collection<UserGroup> getStudyGroup() {
         return studyGroup;
     }
 
-    public void setStudyGroup(Collection<UserStudyGroup> studyGroup) {
+    public void setStudyGroup(Collection<UserGroup> studyGroup) {
         this.studyGroup = studyGroup;
     }
 

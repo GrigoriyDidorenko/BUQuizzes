@@ -3,21 +3,14 @@ package com.bionic.services;
 import com.bionic.DAO.*;
 import com.bionic.DTO.*;
 import com.bionic.entities.*;
-import com.bionic.exceptions.ServerException;
 import com.bionic.exceptions.UserException;
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.*;
-
-import static j2html.TagCreator.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by rondo104 on 25.11.2015.
@@ -134,7 +127,7 @@ public class TestService {
     @Transactional
     public void importTest(HashSet<TestDTO> testDTOs) throws UserException {
         for (TestDTO testDTO : testDTOs) {
-           saveAndImportTest(testDTO);
+            saveAndImportTest(testDTO);
         }
     }
 
@@ -142,7 +135,7 @@ public class TestService {
     public Test importTest(TestDTO testDTO) throws UserException {
         HashSet<Question> questions = new HashSet<>();
         Test test = new Test();
-            test.setId(testDTO.getId());
+        test.setId(testDTO.getId());
         test.setDuration(testDTO.getDuration());
         test.setTestName(testDTO.getTestName());
         test.setOneTime(testDTO.isOneTime());
@@ -201,8 +194,10 @@ public class TestService {
         testDAO.update(importTest(testDTO));
     }
 
-    public void saveAndImportTest(TestDTO testDTO) throws UserException {
-        testDAO.save(importTest(testDTO));
+    public Test saveAndImportTest(TestDTO testDTO) throws UserException {
+        Test test = importTest(testDTO);
+        testDAO.save(test);
+        return test;
     }
 
     public ResultDTO processingAnswersForOneTimeTest(ArrayList<UserAnswerDTO> answerDTOs, final long testId, final String nickName, final String email, final String name, final String host) {
@@ -227,7 +222,7 @@ public class TestService {
 
                 }
             }).start();
-            } catch (Exception e) {
+        } catch (Exception e) {
             resultDTO.setCheckStatus(e.getMessage());
         } finally {
             return resultDTO;
