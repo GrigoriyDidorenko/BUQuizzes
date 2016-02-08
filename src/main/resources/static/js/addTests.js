@@ -3,6 +3,9 @@
  */
 
 $(document).ready(function () {
+    $(function() {
+        $( "#datepicker" ).datepicker();
+    });
     addQuestion();
     //ToDo
     //Add new Question
@@ -77,11 +80,15 @@ $(document).ready(function () {
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             var rols = json;
-            $('select').material_select(
+            var availableTags = []; // create array here
             $.each(rols, function (index, rolsone) {
                 $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
-            })
-            );
+                availableTags.push(rolsone); //push values here
+            });
+                console.log(availableTags);
+                $( "#tags" ).autocomplete({
+                    source: availableTags
+                });
         },
         error: function (http) {
             return http.responseText;
@@ -115,7 +122,7 @@ function addQuestion() {
     childInp.setAttribute("class", "questioninput");
     childInp.placeholder = "Question";
     childInp.name = "questioninput";
-    childInp.style = 'width:85%';
+    childInp.style = 'width:85%;';
     var childDelButton = document.createElement('i');
     childDelButton.id = childLI.id + "_d";
     childDelButton.setAttribute("class", "fa fa-times closeicon");
