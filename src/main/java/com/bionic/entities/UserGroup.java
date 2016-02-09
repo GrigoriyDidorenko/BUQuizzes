@@ -23,6 +23,17 @@ public class UserGroup {
     @Column(name = "group_name", nullable = false)
     private String groupName;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public long getId() {
         return id;
     }

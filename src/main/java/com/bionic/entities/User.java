@@ -16,7 +16,7 @@ import java.util.*;
 @NamedQueries({
         @NamedQuery(name = "getAvailableTestsById",
                 query = "SELECT u.tests FROM User u " +
-                        "WHERE u.id = :id AND test.archived = false"),
+                        "WHERE u.id = :id"),
         @NamedQuery(name = "getUserByEmail",
                 query = "SELECT u FROM User u WHERE u.email=:email"),
 })
@@ -59,7 +59,7 @@ public class User {
     @JoinTable(name = "result", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "test_id"))
     private Set<Test> tests;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Collection<UserGroup> studyGroup;
 
     public Collection<UserGroup> getStudyGroup() {
