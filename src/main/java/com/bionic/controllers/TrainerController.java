@@ -1,9 +1,8 @@
 package com.bionic.controllers;
 
-import com.bionic.DTO.ResultDTO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
-import com.bionic.entities.User;
+import com.bionic.entities.UserGroup;
 import com.bionic.services.TestService;
 import com.bionic.services.TrainerService;
 import com.bionic.services.UserService;
@@ -11,11 +10,8 @@ import com.bionic.wrappers.OpenQuestionWrapper;
 import com.bionic.wrappers.TestUserWrapper;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationConfig;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -81,7 +76,7 @@ public class TrainerController {
         try {
             testDTO = objectMapper.readValue(JSON, new TypeReference<TestDTO>() {
             });
-            testService.saveAndImportTest(testDTO);
+            trainerService.testToGroup(testDTO.getTestsToGroups(), testService.saveAndImportTest(testDTO).getId());
             return "success";
         } catch (JsonGenerationException e) {
             return new String(e.getMessage());
@@ -113,6 +108,18 @@ public class TrainerController {
     List<UserAnswerDTO> getUncheckedAnswersForCurrentQuestion(@PathVariable("questionId") String questionId) {
         try {
             return trainerService.getUncheckedAnswersForCurrentQuestion(questionId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/getAllGroups", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    List<UserGroup> getAllGroups() {
+        try {
+            return trainerService.getAllGroups();
         } catch (Exception e) {
             e.printStackTrace();
         }

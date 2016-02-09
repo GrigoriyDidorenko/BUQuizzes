@@ -1,5 +1,9 @@
 package com.bionic.DTO;
 
+import com.bionic.entities.UserGroup;
+
+import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -13,13 +17,13 @@ import java.util.Set;
 
 public class TestDTO {
 
-    // General filds
+    // General fields
     private long id;
     private String testName;
-    //Filds for Avaliable Tests
+    //Fields for Available Tests
     private int duration;
     private Set<QuestionDTO> questions;
-    //Filds for Submited Tests
+    //Fields for Submitted Tests
     private boolean isChecked;
     private int mark;
     private boolean submitted;
@@ -27,6 +31,48 @@ public class TestDTO {
     private long categoryTestId;
     private String categoryTestName;
 
+    private List<TestToGroup> testsToGroups;
+
+    //TODO: CHECK IT
+
+    public class TestToGroup{
+
+        private String userGroupName;
+        private Date accessBegin;
+        private Date accessEnd;
+
+        public TestToGroup(){}
+
+        public TestToGroup(String userGroupName, Date accessBegin, Date accessEnd) {
+            this.userGroupName = userGroupName;
+            this.accessBegin = accessBegin;
+            this.accessEnd = accessEnd;
+        }
+
+        public String getUserGroupName() {
+            return userGroupName;
+        }
+
+        public void setUserGroupName(String userGroupName) {
+            this.userGroupName = userGroupName;
+        }
+
+        public Date getAccessBegin() {
+            return accessBegin;
+        }
+
+        public void setAccessBegin(Date accessBegin) {
+            this.accessBegin = accessBegin;
+        }
+
+        public Date getAccessEnd() {
+            return accessEnd;
+        }
+
+        public void setAccessEnd(Date accessEnd) {
+            this.accessEnd = accessEnd;
+        }
+    }
 
     public TestDTO() {
     }
@@ -145,6 +191,14 @@ public class TestDTO {
 
     public void setCategoryTestName(String categoryTestName) {
         this.categoryTestName = categoryTestName;
+    }
+
+    public List<TestToGroup> getTestsToGroups() {
+        return testsToGroups;
+    }
+
+    public void setTestsToGroups(List<TestToGroup> testsToGroups) {
+        this.testsToGroups = testsToGroups;
     }
 
     @Override
