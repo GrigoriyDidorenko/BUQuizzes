@@ -102,7 +102,6 @@ $(document).ready(function () {
 
     $('#importTest').click(function () {
         var mi = $('#questioninput-1').val();
-        alert(mi);
         importTest();
     });
 
