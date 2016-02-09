@@ -76,7 +76,7 @@ public class TrainerController {
         try {
             testDTO = objectMapper.readValue(JSON, new TypeReference<TestDTO>() {
             });
-            trainerService.testToGroup(testDTO.getTestsToGroups(), testService.saveAndImportTest(testDTO).getId());
+            trainerService.testToGroup(testDTO.getTestsToGroups(), testService.saveAndImportTest(testDTO));
             return "success";
         } catch (JsonGenerationException e) {
             return new String(e.getMessage());

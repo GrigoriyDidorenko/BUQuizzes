@@ -253,15 +253,15 @@ function importTest() {
     var beginTime;
     var endTime;
     var group;
-    var testToGroups = [];
+    var testsToGroups = [];
     $('.groupdiv').each(function (index) {
         groupName = $.trim($('#tags-'+index+'').val());
         beginTime = $.trim($('#datepicker-'+index+'').val());
         endTime = $.trim($('#end-'+index+'').val());
         group = new Group(groupName, beginTime, endTime);
-        testToGroups.push(group);
+        testsToGroups.push(group);
     });
-    console.log(testToGroups);
+    console.log(testsToGroups);
     var questions = [];
     $.each( $('#questions li') , function( indexQ, questionLi ) {
       var questionD;
@@ -289,7 +289,7 @@ function importTest() {
         });
          questions.push(question);
     });
-    var test = new Test(testName, duration, oneTime, categoryTestName, testToGroups, questions);
+    var test = new Test(testName, duration, oneTime, categoryTestName, testsToGroups, questions);
     console.log(test);
     var json = JSON.stringify(test);
     console.log(json);
@@ -310,12 +310,12 @@ function importTest() {
     })
 }
 
-function Test(testName, duration, oneTime, categoryTestName, testToGroups, questions) {
+function Test(testName, duration, oneTime, categoryTestName, testsToGroups, questions) {
     this.testName = testName;
     this.duration = duration;
     this.oneTime = oneTime;
     this.categoryTestName = categoryTestName;
-    this.testToGroups = testToGroups;
+    this.testsToGroups = testsToGroups;
     this.questions = questions;
 }
 function Group(groupName, beginTime, endTime) {

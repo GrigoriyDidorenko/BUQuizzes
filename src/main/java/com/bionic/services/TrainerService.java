@@ -6,6 +6,7 @@ import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.DTO.UserDTO;
 import com.bionic.entities.Permission;
 import com.bionic.entities.Result;
+import com.bionic.entities.Test;
 import com.bionic.entities.UserGroup;
 import com.bionic.wrappers.OpenQuestionWrapper;
 import com.bionic.wrappers.TestUserWrapper;
@@ -97,12 +98,12 @@ public class TrainerService {
     
     /*TODO: CHECK IT*/
 
-    public void testToGroup(List<TestDTO.TestToGroup> testsToGroups, long testId) {
-        if (testsToGroups != null) {
+    public void testToGroup(List<TestDTO.TestToGroup> testsToGroups, Test test) {
+        if (testsToGroups != null && !test.isOneTime()) {
             for (TestDTO.TestToGroup testToGroup : testsToGroups) {
-                for (Long studentId : getUsersIdByGroup(testToGroup.getUserGroupName())) {
+                for (Long studentId : getUsersIdByGroup(testToGroup.getGroupName())) {
                     resultDAO.save(new Result(false, false, testToGroup.getAccessBegin(),
-                            testToGroup.getAccessEnd(), Permission.PASS_THE_TEST, userDAO.find(studentId), testDAO.find(testId)));
+                            testToGroup.getAccessEnd(), Permission.PASS_THE_TEST, userDAO.find(studentId), test));
                 }
             }
         }
