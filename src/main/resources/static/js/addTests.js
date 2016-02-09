@@ -82,8 +82,6 @@ $(document).ready(function () {
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             var rols = json;
-
-            var availableTags = []; // create array here
             $.each(rols, function (index, rolsone) {
                 $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
             });
@@ -312,12 +310,12 @@ function importTest() {
     })
 }
 
-function Test(testName, duration, oneTime, categoryTestName, groups, questions) {
+function Test(testName, duration, oneTime, categoryTestName, testToGroups, questions) {
     this.testName = testName;
     this.duration = duration;
     this.oneTime = oneTime;
     this.categoryTestName = categoryTestName;
-    this.groups = groups;
+    this.testToGroups = testToGroups;
     this.questions = questions;
 }
 function Group(groupName, beginTime, endTime) {
