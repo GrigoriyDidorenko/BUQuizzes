@@ -651,6 +651,10 @@ ul {
   color: #4CAF50;
   font-size: 13px;
 }
+.yes {
+  color: #2dadf0;
+  font-size: 13px;
+}
 .add-test{
   margin: 0 auto;
   background-color: white;
@@ -663,6 +667,20 @@ ul {
   font-size: 12px;
   text-transform: uppercase;
   border-radius: 5px;
+}
+.add-group{
+  margin: 0 auto;
+  background-color: white;
+  color: #2dadf0;
+  border: none;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+  padding: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 #exeption{
   width: 100%;

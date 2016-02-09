@@ -13,9 +13,6 @@ $(document).ready(function () {
     $("#addQuestion").click(function () {
         addQuestion();
     });
-    $("#addGroup").click(function () {
-        addGroup();
-    });
     $('#importTest').click(function () {
         $.validator.setDefaults({
             submitHandler: function() {
@@ -89,12 +86,7 @@ $(document).ready(function () {
             var availableTags = []; // create array here
             $.each(rols, function (index, rolsone) {
                 $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
-                availableTags.push(rolsone); //push values here
             });
-                console.log(availableTags);
-                $( ".tags" ).autocomplete({
-                    source: availableTags
-                });
         },
         error: function (http) {
             return http.responseText;
@@ -104,7 +96,43 @@ $(document).ready(function () {
     $('.collapsible').collapsible({
         accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
     });
-
+    jQuery.ajax({
+        type: "GET",
+        url: "/trainer/getAllGroups",
+        dataType: "json",
+        async: false,
+        contentType: "application/json; charset=utf-8",
+        success: function (json) {
+            var manson = json;
+            var availableGroups = []; // create array here
+            $.each(manson, function (index, myjs) {
+                availableGroups.push(myjs[1]); //push values here
+            });
+            console.log(availableGroups);
+            $( ".tags" ).autocomplete({
+                source: availableGroups
+            });
+            $("#addGroup").click(function () {
+                var katya = $('.groupdiv:last').attr('id');
+                var katenka = $('.groupdiv:last').attr('name');
+                var katyaAdd = (+katenka+1);
+                $('#'+katya+'').after($('<div class="ui-widget groupdiv" id="group-'+katyaAdd+'" name="'+katyaAdd+'" style="margin-top: 5px; margin-left: 5px; float: left;border-top: 1px solid gainsboro; padding-top: 10px;">'+
+                    '<span style="margin-right:5px;font-size: 14px;">Group: </span><input id="tags-'+katyaAdd+'" type="text" class="tags" style="font-size: 14px;">'+
+                    '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="font-size: 14px;">'+
+                    '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></div>'));
+                $(function() {
+                    $( ".begin" ).datepicker();
+                    $( ".end" ).datepicker();
+                });
+                $( ".tags" ).autocomplete({
+                    source: availableGroups
+                });
+            });
+        },
+        error: function (http) {
+            return http.responseText;
+        }
+    });
 
 });
 
@@ -159,43 +187,6 @@ function addQuestion() {
 function deleteQuestion(idQuestion) {
     var delEle = document.getElementById(idQuestion);
     document.getElementById('questions').removeChild(delEle);
-}
-
-function addGroup() {
-    var katya = $('.groupdiv:last').attr('id');
-    var katenka = $('.groupdiv:last').attr('name');
-    var katyaAdd = (+katenka+1);
-    $('#'+katya+'').after($('<div class="ui-widget groupdiv" id="group-'+katyaAdd+'" name="'+katyaAdd+'" style="margin-top: 5px; margin-left: 5px; float: left;border-top: 1px solid gainsboro; padding-top: 10px;">'+
-        '<span style="margin-right:5px;font-size: 14px;color: #2dadf0;">Group: </span><input id="tags-'+katyaAdd+'" type="text" class="tags" style="font-size: 14px;">'+
-        '<span style="margin-right:5px; font-size: 14px;color: #2dadf0;">Begin: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="width: 40%;font-size: 14px;">'+
-        '<span style="margin-right:5px;font-size: 14px;color: #2dadf0;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="width: 40%;font-size: 14px;"></div>'));
-    $(function() {
-        $( ".begin" ).datepicker();
-        $( ".end" ).datepicker();
-    });
-    jQuery.ajax({
-        type: "GET",
-        url: "/trainer/getAllСategoryTestName",
-        dataType: "json",
-        async: false,
-        contentType: "application/json; charset=utf-8",
-        success: function (json) {
-            var rols = json;
-
-            var availableTags = []; // create array here
-            $.each(rols, function (index, rolsone) {
-                $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
-                availableTags.push(rolsone); //push values here
-            });
-            console.log(availableTags);
-            $( ".tags" ).autocomplete({
-                source: availableTags
-            });
-        },
-        error: function (http) {
-            return http.responseText;
-        }
-    });
 }
 
 function addAnswer(questionId) {
