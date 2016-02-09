@@ -36,8 +36,8 @@ $(document).ready(function() {
     });
 
     $( "#next" ).click(function() {
-        if (count > onPageAnswer)  ++onPageAnswer;
-        $("#answer").text(answers[onPageAnswer-1].answer);
+        if (count-1 > onPageAnswer)  ++onPageAnswer;
+        $("#answer").text(answers[onPageAnswer].answer);
         $("#mark").empty();
     });
 
@@ -49,7 +49,7 @@ $(document).ready(function() {
 
     $( "#saveMark" ).click(function() {
         ans=answers[onPageAnswer];
-        setMark(ans, checkedCount, count);
+        setMark(ans);
     });
 
     $( "#exit" ).click(function() {
@@ -58,7 +58,7 @@ $(document).ready(function() {
 
 });
 
-function setMark(answer,checkedCount,count){
+function setMark(answer){
     var mark = Number($("#mark").val());
     var sent = new  sentJSON(answer.userAnswerId, answer.resultId, mark);
     var json = JSON.stringify(sent);
@@ -70,12 +70,11 @@ function setMark(answer,checkedCount,count){
         contentType: "application/json; charset=utf-8",
         data: json,
         success: function (json) {
-
-            //$("#count").text(++checkedCount +'/'+ count);
-            //alert(+checkedCount);
+            //ToDO Change checked answers
+            alert(+checkedCount);
             $("#mark").empty();
             $("#stay").empty();
-            $("#stay").append(+checkedCount+1);
+            $("#stay").append(checkedCount);
         },
         error: function (http) {
         //TOdo
