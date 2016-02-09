@@ -312,12 +312,12 @@ function importTest() {
     })
 }
 
-function Test(testName, duration, oneTime, categoryTestName, testToGroups, questions) {
+function Test(testName, duration, oneTime, categoryTestName, testsToGroups, questions) {
     this.testName = testName;
     this.duration = duration;
     this.oneTime = oneTime;
     this.categoryTestName = categoryTestName;
-    this.testToGroups = testToGroups;
+    this.testsToGroups = testsToGroups;
     this.questions = questions;
 }
 function Group(groupName, beginTime, endTime) {
