@@ -255,15 +255,15 @@ function importTest() {
     var beginTime;
     var endTime;
     var group;
-    var groups = [];
+    var testToGroups = [];
     $('.groupdiv').each(function (index) {
         groupName = $.trim($('#tags-'+index+'').val());
         beginTime = $.trim($('#datepicker-'+index+'').val());
         endTime = $.trim($('#end-'+index+'').val());
         group = new Group(groupName, beginTime, endTime);
-        groups.push(group);
+        testToGroups.push(group);
     });
-    console.log(groups);
+    console.log(testToGroups);
     var questions = [];
     $.each( $('#questions li') , function( indexQ, questionLi ) {
       var questionD;
@@ -291,7 +291,7 @@ function importTest() {
         });
          questions.push(question);
     });
-    var test = new Test(testName, duration, oneTime, categoryTestName, groups, questions);
+    var test = new Test(testName, duration, oneTime, categoryTestName, testToGroups, questions);
     console.log(test);
     var json = JSON.stringify(test);
     console.log(json);
