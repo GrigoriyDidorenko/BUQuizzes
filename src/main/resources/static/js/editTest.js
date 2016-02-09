@@ -2,6 +2,20 @@
  * Created by c2413 on 29.01.2016.
  */
 $(document).ready(function () {
+    function GetURLParameter(sParam) {
+
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++)
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam)
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+    var test = GetURLParameter('test');
     $("#addQuestion").click(function () {
         addQuestion();
     });
@@ -11,7 +25,7 @@ $(document).ready(function () {
     //get Test
     jQuery.ajax({
         type: "GET",
-        url:"http://localhost:8080/guest/tests/2?email=atia29@mail.ru&nickName=katya&name=kate",
+        url:"http://localhost:8080/guest/tests/"+test+"?email=atia29@mail.ru&nickName=katya&name=kate",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (json) {
@@ -219,15 +233,15 @@ function importTest() {
     var duration = $('#duration').val();
     var oneTime=$('#oneTime').prop("checked");
     var groupName;
-    var beginTime;
-    var endTime;
+    var accessBegin;
+    var accessEnd;
     var group;
     var testToGroups = [];
     $('.groupdiv').each(function (index) {
         groupName = $.trim($('#tags-'+index+'').val());
-        beginTime = $.trim($('#datepicker-'+index+'').val());
-        endTime = $.trim($('#end-'+index+'').val());
-        group = new Group(groupName, beginTime, endTime);
+        accessBegin = $.trim($('#datepicker-'+index+'').val());
+        accessEnd = $.trim($('#end-'+index+'').val());
+        group = new Group(groupName, accessBegin, accessEnd);
         testToGroups.push(group);
     });
     console.log(testToGroups);
@@ -269,7 +283,7 @@ function importTest() {
         contentType: "application/json; charset=utf-8",
         data: json,
         success: function (json) {
-            alert(json);
+            console.log(json);
         },
         error: function (http) {
             $('#exeption').empty();
@@ -287,10 +301,10 @@ function Test(testName, duration, oneTime, categoryTestName, testToGroups, quest
     this.testToGroups = testToGroups;
     this.questions = questions;
 }
-function Group(groupName, beginTime, endTime) {
+function Group(groupName, accessBegin, accessEnd) {
     this.groupName = groupName;
-    this.beginTime = beginTime;
-    this.endTime = endTime;
+    this.accessBegin = accessBegin;
+    this.accessEnd = accessEnd;
 }
 
 function Question(question, answers) {

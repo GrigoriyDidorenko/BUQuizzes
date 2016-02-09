@@ -4,14 +4,21 @@
 
 $(document).ready(function () {
     $(function() {
-        $( ".begin" ).datepicker({ dateFormat: 'dd-mm-yy' });
-        $( ".end" ).datepicker({ dateFormat: 'dd-mm-yy' });
+        $( ".begin" ).datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+        $( ".end" ).datepicker({
+            dateFormat: "yy-mm-dd"
+        });
     });
     addQuestion();
     //ToDo
     //Add new Question
     $("#addQuestion").click(function () {
         addQuestion();
+    });
+    $("#toMain").click(function () {
+        window.location = 'http://localhost:8080/pages/mentorPage.html';
     });
     $('#importTest').click(function () {
         $.validator.setDefaults({
@@ -121,8 +128,12 @@ $(document).ready(function () {
                     '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="font-size: 14px;">'+
                     '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></div>'));
                 $(function() {
-                    $( ".begin" ).datepicker({ dateFormat: 'dd-mm-yy' });
-                    $( ".end" ).datepicker({ dateFormat: 'dd-mm-yy' });
+                    $( ".begin" ).datepicker({
+                        dateFormat: "yy-mm-dd"
+                    });
+                    $( ".end" ).datepicker({
+                        dateFormat: "yy-mm-dd"
+                    });
                 });
                 $( ".tags" ).autocomplete({
                     source: unique
@@ -252,15 +263,15 @@ function importTest() {
     var duration = $('#duration').val();
     var oneTime=$('#oneTime').prop("checked");
     var groupName;
-    var beginTime;
-    var endTime;
+    var accessBegin;
+    var accessEnd;
     var group;
     var testToGroups = [];
     $('.groupdiv').each(function (index) {
         groupName = $.trim($('#tags-'+index+'').val());
-        beginTime = $.trim($('#datepicker-'+index+'').val());
-        endTime = $.trim($('#end-'+index+'').val());
-        group = new Group(groupName, beginTime, endTime);
+        accessBegin = $.trim($('#datepicker-'+index+'').val());
+        accessEnd = $.trim($('#end-'+index+'').val());
+        group = new Group(groupName, accessBegin, accessEnd);
         testToGroups.push(group);
     });
     console.log(testToGroups);
@@ -320,10 +331,10 @@ function Test(testName, duration, oneTime, categoryTestName, testsToGroups, ques
     this.testsToGroups = testsToGroups;
     this.questions = questions;
 }
-function Group(groupName, beginTime, endTime) {
+function Group(groupName, accessBegin, accessEnd) {
     this.groupName = groupName;
-    this.beginTime = beginTime;
-    this.endTime = endTime;
+    this.accessBegin = accessBegin;
+    this.accessEnd = accessEnd;
 }
 function Question(question, answers) {
     this.question = question;
