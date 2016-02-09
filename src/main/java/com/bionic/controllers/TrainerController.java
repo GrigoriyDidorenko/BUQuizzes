@@ -97,7 +97,7 @@ public class TrainerController {
     @ResponseBody
     List<OpenQuestionWrapper> getUncheckedTests() {
         try {
-            return trainerService.getUncheckedTests(/*userService.getAuthorizedUser().getId()*/1);
+            return trainerService.getUncheckedTests(/*userService.getAuthorizedUser().getId()*/3);
         } catch (Exception e) {
             e.printStackTrace();
         }
