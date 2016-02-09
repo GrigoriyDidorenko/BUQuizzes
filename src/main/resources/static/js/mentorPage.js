@@ -37,7 +37,6 @@ $(document).ready(function() {
                         //TODO
                         $(".test").click(function () {
                             var id=this.id;
-                            alert(id)
                             window.location = 'http://localhost:8080/pages/editTest.html?test='+id+'';
 
                         });

@@ -781,5 +781,12 @@ th {
     margin-bottom: 5px;
   }
 }
+.out{
+  margin: 27px 0 0 0;
+  color: white;
+  width: 80px;
+  height: 30px;
+  font-size: 14px;
+}
 
 /*# sourceMappingURL=styles.css.map */

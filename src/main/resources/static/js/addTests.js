@@ -17,9 +17,6 @@ $(document).ready(function () {
     $("#addQuestion").click(function () {
         addQuestion();
     });
-    $("#toMain").click(function () {
-        window.location = 'http://localhost:8080/pages/mentorPage.html';
-    });
     $('#importTest').click(function () {
         $.validator.setDefaults({
             submitHandler: function() {
