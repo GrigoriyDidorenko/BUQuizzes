@@ -106,9 +106,11 @@ $(document).ready(function () {
             $.each(manson, function (index, myjs) {
                 availableGroups.push(myjs[1]); //push values here
             });
-            console.log(availableGroups);
+            var unique=availableGroups.filter(function(itm,i,availableGroups){
+                return i==availableGroups.indexOf(itm);
+            });
             $( ".tags" ).autocomplete({
-                source: availableGroups
+                source: unique
             });
             $("#addGroup").click(function () {
                 var katya = $('.groupdiv:last').attr('id');
@@ -123,7 +125,7 @@ $(document).ready(function () {
                     $( ".end" ).datepicker();
                 });
                 $( ".tags" ).autocomplete({
-                    source: availableGroups
+                    source: unique
                 });
             });
         },
