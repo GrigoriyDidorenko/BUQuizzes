@@ -765,4 +765,21 @@ th {
 .ui-helper-hidden-accessible{
   display: none;
 }
+.mentor{
+   font-size: 14px;
+  color: #2dadf0;
+   padding: 0;
+   text-align: center;
+ }
+.attention{
+  margin-left: 5px;
+}
+@media only screen and (max-width: 600px) {
+  .addbutton, .attent{
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+}
+
 /*# sourceMappingURL=styles.css.map */

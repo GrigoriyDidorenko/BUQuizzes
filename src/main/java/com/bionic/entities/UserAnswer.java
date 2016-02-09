@@ -18,7 +18,7 @@ import javax.persistence.*;
                 "                 AND r.test_id IN (SELECT t.id FROM result r" +
                 "                 JOIN test t on t.id = r.test_id" +
                 "                 JOIN user u on u.id = r.user_id" +
-                "                 WHERE r.permission = 2 AND u.id = :userId) and r.permission = 1" +
+                "                 WHERE r.permission = 1 AND u.id = :userId) and r.permission = 0" +
                 "                 GROUP BY ua.question_id" +
                 "                 HAVING COUNT(ua.is_checked=0) > 0"),
         @NamedNativeQuery(name = "getUncheckedAnswersForCurrentQuestion",

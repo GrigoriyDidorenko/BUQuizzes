@@ -13,8 +13,9 @@ import java.util.Date;
 @NamedQueries({
         @NamedQuery(name = "getCurrentTestById",
                 query = "SELECT test From Result result JOIN result.test test JOIN result.user user " +
-                        "JOIN test.questions question JOIN question.answers answer WHERE test.id = :testId " +
-                        "AND user.id = :userId AND result.permission = :permission"),
+                        "WHERE test.id = :testId " +
+                        "AND user.id = :userId AND result.permission = :permission " +
+                        "AND test.archived = false AND result.accessBegin < current_date AND current_date < result.accessEnd"),
         @NamedQuery(name = "getAvailableTestsNames",
                 query = "SELECT test.id, test.testName, test.duration FROM Result result " +
                         "JOIN result.test test " +

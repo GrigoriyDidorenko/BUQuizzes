@@ -13,6 +13,7 @@ import com.bionic.wrappers.TestUserWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -92,7 +93,7 @@ public class TrainerService {
         return userGroupDAO.getAllGroups();
     }
 
-    public List<Long> getUsersIdByGroup(String groupName) {
+    public List<BigInteger> getUsersIdByGroup(String groupName) {
         return userGroupDAO.getUsersIdByGroup(groupName);
     }
     
@@ -101,9 +102,9 @@ public class TrainerService {
     public void testToGroup(List<TestDTO.TestToGroup> testsToGroups, Test test) {
         if (testsToGroups != null && !test.isOneTime()) {
             for (TestDTO.TestToGroup testToGroup : testsToGroups) {
-                for (Long studentId : getUsersIdByGroup(testToGroup.getGroupName())) {
+                for (BigInteger studentId : getUsersIdByGroup(testToGroup.getGroupName())) {
                     resultDAO.save(new Result(false, false, testToGroup.getAccessBegin(),
-                            testToGroup.getAccessEnd(), Permission.PASS_THE_TEST, userDAO.find(studentId), test));
+                            testToGroup.getAccessEnd(), Permission.PASS_THE_TEST, userDAO.find(studentId.intValue()), test));
                 }
             }
         }

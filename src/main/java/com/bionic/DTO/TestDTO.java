@@ -1,5 +1,9 @@
 package com.bionic.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -36,12 +40,16 @@ public class TestDTO {
     public static class TestToGroup{
 
         private String groupName;
+
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
         private Date accessBegin;
+
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
         private Date accessEnd;
 
         public TestToGroup(){}
 
-        public TestToGroup(String groupName, Date accessBegin, Date accessEnd) {
+        public TestToGroup(String groupName, Date accessBegin, Date accessEnd) throws ParseException {
             this.groupName = groupName;
             this.accessBegin = accessBegin;
             this.accessEnd = accessEnd;
