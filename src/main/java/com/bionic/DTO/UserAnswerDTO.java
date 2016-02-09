@@ -10,7 +10,7 @@ public class UserAnswerDTO {
     private long id;
     private String answerText;
     private long questionId;
-    private List<String> answersId;
+    private List<String> answerId;
     private long resultId;
 
 
@@ -21,10 +21,10 @@ public class UserAnswerDTO {
     public UserAnswerDTO() {
     }
 
-    public UserAnswerDTO(String answerText, long questionId, List<String> answersId) {
+    public UserAnswerDTO(String answerText, long questionId, List<String> answerId) {
         this.answerText = answerText;
         this.questionId = questionId;
-        this.answersId = answersId;
+        this.answerId = answerId;
     }
 
     public int getMark() {
@@ -51,12 +51,12 @@ public class UserAnswerDTO {
         this.questionId = questionId;
     }
 
-    public List<String> getAnswersId() {
-        return answersId;
+    public List<String> getAnswerId() {
+        return answerId;
     }
 
-    public void setAnswersId(List<String> answersId) {
-        this.answersId = answersId;
+    public void setAnswerId(List<String> answerId) {
+        this.answerId = answerId;
     }
 
     public long getId() {
@@ -92,7 +92,7 @@ public class UserAnswerDTO {
 
         if (questionId != that.questionId) return false;
         if (answerText != null ? !answerText.equals(that.answerText) : that.answerText != null) return false;
-        return !(answersId != null ? !answersId.equals(that.answersId) : that.answersId != null);
+        return !(answerId != null ? !answerId.equals(that.answerId) : that.answerId != null);
 
     }
 
@@ -100,7 +100,7 @@ public class UserAnswerDTO {
     public int hashCode() {
         int result = answerText != null ? answerText.hashCode() : 0;
         result = 31 * result + (int) (questionId ^ (questionId >>> 32));
-        result = 31 * result + (answersId != null ? answersId.hashCode() : 0);
+        result = 31 * result + (answerId != null ? answerId.hashCode() : 0);
         return result;
     }
 }

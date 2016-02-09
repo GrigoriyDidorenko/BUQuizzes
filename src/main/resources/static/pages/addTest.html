@@ -52,7 +52,7 @@
                 <input id="oneTime" type="checkbox"  class="positions filled-in" name="oneTime">
                 <label for="oneTime">Open test</label>
                 <div style="margin-top: 10px;">
-                <p id="label">Select tests category</p>
+                <p id="label" style="font-size: 14px;color: #2dadf0;">Select tests category</p>
                 <select id="selectCategoryTestName" class="addTestSelect" name="selectCategory">
                     <option value="" disabled selected>Select tests category</option>
                 </select>
@@ -60,14 +60,15 @@
                 <label for="categoryTestName" class="CategoryTestName">Or add new tests category</label>
                 <input id="categoryTestName" type="text" class="addTestSelect">
                 <label for="categoryTestName">Add test to groups and test time interval</label>
-                <div class="ui-widget" style="margin-top: 5px; margin-left: 5px; float: left">
-                    <label for="tags" style="margin-right:5px;">Group: </label>
-                    <input id="tags" type="text">
-                    <label for="datepicker" style="margin-right:5px;">Begin: </label>
-                    <input type="text" id="datepicker">
-                    <label for="end" style="margin-right:5px;">End: </label>
-                    <input id="end" type="text" style="width: 40%">
-                </div>
+                <div><div class="ui-widget groupdiv" id="group-0" name="0" style="margin-top: 5px; margin-left: 5px; float: left;">
+                    <span style="margin-right:5px;font-size: 14px;color: #2dadf0;">Group: </span>
+                    <input id="tags-0" type="text" class="tags" style="font-size: 14px;">
+                    <span style="margin-right:5px; font-size: 14px;color: #2dadf0;">Begin: </span>
+                    <input type="text" id="datepicker-0" class="begin" style="width: 40%;font-size: 14px;">
+                    <span style="margin-right:5px;font-size: 14px;color: #2dadf0;">End: </span>
+                    <input id="end-0" type="text" class="end" style="width: 40%;font-size: 14px;">
+                </div></div>
+                <button id="addGroup" class="add-test"><i class="fa fa-plus yesicon" style="margin-right: 3px"></i>add group</button>
                 </div>
             <div class="col s12 m7">
                 <label for="accordion">Add questions and answers</label>

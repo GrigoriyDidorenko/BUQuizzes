@@ -11,7 +11,7 @@ $(document).ready(function () {
     //get Test
     jQuery.ajax({
         type: "GET",
-        url:"http://localhost:8080/guest/tests/1?email=atia29@mail.ru&nickName=katya&name=kate",
+        url:"http://localhost:8080/guest/tests/82?email=atia29@mail.ru&nickName=katya&name=kate",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (json) {
@@ -25,8 +25,8 @@ $(document).ready(function () {
             else{
                 $('#oneTime').prop("checked", false);
             }
-            var categoryTestName = "java";
-            $('#selectCategoryTestName').append('<option selected id="selected">'+categoryTestName+'</option>');
+            //var categoryTestName = "java";
+            //$('#selectCategoryTestName').append('<option selected id="selected">'+categoryTestName+'</option>');
 
             $.each(myJson.questions, function (index, quest) {
                 var mu = ''+(index+1)+'';
@@ -59,7 +59,8 @@ $(document).ready(function () {
                 $('#question-'+myau+'_answer'+kiss+'').after($('<div style="display: block; margin: 1px 0 -10px 10px;" class="collapsible-body" id="question-'+myau+'_answer'+kissAdd+'">'+
                     '<input id="question-'+myau+'_a'+kissAdd+'" class="mur-'+myau+'" name="'+kissAdd+'" type="text" placeholder="Answer">'+
                     '<input id="question-'+myau+'_m'+kissAdd+'" type="number" class="mark-question-'+myau+'" placeholder="mark">'+
-                    '<i class="fa fa-times fa-1x closeicon" name="'+kissAdd+'" id="question-'+myau+'_delAnswer'+kissAdd+'" style="cursor: pointer"></i></div>'));
+                    '<i class="fa fa-times fa-1x closeicon" name="'+kissAdd+'" id="question-'+myau+'_delAnswer'+kissAdd+'" style="cursor: pointer"></i>'+
+                    '<i class="yesicon '+myau+'" name="'+myau+'" id="question-'+myau+'_addAnswer'+kissAdd+'"></i></div>'));
 
                 $('.closeicon').click(function () {
                     var miq = $(this).attr('name');
@@ -76,7 +77,6 @@ $(document).ready(function () {
     });
 
 
-    //ToDo ADD category TestName
     jQuery.ajax({
         type: "GET",
         url: "/trainer/getAllСategoryTestName",
@@ -85,14 +85,14 @@ $(document).ready(function () {
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             var rols = json;
-            $.each(rols, function (index, rolsone) {
-                $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
-            });
+                $.each(rols, function (index, rolsone) {
+                    $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
+                });
         },
         error: function (http) {
             return http.responseText;
         }
-    })
+    });
 
 
 });
@@ -123,7 +123,8 @@ function addQuestion() {
         $('#question-'+myau+'_answer'+kiss+'').after($('<div style="display: block;  margin: 1px 0 -10px 10px;" class="collapsible-body" id="question-'+myau+'_answer'+kissAdd+'">'+
             '<input id="question-'+myau+'_a'+kissAdd+'" class="mur-'+myau+'" name="'+kissAdd+'" type="text" placeholder="Answer">'+
             '<input id="question-'+myau+'_m'+kissAdd+'" type="number" class="mark-question-'+myau+'" placeholder="mark">'+
-            '<i class="fa fa-times fa-1x closeicon" name="'+kissAdd+'" id="question-'+myau+'_delAnswer'+kissAdd+'" style="cursor: pointer"></i></div>'));
+            '<i class="fa fa-times fa-1x closeicon" name="'+kissAdd+'" id="question-'+myau+'_delAnswer'+kissAdd+'" style="cursor: pointer"></i>'+
+            '<i class="yesicon '+myau+'" name="'+myau+'" id="question-'+myau+'_addAnswer'+kissAdd+'"></i></div>'));
 
         $('.closeicon').click(function () {
             var miq = $(this).attr('name');

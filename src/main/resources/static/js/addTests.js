@@ -4,13 +4,17 @@
 
 $(document).ready(function () {
     $(function() {
-        $( "#datepicker" ).datepicker();
+        $( ".begin" ).datepicker();
+        $( ".end" ).datepicker();
     });
     addQuestion();
     //ToDo
     //Add new Question
     $("#addQuestion").click(function () {
         addQuestion();
+    });
+    $("#addGroup").click(function () {
+        addGroup();
     });
     $('#importTest').click(function () {
         $.validator.setDefaults({
@@ -50,6 +54,7 @@ $(document).ready(function () {
         });
         $().ready(function() {
             var catVal=$.trim($('#categoryTestName').val());
+            var mamula=$.trim($('#selectCategoryTestName').val());
             if(catVal.length>0){
                 $("#selectCategoryTestName").prop('required',false);
             }
@@ -80,13 +85,14 @@ $(document).ready(function () {
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             var rols = json;
+
             var availableTags = []; // create array here
             $.each(rols, function (index, rolsone) {
                 $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
                 availableTags.push(rolsone); //push values here
             });
                 console.log(availableTags);
-                $( "#tags" ).autocomplete({
+                $( ".tags" ).autocomplete({
                     source: availableTags
                 });
         },
@@ -155,6 +161,43 @@ function deleteQuestion(idQuestion) {
     document.getElementById('questions').removeChild(delEle);
 }
 
+function addGroup() {
+    var katya = $('.groupdiv:last').attr('id');
+    var katenka = $('.groupdiv:last').attr('name');
+    var katyaAdd = (+katenka+1);
+    $('#'+katya+'').after($('<div class="ui-widget groupdiv" id="group-'+katyaAdd+'" name="'+katyaAdd+'" style="margin-top: 5px; margin-left: 5px; float: left;border-top: 1px solid gainsboro; padding-top: 10px;">'+
+        '<span style="margin-right:5px;font-size: 14px;color: #2dadf0;">Group: </span><input id="tags-'+katyaAdd+'" type="text" class="tags" style="font-size: 14px;">'+
+        '<span style="margin-right:5px; font-size: 14px;color: #2dadf0;">Begin: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="width: 40%;font-size: 14px;">'+
+        '<span style="margin-right:5px;font-size: 14px;color: #2dadf0;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="width: 40%;font-size: 14px;"></div>'));
+    $(function() {
+        $( ".begin" ).datepicker();
+        $( ".end" ).datepicker();
+    });
+    jQuery.ajax({
+        type: "GET",
+        url: "/trainer/getAllСategoryTestName",
+        dataType: "json",
+        async: false,
+        contentType: "application/json; charset=utf-8",
+        success: function (json) {
+            var rols = json;
+
+            var availableTags = []; // create array here
+            $.each(rols, function (index, rolsone) {
+                $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
+                availableTags.push(rolsone); //push values here
+            });
+            console.log(availableTags);
+            $( ".tags" ).autocomplete({
+                source: availableTags
+            });
+        },
+        error: function (http) {
+            return http.responseText;
+        }
+    });
+}
+
 function addAnswer(questionId) {
     var listAnswer = document.getElementById(questionId);
     var countAnswer = listAnswer.querySelectorAll('div [class="collapsible-body"]').length;
@@ -201,6 +244,7 @@ function removeAnswer(question_answer){
     var delEle = document.getElementById(question_answer);
     document.getElementById(del[0]).removeChild(delEle);
 }
+
 function importTest() {
     var value=$.trim($("#categoryTestName").val());
 
@@ -216,6 +260,19 @@ function importTest() {
     var testName = $('#testName').val();
     var duration = $('#duration').val();
     var oneTime=$('#oneTime').prop("checked");
+    var groupName;
+    var beginTime;
+    var endTime;
+    var group;
+    var groups = [];
+    $('.groupdiv').each(function (index) {
+        groupName = $.trim($('#tags-'+index+'').val());
+        beginTime = $.trim($('#datepicker-'+index+'').val());
+        endTime = $.trim($('#end-'+index+'').val());
+        group = new Group(groupName, beginTime, endTime);
+        groups.push(group);
+    });
+    console.log(groups);
     var questions = [];
     $.each( $('#questions li') , function( indexQ, questionLi ) {
       var questionD;
@@ -243,7 +300,7 @@ function importTest() {
         });
          questions.push(question);
     });
-    var test = new Test(testName, duration, oneTime, categoryTestName, questions);
+    var test = new Test(testName, duration, oneTime, categoryTestName, groups, questions);
     console.log(test);
     var json = JSON.stringify(test);
     console.log(json);
@@ -264,14 +321,19 @@ function importTest() {
     })
 }
 
-function Test(testName, duration, oneTime, categoryTestName, questions) {
+function Test(testName, duration, oneTime, categoryTestName, groups, questions) {
     this.testName = testName;
     this.duration = duration;
     this.oneTime = oneTime;
     this.categoryTestName = categoryTestName;
+    this.groups = groups;
     this.questions = questions;
 }
-
+function Group(groupName, beginTime, endTime) {
+    this.groupName = groupName;
+    this.beginTime = beginTime;
+    this.endTime = endTime;
+}
 function Question(question, answers) {
     this.question = question;
     this.answers = answers;

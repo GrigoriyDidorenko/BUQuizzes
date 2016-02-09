@@ -710,4 +710,38 @@ select{
   height: 3rem;
   margin-bottom: 10px;
 }
+select{
+  display: block;
+}
+.ui-icon, .ui-icon-circle-triangle-w{
+  cursor: pointer;
+  font-size: 13px;
+}
+.ui-datepicker-prev{
+  margin-right: 7px;
+  margin-top: 5px;
+}
+table, tr, td {
+  vertical-align: top;
+  padding: 0;
+}
+th {
+  color: #454649;
+  font-size: 13px;
+}
+.ui-datepicker-title{
+  font-size: 13px;
+}
+.ui-state-default{
+  color:#454649;
+  font-size: 13px;
+}
+.ui-autocomplete{
+  background-color: white;
+  width: 260px;
+}
+.ui-datepicker{
+  background-color: white;
+  padding: 0 10px 0 10px;
+}
 /*# sourceMappingURL=styles.css.map */
