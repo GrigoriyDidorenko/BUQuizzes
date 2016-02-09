@@ -13,6 +13,8 @@
     <script src="../js/jquery.validate.min.js"></script>
     <script src="../js/owl.carousel.min.js"></script>
     <script src="../js/final.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <!--<link rel="stylesheet" href="../css/jquery-ui.css">-->
 </head>
 <body>
 <script src="../js/addTests.js"></script>
@@ -37,7 +39,7 @@
         </div>
     </div>
 </header>
-<main style="margin-top: 30px; ">
+<main style="margin-top: 30px; margin-bottom: 30px;">
     <div class="container">
         <div class="row">
             <form class="cmxform" id="commentForm" method="get" action="">
@@ -50,13 +52,23 @@
                 <input id="oneTime" type="checkbox"  class="positions filled-in" name="oneTime">
                 <label for="oneTime">Open test</label>
                 <div style="margin-top: 10px;">
-                <p id="label">Select tests category</p>
+                <p id="label" style="font-size: 14px;color: #2dadf0;">Select tests category</p>
                 <select id="selectCategoryTestName" class="addTestSelect" name="selectCategory">
                     <option value="" disabled selected>Select tests category</option>
                 </select>
                 </div>
                 <label for="categoryTestName" class="CategoryTestName">Or add new tests category</label>
                 <input id="categoryTestName" type="text" class="addTestSelect">
+                <label for="categoryTestName">Add test to groups and test time interval</label>
+                <div><div class="ui-widget groupdiv" id="group-0" name="0" style="margin-top: 5px; margin-left: 5px; float: left;">
+                    <span style="margin-right:5px;font-size: 14px;color: #2dadf0;">Group: </span>
+                    <input id="tags-0" type="text" class="tags" style="font-size: 14px;">
+                    <span style="margin-right:5px; font-size: 14px;color: #2dadf0;">Begin: </span>
+                    <input type="text" id="datepicker-0" class="begin" style="width: 40%;font-size: 14px;">
+                    <span style="margin-right:5px;font-size: 14px;color: #2dadf0;">End: </span>
+                    <input id="end-0" type="text" class="end" style="width: 40%;font-size: 14px;">
+                </div></div>
+                <button id="addGroup" class="add-test"><i class="fa fa-plus yesicon" style="margin-right: 3px"></i>add group</button>
                 </div>
             <div class="col s12 m7">
                 <label for="accordion">Add questions and answers</label>

@@ -698,9 +698,50 @@ ul {
    margin-top: 0;
 }
 .collapsible-body{
-margin: 15px;
+margin-left: 15px;
 }
 select{
   display: block;
+  background-color: rgba(255,255,255,0.9);
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #f2f2f2;
+  border-radius: 2px;
+  height: 3rem;
+  margin-bottom: 10px;
+}
+select{
+  display: block;
+}
+.ui-icon, .ui-icon-circle-triangle-w{
+  cursor: pointer;
+  font-size: 13px;
+}
+.ui-datepicker-prev{
+  margin-right: 7px;
+  margin-top: 5px;
+}
+table, tr, td {
+  vertical-align: top;
+  padding: 0;
+}
+th {
+  color: #454649;
+  font-size: 13px;
+}
+.ui-datepicker-title{
+  font-size: 13px;
+}
+.ui-state-default{
+  color:#454649;
+  font-size: 13px;
+}
+.ui-autocomplete{
+  background-color: white;
+  width: 260px;
+}
+.ui-datepicker{
+  background-color: white;
+  padding: 0 10px 0 10px;
 }
 /*# sourceMappingURL=styles.css.map */

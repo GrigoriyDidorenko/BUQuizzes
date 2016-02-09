@@ -11,7 +11,7 @@ $(document).ready(function () {
     //get Test
     jQuery.ajax({
         type: "GET",
-        url:"http://localhost:8080/guest/tests/34?email=atia29@mail.ru&nickName=katya&name=kate",
+        url:"http://localhost:8080/guest/tests/82?email=atia29@mail.ru&nickName=katya&name=kate",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (json) {
