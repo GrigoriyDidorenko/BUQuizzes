@@ -80,7 +80,7 @@ $(document).ready(function () {
     //ToDo ADD category TestName
     jQuery.ajax({
         type: "GET",
-        url: "/trainer/getAllСategoryTestName",
+        url: "/trainer/getAllCategoryTestName",
         dataType: "json",
         async: false,
         contentType: "application/json; charset=utf-8",
@@ -263,15 +263,15 @@ function importTest() {
     var accessBegin;
     var accessEnd;
     var group;
-    var testToGroups = [];
+    var testsToGroups = [];
     $('.groupdiv').each(function (index) {
         groupName = $.trim($('#tags-'+index+'').val());
         accessBegin = $.trim($('#datepicker-'+index+'').val());
         accessEnd = $.trim($('#end-'+index+'').val());
         group = new Group(groupName, accessBegin, accessEnd);
-        testToGroups.push(group);
+        testsToGroups.push(group);
     });
-    console.log(testToGroups);
+    console.log(testsToGroups);
     var questions = [];
     $.each( $('#questions li') , function( indexQ, questionLi ) {
       var questionD;
@@ -299,7 +299,7 @@ function importTest() {
         });
          questions.push(question);
     });
-    var test = new Test(testName, duration, oneTime, categoryTestName, testToGroups, questions);
+    var test = new Test(testName, duration, oneTime, categoryTestName, testsToGroups, questions);
     console.log(test);
     var json = JSON.stringify(test);
     console.log(json);

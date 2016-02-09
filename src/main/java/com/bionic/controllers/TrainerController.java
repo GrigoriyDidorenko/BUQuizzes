@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -76,7 +78,7 @@ public class TrainerController {
         try {
             testDTO = objectMapper.readValue(JSON, new TypeReference<TestDTO>() {
             });
-            trainerService.testToGroup(testDTO.getTestsToGroups(), testService.saveAndImportTest(testDTO).getId());
+            trainerService.testToGroup(testDTO.getTestsToGroups(), testService.saveAndImportTest(testDTO));
             return "success";
         } catch (JsonGenerationException e) {
             return new String(e.getMessage());
@@ -158,7 +160,7 @@ public class TrainerController {
 //    }
 
 
-    @RequestMapping(value = "/getAllСategoryTestName", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/getAllCategoryTestName", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     ResponseEntity<Set<String>> categoryTestName() {
