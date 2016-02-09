@@ -4,8 +4,8 @@
 
 $(document).ready(function () {
     $(function() {
-        $( ".begin" ).datepicker();
-        $( ".end" ).datepicker();
+        $( ".begin" ).datepicker({ dateFormat: 'dd-mm-yy' });
+        $( ".end" ).datepicker({ dateFormat: 'dd-mm-yy' });
     });
     addQuestion();
     //ToDo
@@ -121,8 +121,8 @@ $(document).ready(function () {
                     '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="font-size: 14px;">'+
                     '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></div>'));
                 $(function() {
-                    $( ".begin" ).datepicker();
-                    $( ".end" ).datepicker();
+                    $( ".begin" ).datepicker({ dateFormat: 'dd-mm-yy' });
+                    $( ".end" ).datepicker({ dateFormat: 'dd-mm-yy' });
                 });
                 $( ".tags" ).autocomplete({
                     source: unique
