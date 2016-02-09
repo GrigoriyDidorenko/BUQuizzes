@@ -83,7 +83,7 @@ $(document).ready(function () {
     //ToDo ADD category TestName
     jQuery.ajax({
         type: "GET",
-        url: "/trainer/getAllСategoryTestName",
+        url: "/trainer/getAllCategoryTestName",
         dataType: "json",
         async: false,
         contentType: "application/json; charset=utf-8",

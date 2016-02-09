@@ -97,11 +97,12 @@ public class TrainerService {
         return userGroupDAO.getUsersIdByGroup(groupName);
     }
     
-    /*TODO: CHECK IT*/
+
 
     public void testToGroup(List<TestDTO.TestToGroup> testsToGroups, Test test) {
         if (testsToGroups != null && !test.isOneTime()) {
             for (TestDTO.TestToGroup testToGroup : testsToGroups) {
+                /*TODO: CHECK IF groupName == null*/
                 for (BigInteger studentId : getUsersIdByGroup(testToGroup.getGroupName())) {
                     resultDAO.save(new Result(false, false, testToGroup.getAccessBegin(),
                             testToGroup.getAccessEnd(), Permission.PASS_THE_TEST, userDAO.find(studentId.intValue()), test));
