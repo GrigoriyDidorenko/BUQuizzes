@@ -3,7 +3,6 @@ package com.bionic.DAO;
 import com.bionic.DTO.TestDTO;
 import com.bionic.entities.Permission;
 import com.bionic.entities.Result;
-import com.bionic.entities.Role;
 import com.bionic.entities.Test;
 import com.bionic.wrappers.TestWrapper;
 import org.springframework.stereotype.Repository;
@@ -13,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.Query;
 import java.math.BigInteger;
 import java.util.ArrayList;
-
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,21 +31,25 @@ public class ResultDAO extends AbstractDAO<Result> {
         super(Result.class);
     }
 
-    public BigInteger hasUncheckedAnswers(long resultId){
+    public BigInteger hasUncheckedAnswers(long resultId) {
         Query query = em.createNamedQuery("hasUncheckedAnswers");
         query.setParameter("resultId", resultId);
         return (BigInteger) query.getSingleResult();
     }
 
     public Test getCurrentTest(long id, long testId, Permission permission) {
-        Query query = em.createNamedQuery("getCurrentTestById");
+        Query query = null;
+        if (permission == Permission.PASS_THE_TEST)
+            query = em.createNamedQuery("getCurrentTestByIdForStudent");
+        if (permission == Permission.EDIT_THE_TEST)
+            query = em.createNamedQuery("getCurrentTestByIdForTrainer");
         query.setParameter("userId", id);
         query.setParameter("testId", testId);
         query.setParameter("permission", permission);
-        return (Test)query.getResultList().get(0);
+        return (Test) query.getResultList().get(0);
     }
 
-    public BigInteger countCurrentTestGivenToUser(long testId, long userId, Permission permission){
+    public BigInteger countCurrentTestGivenToUser(long testId, long userId, Permission permission) {
         Query query = em.createNamedQuery("countCurrentTestGivenToUser");
         query.setParameter("testId", testId);
         query.setParameter("userId", userId);
@@ -56,10 +57,15 @@ public class ResultDAO extends AbstractDAO<Result> {
         return (BigInteger) query.getSingleResult();
     }
 
-    public List<TestDTO> getAvailableTestsNames(long id) {
+    public List<TestDTO> getAvailableTestsNames(long id, Permission permission) {
         List<TestDTO> list = new ArrayList<>();
-        Query query = em.createNamedQuery("getAvailableTestsNames");
+        Query query = null;
+        if (permission == Permission.PASS_THE_TEST)
+            query = em.createNamedQuery("getAvailableTestsNamesForStudent");
+        if (permission == Permission.EDIT_THE_TEST)
+            query = em.createNamedQuery("getAvailableTestsNamesForTrainer");
         query.setParameter("userId", id);
+        query.setParameter("permission", permission);
         Iterator iterator = query.getResultList().iterator();
         while (iterator.hasNext()) {
             Object[] tmp = (Object[]) iterator.next();

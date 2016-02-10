@@ -68,7 +68,7 @@ public class GuestService {
     public TestDTO getCurrentTest(String testId) {
         try {
             Test test = testDAO.find(Long.valueOf(testId));
-            return Util.convertUsersTestToDTO(test);
+            return Util.convertUsersTestToDTOForStudent(test);
         } catch (Exception e) {
             e.printStackTrace();
         }

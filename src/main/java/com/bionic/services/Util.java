@@ -2,9 +2,6 @@ package com.bionic.services;
 
 import com.bionic.DTO.*;
 import com.bionic.entities.*;
-import com.bionic.entities.Answer;
-import com.bionic.entities.Question;
-import com.bionic.entities.Test;
 
 import java.util.*;
 
@@ -57,7 +54,7 @@ public final class Util {
         return test;
     }
 
-    public static TestDTO convertUsersTestToDTO(Test test) {
+    public static TestDTO convertUsersTestToDTOForStudent(Test test) {
         TestDTO testDTO = new TestDTO();
         Set<QuestionDTO> questionDTOs = new HashSet<>();
         for (Question question : test.getQuestionsNotArchived()) {
@@ -75,6 +72,19 @@ public final class Util {
             testDTO = new TestDTO(test.getId(), test.getTestName(), test.getDuration(), questionDTOs);
         alreadyExecuted = true;
         return testDTO;
+    }
+
+    public static TestDTO convertUsersTestToDTO(Test test) {
+        Set<QuestionDTO> questionDTOs = new HashSet<>();
+        for (Question question : test.getQuestions()) {
+            Set<AnswerDTO> answerDTOs = new HashSet<>();
+            for (Answer answer : question.getAnswers()) {
+                answerDTOs.add(new AnswerDTO(answer.getId(), answer.getAnswerText(), answer.getMark(), answer.getIsArchived()));
+            }
+            questionDTOs.add(new QuestionDTO(question.getId(), question.getQuestion(),
+                    answerDTOs, question.getIsMultichoice(), question.getIsOpen(), question.getIsArchived()));
+        }
+        return new TestDTO(test.getId(), test.getTestName(), test.getDuration(), questionDTOs);
     }
 
     public static Set<QuestionDTO> randomizeQuestions(Set<QuestionDTO> questionDTOs) {

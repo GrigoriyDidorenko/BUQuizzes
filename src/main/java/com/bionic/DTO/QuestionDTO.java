@@ -17,6 +17,7 @@ public class QuestionDTO {
     private Set<AnswerDTO> answers;
     private boolean isMultichoice;
     private boolean isOpen;
+    private boolean archived;
 
     public QuestionDTO() {
     }
@@ -27,6 +28,15 @@ public class QuestionDTO {
         this.answers = answers;
         this.isMultichoice = isMultichoice;
         this.isOpen = isOpen;
+    }
+
+    public QuestionDTO(long id, String question, Set<AnswerDTO> answers, boolean isMultichoice, boolean isOpen, boolean archived) {
+        this.id = id;
+        this.question = question;
+        this.answers = answers;
+        this.isMultichoice = isMultichoice;
+        this.isOpen = isOpen;
+        this.archived = archived;
     }
 
     public long getId() {
@@ -69,6 +79,13 @@ public class QuestionDTO {
         this.isOpen = isOpen;
     }
 
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
+    }
 
     @Override
     public boolean equals(Object o) {

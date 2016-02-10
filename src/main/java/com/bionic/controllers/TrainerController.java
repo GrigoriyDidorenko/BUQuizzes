@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -110,6 +108,30 @@ public class TrainerController {
     List<UserAnswerDTO> getUncheckedAnswersForCurrentQuestion(@PathVariable("questionId") String questionId) {
         try {
             return trainerService.getUncheckedAnswersForCurrentQuestion(questionId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/availableTestsNames", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    ResponseEntity<Set<TestDTO>> getAvailableTestsNames() {
+        try {
+            return new ResponseEntity<>(trainerService.getAvailableTestsNames(1/*userService.getAuthorizedUser().getId()*/), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/getCurrentTest/{testId}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    ResponseEntity<TestDTO> getCurrentTest(@PathVariable("testId") String testId) {
+        try {
+            return new ResponseEntity<>(trainerService.getCurrentTest(1/*userService.getAuthorizedUser().getId()*/, testId), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }

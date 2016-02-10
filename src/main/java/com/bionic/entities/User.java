@@ -55,6 +55,7 @@ public class User {
 
 
 
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "result", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "test_id"))
     private Set<Test> tests;

@@ -11,17 +11,25 @@ import java.util.Date;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "getCurrentTestById",
+        @NamedQuery(name = "getCurrentTestByIdForStudent",
                 query = "SELECT test From Result result JOIN result.test test JOIN result.user user " +
                         "WHERE test.id = :testId " +
                         "AND user.id = :userId AND result.permission = :permission " +
                         "AND test.archived = false AND result.accessBegin < current_date AND current_date < result.accessEnd"),
-        @NamedQuery(name = "getAvailableTestsNames",
+        @NamedQuery(name = "getCurrentTestByIdForTrainer",
+                query = "SELECT test From Result result JOIN result.test test JOIN result.user user " +
+                        "WHERE test.id = :testId " +
+                        "AND user.id = :userId AND result.permission = :permission "),
+        @NamedQuery(name = "getAvailableTestsNamesForStudent",
                 query = "SELECT test.id, test.testName, test.duration FROM Result result " +
                         "JOIN result.test test " +
                         "JOIN result.user user " +
-                        "where user.id = :userId AND result.submited = false"),
-
+                        "where user.id = :userId AND result.submited = false AND result.permission = :permission"),
+        @NamedQuery(name = "getAvailableTestsNamesForTrainer",
+                query = "SELECT test.id, test.testName, test.duration FROM Result result " +
+                        "JOIN result.test test " +
+                        "JOIN result.user user " +
+                        "where user.id = :userId AND result.permission = :permission"),
         @NamedQuery(name = "getPassTests",
                 query = "SELECT test.id, test.testName, result.mark, result.isChecked FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId and result.submited = TRUE " ),
         @NamedQuery(name = "getTestsForUserId",
