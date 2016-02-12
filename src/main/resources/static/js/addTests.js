@@ -85,7 +85,6 @@ $(document).ready(function () {
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             var rols = json;
-
             var availableTags = []; // create array here
             $.each(rols, function (index, rolsone) {
                 $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
