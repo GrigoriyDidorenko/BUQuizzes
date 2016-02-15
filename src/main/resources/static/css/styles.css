@@ -128,6 +128,7 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
   display: inline-block;
   margin-bottom: 15px;
   margin-top: -20px;
+  color: crimson;
 }
 
 label {
@@ -692,7 +693,7 @@ ul {
   margin: 0;
   padding: 0;
 }
-.mama, .papa{
+.mama, .papa, .child{
   color: crimson;
 }
 
@@ -797,5 +798,9 @@ legend {
 fieldset {
   border: 1px solid #c0c0c0;
   margin: -10px 0 10px 0;
+}
+.opentest{
+  color: crimson;
+  font-size: 14px;
 }
 /*# sourceMappingURL=styles.css.map */
