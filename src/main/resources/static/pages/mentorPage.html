@@ -2,18 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script type="text/javascript" src="../js/__code.jquery.com_jquery-1.11.3.js"></script>
-    <script type="text/javascript" src="../materialize-src/js/bin/materialize.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <script type="text/javascript" src="../js/editTest.js"></script>
+    <title>UserPage</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="../materialize-src/sass/materialize.scss" media="screen,projection"/>
+    <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="../js/owl.carousel.min.js"></script>
     <script src="../js/final.js"></script>
-    <script src="../js/jquery-ui.js"></script>
+    <style>
+        select{
+            display:none;
+        }
+    </style>
 </head>
 <body>
+<script src="../js/mentorPage.js"></script>
+<script type="text/javascript" src="../materialize-src/js/bin/materialize.min.js"></script>
 <header>
     <div class="logo">
         <div class="container">
@@ -28,48 +41,37 @@
         <div class="container">
             <div class="row">
                 <div class="col s9 m10 l11">
-                    <h1>редагування тесту</h1>
+                    <h1>профіль ментора</h1>
                 </div>
                 <div class="col s3 m2 l1">
-                    <a href="http://localhost:8080/pages/mentorPage.html"><p class="out"><i class="fa fa-reply" style="margin-right: 5px;"></i>Назад</p></a>
+                    <a href="http://localhost:8080/logout"><button class="out-but">вийти</button></a>
                 </div>
             </div>
         </div>
     </div>
 </header>
-<main style="margin-top: 30px; ">
+<main class="user-main">
     <div class="container">
         <div class="row">
-            <div class="col s12 m5 newTest">
-                <div id="my"></div>
-                <label for="testName">Test name</label>
-                <input id="testName" type="text" name="testName">
-                <div id="exeption" class="positions"></div>
-                <label for="duration">Duration</label>
-                <input id="duration" type="text">
-                <input id="oneTime" type="checkbox" class="positions filled-in">
-                <label for="oneTime">Open test</label>
-                <div style="margin-top: 10px;">
-                    <p id="label">Select tests category</p>
-                    <select id="selectCategoryTestName" class="addTestSelect" name="selectCategory">
-                        <option value="" disabled selected>Select tests category</option>
+            <div class="col s12">
+                <h2 id="name">Катюша</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="input-field">
+                    <p id="label">Оберіть категорію тесту для редагування</p>
+                    <select id="roles">
+                        <option value="" disabled selected>Категорії тестів</option>
                     </select>
                 </div>
-                <label for="categoryTestName" class="CategoryTestName">Or add new tests category</label>
-                <input id="categoryTestName" type="text" class="addTestSelect">
-                <label for="categoryTestName">Add test to groups and test time interval</label>
-                <div class="myGroup"></div>
-                <button id="addGroup" type="button" class="add-group" style="margin-top: 5px;"><i class="fa fa-plus yes" style="margin-right: 3px"></i>add group</button>
+                <table id="testTable"></table>
             </div>
-            <div class="col s12 m7">
-                <label for="accordion">Add questions and answers</label>
-                <div id="accordion">
-                    <ul class="collapsible" data-collapsible="accordion">
-
-                    </ul>
-                </div>
-                <button id="addQuestion" type="button" class="add-test" style="color: #2dadf0; font-size: 14px; margin-top: 10px;"><i class="fa fa-plus yesicon" style="margin-right: 3px; color: #2dadf0;"></i>add question</button>
-                <div style="width: 90%; text-align: center; margin-bottom: 30px;"><button id="importTest" type="button" class="save-btn-test" style="margin-top: 10px; float: none;">save test</button></div>
+            <div class="col s12 m4 center addbutton">
+                <a href="addTest.html"><span class="mentor"><i class="fa fa-plus yes" style="margin-right: 5px"></i>Cтворити тест</span></a>
+            </div>
+            <div class="col s12 m4 center attent">
+                <a href="allOpenQuestions.html"><span class="mentor">Перевірити тести з відкрити відповідями<span class="attention"><i class="fa fa-bell" style="color: crimson;"></i></span></span></a>
             </div>
         </div>
     </div>

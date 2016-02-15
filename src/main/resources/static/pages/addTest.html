@@ -14,7 +14,6 @@
     <script src="../js/owl.carousel.min.js"></script>
     <script src="../js/final.js"></script>
     <script src="../js/jquery-ui.js"></script>
-    <!--<link rel="stylesheet" href="../css/jquery-ui.css">-->
 </head>
 <body>
 <script src="../js/addTests.js"></script>
@@ -32,8 +31,11 @@
     <div class="header-title">
         <div class="container">
             <div class="row">
-                <div class="col s12">
-                    <h1>add tests</h1>
+                <div class="col s9 m10 l11">
+                    <h1>створення тесту</h1>
+                </div>
+                <div class="col s3 m2 l1">
+                    <a href="http://localhost:8080/pages/mentorPage.html"><p class="out"><i class="fa fa-reply" style="margin-right: 5px;"></i>Назад</p></a>
                 </div>
             </div>
         </div>
@@ -44,31 +46,38 @@
         <div class="row">
             <form class="cmxform" id="commentForm" method="get" action="">
             <div class="col s12 m5 newTest">
-                <label for="testName">Test name</label>
+                <label for="testName">Назва тесту</label>
                 <input id="testName" type="text" name="testName" required>
                 <div id="exeption" class="positions"></div>
-                <label for="duration">Duration</label>
+                <label for="duration">Тривалість</label>
                 <input id="duration" type="text">
                 <input id="oneTime" type="checkbox"  class="positions filled-in" name="oneTime">
-                <label for="oneTime">Open test</label>
+                <label for="oneTime">Тест відкритого доступу</label>
                 <div style="margin-top: 10px;">
-                <p id="label" style="font-size: 14px;color: #2dadf0;">Select tests category</p>
+                <p id="label" style="font-size: 14px;color: #2dadf0;">Оберіть категорію тесту</p>
                 <select id="selectCategoryTestName" class="addTestSelect" name="selectCategory">
-                    <option value="" disabled selected>Select tests category</option>
+                    <option value="" disabled selected>Категорія тесту</option>
                 </select>
                 </div>
-                <label for="categoryTestName" class="CategoryTestName">Or add new tests category</label>
+                <label for="categoryTestName" class="CategoryTestName">Або створіть нову категорію тесту</label>
                 <input id="categoryTestName" type="text" class="addTestSelect">
-                <label for="categoryTestName">Add test to groups and test time interval</label>
-                <div><div class="ui-widget groupdiv" id="group-0" name="0" style="margin-top: 5px; margin-left: 5px; float: left;">
-                    <span style="margin-right:5px;font-size: 14px;color: #2dadf0;">Group: </span>
+                <p style="font-size: 14px;color: #2dadf0;">Add test to groups and test time interval</p>
+                <div>
+
+                    <div class="ui-widget groupdiv" id="group-0" name="0" style="margin-top: 5px; margin-left: 5px; float: left;">
+                        <fieldset>
+                            <legend>Group-1</legend>
+                    <span style="margin-right:5px;font-size: 14px;">Group: </span>
                     <input id="tags-0" type="text" class="tags" style="font-size: 14px;">
-                    <span style="margin-right:5px; font-size: 14px;color: #2dadf0;">Begin: </span>
-                    <input type="text" id="datepicker-0" class="begin" style="width: 40%;font-size: 14px;">
-                    <span style="margin-right:5px;font-size: 14px;color: #2dadf0;">End: </span>
-                    <input id="end-0" type="text" class="end" style="width: 40%;font-size: 14px;">
-                </div></div>
-                <button id="addGroup" class="add-test"><i class="fa fa-plus yesicon" style="margin-right: 3px"></i>add group</button>
+                    <span style="margin-right:5px; font-size: 14px;">Begin: </span>
+                    <input type="text" id="datepicker-0" class="begin" style="font-size: 14px;">
+                    <span style="margin-right:5px;font-size: 14px;">End: </span>
+                    <input id="end-0" type="text" class="end" style="font-size: 14px;">
+                        </fieldset>
+                    </div>
+
+                </div>
+                <button id="addGroup" type="button" class="add-group"><i class="fa fa-plus yes" style="margin-right: 3px"></i>add group</button>
                 </div>
             <div class="col s12 m7">
                 <label for="accordion">Add questions and answers</label>

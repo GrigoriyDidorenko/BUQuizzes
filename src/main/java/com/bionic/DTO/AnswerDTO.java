@@ -13,6 +13,7 @@ public class AnswerDTO {
     private long id;
     private String answerText;
     private int mark;
+    private boolean archived;
 
     public long getId() {
         return id;
@@ -41,11 +42,25 @@ public class AnswerDTO {
     public AnswerDTO() {
     }
 
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
+    }
+
     public AnswerDTO(long id, String answerText) {
         this.id = id;
         this.answerText = answerText;
     }
 
+    public AnswerDTO(long id, String answerText, int mark, boolean archived) {
+        this.id = id;
+        this.answerText = answerText;
+        this.mark = mark;
+        this.archived = archived;
+    }
 
     @Override
     public boolean equals(Object o) {

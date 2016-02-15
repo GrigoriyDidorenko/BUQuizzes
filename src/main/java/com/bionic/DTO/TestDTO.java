@@ -1,7 +1,9 @@
 package com.bionic.DTO;
 
-import com.bionic.entities.UserGroup;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -35,26 +37,30 @@ public class TestDTO {
 
     //TODO: CHECK IT
 
-    public class TestToGroup{
+    public static class TestToGroup{
 
-        private String userGroupName;
+        private String groupName;
+
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         private Date accessBegin;
+
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         private Date accessEnd;
 
         public TestToGroup(){}
 
-        public TestToGroup(String userGroupName, Date accessBegin, Date accessEnd) {
-            this.userGroupName = userGroupName;
+        public TestToGroup(String groupName, Date accessBegin, Date accessEnd) throws ParseException {
+            this.groupName = groupName;
             this.accessBegin = accessBegin;
             this.accessEnd = accessEnd;
         }
 
-        public String getUserGroupName() {
-            return userGroupName;
+        public String getGroupName() {
+            return groupName;
         }
 
-        public void setUserGroupName(String userGroupName) {
-            this.userGroupName = userGroupName;
+        public void setGroupName(String groupName) {
+            this.groupName = groupName;
         }
 
         public Date getAccessBegin() {
@@ -75,6 +81,15 @@ public class TestDTO {
     }
 
     public TestDTO() {
+    }
+
+    public TestDTO(String testName, int duration, boolean oneTime, String categoryTestName, List<TestToGroup> testsToGroups, Set<QuestionDTO> questions) {
+        this.testName = testName;
+        this.duration = duration;
+        this.oneTime = oneTime;
+        this.categoryTestName = categoryTestName;
+        this.testsToGroups = testsToGroups;
+        this.questions = questions;
     }
 
     public TestDTO(String categoryTestName, long id, String testName, int duration ) {
@@ -112,6 +127,8 @@ public class TestDTO {
         this.submitted = submitted;
         this.duration = duration;
     }
+
+
 
     public boolean isChecked() {
         return isChecked;

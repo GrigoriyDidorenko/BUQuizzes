@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -28,9 +29,9 @@ public class UserGroupDAO extends AbstractDAO<UserGroupDAO> {
         return (List<UserGroup>)query.getResultList();
     }
 
-    public List<Long> getUsersIdByGroup(String groupName){
+    public List<BigInteger> getUsersIdByGroup(String groupName){
         Query query = em.createNamedQuery("getUsersIdByGroup");
         query.setParameter("groupName", groupName);
-        return (List<Long>)query.getResultList();
+        return (List<BigInteger>)query.getResultList();
     }
 }

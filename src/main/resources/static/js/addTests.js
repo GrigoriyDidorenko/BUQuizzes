@@ -4,17 +4,18 @@
 
 $(document).ready(function () {
     $(function() {
-        $( ".begin" ).datepicker();
-        $( ".end" ).datepicker();
+        $( ".begin" ).datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+        $( ".end" ).datepicker({
+            dateFormat: "yy-mm-dd"
+        });
     });
     addQuestion();
     //ToDo
     //Add new Question
     $("#addQuestion").click(function () {
         addQuestion();
-    });
-    $("#addGroup").click(function () {
-        addGroup();
     });
     $('#importTest').click(function () {
         $.validator.setDefaults({
@@ -79,21 +80,18 @@ $(document).ready(function () {
     //ToDo ADD category TestName
     jQuery.ajax({
         type: "GET",
-        url: "/trainer/getAllСategoryTestName",
+        url: "/trainer/getAllCategoryTestName",
         dataType: "json",
         async: false,
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             var rols = json;
+
             var availableTags = []; // create array here
+
             $.each(rols, function (index, rolsone) {
                 $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
-                availableTags.push(rolsone); //push values here
             });
-                console.log(availableTags);
-                $( ".tags" ).autocomplete({
-                    source: availableTags
-                });
         },
         error: function (http) {
             return http.responseText;
@@ -103,7 +101,50 @@ $(document).ready(function () {
     $('.collapsible').collapsible({
         accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
     });
-
+    jQuery.ajax({
+        type: "GET",
+        url: "/trainer/getAllGroups",
+        dataType: "json",
+        async: false,
+        contentType: "application/json; charset=utf-8",
+        success: function (json) {
+            var manson = json;
+            var availableGroups = []; // create array here
+            $.each(manson, function (index, myjs) {
+                availableGroups.push(myjs[1]); //push values here
+            });
+            var unique=availableGroups.filter(function(itm,i,availableGroups){
+                return i==availableGroups.indexOf(itm);
+            });
+            $( ".tags" ).autocomplete({
+                source: unique
+            });
+            $("#addGroup").click(function () {
+                var katya = $('.groupdiv:last').attr('id');
+                var katenka = $('.groupdiv:last').attr('name');
+                var katyaAdd = (+katenka+1);
+                $('#'+katya+'').after($('<div class="ui-widget groupdiv" id="group-'+katyaAdd+'" name="'+katyaAdd+'" style="margin-top: 5px; margin-left: 5px; float: left;padding-top: 10px;">'+
+                        '<fieldset><legend>Group-'+(katyaAdd+1)+'</legend>'+
+                    '<span style="margin-right:5px;font-size: 14px;">Group: </span><input id="tags-'+katyaAdd+'" type="text" class="tags" style="font-size: 14px;">'+
+                    '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="font-size: 14px;">'+
+                    '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></fieldset></div>'));
+                $(function() {
+                    $( ".begin" ).datepicker({
+                        dateFormat: "yy-mm-dd"
+                    });
+                    $( ".end" ).datepicker({
+                        dateFormat: "yy-mm-dd"
+                    });
+                });
+                $( ".tags" ).autocomplete({
+                    source: unique
+                });
+            });
+        },
+        error: function (http) {
+            return http.responseText;
+        }
+    });
 
 });
 
@@ -158,43 +199,6 @@ function addQuestion() {
 function deleteQuestion(idQuestion) {
     var delEle = document.getElementById(idQuestion);
     document.getElementById('questions').removeChild(delEle);
-}
-
-function addGroup() {
-    var katya = $('.groupdiv:last').attr('id');
-    var katenka = $('.groupdiv:last').attr('name');
-    var katyaAdd = (+katenka+1);
-    $('#'+katya+'').after($('<div class="ui-widget groupdiv" id="group-'+katyaAdd+'" name="'+katyaAdd+'" style="margin-top: 5px; margin-left: 5px; float: left;border-top: 1px solid gainsboro; padding-top: 10px;">'+
-        '<span style="margin-right:5px;font-size: 14px;color: #2dadf0;">Group: </span><input id="tags-'+katyaAdd+'" type="text" class="tags" style="font-size: 14px;">'+
-        '<span style="margin-right:5px; font-size: 14px;color: #2dadf0;">Begin: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="width: 40%;font-size: 14px;">'+
-        '<span style="margin-right:5px;font-size: 14px;color: #2dadf0;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="width: 40%;font-size: 14px;"></div>'));
-    $(function() {
-        $( ".begin" ).datepicker();
-        $( ".end" ).datepicker();
-    });
-    jQuery.ajax({
-        type: "GET",
-        url: "/trainer/getAllСategoryTestName",
-        dataType: "json",
-        async: false,
-        contentType: "application/json; charset=utf-8",
-        success: function (json) {
-            var rols = json;
-
-            var availableTags = []; // create array here
-            $.each(rols, function (index, rolsone) {
-                $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
-                availableTags.push(rolsone); //push values here
-            });
-            console.log(availableTags);
-            $( ".tags" ).autocomplete({
-                source: availableTags
-            });
-        },
-        error: function (http) {
-            return http.responseText;
-        }
-    });
 }
 
 function addAnswer(questionId) {
@@ -260,18 +264,18 @@ function importTest() {
     var duration = $('#duration').val();
     var oneTime=$('#oneTime').prop("checked");
     var groupName;
-    var beginTime;
-    var endTime;
+    var accessBegin;
+    var accessEnd;
     var group;
-    var groups = [];
+    var testsToGroups = [];
     $('.groupdiv').each(function (index) {
         groupName = $.trim($('#tags-'+index+'').val());
-        beginTime = $.trim($('#datepicker-'+index+'').val());
-        endTime = $.trim($('#end-'+index+'').val());
-        group = new Group(groupName, beginTime, endTime);
-        groups.push(group);
+        accessBegin = $.trim($('#datepicker-'+index+'').val());
+        accessEnd = $.trim($('#end-'+index+'').val());
+        group = new Group(groupName, accessBegin, accessEnd);
+        testsToGroups.push(group);
     });
-    console.log(groups);
+    console.log(testsToGroups);
     var questions = [];
     $.each( $('#questions li') , function( indexQ, questionLi ) {
       var questionD;
@@ -299,7 +303,7 @@ function importTest() {
         });
          questions.push(question);
     });
-    var test = new Test(testName, duration, oneTime, categoryTestName, groups, questions);
+    var test = new Test(testName, duration, oneTime, categoryTestName, testsToGroups, questions);
     console.log(test);
     var json = JSON.stringify(test);
     console.log(json);
@@ -320,18 +324,18 @@ function importTest() {
     })
 }
 
-function Test(testName, duration, oneTime, categoryTestName, groups, questions) {
+function Test(testName, duration, oneTime, categoryTestName, testsToGroups, questions) {
     this.testName = testName;
     this.duration = duration;
     this.oneTime = oneTime;
     this.categoryTestName = categoryTestName;
-    this.groups = groups;
+    this.testsToGroups = testsToGroups;
     this.questions = questions;
 }
-function Group(groupName, beginTime, endTime) {
+function Group(groupName, accessBegin, accessEnd) {
     this.groupName = groupName;
-    this.beginTime = beginTime;
-    this.endTime = endTime;
+    this.accessBegin = accessBegin;
+    this.accessEnd = accessEnd;
 }
 function Question(question, answers) {
     this.question = question;

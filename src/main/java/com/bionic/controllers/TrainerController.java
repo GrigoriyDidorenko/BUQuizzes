@@ -76,7 +76,7 @@ public class TrainerController {
         try {
             testDTO = objectMapper.readValue(JSON, new TypeReference<TestDTO>() {
             });
-            trainerService.testToGroup(testDTO.getTestsToGroups(), testService.saveAndImportTest(testDTO).getId());
+            trainerService.testToGroup(testDTO.getTestsToGroups(), testService.saveAndImportTest(testDTO));
             return "success";
         } catch (JsonGenerationException e) {
             return new String(e.getMessage());
@@ -95,7 +95,7 @@ public class TrainerController {
     @ResponseBody
     List<OpenQuestionWrapper> getUncheckedTests() {
         try {
-            return trainerService.getUncheckedTests(/*userService.getAuthorizedUser().getId()*/1);
+            return trainerService.getUncheckedTests(/*userService.getAuthorizedUser().getId()*/3);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,6 +108,30 @@ public class TrainerController {
     List<UserAnswerDTO> getUncheckedAnswersForCurrentQuestion(@PathVariable("questionId") String questionId) {
         try {
             return trainerService.getUncheckedAnswersForCurrentQuestion(questionId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/availableTestsNames", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    ResponseEntity<Set<TestDTO>> getAvailableTestsNames() {
+        try {
+            return new ResponseEntity<>(trainerService.getAvailableTestsNames(1/*userService.getAuthorizedUser().getId()*/), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/getCurrentTest/{testId}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    ResponseEntity<TestDTO> getCurrentTest(@PathVariable("testId") String testId) {
+        try {
+            return new ResponseEntity<>(trainerService.getCurrentTest(1/*userService.getAuthorizedUser().getId()*/, testId), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -158,7 +182,7 @@ public class TrainerController {
 //    }
 
 
-    @RequestMapping(value = "/getAllСategoryTestName", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/getAllCategoryTestName", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     ResponseEntity<Set<String>> categoryTestName() {

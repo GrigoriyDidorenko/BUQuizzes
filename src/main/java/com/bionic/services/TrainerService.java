@@ -6,13 +6,17 @@ import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.DTO.UserDTO;
 import com.bionic.entities.Permission;
 import com.bionic.entities.Result;
+import com.bionic.entities.Test;
 import com.bionic.entities.UserGroup;
 import com.bionic.wrappers.OpenQuestionWrapper;
 import com.bionic.wrappers.TestUserWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * package: com.bionic.services
@@ -23,7 +27,7 @@ import java.util.List;
  * @date: 06.12.2015
  */
 @Service
-public class TrainerService {
+public class TrainerService implements TestHandler<TestDTO> {
 
     @Autowired
     private UserDAO userDAO;
@@ -91,20 +95,32 @@ public class TrainerService {
         return userGroupDAO.getAllGroups();
     }
 
-    public List<Long> getUsersIdByGroup(String groupName) {
+    public List<BigInteger> getUsersIdByGroup(String groupName) {
         return userGroupDAO.getUsersIdByGroup(groupName);
     }
-    
-    /*TODO: CHECK IT*/
 
-    public void testToGroup(List<TestDTO.TestToGroup> testsToGroups, long testId) {
-        if (testsToGroups != null) {
+
+    public void testToGroup(List<TestDTO.TestToGroup> testsToGroups, Test test) {
+        if (testsToGroups != null && !test.isOneTime()) {
             for (TestDTO.TestToGroup testToGroup : testsToGroups) {
-                for (Long studentId : getUsersIdByGroup(testToGroup.getUserGroupName())) {
-                    resultDAO.save(new Result(false, false, testToGroup.getAccessBegin(),
-                            testToGroup.getAccessEnd(), Permission.PASS_THE_TEST, userDAO.find(studentId), testDAO.find(testId)));
-                }
+                if (!testToGroup.getGroupName().equals(""))
+                    for (BigInteger studentId : getUsersIdByGroup(testToGroup.getGroupName())) {
+                        resultDAO.save(new Result(false, false, testToGroup.getAccessBegin(),
+                                testToGroup.getAccessEnd(), Permission.PASS_THE_TEST, userDAO.find(studentId.intValue()), test));
+                    }
             }
         }
+    }
+
+
+    @Override
+    public Set<TestDTO> getAvailableTestsNames(long idStr) {
+        return new HashSet<>(resultDAO.getAvailableTestsNames(idStr, Permission.EDIT_THE_TEST));
+    }
+
+    @Override
+    public TestDTO getCurrentTest(long id, String testIdStr) {
+        return Util.convertUsersTestToDTO(resultDAO.getCurrentTest(id, Util.getLongId(testIdStr), Permission.EDIT_THE_TEST));
+
     }
 }

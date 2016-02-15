@@ -133,6 +133,8 @@ public class TestService {
 
     @Transactional
     public Test importTest(TestDTO testDTO) throws UserException {
+        if(testDTO.getDuration()==0 && !testDTO.isOneTime())
+            throw new UserException("If test isn't open, duration can't be 0");
         HashSet<Question> questions = new HashSet<>();
         Test test = new Test();
         test.setId(testDTO.getId());
@@ -140,9 +142,8 @@ public class TestService {
         test.setTestName(testDTO.getTestName());
         test.setOneTime(testDTO.isOneTime());
         CategoryTest categoryTest = categoryTestDAO.getСategoryTestByTestName(testDTO.getCategoryTestName());
-        if (categoryTest == null) {
+        if (categoryTest == null)
             categoryTest = new CategoryTest(testDTO.getCategoryTestName());
-        }
         test.setCategoryTest(categoryTest);
         if (testDTO.getQuestions() != null)
             for (QuestionDTO questionDTO : testDTO.getQuestions()) {

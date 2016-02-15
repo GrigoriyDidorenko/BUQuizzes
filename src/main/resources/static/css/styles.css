@@ -125,7 +125,6 @@ input[type=email], input[type=password] {
   padding: 0 10px 0 10px;
   box-sizing: border-box; }
 input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=text]:focus:not([readonly])+label {
-  color:crimson;
   display: inline-block;
   margin-bottom: 15px;
   margin-top: -20px;
@@ -651,6 +650,10 @@ ul {
   color: #4CAF50;
   font-size: 13px;
 }
+.yes {
+  color: #2dadf0;
+  font-size: 13px;
+}
 .add-test{
   margin: 0 auto;
   background-color: white;
@@ -663,6 +666,20 @@ ul {
   font-size: 12px;
   text-transform: uppercase;
   border-radius: 5px;
+}
+.add-group{
+  margin: 0 auto;
+  background-color: white;
+  color: #2dadf0;
+  border: none;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+  padding: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 #exeption{
   width: 100%;
@@ -738,10 +755,47 @@ th {
 }
 .ui-autocomplete{
   background-color: white;
+  padding-left: 10px;
   width: 260px;
+  max-height: 150px;
+  overflow-y: scroll;
+  cursor: pointer;
 }
 .ui-datepicker{
   background-color: white;
   padding: 0 10px 0 10px;
+}
+.ui-helper-hidden-accessible{
+  display: none;
+}
+.mentor{
+   font-size: 14px;
+  color: #2dadf0;
+   padding: 0;
+   text-align: center;
+ }
+.attention{
+  margin-left: 5px;
+}
+@media only screen and (max-width: 600px) {
+  .addbutton, .attent{
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+}
+.out{
+  margin: 27px 0 0 0;
+  color: white;
+  width: 80px;
+  height: 30px;
+  font-size: 14px;
+}
+legend {
+  color: #c0c0c0;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: -10px 0 10px 0;
 }
 /*# sourceMappingURL=styles.css.map */

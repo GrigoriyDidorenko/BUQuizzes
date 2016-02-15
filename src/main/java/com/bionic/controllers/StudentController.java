@@ -65,10 +65,11 @@ public class StudentController {
     ResponseEntity<TestDTO> getCurrentTest(@PathVariable("resultId") String resultId) {
 
         studentService.setTestBeginTime(resultId);
-        TestDTO testDTO = studentService.getCurrentTest(userService.getAuthorizedUser().getId(), resultId);
+        TestDTO testDTO = studentService.getCurrentTest(1/*userService.getAuthorizedUser().getId()*/, resultId);
         return new ResponseEntity<>(testDTO, HttpStatus.OK);
     }
 
+    /*TODO: что такое getUserTestsById!!*/
 
     /*Example JSON [ {     "questionId" : 1 , "answerId" : 1 },
                      {     "questionId" : 2 , "answerId" : 4} ,
