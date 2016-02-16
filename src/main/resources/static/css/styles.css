@@ -125,10 +125,10 @@ input[type=email], input[type=password] {
   padding: 0 10px 0 10px;
   box-sizing: border-box; }
 input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=text]:focus:not([readonly])+label {
-  color:crimson;
   display: inline-block;
   margin-bottom: 15px;
   margin-top: -20px;
+  color: crimson;
 }
 
 label {
@@ -693,7 +693,7 @@ ul {
   margin: 0;
   padding: 0;
 }
-.mama, .papa{
+.mama, .papa, .child{
   color: crimson;
 }
 
@@ -756,7 +756,11 @@ th {
 }
 .ui-autocomplete{
   background-color: white;
+  padding-left: 10px;
   width: 260px;
+  max-height: 150px;
+  overflow-y: scroll;
+  cursor: pointer;
 }
 .ui-datepicker{
   background-color: white;
@@ -788,5 +792,15 @@ th {
   height: 30px;
   font-size: 14px;
 }
-
+legend {
+  color: #c0c0c0;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: -10px 0 10px 0;
+}
+.opentest{
+  color: crimson;
+  font-size: 14px;
+}
 /*# sourceMappingURL=styles.css.map */

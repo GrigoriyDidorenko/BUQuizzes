@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function () {
+    $('.opentest').hide();
     $(function() {
         $( ".begin" ).datepicker({
             dateFormat: "yy-mm-dd"
@@ -18,12 +19,14 @@ $(document).ready(function () {
         addQuestion();
     });
     $('#importTest').click(function () {
+        $('.opentest').hide();
         $.validator.setDefaults({
             submitHandler: function() {
                 $(".question").each(function (index) {
                     var iM = (index + 1);
                     $('#question-' + iM + '_error').hide();
                     $('#question-' + iM + '_error2').hide();
+                    $('#question-' + iM + '_error3').hide();
                     var value = $.trim($('#questioninput-' + iM + '').val());
                     if (value.length > 0) {
                         $('#question-' + iM + '_error').hide();
@@ -44,8 +47,33 @@ $(document).ready(function () {
                             }
                         }
                     });
+                    $('#question-' + iM + '_m' + (index + 1) + '').each(function (index) {
+                        var questV = '#question-' + iM + '_m' + (index + 1) + '';
+                        var value=$.trim($(questV).val());
+                        if(value.length > 0){
+                            var val = $.trim($('#question-' + iM + '_a'+(index+1)+'').val());
+                            if (val.length > 0) {
+                            }
+                            else {
+                                $('#question-' + iM + '_error3').show();
+                            }
+                        }
+                    });
                 });
-                if($('.mama').is(":visible") || $('.papa').is(":visible")){
+                var groupval;
+                if ($('#oneTime').is(':checked')) {
+                    $(".tags").each(function (index) {
+                        $('#tags-' + index + '').each(function (index) {
+                            groupval = $.trim($(this).val());
+                        });
+                    });
+                    if (groupval.length > 0) {
+                        $('.opentest').show();
+                    }
+                    else {
+                    }
+                }
+                if($('.mama').is(":visible") || $('.papa').is(":visible")|| $('.child').is(":visible")){
                 }
                 else {
                     importTest();
@@ -66,10 +94,10 @@ $(document).ready(function () {
             $("#commentForm").validate({
                 messages: {
                     testName: {
-                        required: "Please enter test name"
+                        required: "Введіть, будь ласка, назву тесту"
                     },
                     selectCategory: {
-                        required: "Please select tests category or add new"
+                        required: "Будь ласка, оберіть категорію тесту чи створіть нову"
                     }
                 }
             });
@@ -86,6 +114,9 @@ $(document).ready(function () {
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             var rols = json;
+
+            var availableTags = []; // create array here
+
             $.each(rols, function (index, rolsone) {
                 $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
             });
@@ -120,10 +151,11 @@ $(document).ready(function () {
                 var katya = $('.groupdiv:last').attr('id');
                 var katenka = $('.groupdiv:last').attr('name');
                 var katyaAdd = (+katenka+1);
-                $('#'+katya+'').after($('<div class="ui-widget groupdiv" id="group-'+katyaAdd+'" name="'+katyaAdd+'" style="margin-top: 5px; margin-left: 5px; float: left;border-top: 1px solid #2dadf0; padding-top: 10px;">'+
-                    '<span style="margin-right:5px;font-size: 14px;">Group: </span><input id="tags-'+katyaAdd+'" type="text" class="tags" style="font-size: 14px;">'+
-                    '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="font-size: 14px;">'+
-                    '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></div>'));
+                $('#'+katya+'').after($('<div class="ui-widget groupdiv" id="group-'+katyaAdd+'" name="'+katyaAdd+'" style="margin-top: 5px; margin-left: 5px; float: left;padding-top: 10px;">'+
+                        '<fieldset><legend>Група-'+(katyaAdd+1)+'</legend>'+
+                    '<span style="margin-right:5px;font-size: 14px;">Назва групи: </span><input id="tags-'+katyaAdd+'" type="text" class="tags" style="font-size: 14px;">'+
+                    '<span style="margin-right:5px; font-size: 14px;">Початок: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="font-size: 14px;">'+
+                    '<span style="margin-right:5px;font-size: 14px;">Кінець: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></fieldset></div>'));
                 $(function() {
                     $( ".begin" ).datepicker({
                         dateFormat: "yy-mm-dd"
@@ -162,7 +194,7 @@ function addQuestion() {
     childInp.type = "text";
     childInp.id = 'questioninput-' + +countQuestion;
     childInp.setAttribute("class", "questioninput");
-    childInp.placeholder = "Question";
+    childInp.placeholder = "Питання";
     childInp.name = "questioninput";
     childInp.style = 'width:85%;';
     var childDelButton = document.createElement('i');
@@ -173,23 +205,30 @@ function addQuestion() {
     });
     var childError = document.createElement('i');
     childError.id = childLI.id + "_error";
-    childError.textContent = "Please enter question";
-    childError.style = 'display: block; font-size: 14px; width: 50%; margin: -25px 0 -23px 0; padding: 0px; text-align: left;font-style:normal;';
+    childError.textContent = "Будь ласка, введіть питання";
+    childError.style = 'display: block; font-size: 14px; width: 50%; margin: -25px 0 -15px 0; padding: 0px; text-align: left;font-style:normal;';
     childError.setAttribute("class", "mama");
     var childError2 = document.createElement('i');
     childError2.id = childLI.id + "_error2";
-    childError2.textContent = "Please enter mark";
+    childError2.textContent = "Будь ласка, введіть оцінку";
     childError2.style = 'display: block; font-size: 14px; width: 50%; margin: -15px 0px -10px 0px; text-align:left; font-style:normal;';
     childError2.setAttribute("class", "papa");
+    var childError3 = document.createElement('i');
+    childError3.id = childLI.id + "_error3";
+    childError3.textContent = "Будь ласка, введіть відповідь";
+    childError3.style = 'display: block; font-size: 14px; width: 50%; margin: -15px 0px -10px 0px; text-align:left; font-style:normal;';
+    childError3.setAttribute("class", "child");
     childDiv.appendChild(childInp);
     childDiv.appendChild(childDelButton);
     childDiv.appendChild(childError);
     childDiv.appendChild(childError2);
+    childDiv.appendChild(childError3);
     childLI.appendChild(childDiv);
     document.getElementById('questions').appendChild(childLI);
     addAnswer(childLI.id);
     $('.mama').hide();
     $('.papa').hide();
+    $('.child').hide();
 }
 
 function deleteQuestion(idQuestion) {
@@ -208,12 +247,12 @@ function addAnswer(questionId) {
     var childInp1 = document.createElement('input');
     childInp1.id = questionId + "_a" + countAnswer;
     childInp1.type = "text";
-    childInp1.placeholder = "Answer";
+    childInp1.placeholder = "Відповідь";
     var childInp2 = document.createElement('input');
     childInp2.id = questionId + "_m" + countAnswer;
     childInp2.type = "number";
     childInp2.setAttribute("class", "mark-"+questionId+"");
-    childInp2.placeholder = "mark";
+    childInp2.placeholder = "оцінка";
     //button
     var childDelButton = document.createElement('i');
     //Add id

@@ -53,33 +53,40 @@
                 <input id="duration" type="text">
                 <input id="oneTime" type="checkbox"  class="positions filled-in" name="oneTime">
                 <label for="oneTime">Тест відкритого доступу</label>
+                <div class="opentest">Тест відкритого доступу не може бути призначений групам</div>
                 <div style="margin-top: 10px;">
                 <p id="label" style="font-size: 14px;color: #2dadf0;">Оберіть категорію тесту</p>
                 <select id="selectCategoryTestName" class="addTestSelect" name="selectCategory">
                     <option value="" disabled selected>Категорія тесту</option>
                 </select>
                 </div>
-                <label for="categoryTestName" class="CategoryTestName">Or add new tests category</label>
+                <label for="categoryTestName" class="CategoryTestName">Або створіть нову категорію тесту</label>
                 <input id="categoryTestName" type="text" class="addTestSelect">
-                <label for="categoryTestName">Add test to groups and test time interval</label>
-                <div><div class="ui-widget groupdiv" id="group-0" name="0" style="margin-top: 5px; margin-left: 5px; float: left;">
-                    <span style="margin-right:5px;font-size: 14px;">Group: </span>
+                <p style="font-size: 14px;color: #2dadf0;">Додати тест групам</p>
+                <div>
+                    <div class="ui-widget groupdiv" id="group-0" name="0" style="margin-top: 5px; margin-left: 5px; float: left;">
+                        <fieldset>
+                            <legend>Група-1</legend>
+                    <span style="margin-right:5px;font-size: 14px;">Назва групи: </span>
                     <input id="tags-0" type="text" class="tags" style="font-size: 14px;">
-                    <span style="margin-right:5px; font-size: 14px;">Begin: </span>
+                    <span style="margin-right:5px; font-size: 14px;">Початок: </span>
                     <input type="text" id="datepicker-0" class="begin" style="font-size: 14px;">
-                    <span style="margin-right:5px;font-size: 14px;">End: </span>
+                    <span style="margin-right:5px;font-size: 14px;">Кінець: </span>
                     <input id="end-0" type="text" class="end" style="font-size: 14px;">
-                </div></div>
-                <button id="addGroup" type="button" class="add-group"><i class="fa fa-plus yes" style="margin-right: 3px"></i>add group</button>
+                        </fieldset>
+                    </div>
+
+                </div>
+                <button id="addGroup" type="button" class="add-group"><i class="fa fa-plus yes" style="margin-right: 3px"></i>додати групу</button>
                 </div>
             <div class="col s12 m7">
-                <label for="accordion">Add questions and answers</label>
+                <label for="accordion">Додати питання та відповіді</label>
                 <div id="accordion">
                     <ul class="collapsible" id="questions" data-collapsible="accordion">
                     </ul>
                 </div>
-                <button id="addQuestion" type="button" class="add-test"><i class="fa fa-plus yesicon" style="margin-right: 3px"></i>add question</button>
-                <div style="width: 90%; text-align: center;"><button id="importTest" type="submit" class="save-btn-test" value="Submit" style="margin-top: 10px; float: none;">save test</button></div>
+                <button id="addQuestion" type="button" class="add-test"><i class="fa fa-plus yesicon" style="margin-right: 3px"></i>додати питання</button>
+                <div style="width: 90%; text-align: center;"><button id="importTest" type="submit" class="save-btn-test" value="Submit" style="margin-top: 10px; float: none;">зберегти тест</button></div>
             </div>
                 </form>
         </div>
