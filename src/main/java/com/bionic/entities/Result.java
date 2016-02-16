@@ -47,6 +47,10 @@ import java.util.Date;
                 "                        res.access_begin as acc_begin, res.access_end as acc_end FROM result res" +
                 "                        JOIN user_group ug ON res.user_id = ug.user_id" +
                 "                        WHERE res.test_id = :testId"),
+        @NamedNativeQuery(name = "getResultIdsByGroupAndTest",
+        query = "SELECT r.id FROM result r " +
+                "JOIN user_group ug ON r.user_id = ug.user_id " +
+                "WHERE ug.group_name = :groupName AND r.test_id = :testId"),
         /*worked, bun not mapped*/
         @NamedNativeQuery(name = "getCurrentTestWithGroups",
                 query = "SELECT firstQuery.tId, firstQuery.test_name, firstQuery.duration, firstQuery.one_time," +

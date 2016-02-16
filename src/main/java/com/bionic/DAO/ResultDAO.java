@@ -63,6 +63,13 @@ public class ResultDAO extends AbstractDAO<Result> {
         return (BigInteger) query.getSingleResult();
     }
 
+    public List<Integer> getResultIdsByGroupAndTest(long testId, String groupName){
+        Query query = em.createNamedQuery("getResultIdsByGroupAndTest");
+        query.setParameter("testId", testId);
+        query.setParameter("groupName", groupName);
+        return (List<Integer>)query.getResultList();
+    }
+
     public List<TestDTO> getAvailableTestsNames(long id, Permission permission) {
         List<TestDTO> list = new ArrayList<>();
         Query query = null;

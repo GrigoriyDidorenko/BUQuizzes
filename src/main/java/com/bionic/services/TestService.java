@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by rondo104 on 25.11.2015.
@@ -26,7 +24,7 @@ public class TestService {
     @Autowired
     private TestDAO testDAO;
     @Autowired
-    private QuestionDAO questionDAO;
+    private TrainerService trainerService;
     @Autowired
     private AnswerDAO answerDAO;
     @Autowired
@@ -133,7 +131,7 @@ public class TestService {
 
     @Transactional
     public Test importTest(TestDTO testDTO) throws UserException {
-        if(testDTO.getDuration()==0 && !testDTO.isOneTime())
+        if (testDTO.getDuration() == 0 && !testDTO.isOneTime())
             throw new UserException("If test isn't open, duration can't be 0");
         HashSet<Question> questions = new HashSet<>();
         Test test = new Test();
@@ -192,7 +190,22 @@ public class TestService {
     /*TODO: CHECK IT*/
 
     public void updateTest(TestDTO testDTO) throws UserException {
-        testDAO.update(importTest(testDTO));
+        Test test = importTest(testDTO);
+        testDAO.update(test);
+        if (!testDTO.getTestsToGroups().isEmpty())
+            for (TestDTO.TestToGroup testToGroup : testDTO.getTestsToGroups()) {
+                List<Integer> resultIds = new ArrayList<>(resultDAO.getResultIdsByGroupAndTest(test.getId(), testToGroup.getGroupName()));
+                if (!resultIds.isEmpty())
+                    for (Integer eachResult : resultIds) {
+                        Result result = resultDAO.find(eachResult);
+                        result.setAccessBegin(testToGroup.getAccessBegin());
+                        result.setAccessEnd(testToGroup.getAccessEnd());
+                        resultDAO.update(result);
+                    }
+                else {
+                    trainerService.testToGroup(Collections.singletonList(testToGroup), test);
+                }
+            }
     }
 
     public Test saveAndImportTest(TestDTO testDTO) throws UserException {
