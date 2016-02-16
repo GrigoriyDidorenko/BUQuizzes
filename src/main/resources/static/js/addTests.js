@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function () {
+
     $('.opentest').hide();
     $(function() {
         $( ".begin" ).datepicker({
@@ -203,23 +204,27 @@ function addQuestion() {
     childDelButton.addEventListener("click", function(){
         deleteQuestion(childLI.id);
     });
+    var childQuestMark = document.createElement('input');
+    childQuestMark.id = childLI.id + "_quest_mark";
+    childQuestMark.setAttribute("class", "questmark");
     var childError = document.createElement('i');
     childError.id = childLI.id + "_error";
     childError.textContent = "Будь ласка, введіть питання";
-    childError.style = 'display: block; font-size: 14px; width: 50%; margin: -25px 0 -15px 0; padding: 0px; text-align: left;font-style:normal;';
+    childError.style = 'display: block; line-height:15px; font-size: 14px; width: 50%; margin: 25px 0; padding: 0px; text-align: left;font-style:normal;';
     childError.setAttribute("class", "mama");
     var childError2 = document.createElement('i');
     childError2.id = childLI.id + "_error2";
     childError2.textContent = "Будь ласка, введіть оцінку";
-    childError2.style = 'display: block; font-size: 14px; width: 50%; margin: -15px 0px -10px 0px; text-align:left; font-style:normal;';
+    childError2.style = 'display: block; line-height:15px; font-size: 14px; width: 50%; margin: 25px 0; text-align:left; font-style:normal;';
     childError2.setAttribute("class", "papa");
     var childError3 = document.createElement('i');
     childError3.id = childLI.id + "_error3";
     childError3.textContent = "Будь ласка, введіть відповідь";
-    childError3.style = 'display: block; font-size: 14px; width: 50%; margin: -15px 0px -10px 0px; text-align:left; font-style:normal;';
+    childError3.style = 'display: block; line-height:15px; font-size: 14px; width: 50%; margin: 25px 0; text-align:left; font-style:normal;';
     childError3.setAttribute("class", "child");
     childDiv.appendChild(childInp);
     childDiv.appendChild(childDelButton);
+    childDiv.appendChild(childQuestMark);
     childDiv.appendChild(childError);
     childDiv.appendChild(childError2);
     childDiv.appendChild(childError3);
@@ -282,8 +287,8 @@ function removeAnswer(question_answer){
     var delEle = document.getElementById(question_answer);
     document.getElementById(del[0]).removeChild(delEle);
 }
-
 function importTest() {
+
     var value=$.trim($("#categoryTestName").val());
 
     if(value.length>0)
@@ -358,7 +363,19 @@ function importTest() {
         }
     })
 }
-
+$(document).ready(function () {
+    $(".question").each(function (index) {
+        $('.mark-question-' + (index + 1) + '').change(function () {
+            sum = 0;
+            $('.mark-question-' + (index + 1) + '').each(function () {
+                if ($(this).val() > 0) {
+                    sum += Number($(this).val());
+                }
+                $("#question-" + (index + 1) + "_quest_mark").val(sum)
+            });
+        });
+    });
+});
 function Test(testName, duration, oneTime, categoryTestName, testsToGroups, questions) {
     this.testName = testName;
     this.duration = duration;
