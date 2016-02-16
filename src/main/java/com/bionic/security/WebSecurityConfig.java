@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.csrf()
                 .disable()
                 .authorizeRequests();
@@ -66,6 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests();
                 //.antMatchers("/").authenticated()
 //                .antMatchers("/pages/addUser.html").access("hasRole('SUPERADMINISTRATOR')");
+
 
 
     }
