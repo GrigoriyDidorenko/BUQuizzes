@@ -21,7 +21,9 @@ public enum Role {
         TRAINER(1, "TRAINER"),
         STUDENT(2, "STUDENT"),
         RESTRICTED_ADMINISTRATOR(3, "RESTRICTED_ADMINISTRATOR"),
-        RESTRICTED_TRAINER(4, "RESTRICTED_TRAINER");
+        RESTRICTED_TRAINER(4, "RESTRICTED_TRAINER"),
+        SUPERADMIN(5,"SUPERADMIN");
+
 
         private long id;
         private String name;
