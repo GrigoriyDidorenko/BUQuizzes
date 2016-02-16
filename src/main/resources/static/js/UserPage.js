@@ -19,7 +19,7 @@ $(document).ready(function ($) {
                 success: function (json) {
                     myjson = json;
                     $.each(myjson, function (index, myjs) {
-                        if(myjs.testDTO.submited){
+                        if(myjs.testDTO.submitted){
                             if(myjs.testDTO.checked){
                                 $('.resultsTests').append('<tr><td class="resultUser">' + myjs.testDTO.testName + '</td><td class="resultUser">' +
                                     myjs.testDTO.mark + '</td><td class="resultUser"><i class="fa fa-check fa-1x">' + '</i></td></tr>');

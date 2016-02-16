@@ -242,7 +242,7 @@ public class TestDTO {
         result = 31 * result + duration;
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
         result = 31 * result + (isChecked ? 1 : 0);
-        result = 31 * result + mark;
+        result = 31 * result + (mark !=null ? mark.hashCode() : 0);
         result = 31 * result + (submitted ? 1 : 0);
         return result;
     }

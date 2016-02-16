@@ -765,7 +765,7 @@ th {
 .ui-autocomplete{
   background-color: white;
   padding-left: 10px;
-  width: 260px;
+  width: 256px;
   max-height: 150px;
   overflow-y: scroll;
   cursor: pointer;

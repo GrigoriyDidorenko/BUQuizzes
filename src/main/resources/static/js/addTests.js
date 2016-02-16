@@ -7,10 +7,45 @@ $(document).ready(function () {
     $('.opentest').hide();
     $(function() {
         $( ".begin" ).datepicker({
-            dateFormat: "yy-mm-dd"
+            dateFormat: "yy:mm:dd",
+            onSelect: function(datetext){
+                var d = new Date(); // for now
+                if(d.getHours()<10){
+                    if(d.getMinutes()<10){
+                        if(d.getSeconds()<10){
+                            datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                        }
+                        else{
+                            datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                        }
+                    }
+                    else{
+                        datetext=datetext+" 0"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                    }
+                }
+                else{
+                    if(d.getMinutes()<10){
+                        if(d.getSeconds()<10){
+                            datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                        }
+                        else{
+                            datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                        }
+                    }
+                    else{
+                        datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                    }
+                }
+                $('.begin').val(datetext);
+            }
         });
         $( ".end" ).datepicker({
-            dateFormat: "yy-mm-dd"
+            dateFormat: "yy:mm:dd",
+            onSelect: function(datetext){
+                var d = new Date(); // for now
+                datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                $('.end').val(datetext);
+            }
         });
     });
     addQuestion();
@@ -159,10 +194,20 @@ $(document).ready(function () {
                     '<span style="margin-right:5px;font-size: 14px;">Кінець: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></fieldset></div>'));
                 $(function() {
                     $( ".begin" ).datepicker({
-                        dateFormat: "yy-mm-dd"
+                        dateFormat: "yy-mm-dd",
+                        onSelect: function(datetext){
+                            var d = new Date(); // for now
+                            datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                            $('.begin').val(datetext);
+                        }
                     });
                     $( ".end" ).datepicker({
-                        dateFormat: "yy-mm-dd"
+                        dateFormat: "yy-mm-dd",
+                        onSelect: function(datetext){
+                            var d = new Date(); // for now
+                            datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                            $('.begin').val(datetext);
+                        }
                     });
                 });
                 $( ".tags" ).autocomplete({
@@ -213,17 +258,17 @@ function addQuestion() {
     var childError = document.createElement('i');
     childError.id = childLI.id + "_error";
     childError.textContent = "Будь ласка, введіть питання";
-    childError.style = 'display: block; line-height:15px; font-size: 14px; width: 50%; margin: 25px 0; padding: 0px; text-align: left;font-style:normal;';
+    childError.style = 'display: block; line-height:15px; font-size: 14px; width: 50%; margin: 0; padding: 0px; text-align: left;font-style:normal;';
     childError.setAttribute("class", "mama");
     var childError2 = document.createElement('i');
     childError2.id = childLI.id + "_error2";
     childError2.textContent = "Будь ласка, введіть оцінку";
-    childError2.style = 'display: block; line-height:15px; font-size: 14px; width: 50%; margin: 25px 0; text-align:left; font-style:normal;';
+    childError2.style = 'display: block; line-height:15px; font-size: 14px; width: 50%; margin: 0; text-align:left; font-style:normal;';
     childError2.setAttribute("class", "papa");
     var childError3 = document.createElement('i');
     childError3.id = childLI.id + "_error3";
     childError3.textContent = "Будь ласка, введіть відповідь";
-    childError3.style = 'display: block; line-height:15px; font-size: 14px; width: 50%; margin: 25px 0; text-align:left; font-style:normal;';
+    childError3.style = 'display: block; line-height:15px; font-size: 14px; width: 50%; margin: 0; text-align:left; font-style:normal;';
     childError3.setAttribute("class", "child");
     childDiv.appendChild(childInp);
     childDiv.appendChild(childDelButton);
