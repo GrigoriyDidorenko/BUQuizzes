@@ -14,8 +14,7 @@ $(document).ready(function ($) {
         }
     }
     var tech = GetURLParameter('resultId');
-    var userok = GetURLParameter('user');
-    var urltest = '/student/tests/'+userok+'/pass/'+tech;
+    var urltest = '/student/tests/pass/'+tech;
     var testinfo;
     var globalVariable;
     jQuery.ajax({

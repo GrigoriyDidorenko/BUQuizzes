@@ -102,6 +102,8 @@ public class ResultDAO extends AbstractDAO<Result> {
         Iterator iterator = query.getResultList().iterator();
         while (iterator.hasNext()) {
             Object[] tmp = (Object[]) iterator.next();
+            if(tmp[2]==null)
+                tmp[2] = 0;
             TestDTO testDTO = new TestDTO((long) tmp[0], (String) tmp[1], (int) tmp[2], (boolean) tmp[3], (boolean) tmp[4], (int) tmp[6]);
             list.add(new TestWrapper(testDTO, (long) tmp[5]));
         }

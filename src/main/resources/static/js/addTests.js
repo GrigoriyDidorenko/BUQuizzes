@@ -3,6 +3,14 @@
  */
 
 $(document).ready(function () {
+    $("#yes").click(function () {
+        var katya;
+        $(".questioninput").each(function (index) {
+            katya = $(".questioninput").attr('id');
+        });
+        console.log('katya='+katya+'');
+    });
+
     $('.opentest').hide();
     $(function() {
         $( ".begin" ).datepicker({
@@ -251,7 +259,7 @@ function addAnswer(questionId) {
     var childInp2 = document.createElement('input');
     childInp2.id = questionId + "_m" + countAnswer;
     childInp2.type = "number";
-    childInp2.setAttribute("class", "mark-"+questionId+"");
+    childInp2.setAttribute("class", "mark-"+questionId+", mark");
     childInp2.placeholder = "оцінка";
     //button
     var childDelButton = document.createElement('i');

@@ -10,11 +10,10 @@ $(document).ready(function ($) {
             $('#name').append(getuser.firstName + " " + getuser.lastName);
 
 //getting tests
-            var userId=getuser.id;
             var myjson;
             jQuery.ajax({
                 type: "GET",
-                url: '/student/tests/'+userId,
+                url: '/student/tests',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (json) {
@@ -30,7 +29,7 @@ $(document).ready(function ($) {
                             }
                         }else{
                             $('.avaliableTests').append('<tr><td>' + myjs.testDTO.testName + '</td><td>' +
-                                myjs.testDTO.duration + " хв" + '</td><td><a href="TestPage.html?resultId='+myjs.resultId+'&user='+userId+'"><button class="start-test-btn">' +
+                                myjs.testDTO.duration + " хв" + '</td><td><a href="TestPage.html?resultId='+myjs.resultId+'"><button class="start-test-btn">' +
                                 "розпочати тест" + '</button></a></td></tr>');
                         }
                     })
