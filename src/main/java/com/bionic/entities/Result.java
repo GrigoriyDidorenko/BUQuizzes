@@ -17,7 +17,8 @@ import java.util.Date;
                         "AND user.id = :userId AND result.permission = :permission " +
                         "AND test.archived = false AND result.accessBegin < current_date AND current_date < result.accessEnd"),
         @NamedQuery(name = "getCurrentTestByIdForTrainer",
-                query = "SELECT test From Result result JOIN result.test test JOIN result.user user " +
+                query = "SELECT test From Result result " +
+                        "JOIN result.test test JOIN result.user user " +
                         "WHERE test.id = :testId " +
                         "AND user.id = :userId AND result.permission = :permission "),
         @NamedQuery(name = "getAvailableTestsNamesForStudent",
@@ -29,7 +30,8 @@ import java.util.Date;
                 query = "SELECT test.id, test.testName, test.duration FROM Result result " +
                         "JOIN result.test test " +
                         "JOIN result.user user " +
-                        "where user.id = :userId AND result.permission = :permission"),
+                        "where user.id = :userId AND result.permission = :permission " +
+                        "order by test.archived"),
         @NamedQuery(name = "getPassTests",
                 query = "SELECT test.id, test.testName, result.mark, result.isChecked FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId and result.submited = TRUE " ),
         @NamedQuery(name = "getTestsForUserId",
@@ -39,6 +41,35 @@ import java.util.Date;
 @NamedNativeQueries({
         @NamedNativeQuery(name = "getResultByIds", query = "SELECT result.id FROM Result result " +
                 "WHERE result.test_id = :testId AND result.user_id = :userId "),
+
+        @NamedNativeQuery(name = "getGroupsForCurrentTest",
+                query="SELECT DISTINCT ug.group_name as gr_name," +
+                "                        res.access_begin as acc_begin, res.access_end as acc_end FROM result res" +
+                "                        JOIN user_group ug ON res.user_id = ug.user_id" +
+                "                        WHERE res.test_id = :testId"),
+        @NamedNativeQuery(name = "getResultIdsByGroupAndTest",
+        query = "SELECT r.id FROM result r " +
+                "JOIN user_group ug ON r.user_id = ug.user_id " +
+                "WHERE ug.group_name = :groupName AND r.test_id = :testId"),
+        /*worked, bun not mapped*/
+        @NamedNativeQuery(name = "getCurrentTestWithGroups",
+                query = "SELECT firstQuery.tId, firstQuery.test_name, firstQuery.duration, firstQuery.one_time," +
+                        " firstQuery.category, firstQuery.qId, firstQuery.question, firstQuery.multi, firstQuery.isOpen," +
+                        " firstQuery.q_archived, firstQuery.aId, firstQuery.answer, firstQuery.mark, firstQuery.ans_archived," +
+                        "  secondQuery.gr_name,  secondQuery.acc_begin,  secondQuery.acc_end" +
+                        " FROM (SELECT t.id as tId, t.test_name as test_name, t.duration as duration," +
+                        " t.one_time as one_time, ct.category_name as category, q.id as qId, " +
+                        "                        q.question as question, q.is_multichoice as multi, q.is_open as isOpen, q.archived as q_archived, " +
+                        "                        a.id as aId, a.answer_text as answer, a.mark as mark, a.archived as ans_archived FROM result r" +
+                        "                        JOIN test t ON r.test_id = t.id " +
+                        "                        JOIN user u ON r.user_id = u.id" +
+                        "                        JOIN category_test ct ON t.category_test_id = ct.id " +
+                        "                        JOIN question q ON t.id = q.test_id JOIN answer a ON q.id = a.question_id " +
+                        "                        WHERE t.id = :testId AND u.id = :userId AND r.permission = :permission) as firstQuery, (SELECT DISTINCT ug.group_name as gr_name," +
+                        "                        res.access_begin as acc_begin, res.access_end as acc_end FROM result res" +
+                        "                        JOIN user_group ug ON res.user_id = ug.user_id" +
+                        "                        WHERE res.test_id = :testId) as secondQuery" +
+                        "                        "),
         @NamedNativeQuery(name = "countCurrentTestGivenToUser",
         query = "SELECT count(*) " +
                 "FROM result r " +

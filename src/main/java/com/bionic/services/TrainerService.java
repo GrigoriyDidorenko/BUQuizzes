@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -115,12 +115,14 @@ public class TrainerService implements TestHandler<TestDTO> {
 
     @Override
     public Set<TestDTO> getAvailableTestsNames(long idStr) {
-        return new HashSet<>(resultDAO.getAvailableTestsNames(idStr, Permission.EDIT_THE_TEST));
+        return new LinkedHashSet<>(resultDAO.getAvailableTestsNames(idStr, Permission.EDIT_THE_TEST));
     }
 
     @Override
     public TestDTO getCurrentTest(long id, String testIdStr) {
-        return Util.convertUsersTestToDTO(resultDAO.getCurrentTest(id, Util.getLongId(testIdStr), Permission.EDIT_THE_TEST));
+        TestDTO result = Util.convertUsersTestToDTO(resultDAO.getCurrentTest(id, Util.getLongId(testIdStr), Permission.EDIT_THE_TEST));
+        result.setTestsToGroups(resultDAO.getGroupsForCurrentTest(Util.getLongId(testIdStr)));
+        return result;
 
     }
 }

@@ -28,7 +28,7 @@ $(document).ready(function ($) {
             var myjson;
             jQuery.ajax({
                 type: "GET",
-                url: '/student/tests/'+userId,
+                url: '/student/tests',
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (json) {

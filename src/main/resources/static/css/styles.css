@@ -130,7 +130,15 @@ input[type=email]:focus:not([readonly]), input[type=password]:focus:not([readonl
   margin-top: -20px;
   color: crimson;
 }
-
+input[name=email]:focus:not([readonly]), input[name=password]:focus:not([readonly]) {
+  color: black;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+td.resultUser {
+  vertical-align: middle;
+  padding: 10px;
+}
 label {
   font-size: 14px;
   color: #2dadf0;
@@ -443,7 +451,7 @@ td, th {
   padding-left: 30px;
   cursor: pointer;
   display: inline-block;
-  line-height: 20px;
+  line-height: 25px;
   font-size: 1rem;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -489,7 +497,7 @@ td, th {
   cursor: pointer;
   display: inline-block;
   height: 25px;
-  line-height: 20px;
+  line-height: 25px;
   font-size: 1rem;
   -webkit-transition: .28s ease;
   -moz-transition: .28s ease;
@@ -802,5 +810,8 @@ fieldset {
 .opentest{
   color: crimson;
   font-size: 14px;
+}
+label.positions{
+  color:#5a5a5a;
 }
 /*# sourceMappingURL=styles.css.map */

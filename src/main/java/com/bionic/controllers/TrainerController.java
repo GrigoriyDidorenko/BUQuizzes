@@ -131,7 +131,7 @@ public class TrainerController {
     @ResponseBody
     ResponseEntity<TestDTO> getCurrentTest(@PathVariable("testId") String testId) {
         try {
-            return new ResponseEntity<>(trainerService.getCurrentTest(1/*userService.getAuthorizedUser().getId()*/, testId), HttpStatus.OK);
+            return new ResponseEntity<>(trainerService.getCurrentTest(3/*userService.getAuthorizedUser().getId()*/, testId), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -150,7 +150,7 @@ public class TrainerController {
         return null;
     }
 
-    @RequestMapping(value = "/testToUser", method = RequestMethod.GET, produces = "application/json")
+/* DEPRECATED   @RequestMapping(value = "/testToUser", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     ResponseEntity<TestUserWrapper> getUsersAndUnarchivedTests() {
@@ -161,7 +161,7 @@ public class TrainerController {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 
     @RequestMapping(value = "/testToUser", method = RequestMethod.POST)
     public

@@ -37,6 +37,12 @@ public class ResultDAO extends AbstractDAO<Result> {
         return (BigInteger) query.getSingleResult();
     }
 
+    public List<TestDTO.TestToGroup> getGroupsForCurrentTest(long testId){
+        Query query = em.createNamedQuery("getGroupsForCurrentTest");
+        query.setParameter("testId", testId);
+        return (List< TestDTO.TestToGroup>)query.getResultList();
+    }
+
     public Test getCurrentTest(long id, long testId, Permission permission) {
         Query query = null;
         if (permission == Permission.PASS_THE_TEST)
@@ -55,6 +61,13 @@ public class ResultDAO extends AbstractDAO<Result> {
         query.setParameter("userId", userId);
         query.setParameter("permission", permission);
         return (BigInteger) query.getSingleResult();
+    }
+
+    public List<Integer> getResultIdsByGroupAndTest(long testId, String groupName){
+        Query query = em.createNamedQuery("getResultIdsByGroupAndTest");
+        query.setParameter("testId", testId);
+        query.setParameter("groupName", groupName);
+        return (List<Integer>)query.getResultList();
     }
 
     public List<TestDTO> getAvailableTestsNames(long id, Permission permission) {

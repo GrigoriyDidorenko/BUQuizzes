@@ -1,3 +1,4 @@
+
 package com.bionic.security;
 
 import org.springframework.security.core.Authentication;
@@ -26,7 +27,9 @@ public class CustomAuthenticationHandler extends SimpleUrlAuthenticationSuccessH
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         String studentTargetUrl = "/pages/UserPage.html";
-        String restrictedTargetUrl = "/pages/UserPage.html";;
+        String restrictedTargetUrl = "/pages/changePass.html";
+        String trainerTargetUrl="/pages/mentorPage.html";
+        String superadmintargetUrl="/pages/addUser.html";
         String targetUrl=getDefaultTargetUrl();
         SavedRequest savedRequest = requestCache.getRequest(request, response);
         try {
@@ -36,7 +39,7 @@ public class CustomAuthenticationHandler extends SimpleUrlAuthenticationSuccessH
             targetUrl=determineTargetUrl(request,response);
         }
 
-        Collection<? extends GrantedAuthority> authorities =  authentication.getAuthorities();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         List<String> roles = new ArrayList<String>();
         for (GrantedAuthority a : authorities) {
             roles.add(a.getAuthority());
@@ -44,7 +47,14 @@ public class CustomAuthenticationHandler extends SimpleUrlAuthenticationSuccessH
 
         if (roles.contains("ROLE_STUDENT")) {
             getRedirectStrategy().sendRedirect(request, response, studentTargetUrl);
-        } else if (roles.contains("ROLE_RESTRICTED_ADMINISTRATOR")||(roles.contains("ROLE_RESTRICTED_TRAINER"))) {
+
+        }else if (roles.contains("ROLE_TRAINER")) {
+            getRedirectStrategy().sendRedirect(request, response, trainerTargetUrl);
+        }
+        else if (roles.contains("ROLE_SUPERADMIN")) {
+            getRedirectStrategy().sendRedirect(request, response, superadmintargetUrl);
+        }
+        else if (roles.contains("ROLE_RESTRICTED_ADMINISTRATOR")||(roles.contains("ROLE_RESTRICTED_TRAINER"))) {
             getRedirectStrategy().sendRedirect(request, response, restrictedTargetUrl);
         } else {
             getRedirectStrategy().sendRedirect(request, response, targetUrl);

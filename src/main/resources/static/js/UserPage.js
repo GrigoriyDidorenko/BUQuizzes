@@ -21,15 +21,15 @@ $(document).ready(function ($) {
                     $.each(myjson, function (index, myjs) {
                         if(myjs.testDTO.submited){
                             if(myjs.testDTO.checked){
-                                $('.resultsTests').append('<tr><td>' + myjs.testDTO.testName + '</td><td>' +
-                                    myjs.testDTO.mark + '</td><td><i class="fa fa-check fa-1x">' + '</i></td></tr>');
+                                $('.resultsTests').append('<tr><td class="resultUser">' + myjs.testDTO.testName + '</td><td class="resultUser">' +
+                                    myjs.testDTO.mark + '</td><td class="resultUser"><i class="fa fa-check fa-1x">' + '</i></td></tr>');
                             }else {
-                                $('.resultsTests').append('<tr><td>' + myjs.testDTO.testName + '</td><td>' +
-                                    myjs.testDTO.mark + '</td><td><i class="fa fa-times fa-1x">' + '</i></td></tr>');
+                                $('.resultsTests').append('<tr><td class="resultUser">' + myjs.testDTO.testName + '</td><td class="resultUser">' +
+                                    myjs.testDTO.mark + '</td><td class="resultUser"><i class="fa fa-times fa-1x">' + '</i></td></tr>');
                             }
                         }else{
-                            $('.avaliableTests').append('<tr><td>' + myjs.testDTO.testName + '</td><td>' +
-                                myjs.testDTO.duration + " хв" + '</td><td><a href="TestPage.html?resultId='+myjs.resultId+'"><button class="start-test-btn">' +
+                            $('.avaliableTests').append('<tr><td class="resultUser">' + myjs.testDTO.testName + '</td><td class="resultUser">' +
+                                myjs.testDTO.duration + " хв" + '</td><td class="resultUser"><a href="TestPage.html?resultId='+myjs.resultId+'"><button class="start-test-btn">' +
                                 "розпочати тест" + '</button></a></td></tr>');
                         }
                     })
