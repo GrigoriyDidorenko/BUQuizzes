@@ -46,9 +46,9 @@ public class StudentService implements TestHandler<TestWrapper> {
     public TestDTO getCurrentTest(long id, String resultIdStr) {
         try {
             Result result = resultDAO.find(Util.getLongId(resultIdStr));
-            Date testBeginTime = result.getBeginTime();
-            testBeginTime.setTime(testBeginTime.getTime() + 60000 * result.getTest().getDuration());
-            if (new Date(System.currentTimeMillis()).before(testBeginTime)) {
+            Date accessEndTime = result.getBeginTime();
+            accessEndTime.setTime(accessEndTime.getTime() + 60000 * result.getTest().getDuration());
+            if (new Date(System.currentTimeMillis()).before(accessEndTime)) {
                 Test test = resultDAO.getCurrentTest(id,
                         result.getTest().getId(), Permission.PASS_THE_TEST);
                 return Util.convertUsersTestToDTOForStudent(test);
