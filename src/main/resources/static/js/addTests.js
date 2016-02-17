@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function () {
+
     $('.opentest').hide();
     $(function() {
         $( ".begin" ).datepicker({
@@ -21,12 +22,12 @@ $(document).ready(function () {
     $('#importTest').click(function () {
         $('.opentest').hide();
         $.validator.setDefaults({
-            submitHandler: function(index) {
-                $('#question-' + (index + 1) + '_error').hide();
-                $('#question-' + (index + 1) + '_error2').hide();
-                $('#question-' + (index + 1) + '_error3').hide();
+            submitHandler: function() {
                 $(".question").each(function (index) {
                     var iM = (index + 1);
+                    $('#question-' + iM + '_error').hide();
+                    $('#question-' + iM + '_error2').hide();
+                    $('#question-' + iM + '_error3').hide();
                     var value = $.trim($('#questioninput-' + iM + '').val());
                     if (value.length > 0) {
                         $('#question-' + iM + '_error').hide();
@@ -34,12 +35,25 @@ $(document).ready(function () {
                     else {
                         $('#question-' + iM + '_error').show();
                     }
-
-                    $('#question-' + iM + '_m' + (index + 1) + '').each(function (k) {
-                        var value=$.trim($(this).val());
+                    $('.mark-question-' + iM + '').each(function (index) {
+                        var questV = '#question-' + iM + '_a'+(index+1)+'';
+                        var value=$.trim($(questV).val());
                         if(value.length > 0){
-                            var val=$.trim($('#question-' + iM + '_a'+(k+1)+'').val());
-                            if(val.length > 0){
+                            var mu = $(this).attr('id');
+                            var val = $.trim($('#question-' + iM + '_m' + (index + 1) + '').val());
+                            if (val.length > 0) {
+                            }
+                            else {
+                                $('#question-' + iM + '_error2').show();
+                            }
+                        }
+                    });
+                    $('#question-' + iM + '_m' + (index + 1) + '').each(function (index) {
+                        var questV = '#question-' + iM + '_m' + (index + 1) + '';
+                        var value=$.trim($(questV).val());
+                        if(value.length > 0){
+                            var val = $.trim($('#question-' + iM + '_a'+(index+1)+'').val());
+                            if (val.length > 0) {
                             }
                             else {
                                 $('#question-' + iM + '_error3').show();
@@ -139,7 +153,7 @@ $(document).ready(function () {
                 var katenka = $('.groupdiv:last').attr('name');
                 var katyaAdd = (+katenka+1);
                 $('#'+katya+'').after($('<div class="ui-widget groupdiv" id="group-'+katyaAdd+'" name="'+katyaAdd+'" style="margin-top: 5px; margin-left: 5px; float: left;padding-top: 10px;">'+
-                        '<fieldset><legend>Група-'+(katyaAdd+1)+'</legend>'+
+                    '<fieldset><legend>Група-'+(katyaAdd+1)+'</legend>'+
                     '<span style="margin-right:5px;font-size: 14px;">Назва групи: </span><input id="tags-'+katyaAdd+'" type="text" class="tags" style="font-size: 14px;">'+
                     '<span style="margin-right:5px; font-size: 14px;">Початок: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="font-size: 14px;">'+
                     '<span style="margin-right:5px;font-size: 14px;">Кінець: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></fieldset></div>'));
@@ -170,8 +184,8 @@ function addQuestion() {
     if  (Li.length != 0) {
         countQuestion = Li[Li.length - 1].id.split("-")[1];
     }
-   // var listQuestion = document.getElementById('questions');
-   // var countQuestion = listQuestion.getElementsByTagName('li').length-1;
+    // var listQuestion = document.getElementById('questions');
+    // var countQuestion = listQuestion.getElementsByTagName('li').length-1;
     var childLI = document.createElement('li');
     childLI.id = 'question-' + ++countQuestion;
     childLI.setAttribute("class", "question");
@@ -183,7 +197,7 @@ function addQuestion() {
     childInp.setAttribute("class", "questioninput");
     childInp.placeholder = "Питання";
     childInp.name = "questioninput";
-    childInp.style = 'width:85%;';
+    childInp.style = 'width:70%;';
     var childDelButton = document.createElement('i');
     childDelButton.id = childLI.id + "_d";
     childDelButton.setAttribute("class", "fa fa-times closeicon");
@@ -191,6 +205,9 @@ function addQuestion() {
         deleteQuestion(childLI.id);
     });
     var childQuestMark = document.createElement('input');
+    childQuestMark.style = 'width:15%;text-align:center';
+    childQuestMark.type = "text";
+    childQuestMark.placeholder = "сумма";
     childQuestMark.id = childLI.id + "_quest_mark";
     childQuestMark.setAttribute("class", "questmark");
     var childError = document.createElement('i');
@@ -217,6 +234,17 @@ function addQuestion() {
     childLI.appendChild(childDiv);
     document.getElementById('questions').appendChild(childLI);
     addAnswer(childLI.id);
+    $(".question").each(function (index) {
+        $('.mark-question-' + (index + 1) + '').change(function () {
+            sum = 0;
+            $('.mark-question-' + (index + 1) + '').each(function () {
+                if ($(this).val() > 0) {
+                    sum += Number($(this).val());
+                }
+                $("#question-" + (index + 1) + "_quest_mark").val(sum)
+            });
+        });
+    });
     $('.mama').hide();
     $('.papa').hide();
     $('.child').hide();
@@ -238,8 +266,6 @@ function addAnswer(questionId) {
     var childInp1 = document.createElement('input');
     childInp1.id = questionId + "_a" + countAnswer;
     childInp1.type = "text";
-    childInp1.setAttribute("class", "answer");
-    childInp1.setAttribute("name", questionId);
     childInp1.placeholder = "Відповідь";
     var childInp2 = document.createElement('input');
     childInp2.id = questionId + "_m" + countAnswer;
@@ -306,9 +332,9 @@ function importTest() {
     console.log(testsToGroups);
     var questions = [];
     $.each( $('#questions li') , function( indexQ, questionLi ) {
-      var questionD;
-      var answers =[];
-      var question;
+        var questionD;
+        var answers =[];
+        var question;
         $.each( questionLi.querySelectorAll("div"), function( indexA, answerDiv ) {
             if (answerDiv.className == 'collapsible-header' || answerDiv.className == 'collapsible-header active' ){
                 questionD = answerDiv.querySelector('input').value;
@@ -324,12 +350,12 @@ function importTest() {
                         mark= answerInput.value;
                     }
                 });
-            answer = new Answer(answerText, mark);
-            answers.push(answer);
+                answer = new Answer(answerText, mark);
+                answers.push(answer);
             }
             question = new Question(questionD, answers);
         });
-         questions.push(question);
+        questions.push(question);
     });
     var test = new Test(testName, duration, oneTime, categoryTestName, testsToGroups, questions);
     console.log(test);
@@ -342,7 +368,7 @@ function importTest() {
         contentType: "application/json; charset=utf-8",
         data: json,
         success: function (json) {
-           //alert(json);
+            //alert(json);
         },
         error: function (http) {
             $('#exeption').empty();
@@ -351,19 +377,6 @@ function importTest() {
         }
     })
 }
-$(document).ready(function () {
-    $(".question").each(function (index) {
-        $('.mark-question-' + (index + 1) + '').change(function () {
-            sum = 0;
-            $('.mark-question-' + (index + 1) + '').each(function () {
-                if ($(this).val() > 0) {
-                    sum += Number($(this).val());
-                }
-                $("#question-" + (index + 1) + "_quest_mark").val(sum)
-            });
-        });
-    });
-});
 function Test(testName, duration, oneTime, categoryTestName, testsToGroups, questions) {
     this.testName = testName;
     this.duration = duration;
