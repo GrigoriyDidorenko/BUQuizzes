@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,7 @@ import java.util.Set;
  */
 
 @Controller
+@Secured({"ROLE_ADMINISTRATOR","ROLE_TRAINER","ROLE_SUPERADMIN"})
 @RequestMapping(value = "/trainer")
 public class TrainerController {
 
