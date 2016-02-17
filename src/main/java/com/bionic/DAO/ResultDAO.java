@@ -10,8 +10,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -45,8 +49,11 @@ public class ResultDAO extends AbstractDAO<Result> {
 
     public Test getCurrentTest(long id, long testId, Permission permission) {
         Query query = null;
-        if (permission == Permission.PASS_THE_TEST)
+        if (permission == Permission.PASS_THE_TEST) {
             query = em.createNamedQuery("getCurrentTestByIdForStudent");
+            Date date = new Date(System.currentTimeMillis());
+            query.setParameter("currentDate", date);
+        }
         if (permission == Permission.EDIT_THE_TEST)
             query = em.createNamedQuery("getCurrentTestByIdForTrainer");
         query.setParameter("userId", id);
@@ -73,8 +80,11 @@ public class ResultDAO extends AbstractDAO<Result> {
     public List<TestDTO> getAvailableTestsNames(long id, Permission permission) {
         List<TestDTO> list = new ArrayList<>();
         Query query = null;
-        if (permission == Permission.PASS_THE_TEST)
+        if (permission == Permission.PASS_THE_TEST) {
             query = em.createNamedQuery("getAvailableTestsNamesForStudent");
+            Date date = new Date(System.currentTimeMillis());
+            query.setParameter("currentDate", date);
+        }
         if (permission == Permission.EDIT_THE_TEST)
             query = em.createNamedQuery("getAvailableTestsNamesForTrainer");
         query.setParameter("userId", id);

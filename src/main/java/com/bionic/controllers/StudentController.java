@@ -65,7 +65,7 @@ public class StudentController {
     ResponseEntity<TestDTO> getCurrentTest(@PathVariable("resultId") String resultId) {
 
         studentService.setTestBeginTime(resultId);
-        TestDTO testDTO = studentService.getCurrentTest(3/*userService.getAuthorizedUser().getId()*/, resultId);
+        TestDTO testDTO = studentService.getCurrentTest(1/*userService.getAuthorizedUser().getId()*/, resultId);
         return new ResponseEntity<>(testDTO, HttpStatus.OK);
     }
 

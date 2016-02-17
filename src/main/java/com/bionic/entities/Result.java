@@ -15,7 +15,7 @@ import java.util.Date;
                 query = "SELECT test From Result result JOIN result.test test JOIN result.user user " +
                         "WHERE test.id = :testId " +
                         "AND user.id = :userId AND result.permission = :permission " +
-                        "AND test.archived = false AND result.accessBegin < current_date AND current_date < result.accessEnd"),
+                        "AND test.archived = false AND :currentDate BETWEEN result.accessBegin AND result.accessEnd"),
         @NamedQuery(name = "getCurrentTestByIdForTrainer",
                 query = "SELECT test From Result result " +
                         "JOIN result.test test JOIN result.user user " +
@@ -25,7 +25,8 @@ import java.util.Date;
                 query = "SELECT test.id, test.testName, test.duration FROM Result result " +
                         "JOIN result.test test " +
                         "JOIN result.user user " +
-                        "where user.id = :userId AND result.submited = false AND result.permission = :permission"),
+                        "where user.id = :userId AND result.submited = false AND result.permission = :permission " +
+                        "AND :currentDate BETWEEN result.accessBegin AND result.accessEnd"),
         @NamedQuery(name = "getAvailableTestsNamesForTrainer",
                 query = "SELECT test.id, test.testName, test.duration FROM Result result " +
                         "JOIN result.test test " +
@@ -33,24 +34,24 @@ import java.util.Date;
                         "where user.id = :userId AND result.permission = :permission " +
                         "order by test.archived"),
         @NamedQuery(name = "getPassTests",
-                query = "SELECT test.id, test.testName, result.mark, result.isChecked FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId and result.submited = TRUE " ),
+                query = "SELECT test.id, test.testName, result.mark, result.isChecked FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId and result.submited = TRUE "),
         @NamedQuery(name = "getTestsForUserId",
-        query = "SELECT test.id, test.testName, result.mark, result.isChecked, result.submited, result.id, test.duration FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId" )
-               
+                query = "SELECT test.id, test.testName, result.mark, result.isChecked, result.submited, result.id, test.duration FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId")
+
 })
 @NamedNativeQueries({
         @NamedNativeQuery(name = "getResultByIds", query = "SELECT result.id FROM Result result " +
                 "WHERE result.test_id = :testId AND result.user_id = :userId "),
 
         @NamedNativeQuery(name = "getGroupsForCurrentTest",
-                query="SELECT DISTINCT ug.group_name as gr_name," +
-                "                        res.access_begin as acc_begin, res.access_end as acc_end FROM result res" +
-                "                        JOIN user_group ug ON res.user_id = ug.user_id" +
-                "                        WHERE res.test_id = :testId"),
+                query = "SELECT DISTINCT ug.group_name as gr_name," +
+                        "                        res.access_begin as acc_begin, res.access_end as acc_end FROM result res" +
+                        "                        JOIN user_group ug ON res.user_id = ug.user_id" +
+                        "                        WHERE res.test_id = :testId"),
         @NamedNativeQuery(name = "getResultIdsByGroupAndTest",
-        query = "SELECT r.id FROM result r " +
-                "JOIN user_group ug ON r.user_id = ug.user_id " +
-                "WHERE ug.group_name = :groupName AND r.test_id = :testId"),
+                query = "SELECT r.id FROM result r " +
+                        "JOIN user_group ug ON r.user_id = ug.user_id " +
+                        "WHERE ug.group_name = :groupName AND r.test_id = :testId"),
         /*worked, bun not mapped*/
         @NamedNativeQuery(name = "getCurrentTestWithGroups",
                 query = "SELECT firstQuery.tId, firstQuery.test_name, firstQuery.duration, firstQuery.one_time," +
@@ -71,15 +72,15 @@ import java.util.Date;
                         "                        WHERE res.test_id = :testId) as secondQuery" +
                         "                        "),
         @NamedNativeQuery(name = "countCurrentTestGivenToUser",
-        query = "SELECT count(*) " +
-                "FROM result r " +
-                "JOIN user u on r.user_id = u.id " +
-                "JOIN test t on r.test_id = t.id " +
-                "WHERE r.test_id = :testId AND r.user_id = :userId AND r.permission = :permission AND r.begin_time IS NULL"),
+                query = "SELECT count(*) " +
+                        "FROM result r " +
+                        "JOIN user u on r.user_id = u.id " +
+                        "JOIN test t on r.test_id = t.id " +
+                        "WHERE r.test_id = :testId AND r.user_id = :userId AND r.permission = :permission AND r.begin_time IS NULL"),
         @NamedNativeQuery(name = "hasUncheckedAnswers",
-        query = "SELECT COUNT(*) from result r" +
-                "                JOIN user_answer ua ON r.id = ua.result_id" +
-                "                WHERE r.id = :resultId AND ua.is_checked = false")
+                query = "SELECT COUNT(*) from result r" +
+                        "                JOIN user_answer ua ON r.id = ua.result_id" +
+                        "                WHERE r.id = :resultId AND ua.is_checked = false")
 })
 @Table(catalog = "quizzes")
 public class Result {
@@ -194,7 +195,7 @@ public class Result {
     }
 
     public Integer getMark() {
-        return (mark==null) ? 0 : mark;
+        return (mark == null) ? 0 : mark;
     }
 
     public void setMark(Integer mark) {
