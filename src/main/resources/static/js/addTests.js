@@ -43,7 +43,32 @@ $(document).ready(function () {
             dateFormat: "yy:mm:dd",
             onSelect: function(datetext){
                 var d = new Date(); // for now
-                datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                if(d.getHours()<10){
+                    if(d.getMinutes()<10){
+                        if(d.getSeconds()<10){
+                            datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                        }
+                        else{
+                            datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                        }
+                    }
+                    else{
+                        datetext=datetext+" 0"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                    }
+                }
+                else{
+                    if(d.getMinutes()<10){
+                        if(d.getSeconds()<10){
+                            datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                        }
+                        else{
+                            datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                        }
+                    }
+                    else{
+                        datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                    }
+                }
                 $('.end').val(datetext);
             }
         });
@@ -194,19 +219,69 @@ $(document).ready(function () {
                     '<span style="margin-right:5px;font-size: 14px;">Кінець: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></fieldset></div>'));
                 $(function() {
                     $( ".begin" ).datepicker({
-                        dateFormat: "yy-mm-dd",
+                        dateFormat: "yy:mm:dd",
                         onSelect: function(datetext){
                             var d = new Date(); // for now
-                            datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                            if(d.getHours()<10){
+                                if(d.getMinutes()<10){
+                                    if(d.getSeconds()<10){
+                                        datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                                    }
+                                    else{
+                                        datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                                    }
+                                }
+                                else{
+                                    datetext=datetext+" 0"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                }
+                            }
+                            else{
+                                if(d.getMinutes()<10){
+                                    if(d.getSeconds()<10){
+                                        datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                                    }
+                                    else{
+                                        datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                                    }
+                                }
+                                else{
+                                    datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                }
+                            }
                             $('.begin').val(datetext);
                         }
                     });
                     $( ".end" ).datepicker({
-                        dateFormat: "yy-mm-dd",
+                        dateFormat: "yy:mm:dd",
                         onSelect: function(datetext){
                             var d = new Date(); // for now
-                            datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
-                            $('.begin').val(datetext);
+                            if(d.getHours()<10){
+                                if(d.getMinutes()<10){
+                                    if(d.getSeconds()<10){
+                                        datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                                    }
+                                    else{
+                                        datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                                    }
+                                }
+                                else{
+                                    datetext=datetext+" 0"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                }
+                            }
+                            else{
+                                if(d.getMinutes()<10){
+                                    if(d.getSeconds()<10){
+                                        datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                                    }
+                                    else{
+                                        datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                                    }
+                                }
+                                else{
+                                    datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                }
+                            }
+                            $('.end').val(datetext);
                         }
                     });
                 });

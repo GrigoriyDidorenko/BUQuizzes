@@ -35,7 +35,7 @@ $(document).ready(function ($) {
                     myjson = json;
                     $.each(myjson, function (index, myjs) {
                         if(myjs.resultId==resultid){
-                            $('#mark').append(myjs.testDTO.mark);
+                            $('#mark').append(myjs.testDTO.duration);
                             if(myjs.testDTO.checked){
 
                             }else

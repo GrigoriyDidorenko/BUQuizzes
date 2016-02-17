@@ -27,7 +27,7 @@ public class TestDTO {
     private Set<QuestionDTO> questions;
     //Fields for Submitted Tests
     private boolean isChecked;
-    private Integer mark;
+    private int mark;
     private boolean submitted;
     private boolean oneTime ;
     private long categoryTestId;
@@ -139,7 +139,7 @@ public class TestDTO {
     }
 
     public int getMark() {
-        return (mark==null) ? 0 : mark;
+        return mark;
     }
 
     public void setMark(int mark) {
@@ -242,7 +242,7 @@ public class TestDTO {
         result = 31 * result + duration;
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
         result = 31 * result + (isChecked ? 1 : 0);
-        result = 31 * result + (mark !=null ? mark.hashCode() : 0);
+        result = 31 * result + mark;
         result = 31 * result + (submitted ? 1 : 0);
         return result;
     }
