@@ -70,8 +70,8 @@ function setMark(answer){
         contentType: "application/json; charset=utf-8",
         data: json,
         success: function (json) {
-            //ToDO Change checked answers
-            alert(+checkedCount);
+            var checkedCount = $("#stay").html();
+            ++checkedCount;
             $("#mark").empty();
             $("#stay").empty();
             $("#stay").append(checkedCount);
