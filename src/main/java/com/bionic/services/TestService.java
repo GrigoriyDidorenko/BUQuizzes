@@ -92,7 +92,7 @@ public class TestService {
                     if (userAnswer.getQuestionId() == question.getId()) {
                         for (Answer answer : question.getAnswers()) {
                             if (answer.getId() == userAnswer.getAnswerId()) {
-                                mark += answer.getMark();
+                               mark+= answer.getMark()>=0 ? answer.getMark() : 0;
                             }
                         }
                     }
