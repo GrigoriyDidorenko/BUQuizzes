@@ -80,7 +80,7 @@ public class TestService {
     }
 
     public Result calcResult(Result result, ArrayList<UserAnswer> userAnswers) throws Exception {
-        int mark = 0, maxMark = 0;
+        int mark = 0;
         result.setIsChecked(true);
         for (Question question : result.getTest().getQuestions()) {
             if (question.getIsOpen()) {
@@ -91,7 +91,6 @@ public class TestService {
                 for (UserAnswer userAnswer : userAnswers) {
                     if (userAnswer.getQuestionId() == question.getId()) {
                         for (Answer answer : question.getAnswers()) {
-                            if (answer.getMark() > 0) maxMark += answer.getMark();
                             if (answer.getId() == userAnswer.getAnswerId()) {
                                 mark += answer.getMark();
                             }
@@ -105,7 +104,6 @@ public class TestService {
                 for (UserAnswer userAnswer : userAnswers) {
                     if (userAnswer.getQuestionId() == question.getId()) {
                         for (Answer answer : question.getAnswers()) {
-                            if (answer.getMark() > 0) maxMark += answer.getMark();
                             if (answer.getId() == userAnswer.getAnswerId()) {
                                 preMark += answer.getMark();
                             }
@@ -117,7 +115,6 @@ public class TestService {
                 continue;
             }
         }
-        mark = Math.round(((float) mark / (float) maxMark) * 100);
         result.setMark(mark);
         return result;
     }
