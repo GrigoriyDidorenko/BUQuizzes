@@ -121,7 +121,7 @@ public class TrainerController {
     @ResponseBody
     ResponseEntity<Set<TestDTO>> getAvailableTestsNames() {
         try {
-            return new ResponseEntity<>(trainerService.getAvailableTestsNames(1/*userService.getAuthorizedUser().getId()*/), HttpStatus.OK);
+            return new ResponseEntity<>(trainerService.getAvailableTestsNames(userService.getAuthorizedUser().getId()), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -133,7 +133,7 @@ public class TrainerController {
     @ResponseBody
     ResponseEntity<TestDTO> getCurrentTest(@PathVariable("testId") String testId) {
         try {
-            return new ResponseEntity<>(trainerService.getCurrentTest(3/*userService.getAuthorizedUser().getId()*/, testId), HttpStatus.OK);
+            return new ResponseEntity<>(trainerService.getCurrentTest(userService.getAuthorizedUser().getId(), testId), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }

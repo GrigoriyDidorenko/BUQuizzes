@@ -25,7 +25,7 @@ import java.util.Date;
                 query = "SELECT test.id, test.testName, test.duration FROM Result result " +
                         "JOIN result.test test " +
                         "JOIN result.user user " +
-                        "where user.id = :userId AND result.submited = false AND result.permission = :permission " +
+                        "where user.id = :userId AND test.archived = false AND result.submited = false AND result.permission = :permission " +
                         "AND :currentDate BETWEEN result.accessBegin AND result.accessEnd"),
         @NamedQuery(name = "getAvailableTestsNamesForTrainer",
                 query = "SELECT test.id, test.testName, test.duration FROM Result result " +
