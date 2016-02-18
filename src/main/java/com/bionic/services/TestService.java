@@ -4,6 +4,7 @@ import com.bionic.DAO.*;
 import com.bionic.DTO.*;
 import com.bionic.entities.*;
 import com.bionic.exceptions.UserException;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -148,12 +149,14 @@ public class TestService {
                 Question question = new Question();
                 question.setTest(test);
                 question.setQuestion(questionDTO.getQuestion());
+                    question.setId(questionDTO.getId());
                 if (questionDTO.getAnswers() != null)
                     for (AnswerDTO answerDTO : questionDTO.getAnswers()) {
                         Answer answer = new Answer();
                         answer.setAnswerText(answerDTO.getAnswerText());
                         answer.setQuestion(question);
                         answer.setMark(answerDTO.getMark());
+                        answer.setId(answerDTO.getId());
                         answers.add(answer);
                         if (answer.getMark() > 0)
                             positiveMark++;
