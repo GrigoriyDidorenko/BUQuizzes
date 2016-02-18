@@ -264,7 +264,7 @@ public class TestService {
                         for (Answer answer : question.getAnswers()) {
                             if (answer.getMark() > 0) maxmark += answer.getMark();
                             if (answer.getId() == userAnswer.getAnswerId()) {
-                                mark += answer.getMark();
+                                mark += answer.getMark()>=0 ? answer.getMark() : 0;
                             }
                         }
                     }

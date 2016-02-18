@@ -74,10 +74,12 @@ public final class Util {
         return testDTO;
     }
 
+    /*ToDo: finish sorting*/
+
     public static TestDTO convertUsersTestToDTO(Test test) {
-        Set<QuestionDTO> questionDTOs = new HashSet<>();
+        Set<QuestionDTO> questionDTOs = new LinkedHashSet<>(test.getQuestions().size());
         for (Question question : test.getQuestions()) {
-            Set<AnswerDTO> answerDTOs = new HashSet<>();
+            Set<AnswerDTO> answerDTOs = new LinkedHashSet<>(question.getAnswers().size());
             for (Answer answer : question.getAnswers()) {
                 answerDTOs.add(new AnswerDTO(answer.getId(), answer.getAnswerText(), answer.getMark(), answer.getIsArchived()));
             }
