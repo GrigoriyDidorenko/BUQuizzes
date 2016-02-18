@@ -156,15 +156,17 @@ $(document).ready(function () {
             $.each(myJson.questions, function (index, quest) {
                 var mu = ''+(index+1)+'';
                 var my = 'question-'+(index+1)+'';
+                var questid=quest.id;
                 $('.collapsible').append('<li id="question-'+(index+1)+'" class="question" name="'+(index+1)+'"><div class="collapsible-header">'+
-                    '<input type="text" id="questioninput-'+(index+1)+'" placeholder="Question" name="questioninput" style="width: 85%" value="'+quest.question+'">'+
+                    '<input type="text" placeholder="'+questid+'" id="questioninput-'+(index+1)+'" name="questioninput" style="width: 85%" value="'+quest.question+'">'+
                     '<i id="question-'+(index+1)+'_d" class="fa fa-times closeicon" style="cursor: pointer"></i></div></li>');
                 $( '#question-'+(index+1)+'_d' ).click(function() {
                     $('#question-'+(index+1)+'').remove();
                 });
                 $.each(quest.answers, function (index, answer) {
+                    var answId=answer.id;
                     $('#'+my+'').append('<div style="display: block; margin: 1px 0 -10px 10px;" class="collapsible-body" id="question-'+mu+'_answer'+(index+1)+'">'+
-                        '<input id="question-'+mu+'_a'+(index+1)+'" type="text" class="mur-'+mu+'" name="'+(index+1)+'" placeholder="Answer" value="'+answer.answerText+'">'+
+                        '<input id="question-'+mu+'_a'+(index+1)+'" type="text" class="mur-'+mu+'" name="'+(index+1)+'" placeholder="'+answId+'" value="'+answer.answerText+'">'+
                         '<input id="question-'+mu+'_m'+(index+1)+'" type="number" class="mark-question-'+mu+'" placeholder="mark" value="'+answer.mark+'">'+
                         '<i class="fa fa-times fa-1x closeicon" name="'+(index+1)+'" id="question-'+mu+'_delAnswer'+(index+1)+'" style="cursor: pointer"></i>'+
                         '<i class="fa fa-plus fa-1x yesicon '+mu+'" name="'+mu+'" id="question-'+mu+'_addAnswer'+(index+1)+'" style="cursor: pointer"></i></div>');
@@ -345,10 +347,10 @@ function addQuestion() {
     var kissnameAdd = (+kissname+1);
     var kissm = $('.question:last').attr('id');
     $('#'+kissm+'').after($('<li id="question-'+kissnameAdd+'" class="question" name="'+kissnameAdd+'"><div class="collapsible-header">'+
-        '<input type="text" id="questioninput-'+kissnameAdd+'" placeholder="Question" name="questioninput" style="width: 85%">'+
+        '<input type="text" id="questioninput-'+kissnameAdd+'" placeholder="" name="questioninput" style="width: 85%">'+
         '<i id="question-'+kissnameAdd+'_d" class="fa fa-times closeicon" style="cursor: pointer"></i></div>'+
         '<div style="display: block; margin: 1px 0 -10px 10px;" class="collapsible-body" id="question-'+kissnameAdd+'_answer1">'+
-        '<input id="question-'+kissnameAdd+'_a1" class="mur-'+kissnameAdd+'" name="1" type="text" placeholder="Answer">'+
+        '<input id="question-'+kissnameAdd+'_a1" class="mur-'+kissnameAdd+'" name="1" type="text" placeholder="">'+
         '<input id="question-'+kissnameAdd+'_m1" type="number" class="mark-question-'+kissnameAdd+'" placeholder="mark">'+
         '<i class="fa fa-times fa-1x closeicon" name="'+kissnameAdd+'" id="question-'+kissnameAdd+'_delAnswer1" style="cursor: pointer"></i>'+
         '<i class="fa fa-plus fa-1x yesicon '+kissnameAdd+'" name="'+kissnameAdd+'" id="question-'+kissnameAdd+'_addAnswer1" style="cursor: pointer"></i></div></li>'));
@@ -411,17 +413,21 @@ function importTest() {
     console.log(testsToGroups);
     var questions = [];
     $.each( $('.question') , function( indexQ, questionLi ) {
+        var quid;
         var questionD;
         var answers =[];
         var question;
         $.each( questionLi.querySelectorAll("div"), function( indexA, answerDiv ) {
             if (answerDiv.className == 'collapsible-header' || answerDiv.className == 'collapsible-header active' ){
                 questionD = answerDiv.querySelector('input').value;
+                quid = answerDiv.querySelector('input').getAttribute('placeholder');
             }else {
                 var answer;
+                var ansid;
                 var answerText;
                 var mark;
                 $.each( answerDiv.querySelectorAll("input"), function( indexI, answerInput ) {
+                    ansid = answerDiv.querySelector('input').getAttribute('placeholder');
                     if(answerInput.id == questionLi.id + "_a" + indexA ) {
                         answerText = answerInput.value ;
                     }
@@ -429,10 +435,10 @@ function importTest() {
                         mark= answerInput.value;
                     }
                 });
-                answer = new Answer(answerText, mark);
+                answer = new Answer(ansid, answerText, mark);
                 answers.push(answer);
             }
-            question = new Question(questionD, answers);
+            question = new Question(quid, questionD, answers);
         });
         questions.push(question);
     });
@@ -472,12 +478,14 @@ function Group(groupName, accessBegin, accessEnd) {
     this.accessEnd = accessEnd;
 }
 
-function Question(question, answers) {
+function Question(id, question, answers) {
+    this.id = id;
     this.question = question;
     this.answers = answers;
 }
 
-function Answer(answerText, mark) {
+function Answer(id, answerText, mark) {
+    this.id = id;
     this.answerText = answerText;
     this.mark = mark;
 }
