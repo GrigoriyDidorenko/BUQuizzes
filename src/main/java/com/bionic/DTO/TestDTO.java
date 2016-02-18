@@ -1,5 +1,6 @@
 package com.bionic.DTO;
 
+import com.bionic.entities.CategoryTest;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.text.ParseException;
@@ -118,6 +119,14 @@ public class TestDTO {
         this.duration = duration;
         this.testName = testName;
         this.questions = questions;
+    }
+
+    public TestDTO(long id, String testName, int duration, Set<QuestionDTO> questions, String categoryTestName) {
+        this.id = id;
+        this.duration = duration;
+        this.testName = testName;
+        this.questions = questions;
+        this.categoryTestName = categoryTestName;
     }
 
     public TestDTO(long id, String testName, int mark, boolean isChecked, boolean submitted, int duration) {
