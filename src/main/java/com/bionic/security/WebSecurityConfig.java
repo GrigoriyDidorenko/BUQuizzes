@@ -73,7 +73,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/pages/importTest.html").access("hasRole('TRAINER')")
                 .antMatchers("/pages/mentorPage.html").access("hasRole('TRAINER')")
                 .antMatchers("/pages/TestPage.html").access("hasAnyRole('STUDENT','TRAINER')")
-                .antMatchers("/pages/userPage.html").access("hasAnyRole('STUDENT','TRAINER')");
+                .antMatchers("/pages/userPage.html").access("hasAnyRole('STUDENT','TRAINER')")
+                .and()
+                .exceptionHandling().accessDeniedPage("/pages/errorPage.html");
 
 
 
