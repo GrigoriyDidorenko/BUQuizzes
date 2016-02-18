@@ -178,7 +178,6 @@ $(document).ready(function () {
             });
             $(".yesicon").click(function () {
                 var myau = $(this).attr('name');
-                alert(myau);
                 var kio = $('.mur-'+myau+':last').attr('id');
                 var kiss = $('.mur-'+myau+':last').attr('name');
                 var kissAdd = (+kiss+1);
