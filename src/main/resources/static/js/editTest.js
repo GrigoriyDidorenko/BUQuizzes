@@ -248,11 +248,22 @@ $(document).ready(function () {
                 var katya = $('.groupdiv:last').attr('id');
                 var katenka = $('.groupdiv:last').attr('name');
                 var katyaAdd = (+katenka+1);
+                if(katya != undefined){
                     $('#'+katya+'').after($('<div class="ui-widget groupdiv" id="group-'+katyaAdd+'" name="'+katyaAdd+'" style="margin-top: 5px; margin-left: 5px; float: left;">'+
                         '<fieldset><legend>Група-'+(katyaAdd+1)+'</legend>'+
                         '<span style="margin-right:5px;font-size: 14px;">Group: </span><input id="tags-'+katyaAdd+'" type="text" class="tags" style="font-size: 14px;">'+
                         '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="font-size: 14px;">'+
                         '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></fieldset></div>'));
+
+                }
+                else{
+                    $('.myGroup').append($('<div class="ui-widget groupdiv" id="group-1" name="0" style="margin-top: 5px; margin-left: 5px; float: left;">'+
+                        '<fieldset><legend>Група-1</legend>'+
+                        '<span style="margin-right:5px;font-size: 14px;">Group: </span><input id="tags-1" type="text" class="tags" style="font-size: 14px;">'+
+                        '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-1" class="begin" style="font-size: 14px;">'+
+                        '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-1" type="text" class="end" style="font-size: 14px;"></fieldset></div>'));
+
+                }
                 $(function() {
                     $( ".begin" ).datepicker({
                         dateFormat: "yy:mm:dd",
