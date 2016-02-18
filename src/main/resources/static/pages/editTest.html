@@ -9,6 +9,7 @@
     <script type="text/javascript" src="../js/editTest.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/jquery.validate.min.js"></script>
     <script src="../js/owl.carousel.min.js"></script>
     <script src="../js/final.js"></script>
     <script src="../js/jquery-ui.js"></script>
@@ -40,37 +41,39 @@
 <main style="margin-top: 30px; ">
     <div class="container">
         <div class="row">
-            <div class="col s12 m5 newTest">
-                <div id="my"></div>
-                <label for="testName">Test name</label>
-                <input id="testName" type="text" name="testName">
-                <div id="exeption" class="positions"></div>
-                <label for="duration">Duration</label>
-                <input id="duration" type="text">
-                <input id="oneTime" type="checkbox" class="positions filled-in">
-                <label for="oneTime">Open test</label>
-                <div style="margin-top: 10px;">
-                    <p id="label">Select tests category</p>
-                    <select id="selectCategoryTestName" class="addTestSelect" name="selectCategory">
-                        <option value="" disabled selected>Select tests category</option>
-                    </select>
+            <form class="cmxform" id="commentForm" method="get" action="">
+                <div class="col s12 m5 newTest">
+                    <label for="testName">Назва тесту</label>
+                    <input id="testName" type="text" name="testName" required>
+                    <div id="exeption" class="positions"></div>
+                    <label for="duration">Тривалість</label>
+                    <input id="duration" type="text" style="width:90%;float:left"><span style="float:left"> хв</span>
+                    <input id="oneTime" type="checkbox" class="positions filled-in" name="oneTime">
+                    <label for="oneTime">Тест відкритого доступу</label>
+                    <div class="opentest">Тест відкритого доступу не може бути призначений групам</div>
+                    <div style="margin-top: 10px;">
+                        <p id="label" style="font-size: 14px;color: #2dadf0;">Оберіть категорію тесту</p>
+                        <select id="selectCategoryTestName" class="addTestSelect" name="selectCategory">
+                            <option value="" disabled selected>Категорія тесту</option>
+                        </select>
+                    </div>
+                    <label for="categoryTestName" class="CategoryTestName">Або створіть нову категорію тесту</label>
+                    <input id="categoryTestName" type="text" class="addTestSelect">
+                    <p style="font-size: 14px;color: #2dadf0;">Додати тест групам</p>
+                    <div class="myGroup">
+                    </div>
+                    <button id="addGroup" type="button" class="add-group"><i class="fa fa-plus yes" style="margin-right: 3px"></i>додати групу</button>
                 </div>
-                <label for="categoryTestName" class="CategoryTestName">Or add new tests category</label>
-                <input id="categoryTestName" type="text" class="addTestSelect">
-                <label for="categoryTestName">Add test to groups and test time interval</label>
-                <div class="myGroup"></div>
-                <button id="addGroup" type="button" class="add-group" style="margin-top: 5px;"><i class="fa fa-plus yes" style="margin-right: 3px"></i>add group</button>
-            </div>
-            <div class="col s12 m7">
-                <label for="accordion">Add questions and answers</label>
-                <div id="accordion">
-                    <ul class="collapsible" data-collapsible="accordion">
-
-                    </ul>
+                <div class="col s12 m7">
+                    <label for="accordion">Додати питання та відповіді</label>
+                    <div id="accordion">
+                        <ul class="collapsible" id="questions" data-collapsible="accordion">
+                        </ul>
+                    </div>
+                    <button id="addQuestion" type="button" class="add-test"><i class="fa fa-plus yesicon" style="margin-right: 3px"></i>додати питання</button>
+                    <div style="width: 90%; text-align: center;"><button id="importTest" type="button" class="save-btn-test" value="Submit" style="margin-top: 10px; float: none;">зберегти тест</button></div>
                 </div>
-                <button id="addQuestion" type="button" class="add-test" style="color: #2dadf0; font-size: 14px; margin-top: 10px;"><i class="fa fa-plus yesicon" style="margin-right: 3px; color: #2dadf0;"></i>add question</button>
-                <div style="width: 90%; text-align: center; margin-bottom: 30px;"><button id="importTest" type="button" class="save-btn-test" style="margin-top: 10px; float: none;">save test</button></div>
-            </div>
+            </form>
         </div>
     </div>
 </main>

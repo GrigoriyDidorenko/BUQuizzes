@@ -21,9 +21,8 @@ $(document).ready(function() {
         success: function (json) {
             myjson = json;
             $.each(myjson, function (index, myjs) {
-                    $('#avaliableTests').append('<tr><td>' + myjs.testName + '</td><td>' +
-                        myjs.duration + " хв" + '</td><td><a href=""><button class="start-test-btn">' +
-                        "розпочати тест" + '</button></a></td></tr>');
+                    $('#avaliableTests').append('<tr style="padding: 5px 0 5px 0"><td>' + myjs.testName + '</td><td>' +
+                        myjs.duration + " хв" + '</td><td><a href="../pages/editTest.html?id='+myjs.id+'"><i class="fa fa-pencil-square-o"></i></a></td></tr>');
             })
         }
     });

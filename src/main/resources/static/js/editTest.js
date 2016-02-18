@@ -2,6 +2,7 @@
  * Created by c2413 on 29.01.2016.
  */
 $(document).ready(function () {
+    $('.opentest').hide();
     function GetURLParameter(sParam) {
 
         var sPageURL = window.location.search.substring(1);
@@ -15,7 +16,7 @@ $(document).ready(function () {
             }
         }
     }
-    var test = GetURLParameter('test');
+    var id = GetURLParameter('id');
     $("#addQuestion").click(function () {
         addQuestion();
     });
@@ -25,32 +26,95 @@ $(document).ready(function () {
     //get Test
     jQuery.ajax({
         type: "GET",
-        url:"http://localhost:8080/guest/tests/"+test+"?email=atia29@mail.ru&nickName=katya&name=kate",
+        url:"/trainer/getCurrentTest/"+id,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             var myJson=json;
             $('#testName').val(myJson.testName);
             $('#duration').val(myJson.duration);
-            var oneTime = true;
-            if(oneTime){
+            if(myJson.oneTime){
                 $('#oneTime').prop('checked', true);
             }
             else{
                 $('#oneTime').prop("checked", false);
             }
-            var categoryTestName = "java";
-            $('#selectCategoryTestName').append('<option selected id="selected">'+categoryTestName+'</option>');
+            $('#selectCategoryTestName').append('<option selected id="selected">'+myJson.categoryTestName+'</option>');
             //get groups
-            $.each(myJson.questions, function (index, quest) {
-                $('.myGroup').append('<div class="ui-widget groupdiv" id="group-'+index+'" name="'+index+'" style="margin-top: 5px; margin-left: 5px; float: left;border-bottom: 1px solid #2dadf0;">'+
-                   '<span style="margin-right:5px;font-size: 14px;">Group: </span><input id="tags-'+index+'" type="text" class="tags" style="font-size: 14px;" value="'+quest.question+'">'+
-                   '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+index+'" class="begin" style="font-size: 14px;" value="'+quest.question+'">'+
-                    '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+index+'" type="text" class="end" style="font-size: 14px;" value="'+quest.question+'"></div>');
+            $.each(myJson.testsToGroups, function (index, quest) {
+                $('.myGroup').append('<div class="ui-widget groupdiv" id="group-'+index+'" name="'+index+'" style="margin-top: 5px; margin-left: 5px; float: left;padding-top: 10px;">'+
+                    '<fieldset><legend>Група-'+(index+1)+'</legend>'+
+                    '<span style="margin-right:5px;font-size: 14px;">Group: </span><input id="tags-'+index+'" type="text" class="tags" style="font-size: 14px;" value="'+quest[0]+'">'+
+                   '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+index+'" class="begin" style="font-size: 14px;" value="'+quest[1].toString()+'">'+
+                    '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+index+'" type="text" class="end" style="font-size: 14px;" value="'+quest[2]+'"></fieldset></div>');
             });
             $(function() {
-                $( ".begin" ).datepicker({ dateFormat: 'dd-mm-yy' });
-                $( ".end" ).datepicker({ dateFormat: 'dd-mm-yy' });
+                $( ".begin" ).datepicker({
+                    dateFormat: "yy:mm:dd",
+                    onSelect: function(datetext){
+                        var d = new Date(); // for now
+                        if(d.getHours()<10){
+                            if(d.getMinutes()<10){
+                                if(d.getSeconds()<10){
+                                    datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                                }
+                                else{
+                                    datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                                }
+                            }
+                            else{
+                                datetext=datetext+" 0"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                            }
+                        }
+                        else{
+                            if(d.getMinutes()<10){
+                                if(d.getSeconds()<10){
+                                    datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                                }
+                                else{
+                                    datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                                }
+                            }
+                            else{
+                                datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                            }
+                        }
+                        $('.begin').val(datetext);
+                    }
+                });
+                $( ".end" ).datepicker({
+                    dateFormat: "yy:mm:dd",
+                    onSelect: function(datetext){
+                        var d = new Date(); // for now
+                        if(d.getHours()<10){
+                            if(d.getMinutes()<10){
+                                if(d.getSeconds()<10){
+                                    datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                                }
+                                else{
+                                    datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                                }
+                            }
+                            else{
+                                datetext=datetext+" 0"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                            }
+                        }
+                        else{
+                            if(d.getMinutes()<10){
+                                if(d.getSeconds()<10){
+                                    datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                                }
+                                else{
+                                    datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                                }
+                            }
+                            else{
+                                datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                            }
+                        }
+                        $('.end').val(datetext);
+                    }
+                });
             });
             jQuery.ajax({
                 type: "GET",
@@ -122,20 +186,24 @@ $(document).ready(function () {
 
     jQuery.ajax({
         type: "GET",
-        url: "/trainer/getAllСategoryTestName",
+        url: "/trainer/getAllCategoryTestName",
         dataType: "json",
         async: false,
         contentType: "application/json; charset=utf-8",
         success: function (json) {
             var rols = json;
-                $.each(rols, function (index, rolsone) {
-                    $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
-                });
+
+            var availableTags = []; // create array here
+
+            $.each(rols, function (index, rolsone) {
+                $('#selectCategoryTestName').append('<option>'+rolsone+'</option>');
+            });
         },
         error: function (http) {
             return http.responseText;
         }
     });
+
     jQuery.ajax({
         type: "GET",
         url: "/trainer/getAllGroups",
@@ -163,8 +231,72 @@ $(document).ready(function () {
                     '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="font-size: 14px;">'+
                     '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></div>'));
                 $(function() {
-                    $( ".begin" ).datepicker({ dateFormat: 'dd-mm-yy' });
-                    $( ".end" ).datepicker({ dateFormat: 'dd-mm-yy' });
+                    $( ".begin" ).datepicker({
+                        dateFormat: "yy:mm:dd",
+                        onSelect: function(datetext){
+                            var d = new Date(); // for now
+                            if(d.getHours()<10){
+                                if(d.getMinutes()<10){
+                                    if(d.getSeconds()<10){
+                                        datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                                    }
+                                    else{
+                                        datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                                    }
+                                }
+                                else{
+                                    datetext=datetext+" 0"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                }
+                            }
+                            else{
+                                if(d.getMinutes()<10){
+                                    if(d.getSeconds()<10){
+                                        datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                                    }
+                                    else{
+                                        datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                                    }
+                                }
+                                else{
+                                    datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                }
+                            }
+                            $('.begin').val(datetext);
+                        }
+                    });
+                    $( ".end" ).datepicker({
+                        dateFormat: "yy:mm:dd",
+                        onSelect: function(datetext){
+                            var d = new Date(); // for now
+                            if(d.getHours()<10){
+                                if(d.getMinutes()<10){
+                                    if(d.getSeconds()<10){
+                                        datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                                    }
+                                    else{
+                                        datetext=datetext+" 0"+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                                    }
+                                }
+                                else{
+                                    datetext=datetext+" 0"+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                }
+                            }
+                            else{
+                                if(d.getMinutes()<10){
+                                    if(d.getSeconds()<10){
+                                        datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":0"+d.getSeconds();
+                                    }
+                                    else{
+                                        datetext=datetext+" "+d.getHours()+":0"+d.getMinutes()+":"+d.getSeconds();
+                                    }
+                                }
+                                else{
+                                    datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                }
+                            }
+                            $('.end').val(datetext);
+                        }
+                    });
                 });
                 $( ".tags" ).autocomplete({
                     source: unique
@@ -277,7 +409,7 @@ function importTest() {
     var json = JSON.stringify(test);
     console.log(json);
     jQuery.ajax({
-        url: "/trainer/addNewTest",
+        url: "/trainer/updateTest",
         type: "POST",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
