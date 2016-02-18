@@ -32,6 +32,7 @@ $(document).ready(function () {
         success: function (json) {
             var myJson=json;
             $('#testName').val(myJson.testName);
+            $('#testName').addClass(''+myJson.id+'');
             $('#duration').val(myJson.duration);
             if(myJson.oneTime){
                 $('#oneTime').prop('checked', true);
@@ -43,11 +44,17 @@ $(document).ready(function () {
             //get groups
             $.each(myJson.testsToGroups, function (index, quest) {
                 if(quest[1]!= null){
+                    var date = new Date(quest[1]);
+                    var one= date.toString();
+                    var data = dateFormat(new Date(one), 'yyyy:mm:dd HH:MM:ss');
+                    var date2 = new Date(quest[2]);
+                    var two= date2.toString();
+                    var data2 = dateFormat(new Date(two), 'yyyy:mm:dd HH:MM:ss');
                     $('.myGroup').append('<div class="ui-widget groupdiv" id="group-'+index+'" name="'+index+'" style="margin-top: 5px; margin-left: 5px; float: left;">'+
                         '<fieldset><legend>Група-'+(index+1)+'</legend>'+
                         '<span style="margin-right:5px;font-size: 14px;">Group: </span><input id="tags-'+index+'" type="text" class="tags" style="font-size: 14px;" value="'+quest[0]+'">'+
-                        '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+index+'" class="begin" style="font-size: 14px;" value="'+quest[1]+'">'+
-                        '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+index+'" type="text" class="end" style="font-size: 14px;" value="'+quest[2]+'"></fieldset></div>');
+                        '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+index+'" class="begin" style="font-size: 14px;" value="'+data+'">'+
+                        '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+index+'" type="text" class="end" style="font-size: 14px;" value="'+data2+'"></fieldset></div>');
                 }else {
                 }
             });
@@ -79,7 +86,12 @@ $(document).ready(function () {
                                 }
                             }
                             else{
-                                datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                if(d.getSeconds()<10){
+                                    datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":0"+d.getSeconds();
+                                }
+                                else{
+                                    datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                }
                             }
                         }
                         $(this).val(datetext);
@@ -112,7 +124,12 @@ $(document).ready(function () {
                                 }
                             }
                             else{
-                                datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                if(d.getSeconds()<10){
+                                    datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":0"+d.getSeconds();
+                                }
+                                else{
+                                    datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                }
                             }
                         }
                         $(this).val(datetext);
@@ -364,6 +381,7 @@ function importTest() {
         var categoryTestName= $('#selectCategoryTestName').val();
         console.log(categoryTestName)
     }
+    var id = $('#testName').attr('class');
     var testName = $('#testName').val();
     var duration = $('#duration').val();
     var oneTime=$('#oneTime').prop("checked");
@@ -407,7 +425,7 @@ function importTest() {
         });
         questions.push(question);
     });
-    var test = new Test(testName, duration, oneTime, categoryTestName, testToGroups, questions);
+    var test = new Test(id, testName, duration, oneTime, categoryTestName, testToGroups, questions);
     console.log(test);
     var json = JSON.stringify(test);
     console.log(json);
@@ -428,7 +446,8 @@ function importTest() {
     })
 }
 
-function Test(testName, duration, oneTime, categoryTestName, testToGroups, questions) {
+function Test(id, testName, duration, oneTime, categoryTestName, testToGroups, questions) {
+    this.id = id;
     this.testName = testName;
     this.duration = duration;
     this.oneTime = oneTime;
