@@ -317,19 +317,19 @@ function addQuestion() {
     childInp.setAttribute("class", "questioninput");
     childInp.placeholder = "Питання";
     childInp.name = "questioninput";
-    childInp.style = 'width:70%;';
+    childInp.style = 'width:85%;';
     var childDelButton = document.createElement('i');
     childDelButton.id = childLI.id + "_d";
     childDelButton.setAttribute("class", "fa fa-times closeicon");
     childDelButton.addEventListener("click", function(){
         deleteQuestion(childLI.id);
     });
-    var childQuestMark = document.createElement('input');
-    childQuestMark.style = 'width:15%;text-align:center';
-    childQuestMark.type = "text";
-    childQuestMark.placeholder = "сумма";
-    childQuestMark.id = childLI.id + "_quest_mark";
-    childQuestMark.setAttribute("class", "questmark");
+    //var childQuestMark = document.createElement('input');
+    //childQuestMark.style = 'width:15%;text-align:center';
+    //childQuestMark.type = "text";
+    //childQuestMark.placeholder = "сумма";
+    //childQuestMark.id = childLI.id + "_quest_mark";
+    //childQuestMark.setAttribute("class", "questmark");
     var childError = document.createElement('i');
     childError.id = childLI.id + "_error";
     childError.textContent = "Будь ласка, введіть питання";
@@ -347,24 +347,24 @@ function addQuestion() {
     childError3.setAttribute("class", "child");
     childDiv.appendChild(childInp);
     childDiv.appendChild(childDelButton);
-    childDiv.appendChild(childQuestMark);
+    //childDiv.appendChild(childQuestMark);
     childDiv.appendChild(childError);
     childDiv.appendChild(childError2);
     childDiv.appendChild(childError3);
     childLI.appendChild(childDiv);
     document.getElementById('questions').appendChild(childLI);
     addAnswer(childLI.id);
-    $(".question").each(function (index) {
-        $('.mark-question-' + (index + 1) + '').change(function () {
-            sum = 0;
-            $('.mark-question-' + (index + 1) + '').each(function () {
-                if ($(this).val() > 0) {
-                    sum += Number($(this).val());
-                }
-                $("#question-" + (index + 1) + "_quest_mark").val(sum)
-            });
-        });
-    });
+    //$(".question").each(function (index) {
+    //    $('.mark-question-' + (index + 1) + '').change(function () {
+    //        sum = 0;
+    //        $('.mark-question-' + (index + 1) + '').each(function () {
+    //            if ($(this).val() > 0) {
+    //                sum += Number($(this).val());
+    //            }
+    //            $("#question-" + (index + 1) + "_quest_mark").val(sum)
+    //        });
+    //    });
+    //});
     $('.mama').hide();
     $('.papa').hide();
     $('.child').hide();
