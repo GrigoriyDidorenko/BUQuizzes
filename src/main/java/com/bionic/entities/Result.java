@@ -19,16 +19,18 @@ import java.util.Date;
         @NamedQuery(name = "getCurrentTestByIdForTrainer",
                 query = "SELECT test From Result result " +
                         "JOIN result.test test JOIN result.user user " +
+                        "JOIN test.questions question JOIN question.answers answer " +
                         "WHERE test.id = :testId " +
-                        "AND user.id = :userId AND result.permission = :permission "),
+                        "AND user.id = :userId AND result.permission = :permission " +
+                        "order by question.isArchived, answer.isArchived"),
         @NamedQuery(name = "getAvailableTestsNamesForStudent",
-                query = "SELECT test.id, test.testName, test.duration FROM Result result " +
+                query = "SELECT test.id, test.testName, test.duration, test.archived FROM Result result " +
                         "JOIN result.test test " +
                         "JOIN result.user user " +
                         "where user.id = :userId AND test.archived = false AND result.submited = false AND result.permission = :permission " +
                         "AND :currentDate BETWEEN result.accessBegin AND result.accessEnd"),
         @NamedQuery(name = "getAvailableTestsNamesForTrainer",
-                query = "SELECT test.id, test.testName, test.duration FROM Result result " +
+                query = "SELECT test.id, test.testName, test.duration, test.archived FROM Result result " +
                         "JOIN result.test test " +
                         "JOIN result.user user " +
                         "where user.id = :userId AND result.permission = :permission " +

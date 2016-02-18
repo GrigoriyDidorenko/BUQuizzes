@@ -25,6 +25,7 @@ public class TestDTO {
     //Fields for Available Tests
     private int duration;
     private Set<QuestionDTO> questions;
+    private boolean archived;
     //Fields for Submitted Tests
     private boolean isChecked;
     private int mark;
@@ -105,18 +106,18 @@ public class TestDTO {
         this.testName = testName;
     }
 
+    public TestDTO(long id, String testName, int duration, boolean archived) {
+        this.id = id;
+        this.duration = duration;
+        this.testName = testName;
+        this.archived = archived;
+    }
+
     public TestDTO(long id, String testName, int duration, Set<QuestionDTO> questions) {
         this.id = id;
         this.duration = duration;
         this.testName = testName;
         this.questions = questions;
-    }
-
-    public TestDTO(long id, String testName, int mark, boolean isChecked) {
-        this.id = id;
-        this.testName = testName;
-        this.mark = mark;
-        this.isChecked = isChecked;
     }
 
     public TestDTO(long id, String testName, int mark, boolean isChecked, boolean submitted, int duration) {
@@ -216,6 +217,14 @@ public class TestDTO {
 
     public void setTestsToGroups(List<TestToGroup> testsToGroups) {
         this.testsToGroups = testsToGroups;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 
     @Override
