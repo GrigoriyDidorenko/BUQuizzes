@@ -39,6 +39,8 @@ public class TrainerService implements TestHandler<TestDTO> {
     private UserAnswerDAO userAnswerDAO;
     @Autowired
     private UserGroupDAO userGroupDAO;
+    @Autowired
+    private UserService userService;
 
     public List<UserDTO> getAllUsersNames() {
         try {
@@ -110,7 +112,14 @@ public class TrainerService implements TestHandler<TestDTO> {
                     }
             }
         }
+        trainersPermissionToTest(test);
     }
+
+    public void trainersPermissionToTest(Test test){
+        Result result = new Result(false, false, Permission.EDIT_THE_TEST, userService.getAuthorizedUser(),test);
+        resultDAO.save(result);
+    }
+
 
 
     @Override

@@ -86,7 +86,7 @@ public final class Util {
             questionDTOs.add(new QuestionDTO(question.getId(), question.getQuestion(),
                     answerDTOs, question.getIsMultichoice(), question.getIsOpen(), question.getIsArchived()));
         }
-        return new TestDTO(test.getId(), test.getTestName(), test.getDuration(), questionDTOs);
+        return new TestDTO(test.getId(), test.getTestName(), test.getDuration(), questionDTOs, test.getCategoryTest().getCategoryName());
     }
 
     public static Set<QuestionDTO> randomizeQuestions(Set<QuestionDTO> questionDTOs) {
