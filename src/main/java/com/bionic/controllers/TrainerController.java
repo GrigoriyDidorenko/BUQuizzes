@@ -3,6 +3,7 @@ package com.bionic.controllers;
 import com.bionic.DTO.TestDTO;
 import com.bionic.DTO.UserAnswerDTO;
 import com.bionic.entities.UserGroup;
+import com.bionic.exceptions.UserException;
 import com.bionic.services.TestService;
 import com.bionic.services.TrainerService;
 import com.bionic.services.UserService;
@@ -214,7 +215,7 @@ public class TrainerController {
     @RequestMapping(value = "/updateTest", method = RequestMethod.POST)
     public
     @ResponseBody
-    String updateTest(@RequestBody String test) {
+    String updateTest(@RequestBody String test) throws UserException {
         try {
             testService.updateTest(objectMapper.readValue(test, TestDTO.class));
             return "success";
@@ -224,8 +225,8 @@ public class TrainerController {
             return "Invalid format";
         } catch (IOException e) {
             return new String(e.getMessage());
-        } catch (Exception e) {
-            return "Duplicate row in DB";
+/*        } catch (Exception e) {
+            return "Duplicate row in DB";*/
         }
     }
 

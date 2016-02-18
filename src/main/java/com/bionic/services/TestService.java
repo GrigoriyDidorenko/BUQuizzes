@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -189,12 +190,12 @@ public class TestService {
     public void updateTest(TestDTO testDTO) throws UserException {
         Test test = importTest(testDTO);
         testDAO.update(test);
-        if (!testDTO.getTestsToGroups().isEmpty())
+        if (testDTO.getTestsToGroups()!=null)
             for (TestDTO.TestToGroup testToGroup : testDTO.getTestsToGroups()) {
-                List<Integer> resultIds = new ArrayList<>(resultDAO.getResultIdsByGroupAndTest(test.getId(), testToGroup.getGroupName()));
+                List<BigInteger> resultIds = new ArrayList<>(resultDAO.getResultIdsByGroupAndTest(test.getId(), testToGroup.getGroupName()));
                 if (!resultIds.isEmpty())
-                    for (Integer eachResult : resultIds) {
-                        Result result = resultDAO.find(eachResult);
+                    for (BigInteger eachResult : resultIds) {
+                        Result result = resultDAO.find(eachResult.intValue());
                         result.setAccessBegin(testToGroup.getAccessBegin());
                         result.setAccessEnd(testToGroup.getAccessEnd());
                         resultDAO.update(result);

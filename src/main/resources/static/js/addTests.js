@@ -33,7 +33,12 @@ $(document).ready(function () {
                         }
                     }
                     else{
-                        datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                        if(d.getSeconds()<10){
+                            datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":0"+d.getSeconds();
+                        }
+                        else{
+                            datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                        }
                     }
                 }
                 $('.begin').val(datetext);
@@ -66,7 +71,12 @@ $(document).ready(function () {
                         }
                     }
                     else{
-                        datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                        if(d.getSeconds()<10){
+                            datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":0"+d.getSeconds();
+                        }
+                        else{
+                            datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                        }
                     }
                 }
                 $('.end').val(datetext);
@@ -245,7 +255,12 @@ $(document).ready(function () {
                                     }
                                 }
                                 else{
-                                    datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                    if(d.getSeconds()<10){
+                                        datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":0"+d.getSeconds();
+                                    }
+                                    else{
+                                        datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                    }
                                 }
                             }
                             $('.begin').val(datetext);
@@ -278,7 +293,12 @@ $(document).ready(function () {
                                     }
                                 }
                                 else{
-                                    datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                    if(d.getSeconds()<10){
+                                        datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":0"+d.getSeconds();
+                                    }
+                                    else{
+                                        datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                    }
                                 }
                             }
                             $('.end').val(datetext);

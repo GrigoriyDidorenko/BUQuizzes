@@ -20,9 +20,6 @@ $(document).ready(function () {
     $("#addQuestion").click(function () {
         addQuestion();
     });
-    $("#addAnswer").click(function () {
-        addAnswer();
-    });
     //get Test
     jQuery.ajax({
         type: "GET",
@@ -181,6 +178,7 @@ $(document).ready(function () {
             });
             $(".yesicon").click(function () {
                 var myau = $(this).attr('name');
+                alert(myau);
                 var kio = $('.mur-'+myau+':last').attr('id');
                 var kiss = $('.mur-'+myau+':last').attr('name');
                 var kissAdd = (+kiss+1);
@@ -196,6 +194,10 @@ $(document).ready(function () {
                 });
             });
         }
+    });
+
+    $("#addAnswer").click(function () {
+        addAnswer();
     });
 
     $('#importTest').click(function () {
@@ -278,7 +280,12 @@ $(document).ready(function () {
                                     }
                                 }
                                 else{
-                                    datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                    if(d.getSeconds()<10){
+                                        datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":0"+d.getSeconds();
+                                    }
+                                    else{
+                                        datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                    }
                                 }
                             }
                             $(this).val(datetext);
@@ -311,7 +318,12 @@ $(document).ready(function () {
                                     }
                                 }
                                 else{
-                                    datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                    if(d.getSeconds()<10){
+                                        datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":0"+d.getSeconds();
+                                    }
+                                    else{
+                                        datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+                                    }
                                 }
                             }
                             $(this).val(datetext);
@@ -389,15 +401,15 @@ function importTest() {
     var accessBegin;
     var accessEnd;
     var group;
-    var testToGroups = [];
+    var testsToGroups = [];
     $('.groupdiv').each(function (index) {
         groupName = $.trim($('#tags-'+index+'').val());
         accessBegin = $.trim($('#datepicker-'+index+'').val());
         accessEnd = $.trim($('#end-'+index+'').val());
         group = new Group(groupName, accessBegin, accessEnd);
-        testToGroups.push(group);
+        testsToGroups.push(group);
     });
-    console.log(testToGroups);
+    console.log(testsToGroups);
     var questions = [];
     $.each( $('.question') , function( indexQ, questionLi ) {
         var questionD;
@@ -425,7 +437,7 @@ function importTest() {
         });
         questions.push(question);
     });
-    var test = new Test(id, testName, duration, oneTime, categoryTestName, testToGroups, questions);
+    var test = new Test(id, testName, duration, oneTime, categoryTestName, testsToGroups, questions);
     console.log(test);
     var json = JSON.stringify(test);
     console.log(json);
@@ -446,13 +458,13 @@ function importTest() {
     })
 }
 
-function Test(id, testName, duration, oneTime, categoryTestName, testToGroups, questions) {
+function Test(id, testName, duration, oneTime, categoryTestName, testsToGroups, questions) {
     this.id = id;
     this.testName = testName;
     this.duration = duration;
     this.oneTime = oneTime;
     this.categoryTestName = categoryTestName;
-    this.testToGroups = testToGroups;
+    this.testsToGroups = testsToGroups;
     this.questions = questions;
 }
 function Group(groupName, accessBegin, accessEnd) {
