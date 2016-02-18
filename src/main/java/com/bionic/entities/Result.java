@@ -14,7 +14,7 @@ import java.util.Date;
         @NamedQuery(name = "getCurrentTestByIdForStudent",
                 query = "SELECT test From Result result JOIN result.test test JOIN result.user user " +
                         "WHERE test.id = :testId " +
-                        "AND user.id = :userId AND result.permission = :permission " +
+                        "AND user.id = :userId AND result.permission = :permission AND test.oneTime = false " +
                         "AND test.archived = false AND :currentDate BETWEEN result.accessBegin AND result.accessEnd"),
         @NamedQuery(name = "getCurrentTestByIdForTrainer",
                 query = "SELECT test From Result result " +
@@ -38,7 +38,10 @@ import java.util.Date;
         @NamedQuery(name = "getPassTests",
                 query = "SELECT test.id, test.testName, result.mark, result.isChecked FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId and result.submited = TRUE "),
         @NamedQuery(name = "getTestsForUserId",
-                query = "SELECT test.id, test.testName, result.mark, result.isChecked, result.submited, result.id, test.duration FROM Result result JOIN result.test test JOIN result.user user where user.id = :userId")
+                query = "SELECT test.id, test.testName, result.mark, result.isChecked, result.submited, result.id, test.duration " +
+                        "FROM Result result " +
+                        "JOIN result.test test JOIN result.user user " +
+                        "where user.id = :userId AND :currentDate BETWEEN result.accessBegin AND result.accessEnd")
 
 })
 @NamedNativeQueries({

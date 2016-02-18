@@ -122,6 +122,7 @@ public class ResultDAO extends AbstractDAO<Result> {
         List<TestWrapper> list = new ArrayList<>();
         Query query = em.createNamedQuery("getTestsForUserId");
         query.setParameter("userId", id);
+        query.setParameter("currentDate", new Date());
         Iterator iterator = query.getResultList().iterator();
         while (iterator.hasNext()) {
             Object[] tmp = (Object[]) iterator.next();
