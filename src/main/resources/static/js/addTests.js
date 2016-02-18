@@ -508,9 +508,14 @@ function importTest() {
         contentType: "application/json; charset=utf-8",
         data: json,
         success: function (json) {
+            //console.log(json);
             //alert(json);
+            // do right redirect to "../pages/addtestConf.html"
         },
         error: function (http) {
+            if(http.responseText =="success"){
+                document.location.href = "../pages/addtestConf.html";
+            }
             $('#exeption').empty();
             $('#exeption').append(http.responseText);
             return http.responseText;

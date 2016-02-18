@@ -248,11 +248,11 @@ $(document).ready(function () {
                 var katya = $('.groupdiv:last').attr('id');
                 var katenka = $('.groupdiv:last').attr('name');
                 var katyaAdd = (+katenka+1);
-                $('#'+katya+'').after($('<div class="ui-widget groupdiv" id="group-'+katyaAdd+'" name="'+katyaAdd+'" style="margin-top: 5px; margin-left: 5px; float: left;">'+
-                    '<fieldset><legend>Група-'+(katyaAdd+1)+'</legend>'+
-                    '<span style="margin-right:5px;font-size: 14px;">Group: </span><input id="tags-'+katyaAdd+'" type="text" class="tags" style="font-size: 14px;">'+
-                    '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="font-size: 14px;">'+
-                    '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></fieldset></div>'));
+                    $('#'+katya+'').after($('<div class="ui-widget groupdiv" id="group-'+katyaAdd+'" name="'+katyaAdd+'" style="margin-top: 5px; margin-left: 5px; float: left;">'+
+                        '<fieldset><legend>Група-'+(katyaAdd+1)+'</legend>'+
+                        '<span style="margin-right:5px;font-size: 14px;">Group: </span><input id="tags-'+katyaAdd+'" type="text" class="tags" style="font-size: 14px;">'+
+                        '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="font-size: 14px;">'+
+                        '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></fieldset></div>'));
                 $(function() {
                     $( ".begin" ).datepicker({
                         dateFormat: "yy:mm:dd",
@@ -453,9 +453,12 @@ function importTest() {
         contentType: "application/json; charset=utf-8",
         data: json,
         success: function (json) {
-            console.log(json);
+            //console.log(json);
         },
         error: function (http) {
+            if(http.responseText =="success"){
+                document.location.href = "../pages/addtestConf.html";
+            }
             $('#exeption').empty();
             $('#exeption').append(http.responseText);
             return http.responseText;
