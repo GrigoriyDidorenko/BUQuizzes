@@ -42,11 +42,14 @@ $(document).ready(function () {
             $('#selectCategoryTestName').append('<option selected id="selected">'+myJson.categoryTestName+'</option>');
             //get groups
             $.each(myJson.testsToGroups, function (index, quest) {
-                $('.myGroup').append('<div class="ui-widget groupdiv" id="group-'+index+'" name="'+index+'" style="margin-top: 5px; margin-left: 5px; float: left;padding-top: 10px;">'+
-                    '<fieldset><legend>Група-'+(index+1)+'</legend>'+
-                    '<span style="margin-right:5px;font-size: 14px;">Group: </span><input id="tags-'+index+'" type="text" class="tags" style="font-size: 14px;" value="'+quest[0]+'">'+
-                   '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+index+'" class="begin" style="font-size: 14px;" value="'+quest[1].toString()+'">'+
-                    '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+index+'" type="text" class="end" style="font-size: 14px;" value="'+quest[2]+'"></fieldset></div>');
+                if(quest[1]!= null){
+                    $('.myGroup').append('<div class="ui-widget groupdiv" id="group-'+index+'" name="'+index+'" style="margin-top: 5px; margin-left: 5px; float: left;">'+
+                        '<fieldset><legend>Група-'+(index+1)+'</legend>'+
+                        '<span style="margin-right:5px;font-size: 14px;">Group: </span><input id="tags-'+index+'" type="text" class="tags" style="font-size: 14px;" value="'+quest[0]+'">'+
+                        '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+index+'" class="begin" style="font-size: 14px;" value="'+quest[1]+'">'+
+                        '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+index+'" type="text" class="end" style="font-size: 14px;" value="'+quest[2]+'"></fieldset></div>');
+                }else {
+                }
             });
             $(function() {
                 $( ".begin" ).datepicker({
@@ -79,7 +82,7 @@ $(document).ready(function () {
                                 datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
                             }
                         }
-                        $('.begin').val(datetext);
+                        $(this).val(datetext);
                     }
                 });
                 $( ".end" ).datepicker({
@@ -112,7 +115,7 @@ $(document).ready(function () {
                                 datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
                             }
                         }
-                        $('.end').val(datetext);
+                        $(this).val(datetext);
                     }
                 });
             });
@@ -203,7 +206,6 @@ $(document).ready(function () {
             return http.responseText;
         }
     });
-
     jQuery.ajax({
         type: "GET",
         url: "/trainer/getAllGroups",
@@ -226,10 +228,11 @@ $(document).ready(function () {
                 var katya = $('.groupdiv:last').attr('id');
                 var katenka = $('.groupdiv:last').attr('name');
                 var katyaAdd = (+katenka+1);
-                $('#'+katya+'').after($('<div class="ui-widget groupdiv" id="group-'+katyaAdd+'" name="'+katyaAdd+'" style="margin-top: 5px; margin-left: 5px; float: left;border-bottom: 1px solid #2dadf0;">'+
+                $('#'+katya+'').after($('<div class="ui-widget groupdiv" id="group-'+katyaAdd+'" name="'+katyaAdd+'" style="margin-top: 5px; margin-left: 5px; float: left;">'+
+                    '<fieldset><legend>Група-'+(katyaAdd+1)+'</legend>'+
                     '<span style="margin-right:5px;font-size: 14px;">Group: </span><input id="tags-'+katyaAdd+'" type="text" class="tags" style="font-size: 14px;">'+
                     '<span style="margin-right:5px; font-size: 14px;">Begin: </span><input type="text" id="datepicker-'+katyaAdd+'" class="begin" style="font-size: 14px;">'+
-                    '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></div>'));
+                    '<span style="margin-right:5px;font-size: 14px;">End: </span><input id="end-'+katyaAdd+'" type="text" class="end" style="font-size: 14px;"></fieldset></div>'));
                 $(function() {
                     $( ".begin" ).datepicker({
                         dateFormat: "yy:mm:dd",
@@ -261,7 +264,7 @@ $(document).ready(function () {
                                     datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
                                 }
                             }
-                            $('.begin').val(datetext);
+                            $(this).val(datetext);
                         }
                     });
                     $( ".end" ).datepicker({
@@ -294,7 +297,7 @@ $(document).ready(function () {
                                     datetext=datetext+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
                                 }
                             }
-                            $('.end').val(datetext);
+                            $(this).val(datetext);
                         }
                     });
                 });

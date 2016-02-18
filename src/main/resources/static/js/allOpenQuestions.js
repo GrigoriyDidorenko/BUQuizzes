@@ -58,23 +58,27 @@ function addOneTest(test, indexI,flag){
     childLI.id = 'test-' + index;
     var childDiv = document.createElement('div');
     childDiv.setAttribute("class", "collapsible-header");
-    childDiv.appendChild(document.createTextNode(test.testname));
+    childDiv.style = 'background-color:#f2f2f2; padding: 12px 5px; margin-bottom:5px;';
+    childDiv.appendChild(document.createTextNode('Назва тесту: '+test.testname));
     childLI.appendChild(childDiv);
     } else {
         childLI = document.getElementById('test-' + index );
     }
     var childDiv2 = document.createElement('div');
         childDiv2.setAttribute("class", "collapsible-body");
-        childDiv2.appendChild(document.createTextNode(test.question));
+    childDiv2.style = 'border: 1px solid #c0c0c0; padding: 5px 5px 5px 10px; margin: 5px 0 5px 15px';
+    childDiv2.appendChild(document.createTextNode('Запитання: '+test.question+',    '));
+    childDiv2.appendChild(document.createTextNode('Кількість відповідей: '+test.numberOfUncheckedAnswers));
+    childLI.appendChild(childDiv2);
     var childButton = document.createElement('button');
     childButton.id = childLI.id + "_d";
     childButton.appendChild(document.createTextNode("Перевірити"));
+    childButton.setAttribute("class", "start-test-btn");
+    childButton.style = 'margin:0 20px;';
     childButton.addEventListener("click", function(){
         window.location = "auditOpenQuestions.html?" + "questionId=" + test.questionId + "&question=" + test.question;
     });
     childDiv2.appendChild(childButton);
-    childDiv2.appendChild(document.createTextNode(test.numberOfUncheckedAnswers));
-    childLI.appendChild(childDiv2);
     document.getElementById('tests').appendChild(childLI);
     $('.collapsible').collapsible(document.getElementById('tests'));
 }

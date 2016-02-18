@@ -817,4 +817,20 @@ label.positions{
 #avaliableTests{
   margin-top: 10px;
 }
+.start-test-next {
+  background-color: white;
+  margin: 0 auto;
+  color: #2dadf0;
+  border: none;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+  padding: 5px 5px 2.5px 5px;
+  font-size: 12px;
+  text-transform: uppercase;
+  border-radius: 5px;
+}
+#check-open{
+  color: crimson;
+}
 /*# sourceMappingURL=styles.css.map */

@@ -39,7 +39,7 @@
                     <h1>перевірка відкритих відповідей</h1>
                 </div>
                 <div class="col s3 m2 l1">
-                    <a href="http://localhost:8080/pages/mentorPage.html"><p class="out"><i class="fa fa-reply" style="margin-right: 5px;"></i>Назад</p></a>
+                    <a href="allOpenQuestions.html"><p class="out"><i class="fa fa-reply" style="margin-right: 5px;"></i>Назад</p></a>
                 </div>
             </div>
         </div>
@@ -49,21 +49,26 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-    <div id="stay"></div><div id="all"></div>
 
-<br>
-<textarea id="question"></textarea>
-<br>
-<textarea id="answer"></textarea>
-<br>
-Введіть оцінку
-<input type="email" id="mark">
-<br>
-<input type="button" id="preview" value="Попереднє" >
-<input type="button" id="saveMark" value="Зберегти">
-<input type="button" id="next" value="Наступне">
-<br>
-<input type="button"id="exit">Вийти в свій профіль</button>
+<div>
+    <span style="font-size: 14px;color: #2dadf0;">Кількіть відповідей: </span><span id="stay"></span><span>/</span><span id="all"></span>
+</div>
+<div style="margin-left: 10px;margin-top:5px;">
+<label>Запитання:</label>
+<div id="question" style="margin: 3px 0 5px 5px"></div>
+<label>Відповідь:</label>
+<div id="answer" style="margin: 3px 0 5px 5px"></div>
+<label>Введіть оцінку:</label>
+<input type="number" id="mark" style="width: 10%">
+</div>
+<div style="margin: 0 auto">
+<input type="button" id="preview" value="Попереднє" class="start-test-next">
+<input type="button" id="saveMark" value="Зберегти" class="start-test-btn">
+<input type="button" id="next" value="Наступне" class="start-test-next">
+</div>
+<div style="width: 100%; margin:0 auto; padding-top: 10px; text-align: center;">
+<a href="mentorPage.html"><button class="start-test-btn">На головну</button></a>
+</div>
                 </div></div></div></main>
 <footer class="footer">
     <div class="container">

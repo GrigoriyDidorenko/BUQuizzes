@@ -16,8 +16,6 @@ $(document).ready(function() {
         async: false,
         contentType: "application/json; charset=utf-8",
         success: function (json) {
-            //console.log(json);
-            //json = [ [ 5, 4, "1", 2 ], [ 7, 6, "2", 2 ]  ];
             $.each( json, function( indexI, ans ) {
                 var Answer = new answer(ans[0],ans[1],ans[2],ans[3])
                 answers.push(Answer);
